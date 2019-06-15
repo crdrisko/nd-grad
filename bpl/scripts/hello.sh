@@ -1,7 +1,7 @@
 #!/bin/bash
-# Title: hello2 - (Listing 2-1)
+# Name: hello.sh - (Listing 2-1)
 # Author: Cody R. Drisko (crdrisko)
-# Date: 5/11/2019
+# Date: 06/13/2019-21:11:23
 # Description: print Hello and the first command-line argument
 
 printf "Hello, %s!\n" "$1"
