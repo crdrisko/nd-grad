@@ -1,25 +1,28 @@
+// Name: Simple_Kernel_Params.cu
+// Author: Cody R. Drisko (crdrisko)
+// Date: 06/22/2019-15:34:16
+// Description: Passing parameters to the kernel
+
 #include <stdio.h>
 #include "../../common/book.h"
 #include "cuda_runtime.h"
 
-__global__ void add(int a, int b, int *c)
+__global__ void add ( int a, int b, int *c )
 {
 	*c = a + b;
 }
 
-int main(void)
+int main ( void )
 {
 	int c;
 	int *dev_c;
-	HANDLE_ERROR (cudaMalloc( (void**)& dev_c, sizeof(int) ));
+	HANDLE_ERROR ( cudaMalloc ( ( void ** )& dev_c, sizeof ( int ) ) );
 
-	add <<<1, 1>>> (2, 7, dev_c);
+	add <<< 1, 1 >>> ( 2, 7, dev_c );
 
-	HANDLE_ERROR (cudaMemcpy( &c, dev_c, sizeof(int), cudaMemcpyDeviceToHost ));
+	HANDLE_ERROR ( cudaMemcpy ( &c, dev_c, sizeof ( int ), cudaMemcpyDeviceToHost ) );
 	
-	printf("2 + 7 = %d\n", c);
-	cudaFree(dev_c);
-
+	printf ( "2 + 7 = %d\n", c );
+	cudaFree ( dev_c );
 	return 0;
-
 }
