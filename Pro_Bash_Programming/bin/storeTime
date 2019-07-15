@@ -7,7 +7,6 @@
 TIMEFORMAT='%3lR %3lU %3lS'
 { time echo {1..100000} >/dev/null 2>&1 ; } 2> sampleFile
 
-
 read real user system < sampleFile
 printf "%s\n" "$real" "$user" "$system"
 rm sampleFile
