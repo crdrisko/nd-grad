@@ -8,4 +8,4 @@ cd "$HOME/bin" &&
 for name in sleepy sneezy grumpy dopey
 do
     ln -s bashful "$name"           ## you can leave out the -s option if you like
-dones
+done
