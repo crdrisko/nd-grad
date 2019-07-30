@@ -1,0 +1,17 @@
+#!/bin/bash
+# Name: split_record.sh - (Listing 13-8)
+# Author: Cody R. Drisko (crdrisko)
+# Date: 07/29/2019-07:25:12
+# Description: Split a record by reading variables
+
+split_record()      #@ USAGE: split_record record delimiter var ...
+{
+  local record=${1:?} IFS=${2:?}            ## record and delimiter must be provided
+  : ${3:?}                                  ## at least one variable is required
+  shift 2                                   ## remove record and delimiter, leaving variables
+
+  ## Read record into a list of variables using a 'here document'
+  read "$@" <<.
+$record
+.
+}
