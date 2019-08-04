@@ -6,7 +6,7 @@
 
 . screen-funcs.sh
 echo
-for attr in "$underline" 0 "$reverse" "$bold"
+for attr in "$underline" 0 "$reverse" "$bold" "$bold;$reverse"
 do
   printf "$set_attr" "$attr"
   printf "$set_fg %s " "$red" RED
