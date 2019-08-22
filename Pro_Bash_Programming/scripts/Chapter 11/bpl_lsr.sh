@@ -34,6 +34,3 @@ ls $ls_opts $timestyle "$@" | {
     esac
     cat
 } | head -n$num
-
-
-

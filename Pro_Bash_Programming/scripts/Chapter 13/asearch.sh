@@ -24,4 +24,3 @@ asearch()       #@ Search for substring in array; results in array _asearch_elem
     esac
   done
 }
-

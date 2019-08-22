@@ -8,4 +8,3 @@ bpl_l()
 {
     ls -lA "$@" | less      ## the -A option is specific to GNU and *BSD versions
 }
-

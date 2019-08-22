@@ -219,5 +219,3 @@ do
         q) echo; break ;;
     esac
 done
-
-

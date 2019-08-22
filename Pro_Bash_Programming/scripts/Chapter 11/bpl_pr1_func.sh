@@ -21,5 +21,3 @@ bpl_pr1()
     esac
     printf "%${pr_w}s\n" "$@"
 }
-
-

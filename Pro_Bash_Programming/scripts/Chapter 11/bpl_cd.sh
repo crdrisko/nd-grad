@@ -34,4 +34,3 @@ bpl_cd()    #@ Change directory, storing new directory on DIRSTACK
     fi
     return "$error"             ## leave with pushd's exit code
 } > /dev/null
-

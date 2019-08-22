@@ -20,4 +20,3 @@ bpl_cp()
         fi
     fi
 }
-

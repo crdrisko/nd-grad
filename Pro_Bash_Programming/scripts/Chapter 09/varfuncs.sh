@@ -4,7 +4,7 @@
 # Date: 07/13/2019-12:10:22
 # Description: Emulate assciative arrays
 
-validname()     ## Borrowed from Chapter 7
+validname() ## Borrowed from Chapter 7
     case $1 in 
         [!a-zA-Z_]* | *[!a-zA-Z0-9_]* ) return 1 ;;
     esac

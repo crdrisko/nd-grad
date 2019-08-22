@@ -13,4 +13,3 @@ bpl_sus()
         lynx -source $sus_dir${1##*/}.html > $html_file ##>/dev/null 2>&1
     lynx -dump -nolist $html_file | ${PAGER:-less}
 }
-
