@@ -1,5 +1,5 @@
 <?php
-// Name: superGlobal.php
+// Name: superGlobal.php - (Example 3.3)
 // Author: Cody R. Drisko (crdrisko)
 // Date: 07/23/2019-20:14:27
 // Description: Demonstrating the use of PHP's Superglobal Variables
