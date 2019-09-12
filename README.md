@@ -1,2 +1,3 @@
-# E-and-M-Spectroscopy
-Coursework from E&amp;M / Spectroscopy Class
+# ND-Coursework
+
+Coursework from Graduate Classes at the University of Notre Dame
