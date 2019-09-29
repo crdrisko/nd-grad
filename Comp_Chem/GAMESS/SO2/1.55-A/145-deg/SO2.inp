@@ -1,0 +1,10 @@
+ $BASIS GBASIS=PCSEG-1 $END
+ $CONTRL COORD=ZMT ISPHER=1 RUNTYP=ENERGY DFTTYP=PBE MULT=1 $END
+
+ $DATA 
+Title SO2 single-point calculation template with Z-Matrix
+C1
+S    
+O 1 1.55 
+O 1 1.55 2 145
+ $END
