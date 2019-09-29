@@ -1,0 +1,9 @@
+!   File created by the GAMESS Input Deck Generator Plugin for Avogadro
+ $BASIS GBASIS=N31 NGAUSS=6 $END
+ $CONTRL RUNTYP=ENERGY DFTTYP=SLATER $END
+
+ $DATA 
+Title Ar single-point calculation
+C1
+Ar    18.0     0.0     0.0     0.0
+ $END
