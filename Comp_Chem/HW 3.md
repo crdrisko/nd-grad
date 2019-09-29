@@ -29,6 +29,7 @@ Ar    18.0     0.0     0.0     0.0
 ```
 
 **Table 1.1:** Total and orbital energies of the argon atom calculated using GAMESS and FDA.
+
 | **Energy Type** | **GAMESS**         | **FDA**            |
 |:---------------:|:------------------:|:------------------:|
 | **E_tot**       | -524.4521 Hartrees | -526.8275 Hartrees |
@@ -62,6 +63,7 @@ h) The gross charges on each atom of the SO<sub>2</sub> molecule are shown in **
 i) We can see the electrostatic potential of the SO<sub>2</sub> molecule in **Figure 2.1**. The blue (positive) end on the sulfur atom corresponds to the *electrophilic*  end, while the red (negative) ends on each of the oxygen atoms corresponds to the *nucleophilic* end.
 
 **Code 2.1:** GAMESS input file for a sulfur dioxide molecule undergoing a single-point energy calculation with GGA.
+
 ```FORTRAN
 !   File created by the GAMESS Input Deck Generator Plugin for Avogadro
  $BASIS GBASIS=PCSEG-1 $END
@@ -79,13 +81,15 @@ O     8.0    -3.44983     2.74004     0.76414
 <div style="page-break-after: always;"></div>
 
 **Table 2.1:** Mulliken gross charges for each atom in the SO<sub>2</sub> molecule.
+
 | **Atom** | **Mulliken Charge** |
 |:--------:|:-------------------:|
 | **S**    |  0.597301 e         | 
 | **O**    | -0.297110 e         |
 | **O**    | -0.300192 e         | 
 
-**Figure 2.1:** Electrostatic potential of the SO<sub>2</sub> molecule mapped onto a Van der Waals surface. 
+**Figure 2.1:** Electrostatic potential of the SO<sub>2</sub> molecule mapped onto a Van der Waals surface.
+
 ![alt text](GAMESS/SO2.png "Electrostatic Potential of SO2")
 
 
@@ -100,6 +104,7 @@ a) Shown in **Codes 3.1**, **3.2**, and **3.3** are the template for the GAMESS 
 b) According to the optimization run (**Code 3.4**), the optimal bond distances for the S-O bond is 1.491 &#8491;, and the optimal angle for the O-S-O angle is 118.5&#176;. Considering the bond angles and lengths were varied by 5 units each time in part a, we actually got pretty close. This optimization was much faster but ultimately, the two methods agree.
 
 **Code 3.1:** Template for each of the runs that will attempt to optimize the energy of the SO<sub>2</sub> molecule by minimizing the energy. Here, 'LEN' will be replaced by values between 1.30 and 1.70 &#8491;, and 'ANG' will be replaced by values between 90.0 and 150.0&#176;.
+
 ```FORTRAN
  $BASIS GBASIS=PCSEG-1 $END
  $CONTRL COORD=ZMT ISPHER=1 RUNTYP=ENERGY DFTTYP=PBE MULT=1 $END
@@ -116,6 +121,7 @@ O 1 LEN 2 ANG
 <div style="page-break-after: always;"></div>
 
 **Code 3.2:** Bash script to run "optimization" calculations on the CRC. Note: I had too many jobs running in the queue already, so I couldn't submit them to the CRC queue.
+
 ```Bash
 #!/bin/bash
 # Name: runGAMESS.sh - Version 1.0
@@ -162,6 +168,7 @@ done
 <div style="page-break-after: always;"></div>
 
 **Code 3.3:** Python code to plot the results of the calculations. These plots are shown in **Figure 3.1**.
+
 ```Python
 #!/usr/bin/env python3
 # Name: plotEnergy.py - Version 1.0
@@ -213,6 +220,7 @@ plt.savefig("Energy-Plot.png")
 ```
 
 **Code 3.4:** GAMESS input file for the optimization of the SO<sub>2</sub> molecule.
+
 ```FORTRAN
 !   File created by the GAMESS Input Deck Generator Plugin for Avogadro
  $BASIS GBASIS=PCSEG-1 $END
@@ -228,6 +236,7 @@ O     8.0    -3.44983     2.74004     0.76414
 ```
 
 **Figure 3.1:** Plots of the energy represented by a 3D scatter plot and a contour plot. The red point in both graphs is the structure with the lowest energy.
+
 ![alt text](GAMESS/Energy-Plot.png "Manual Optimization of the SO2 Molecule")
 
 ---
@@ -244,6 +253,7 @@ O     8.0    -3.44983     2.74004     0.76414
 | **SO<sub>2</sub>**  | 1.491 &#8491; | 118.5&#176; | Singlet | 0.3696 e&#8491; | 0.656766 e | -0.328387 e | -0.328379 e |
 
 **Code 4.1:** GAMESS input file for the optimization of the CO<sub>2</sub> molecule.
+
 ```FORTRAN
 !   File created by the GAMESS Input Deck Generator Plugin for Avogadro
  $BASIS GBASIS=PCSEG-1 $END
@@ -259,6 +269,7 @@ O     8.0    -2.43756     2.41127    -0.12043
 ```
 
 **Code 4.2:** GAMESS input file for the optimization of the NO<sub>2</sub> molecule. Note: I couldn't get the results to converge when I drew the molecule in Avogadro like the others so I used a Z-matrix for this one.
+
 ```FORTRAN
 !   File created by the GAMESS Input Deck Generator Plugin for Avogadro
  $BASIS GBASIS=PCSEG-1 $END 
@@ -276,6 +287,7 @@ O 1 1.20 2 132
 <div style="page-break-after: always;"></div>
 
 **Code 4.3:** GAMESS input file for the optimization of the SiO<sub>2</sub> molecule.
+
 ```FORTRAN
 !   File created by the GAMESS Input Deck Generator Plugin for Avogadro
  $BASIS GBASIS=PCSEG-1 $END
@@ -291,6 +303,7 @@ O     8.0    -5.31866     3.55234    -0.00743
 ```
 
 **Code 4.4:** GAMESS input file for the optimization of the SO<sub>2</sub> molecule.
+
 ```FORTRAN
 !   File created by the GAMESS Input Deck Generator Plugin for Avogadro
  $BASIS GBASIS=PCSEG-1 $END
