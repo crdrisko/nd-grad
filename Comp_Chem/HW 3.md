@@ -3,7 +3,8 @@
 ## Question 1)
 
 a) There are 16 primitive Gaussians and 12 total basis functions included in this calculation. These are split up among the s, p, and d orbitals accordingly:
-* s: 6 Primitive Gaussians in one basis set shell. 
+
+* s: 6 Primitive Gaussians in one basis set shell.
 * p: 10 Primitive Gaussians in three basis set shells.
 * d: 0 Primitive Gaussians.
 
@@ -16,12 +17,13 @@ d) The energies for each of the orbitals are shown in **Table 1.1** below. The i
 e) From **Table  1.1**, we can see that the total HFS energy and all orbital energies are lower in the FDA calculation than in the GAMESS calculation. Ultimately though, I’d say the agreement between the two methods is actually pretty good.
 
 **Code 1.1:** GAMESS input file for argon atom undergoing a single-point energy calculation with HFS.
+
 ```FORTRAN
 !   File created by the GAMESS Input Deck Generator Plugin for Avogadro
  $BASIS GBASIS=N31 NGAUSS=6 $END
  $CONTRL RUNTYP=ENERGY DFTTYP=SLATER $END
 
- $DATA 
+ $DATA
 Title Ar single-point calculation
 C1
 Ar    18.0     0.0     0.0     0.0
@@ -39,13 +41,14 @@ Ar    18.0     0.0     0.0     0.0
 | **E_3s**        | -0.8218 Hartrees   | -1.1022 Hartrees   |
 | **E_3p**        | -0.3222 Hartrees   | -0.5735 Hartrees   |
 
-
 ---
+
 ## Question 2)
 
-a) The spin multiplicity of SO<sub>2</sub> is singlet, because there are no unpaired electrons. 
+a) The spin multiplicity of SO<sub>2</sub> is singlet, because there are no unpaired electrons.
+
 * Multiplicity = 2 * (S=0) + 1 = 1
- 
+
 b) The calculation used 48 primitive Gaussians and 49 total basis functions.
 
 c) It took 22 cycles before the energy calculation converged.
@@ -58,7 +61,7 @@ f) The energy of the HOMO is -0.2837 Hartrees and the energy of the LUMO is -0.1
 
 g) The final dipole moment of the molecule is 1.508668 Debyes. Compared to the [experimental value](https://doi.org/10.1063/1.437860) of 1.63305 Debyes, this calculation was off. Potentially the coordinates I picked for this molecule are causing it to under-calculate the dipole moment.
 
-h) The gross charges on each atom of the SO<sub>2</sub> molecule are shown in **Table 2.1**. Based on the fact that the charges on oxygens are not equal and that the Mulliken estimation is based on the geometry of the molecule, it is safe to say that the molecule is not properly symmetric. 
+h) The gross charges on each atom of the SO<sub>2</sub> molecule are shown in **Table 2.1**. Based on the fact that the charges on oxygens are not equal and that the Mulliken estimation is based on the geometry of the molecule, it is safe to say that the molecule is not properly symmetric.
 
 i) We can see the electrostatic potential of the SO<sub>2</sub> molecule in **Figure 2.1**. The blue (positive) end on the sulfur atom corresponds to the *electrophilic*  end, while the red (negative) ends on each of the oxygen atoms corresponds to the *nucleophilic* end.
 
@@ -69,7 +72,7 @@ i) We can see the electrostatic potential of the SO<sub>2</sub> molecule in **Fi
  $BASIS GBASIS=PCSEG-1 $END
  $CONTRL RUNTYP=ENERGY DFTTYP=PBE ISPHER=1 MULT=1 $END
 
- $DATA 
+ $DATA
 Title SO2 single-point calculation
 C1
 O     8.0    -5.66692     3.47856     1.63888
@@ -84,14 +87,13 @@ O     8.0    -3.44983     2.74004     0.76414
 
 | **Atom** | **Mulliken Charge** |
 |:--------:|:-------------------:|
-| **S**    |  0.597301 e         | 
+| **S**    |  0.597301 e         |
 | **O**    | -0.297110 e         |
-| **O**    | -0.300192 e         | 
+| **O**    | -0.300192 e         |
 
 **Figure 2.1:** Electrostatic potential of the SO<sub>2</sub> molecule mapped onto a Van der Waals surface.
 
 ![alt text](GAMESS/SO2.png "Electrostatic Potential of SO2")
-
 
 ---
 
@@ -109,11 +111,11 @@ b) According to the optimization run (**Code 3.4**), the optimal bond distances 
  $BASIS GBASIS=PCSEG-1 $END
  $CONTRL COORD=ZMT ISPHER=1 RUNTYP=ENERGY DFTTYP=PBE MULT=1 $END
 
- $DATA 
+ $DATA
 Title SO2 single-point calculation template with Z-Matrix
 C1
-S    
-O 1 LEN 
+S
+O 1 LEN
 O 1 LEN 2 ANG
  $END
 ```
@@ -129,8 +131,8 @@ O 1 LEN 2 ANG
 # Date: 09/29/2019-08:45:51
 # Description: Run GAMESS jobs on the CRC
 
-modifyFiles()		#@ DESCRIPTION: Modify a file using sed
-{					#@ USAGE: modifyFiles fileName oldString newString
+modifyFiles()       #@ DESCRIPTION: Modify a file using sed
+{                   #@ USAGE: modifyFiles fileName oldString newString
   sed "s/${2?}/${3?}/g" ${1?} > tempFile && mv tempFile ${1?}
 }
 
@@ -144,22 +146,22 @@ do
 
   for ang in ${angles[@]}
   do
-	mkdir ${ang}-deg
-	cd ${ang}-deg
+    mkdir ${ang}-deg
+    cd ${ang}-deg
 
-	cp ../../SO2_temp.inp SO2.inp
+    cp ../../SO2_temp.inp SO2.inp
 
-	modifyFiles SO2.inp LEN $len
-	modifyFiles SO2.inp ANG $ang
+    modifyFiles SO2.inp LEN $len
+    modifyFiles SO2.inp ANG $ang
 
-	rungms SO2.inp > SO2.out
+    rungms SO2.inp > SO2.out
 
-	energyArray=( $(grep FINAL\ R-PBE\ ENERGY\ IS SO2.out) )
-	energy=${energyArray[4]}
+    energyArray=( $(grep FINAL\ R-PBE\ ENERGY\ IS SO2.out) )
+    energy=${energyArray[4]}
 
-	printf "%s\t %s\t %s\n" $len $ang $energy >> ../../allEnergies.dat
+    printf "%s\t %s\t %s\n" $len $ang $energy >> ../../allEnergies.dat
 
-	cd ../
+    cd ../
   done
   cd ../
 done
@@ -226,7 +228,7 @@ plt.savefig("Energy-Plot.png")
  $BASIS GBASIS=PCSEG-1 $END
  $CONTRL RUNTYP=OPTIMIZE DFTTYP=PBE ISPHER=1 MULT=1 $END
 
- $DATA 
+ $DATA
 Title SO2 Geometry Optimization
 C1
 O     8.0    -5.66692     3.47856     1.63888
@@ -259,7 +261,7 @@ O     8.0    -3.44983     2.74004     0.76414
  $BASIS GBASIS=PCSEG-1 $END
  $CONTRL RUNTYP=OPTIMIZE DFTTYP=PBE ISPHER=1 MULT=1 $END
 
- $DATA 
+ $DATA
 Title CO2 Geometry Optimization
 C1
 C     6.0    -0.98864     2.41193     0.00106
@@ -272,14 +274,14 @@ O     8.0    -2.43756     2.41127    -0.12043
 
 ```FORTRAN
 !   File created by the GAMESS Input Deck Generator Plugin for Avogadro
- $BASIS GBASIS=PCSEG-1 $END 
+ $BASIS GBASIS=PCSEG-1 $END
  $CONTRL COORD=ZMT SCFTYP=ROHF ISPHER=1 RUNTYP=OPTIMIZE MULT=2 DFTTYP=PBE $END
 
- $DATA 
+ $DATA
 Title NO2 Geometry Optimization
 C1
 N
-O 1 1.20 
+O 1 1.20
 O 1 1.20 2 132
  $END
 ```
@@ -293,7 +295,7 @@ O 1 1.20 2 132
  $BASIS GBASIS=PCSEG-1 $END
  $CONTRL RUNTYP=OPTIMIZE DFTTYP=PBE ISPHER=1 MULT=1 $END
 
- $DATA 
+ $DATA
 Title SiO2 Geometry Optimization
 C1
 Si    14.0    -4.00518     4.13005     0.00435
@@ -309,7 +311,7 @@ O     8.0    -5.31866     3.55234    -0.00743
  $BASIS GBASIS=PCSEG-1 $END
  $CONTRL RUNTYP=OPTIMIZE DFTTYP=PBE ISPHER=1 MULT=1 $END
 
- $DATA 
+ $DATA
 Title SO2 Geometry Optimization
 C1
 O     8.0    -5.66692     3.47856     1.63888
