@@ -245,12 +245,12 @@ O     8.0    -3.44983     2.74004     0.76414
 
 ## Question 4
 
-| **AO<sub>2</sub>** | **A-O** | **O-A-O** | **Spin Multiplicity** | **Dipole Moment** | **Mulliken Charge A** | **Mulliken Charge O1** | **Mulliken Charge O2** |
-|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **CO<sub>2</sub>**  | 1.176 &#8491; | 180.0&#176; | Singlet | 3.0605x10<sup>-5</sup> e&#8491; | 0.519821 e | -0.259908 e | -0.259913 e |
-| **NO<sub>2</sub>**  | 1.211 &#8491; | 133.8&#176; | Doublet | 0.05331 e&#8491; | 0.390296 e | -0.195147 e | -0.195149 e |
-| **SiO<sub>2</sub>** | 1.541 &#8491; | 180.0&#176; | Singlet | 1.9383x10<sup>-4</sup> e&#8491; | 0.859985 e | -0.429989 e | -0.429996 e |
-| **SO<sub>2</sub>**  | 1.491 &#8491; | 118.5&#176; | Singlet | 0.3696 e&#8491; | 0.656766 e | -0.328387 e | -0.328379 e |
+| **AO<sub>2</sub>** | **A-O (&#8491;)** | **O-A-O (Degrees)** | **Spin Multiplicity** | **Dipole Moment (e&#8491;)** | **Mulliken Charge A (e)** | **Mulliken Charge O (e)**|
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| **CO<sub>2</sub>**  | 1.176 | 180.0 | Singlet | 3.0605x10<sup>-5</sup> | 0.519821 | -0.25991 |
+| **NO<sub>2</sub>**  | 1.211 | 133.8 | Doublet | 5.3310x10<sup>-2</sup> | 0.390296 | -0.19515 |
+| **SiO<sub>2</sub>** | 1.541 | 180.0 | Singlet | 1.9383x10<sup>-4</sup> | 0.859985 | -0.43000 |
+| **SO<sub>2</sub>**  | 1.491 | 118.5 | Singlet | 3.6960x10<sup>-1</sup> | 0.656766 | -0.32839 |
 
 **Code 4.1:** GAMESS input file for the optimization of the CO<sub>2</sub> molecule.
 
