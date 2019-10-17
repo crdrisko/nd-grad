@@ -93,7 +93,7 @@ O     8.0    -3.44983     2.74004     0.76414
 
 **Figure 2.1:** Electrostatic potential of the SO<sub>2</sub> molecule mapped onto a Van der Waals surface.
 
-![alt text](GAMESS/SO2.png "Electrostatic Potential of SO2")
+![alt text](GAMESS/SO2/SO2.png "Electrostatic Potential of SO2")
 
 ---
 
@@ -239,7 +239,7 @@ O     8.0    -3.44983     2.74004     0.76414
 
 **Figure 3.1:** Plots of the energy represented by a 3D scatter plot and a contour plot. The red point in both graphs is the structure with the lowest energy.
 
-![alt text](GAMESS/Energy-Plot.png "Manual Optimization of the SO2 Molecule")
+![alt text](GAMESS/SO2/Energy-Plot.png "Manual Optimization of the SO2 Molecule")
 
 ---
 
