@@ -1,6 +1,6 @@
 ----- GAMESS execution script 'rungms' -----
 This job is running on host crcfe01.crc.nd.edu
-under operating system Linux at Thu Oct 17 12:47:02 EDT 2019
+under operating system Linux at Thu Oct 17 23:42:50 EDT 2019
 Available scratch disk space (Kbyte units) at beginning of the job is
 Filesystem      1K-blocks  Used  Available Use% Mounted on
 AFS            2147483647     0 2147483647   0% /afs
@@ -85,7 +85,7 @@ Copying input file acetaldehyde.inp to your run's scratch directory...
      NAGOYA UNIVERSITY: YOSHIO NISHIMOTO, STEPHAN IRLE
      MOSCOW STATE UNIVERSITY: VLADIMIR MIRONOV
 
- EXECUTION OF GAMESS BEGUN Thu Oct 17 12:47:02 2019
+ EXECUTION OF GAMESS BEGUN Thu Oct 17 23:42:50 2019
 
             ECHO OF THE FIRST FEW INPUT CARDS -
  INPUT CARD> $CONTRL SCFTYP=RHF DFTTYP=B3LYP RUNTYP=ENERGY                                  
@@ -385,14 +385,14 @@ Copying input file acetaldehyde.inp to your run's scratch directory...
  A   =   50
 
  ..... DONE SETTING UP THE RUN .....
- STEP CPU TIME =     0.02 TOTAL CPU TIME =          0.0 (      0.0 MIN)
- TOTAL WALL CLOCK TIME=          0.0 SECONDS, CPU UTILIZATION IS    66.67%
+ STEP CPU TIME =     0.01 TOTAL CPU TIME =          0.0 (      0.0 MIN)
+ TOTAL WALL CLOCK TIME=          0.0 SECONDS, CPU UTILIZATION IS    33.33%
 
           ********************
           1 ELECTRON INTEGRALS
           ********************
  ...... END OF ONE-ELECTRON INTEGRALS ......
- STEP CPU TIME =     0.01 TOTAL CPU TIME =          0.0 (      0.0 MIN)
+ STEP CPU TIME =     0.02 TOTAL CPU TIME =          0.0 (      0.0 MIN)
  TOTAL WALL CLOCK TIME=          0.0 SECONDS, CPU UTILIZATION IS   100.00%
 
           -------------
@@ -419,7 +419,7 @@ Copying input file acetaldehyde.inp to your run's scratch directory...
     18=A       19=A       20=A       21=A       22=A   
  ...... END OF INITIAL ORBITAL SELECTION ......
  STEP CPU TIME =     0.00 TOTAL CPU TIME =          0.0 (      0.0 MIN)
- TOTAL WALL CLOCK TIME=          0.0 SECONDS, CPU UTILIZATION IS    75.00%
+ TOTAL WALL CLOCK TIME=          0.0 SECONDS, CPU UTILIZATION IS   100.00%
 
                     ----------------------
                     AO INTEGRAL TECHNOLOGY
@@ -466,8 +466,8 @@ Copying input file acetaldehyde.inp to your run's scratch directory...
  TOTAL NUMBER OF NONZERO TWO-ELECTRON INTEGRALS =              980024
          66 INTEGRAL RECORDS WERE STORED ON DISK FILE  8.
   ...... END OF TWO-ELECTRON INTEGRALS .....
- STEP CPU TIME =     0.12 TOTAL CPU TIME =          0.2 (      0.0 MIN)
- TOTAL WALL CLOCK TIME=          0.1 SECONDS, CPU UTILIZATION IS   100.00%
+ STEP CPU TIME =     0.11 TOTAL CPU TIME =          0.1 (      0.0 MIN)
+ TOTAL WALL CLOCK TIME=          0.1 SECONDS, CPU UTILIZATION IS    93.33%
 
           --------------------------
              R-B3LYP SCF CALCULATION
@@ -527,7 +527,7 @@ Copying input file acetaldehyde.inp to your run's scratch directory...
           -----------------
           DENSITY CONVERGED
           -----------------
-     TIME TO FORM FOCK OPERATORS=       5.7 SECONDS (       0.3 SEC/ITER)
+     TIME TO FORM FOCK OPERATORS=       5.2 SECONDS (       0.2 SEC/ITER)
      TIME TO SOLVE SCF EQUATIONS=       0.0 SECONDS (       0.0 SEC/ITER)
 
  FINAL R-B3LYP ENERGY IS     -153.1035780780 AFTER  22 ITERATIONS
@@ -1108,8 +1108,8 @@ Copying input file acetaldehyde.inp to your run's scratch directory...
    52  H  7  S    0.120952   0.044928  -0.014002  -0.137048   0.032333
    53  H  7  S   -0.180096  -0.011571  -0.018056  -0.017235   0.038493
  ...... END OF RHF CALCULATION ......
- STEP CPU TIME =     5.84 TOTAL CPU TIME =          6.0 (      0.1 MIN)
- TOTAL WALL CLOCK TIME=          6.0 SECONDS, CPU UTILIZATION IS    99.17%
+ STEP CPU TIME =     5.33 TOTAL CPU TIME =          5.5 (      0.1 MIN)
+ TOTAL WALL CLOCK TIME=          5.5 SECONDS, CPU UTILIZATION IS    99.27%
 
      ---------------------------------------------------------------------
      PROPERTIES FOR THE B3LYP    DFT FUNCTIONAL (RHF  TYPE) DENSITY MATRIX
@@ -1300,23 +1300,23 @@ Copying input file acetaldehyde.inp to your run's scratch directory...
          DX          DY          DZ         /D/  (DEBYE)
     -3.032798   -2.845312   -0.532768    4.192553
  ...... END OF PROPERTY EVALUATION ......
- STEP CPU TIME =     0.01 TOTAL CPU TIME =          6.0 (      0.1 MIN)
- TOTAL WALL CLOCK TIME=          6.0 SECONDS, CPU UTILIZATION IS    99.17%
+ STEP CPU TIME =     0.00 TOTAL CPU TIME =          5.5 (      0.1 MIN)
+ TOTAL WALL CLOCK TIME=          5.5 SECONDS, CPU UTILIZATION IS    99.27%
                 580000  WORDS OF DYNAMIC MEMORY USED
- EXECUTION OF GAMESS TERMINATED NORMALLY Thu Oct 17 12:47:08 2019
+ EXECUTION OF GAMESS TERMINATED NORMALLY Thu Oct 17 23:42:55 2019
  DDI: 263640 bytes (0.3 MB / 0 MWords) used by master data server.
 
  ----------------------------------------
  CPU timing information for all processes
  ========================================
- 0: 5.857 + 0.151 = 6.08
+ 0: 5.326 + 0.153 = 5.480
  ----------------------------------------
  ddikick.x: exited gracefully.
 ----- accounting info -----
 Files used on the master node crcfe01.crc.nd.edu were:
--rw-r--r-- 1 cdrisko campus      490 Oct 17 12:47 /afs/crc.nd.edu/user/c/cdrisko/acetaldehyde.F05
--rw-r--r-- 1 cdrisko campus    45118 Oct 17 12:47 /afs/crc.nd.edu/user/c/cdrisko/acetaldehyde.F07
--rw-r--r-- 1 cdrisko campus 11881056 Oct 17 12:47 /afs/crc.nd.edu/user/c/cdrisko/acetaldehyde.F08
--rw-r--r-- 1 cdrisko campus  1799600 Oct 17 12:47 /afs/crc.nd.edu/user/c/cdrisko/acetaldehyde.F10
-Thu Oct 17 12:47:11 EDT 2019
-0.431u 0.559s 0:09.88 9.9%	0+0k 0+16io 0pf+0w
+-rw-r--r-- 1 cdrisko campus      490 Oct 17 23:42 /afs/crc.nd.edu/user/c/cdrisko/acetaldehyde.F05
+-rw-r--r-- 1 cdrisko campus    45118 Oct 17 23:42 /afs/crc.nd.edu/user/c/cdrisko/acetaldehyde.F07
+-rw-r--r-- 1 cdrisko campus 11881056 Oct 17 23:42 /afs/crc.nd.edu/user/c/cdrisko/acetaldehyde.F08
+-rw-r--r-- 1 cdrisko campus  1799600 Oct 17 23:42 /afs/crc.nd.edu/user/c/cdrisko/acetaldehyde.F10
+Thu Oct 17 23:42:59 EDT 2019
+0.315u 0.219s 0:09.03 5.7%	0+0k 0+24io 0pf+0w

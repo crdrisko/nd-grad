@@ -1,6 +1,6 @@
 ----- GAMESS execution script 'rungms' -----
 This job is running on host crcfe01.crc.nd.edu
-under operating system Linux at Thu Oct 17 12:47:12 EDT 2019
+under operating system Linux at Thu Oct 17 23:42:59 EDT 2019
 Available scratch disk space (Kbyte units) at beginning of the job is
 Filesystem      1K-blocks  Used  Available Use% Mounted on
 AFS            2147483647     0 2147483647   0% /afs
@@ -85,7 +85,7 @@ Copying input file acetaldehyde.inp to your run's scratch directory...
      NAGOYA UNIVERSITY: YOSHIO NISHIMOTO, STEPHAN IRLE
      MOSCOW STATE UNIVERSITY: VLADIMIR MIRONOV
 
- EXECUTION OF GAMESS BEGUN Thu Oct 17 12:47:12 2019
+ EXECUTION OF GAMESS BEGUN Thu Oct 17 23:42:59 2019
 
             ECHO OF THE FIRST FEW INPUT CARDS -
  INPUT CARD> $CONTRL SCFTYP=RHF DFTTYP=B3LYP RUNTYP=ENERGY                                  
@@ -385,15 +385,15 @@ Copying input file acetaldehyde.inp to your run's scratch directory...
  A   =   50
 
  ..... DONE SETTING UP THE RUN .....
- STEP CPU TIME =     0.01 TOTAL CPU TIME =          0.0 (      0.0 MIN)
- TOTAL WALL CLOCK TIME=          0.0 SECONDS, CPU UTILIZATION IS    50.00%
+ STEP CPU TIME =     0.02 TOTAL CPU TIME =          0.0 (      0.0 MIN)
+ TOTAL WALL CLOCK TIME=          0.0 SECONDS, CPU UTILIZATION IS    66.67%
 
           ********************
           1 ELECTRON INTEGRALS
           ********************
  ...... END OF ONE-ELECTRON INTEGRALS ......
  STEP CPU TIME =     0.00 TOTAL CPU TIME =          0.0 (      0.0 MIN)
- TOTAL WALL CLOCK TIME=          0.0 SECONDS, CPU UTILIZATION IS    50.00%
+ TOTAL WALL CLOCK TIME=          0.0 SECONDS, CPU UTILIZATION IS    66.67%
 
           -------------
           GUESS OPTIONS
@@ -418,7 +418,7 @@ Copying input file acetaldehyde.inp to your run's scratch directory...
     11=A       12=A       13=A       14=A       15=A       16=A       17=A   
     18=A       19=A       20=A       21=A       22=A   
  ...... END OF INITIAL ORBITAL SELECTION ......
- STEP CPU TIME =     0.01 TOTAL CPU TIME =          0.0 (      0.0 MIN)
+ STEP CPU TIME =     0.00 TOTAL CPU TIME =          0.0 (      0.0 MIN)
  TOTAL WALL CLOCK TIME=          0.0 SECONDS, CPU UTILIZATION IS    66.67%
 
                     ----------------------
@@ -466,8 +466,8 @@ Copying input file acetaldehyde.inp to your run's scratch directory...
  TOTAL NUMBER OF NONZERO TWO-ELECTRON INTEGRALS =              979347
          66 INTEGRAL RECORDS WERE STORED ON DISK FILE  8.
   ...... END OF TWO-ELECTRON INTEGRALS .....
- STEP CPU TIME =     0.12 TOTAL CPU TIME =          0.1 (      0.0 MIN)
- TOTAL WALL CLOCK TIME=          0.2 SECONDS, CPU UTILIZATION IS    93.33%
+ STEP CPU TIME =     0.11 TOTAL CPU TIME =          0.1 (      0.0 MIN)
+ TOTAL WALL CLOCK TIME=          0.1 SECONDS, CPU UTILIZATION IS    86.67%
 
           --------------------------
              R-B3LYP SCF CALCULATION
@@ -526,7 +526,7 @@ Copying input file acetaldehyde.inp to your run's scratch directory...
           -----------------
           DENSITY CONVERGED
           -----------------
-     TIME TO FORM FOCK OPERATORS=       5.3 SECONDS (       0.3 SEC/ITER)
+     TIME TO FORM FOCK OPERATORS=       5.1 SECONDS (       0.2 SEC/ITER)
      TIME TO SOLVE SCF EQUATIONS=       0.0 SECONDS (       0.0 SEC/ITER)
 
  FINAL R-B3LYP ENERGY IS     -153.4309606421 AFTER  21 ITERATIONS
@@ -1107,8 +1107,8 @@ Copying input file acetaldehyde.inp to your run's scratch directory...
    52  H  7  S   -0.164646   0.048024  -0.010132  -0.146473   0.039191
    53  H  7  S    0.107470  -0.015294  -0.022049  -0.029653   0.048869
  ...... END OF RHF CALCULATION ......
- STEP CPU TIME =     5.41 TOTAL CPU TIME =          5.5 (      0.1 MIN)
- TOTAL WALL CLOCK TIME=          5.6 SECONDS, CPU UTILIZATION IS    99.28%
+ STEP CPU TIME =     5.25 TOTAL CPU TIME =          5.4 (      0.1 MIN)
+ TOTAL WALL CLOCK TIME=          5.4 SECONDS, CPU UTILIZATION IS    99.26%
 
      ---------------------------------------------------------------------
      PROPERTIES FOR THE B3LYP    DFT FUNCTIONAL (RHF  TYPE) DENSITY MATRIX
@@ -1299,23 +1299,23 @@ Copying input file acetaldehyde.inp to your run's scratch directory...
          DX          DY          DZ         /D/  (DEBYE)
     -3.120197   -2.883613   -0.473994    4.274988
  ...... END OF PROPERTY EVALUATION ......
- STEP CPU TIME =     0.00 TOTAL CPU TIME =          5.5 (      0.1 MIN)
- TOTAL WALL CLOCK TIME=          5.6 SECONDS, CPU UTILIZATION IS    99.11%
+ STEP CPU TIME =     0.00 TOTAL CPU TIME =          5.4 (      0.1 MIN)
+ TOTAL WALL CLOCK TIME=          5.4 SECONDS, CPU UTILIZATION IS    99.08%
                 580000  WORDS OF DYNAMIC MEMORY USED
- EXECUTION OF GAMESS TERMINATED NORMALLY Thu Oct 17 12:47:18 2019
+ EXECUTION OF GAMESS TERMINATED NORMALLY Thu Oct 17 23:43:05 2019
  DDI: 263640 bytes (0.3 MB / 0 MWords) used by master data server.
 
  ----------------------------------------
  CPU timing information for all processes
  ========================================
- 0: 5.400 + 0.163 = 5.564
+ 0: 5.259 + 0.135 = 5.395
  ----------------------------------------
  ddikick.x: exited gracefully.
 ----- accounting info -----
 Files used on the master node crcfe01.crc.nd.edu were:
--rw-r--r-- 1 cdrisko campus      490 Oct 17 12:47 /afs/crc.nd.edu/user/c/cdrisko/acetaldehyde.F05
--rw-r--r-- 1 cdrisko campus    45118 Oct 17 12:47 /afs/crc.nd.edu/user/c/cdrisko/acetaldehyde.F07
--rw-r--r-- 1 cdrisko campus 11881056 Oct 17 12:47 /afs/crc.nd.edu/user/c/cdrisko/acetaldehyde.F08
--rw-r--r-- 1 cdrisko campus  1799600 Oct 17 12:47 /afs/crc.nd.edu/user/c/cdrisko/acetaldehyde.F10
-Thu Oct 17 12:47:21 EDT 2019
-0.453u 0.512s 0:09.41 10.2%	0+0k 0+32io 0pf+0w
+-rw-r--r-- 1 cdrisko campus      490 Oct 17 23:42 /afs/crc.nd.edu/user/c/cdrisko/acetaldehyde.F05
+-rw-r--r-- 1 cdrisko campus    45118 Oct 17 23:43 /afs/crc.nd.edu/user/c/cdrisko/acetaldehyde.F07
+-rw-r--r-- 1 cdrisko campus 11881056 Oct 17 23:42 /afs/crc.nd.edu/user/c/cdrisko/acetaldehyde.F08
+-rw-r--r-- 1 cdrisko campus  1799600 Oct 17 23:43 /afs/crc.nd.edu/user/c/cdrisko/acetaldehyde.F10
+Thu Oct 17 23:43:08 EDT 2019
+0.441u 0.252s 0:09.10 7.5%	0+0k 0+24io 0pf+0w

@@ -9,13 +9,19 @@ modifyFiles()		#@ DESCRIPTION: Modify a file using sed
   sed "s/${2?}/${3?}/g" ${1?} > tempFile && mv tempFile ${1?}
 }
 
-angles=(-110 -90 -80 -70 -60 -50 -40 -30 -20 -10 0 10 20 30 40 50 60 70 80 90 100 110)
+angles=(-180 -170 -160 -150 -140 -130 -120 -110 -90 -80 -70 -60 -50 -40 -30 -20 -10 0 10 20 30 40 50 60 70 80 90 100 110 120 130 140 150 160 170 180)
 
 for ang in ${angles[@]}
 do
-  mkdir ${ang}-deg
-  cd ${ang}-deg
-
+  if [ ${ang:0:1} = '-' ]
+  then
+    mkdir n${ang:1:${#ang}}-deg
+    cd n${ang:1:${#ang}}-deg
+  else  
+    mkdir ${ang}-deg
+    cd ${ang}-deg
+  fi
+ 
   cp ../acetaldehyde_scan.inp acetaldehyde.inp
 
   modifyFiles acetaldehyde.inp ANG $ang

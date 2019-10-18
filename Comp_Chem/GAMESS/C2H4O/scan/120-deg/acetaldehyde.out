@@ -1,6 +1,6 @@
 ----- GAMESS execution script 'rungms' -----
 This job is running on host crcfe01.crc.nd.edu
-under operating system Linux at Thu Oct 17 12:46:50 EDT 2019
+under operating system Linux at Thu Oct 17 23:42:38 EDT 2019
 Available scratch disk space (Kbyte units) at beginning of the job is
 Filesystem      1K-blocks  Used  Available Use% Mounted on
 AFS            2147483647     0 2147483647   0% /afs
@@ -85,7 +85,7 @@ Copying input file acetaldehyde.inp to your run's scratch directory...
      NAGOYA UNIVERSITY: YOSHIO NISHIMOTO, STEPHAN IRLE
      MOSCOW STATE UNIVERSITY: VLADIMIR MIRONOV
 
- EXECUTION OF GAMESS BEGUN Thu Oct 17 12:46:50 2019
+ EXECUTION OF GAMESS BEGUN Thu Oct 17 23:42:38 2019
 
             ECHO OF THE FIRST FEW INPUT CARDS -
  INPUT CARD> $CONTRL SCFTYP=RHF DFTTYP=B3LYP RUNTYP=ENERGY                                  
@@ -167,7 +167,7 @@ Copying input file acetaldehyde.inp to your run's scratch directory...
   * ... LESS THAN  3.000
 
  **** THERE ARE ATOMS LESS THAN   0.100 APART, QUITTING... ****
- EXECUTION OF GAMESS TERMINATED -ABNORMALLY- AT Thu Oct 17 12:46:50 2019
+ EXECUTION OF GAMESS TERMINATED -ABNORMALLY- AT Thu Oct 17 23:42:38 2019
                 580000  WORDS OF DYNAMIC MEMORY USED
  STEP CPU TIME =     0.00 TOTAL CPU TIME =          0.0 (      0.0 MIN)
  TOTAL WALL CLOCK TIME=          0.0 SECONDS, CPU UTILIZATION IS     0.00%
@@ -176,8 +176,8 @@ Copying input file acetaldehyde.inp to your run's scratch directory...
  ddikick.x: Execution terminated due to error(s).
 ----- accounting info -----
 Files used on the master node crcfe01.crc.nd.edu were:
--rw-r--r-- 1 cdrisko campus    490 Oct 17 12:46 /afs/crc.nd.edu/user/c/cdrisko/acetaldehyde.F05
--rw-r--r-- 1 cdrisko campus    931 Oct 17 12:46 /afs/crc.nd.edu/user/c/cdrisko/acetaldehyde.F07
--rw-r--r-- 1 cdrisko campus 785280 Oct 17 12:46 /afs/crc.nd.edu/user/c/cdrisko/acetaldehyde.F10
-Thu Oct 17 12:46:52 EDT 2019
-0.473u 0.526s 0:02.86 34.6%	0+0k 0+24io 0pf+0w
+-rw-r--r-- 1 cdrisko campus    490 Oct 17 23:42 /afs/crc.nd.edu/user/c/cdrisko/acetaldehyde.F05
+-rw-r--r-- 1 cdrisko campus    931 Oct 17 23:42 /afs/crc.nd.edu/user/c/cdrisko/acetaldehyde.F07
+-rw-r--r-- 1 cdrisko campus 785280 Oct 17 23:42 /afs/crc.nd.edu/user/c/cdrisko/acetaldehyde.F10
+Thu Oct 17 23:42:41 EDT 2019
+0.405u 0.237s 0:02.63 23.9%	0+0k 0+24io 0pf+0w
