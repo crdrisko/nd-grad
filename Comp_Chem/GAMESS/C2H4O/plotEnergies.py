@@ -34,10 +34,10 @@ plt.plot(frec_a, int_a, label="Acetaldehyde")
 plt.plot(frec_ts, int_ts, label="Transition State")
 plt.plot(frec_va, int_va, label="Vinyl Alcohol")
 
-plt.xlabel("Scaled Frequencies (cm$^-1$) ")
+plt.xlabel("Scaled Frequencies (cm$^{-1}$) ")
 plt.ylabel("Intensities")
 plt.legend()
-plt.savefig("Frequencies.pdf")
+plt.savefig("Frequencies.png")
 
 
 
@@ -50,9 +50,8 @@ energy = data_scan[0:N_scan:1, 1]
 
 
 plt.figure(2)
-plt.plot(angle, energy, label="Acetaldehyde")
+plt.plot(angle, energy)
 
 plt.xlabel("Dihedral Angle (Degrees)")
 plt.ylabel("Energy (Hartrees)")
-plt.legend()
-plt.savefig("Energies.pdf")
+plt.savefig("Energies.png")
