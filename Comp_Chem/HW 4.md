@@ -49,7 +49,7 @@ C1 1
 
 ## Question 2)
 
-a)
+*a) Originally I performed a series of calculations in which I varied the dihedral angle from 0 to 180 degrees. When running those, I realized that the atoms would run into one another at 120 degrees so I did another scan from -110 to 110 degrees. As seen in **Figure 2.1**, the Hydrogen has essentially free reign until it reaches ~90 degrees away in which the energy shoots up. Since the energy at 120 degrees couldn't run, it's difficult to give an exact number as this would be the largest energy. However, from 0 to 130 degrees, the barrier appears to be -151.5088136333 - (-153.7387080308) kJ/mol.*
 
 ---
 
@@ -63,7 +63,7 @@ b) The single imaginary mode for this transition state occurs at a scaled freque
 
 c) The results of my calculations are shown in **Table 1.2** and intutivly these values make sense. The Product - Reactant energy corresponds to the enthalpy of the reaction and should be noticiably lower than the TS - Reactant energy. That energy corresponds to the activation energy or Gibbs free energy of the Transition state.
 
-*d) The value of &#x394;G&#8225; at 298K is 291.8822 kJ/mol. In the TST expression, this corresponds to a rate constant of*
+*d) The value of &#x394;G&#8225; at 298K is 291.8822 kJ/mol. In the TST expression, this corresponds to a rate constant of 6.25e-12 * exp(-291.8822 /2.479)*
 
 ---
 
