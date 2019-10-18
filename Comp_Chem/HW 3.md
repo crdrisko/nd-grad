@@ -99,7 +99,7 @@ O     8.0    -3.44983     2.74004     0.76414
 
 <div style="page-break-after: always;"></div>
 
-## Question 3
+## Question 3)
 
 a) Shown in **Codes 3.1**, **3.2**, and **3.3** are the template for the GAMESS input, bash script to run the calculation, and python script to plot the energies as a function of bond length and angle, respectively. The results from the calculations are shown in **Figure 3.1**. The lowest energy (-548.249 Hartrees) occurs at a S-O bond distance of 1.50 &#8491; and a O-S-O angle of 120.0&#176;.
 
@@ -245,7 +245,7 @@ O     8.0    -3.44983     2.74004     0.76414
 
 <div style="page-break-after: always;"></div>
 
-## Question 4
+## Question 4)
 
 | **AO<sub>2</sub>** | **A-O (&#8491;)** | **O-A-O (Degrees)** | **Spin Multiplicity** | **Dipole Moment (e&#8491;)** | **Mulliken Charge A (e)** | **Mulliken Charge O (e)**|
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
