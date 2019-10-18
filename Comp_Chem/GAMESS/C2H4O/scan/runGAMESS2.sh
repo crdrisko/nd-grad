@@ -5,11 +5,11 @@
 # Description: Submit GAMESS jobs to the CRC queue
 
 modifyFiles()		#@ DESCRIPTION: Modify a file using sed
-{			#@ USAGE: modifyFiles fileName oldString newString
+{					#@ USAGE: modifyFiles fileName oldString newString
   sed "s/${2?}/${3?}/g" ${1?} > tempFile && mv tempFile ${1?}
 }
 
-angles=(0 10 20 30 40 50 60 70 80 90 100 110 120 130 140 150 160 170 180)
+angles=(-110 -90 -80 -70 -60 -50 -40 -30 -20 -10 0 10 20 30 40 50 60 70 80 90 100 110)
 
 for ang in ${angles[@]}
 do
