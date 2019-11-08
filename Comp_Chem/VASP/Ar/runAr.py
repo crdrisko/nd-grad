@@ -3,7 +3,7 @@
 # Name: runAr.py - Version 1.0.0
 # Author: Cody R. Drisko (crdrisko)
 # Date: 11/07/2019-19:00:38
-# Description:
+# Description: Script responsible for running VASP calculations depending on the positional parameter passed to it
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -19,16 +19,16 @@ VASPRC['queue.q'] = 'long'
 VASPRC['queue.nprocs'] = 8
 VASPRC['queue.pe'] = 'smp'
 
-ar = Atoms( [ Atom('Ar',[  0, 0, 0]) ],
+ar = Atoms( [ Atom('Ar', [0, 0, 0]) ],
               cell=(12, 12, 12) )
 
 ar.center()
 
 if argv[1] == "Q1":
 	calc = Vasp('molecules/simple-ar',
-               xc = 'PBE',    # the exchange-correlation functional
-           ismear = 0,        # gaussian smearing
-            sigma = 0.01,     # very small smearing factor for a molecule
+               xc = 'PBE',    	## the exchange-correlation functional
+           ismear = 0,        	## gaussian smearing
+            sigma = 0.01,     	## very small smearing factor for a molecule
             atoms = ar)
 
 	calc.calculate()
@@ -61,4 +61,3 @@ else:
 		 atoms = ar)
 
 	calc.calculate()
-
