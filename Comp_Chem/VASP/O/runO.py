@@ -21,14 +21,14 @@ VASPRC['queue.pe'] = 'smp'
 o = Atoms( [ Atom('O', [0, 0, 0]) ],
               cell=(12, 12, 12) )
 
-ar.center()
+o.center()
 
 calc = Vasp('molecules/simple-o',
             xc = 'PBE',    	## the exchange-correlation functional
         ismear = 0,        	## gaussian smearing
          sigma = 0.01,     	## very small smearing factor for a molecule
-		 ispin = 2,			## turn on spin polarization
-		 encut = 400,		## energy cutoff
+	 ispin = 2,		## turn on spin polarization
+         encut = 400,		## energy cutoff
          atoms = o)
 
 calc.calculate()

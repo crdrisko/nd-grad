@@ -1,0 +1,8 @@
+#!/bin/bash
+module load vasp/5.4.1[cdrisko@crcfe01:vasp]$.
+
+cd /afs/crc.nd.edu/user/c/cdrisko/ND-Coursework/Comp_Chem/VASP/O
+cd /afs/crc.nd.edu/user/c/cdrisko/ND-Coursework/Comp_Chem/VASP/O/molecules/simple-o  # this is the vasp directory
+
+runvasp.py     # this is the vasp command
+#end

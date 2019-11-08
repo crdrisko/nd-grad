@@ -1,0 +1,11 @@
+INCAR created by Atomic Simulation Environment
+ ISMEAR = 0
+ LORBIT = 11
+ LCHARG = .FALSE.
+ ENCUT = 400
+ NSW = 20
+ LWAVE = .FALSE.
+ SIGMA = 0.01
+ IBRION = 1
+ MAGMOM = 0.0 0.0
+ ISPIN = 2
