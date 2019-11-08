@@ -13,6 +13,17 @@ do
   [ -f molecules/simple-ar/OUTCAR ] && break
 done
 
+sleep 5 ## bash seems to jump the gun, so let the job finish before analysis
+
+for selection in NELECT TOTEN Iteration NPLWV
+do
+  echo "$selection:"
+  grep $selection molecules/simple-ar/OUTCAR | tail -n 1
+  echo
+done
+
+
+
 ## Question 2 ##
 for cutoff in 100 200 300 400 500
 do
@@ -22,24 +33,13 @@ do
   do
     [ -f molecules/cutoff-ar-$cutoff/OUTCAR ] && break
   done
-done
+  
+  sleep 5 ## bash seems to jump the gun, so let the job finish before analysis
 
-
-for selection in NELECT TOTEN Iteration NPLWV
-do
-  echo "$selection:"
-  grep $selection molecules/simple-ar/OUTCAR | tail -n 1
-  echo
-done
-
-## bash seems to jump the gun for 500 so let the job finish before analysis
-sleep 5
-
-for cutoff in 100 200 300 400 500
-do
   energyArray=( $(grep TOTEN molecules/cutoff-ar-$cutoff/OUTCAR | tail -n 1) )
   timeArray=( $(grep Elapsed molecules/cutoff-ar-$cutoff/OUTCAR | tail -n 1) )
   echo "$cutoff ${energyArray[4]} ${timeArray[3]}" >> energies.dat
 done
 
 python runAr.py Plot
+

@@ -6,7 +6,7 @@
   <i name="subversion" type="string">05Feb16 (build Feb 08 2018 09:21:51) complex                          parallel </i>
   <i name="platform" type="string">LinuxIFC </i>
   <i name="date" type="string">2019 11 07 </i>
-  <i name="time" type="string">19:59:26 </i>
+  <i name="time" type="string">20:21:39 </i>
  </generator>
  <incar>
   <i type="string" name="PREC">normal</i>
@@ -367,7 +367,7 @@
  <calculation>
   <scstep>
    <time name="dav">    0.03    0.03</time>
-   <time name="total">    0.12    0.12</time>
+   <time name="total">    0.10    0.11</time>
    <energy>
     <i name="alphaZ">      0.08552978 </i>
     <i name="ewald">   -108.95061336 </i>
@@ -385,7 +385,7 @@
   </scstep>
   <scstep>
    <time name="dav">    0.04    0.04</time>
-   <time name="total">    0.04    0.05</time>
+   <time name="total">    0.04    0.04</time>
    <energy>
     <i name="e_fr_energy">     12.04165004 </i>
     <i name="e_wo_entrp">     12.04165004 </i>
@@ -403,7 +403,7 @@
   </scstep>
   <scstep>
    <time name="dav">    0.02    0.02</time>
-   <time name="total">    0.02    0.03</time>
+   <time name="total">    0.02    0.02</time>
    <energy>
     <i name="e_fr_energy">     -0.02008881 </i>
     <i name="e_wo_entrp">     -0.02008881 </i>
@@ -411,8 +411,8 @@
    </energy>
   </scstep>
   <scstep>
-   <time name="dav">    0.04    0.04</time>
-   <time name="total">    0.06    0.07</time>
+   <time name="dav">    0.03    0.03</time>
+   <time name="total">    0.06    0.06</time>
    <energy>
     <i name="e_fr_energy">     -0.02334267 </i>
     <i name="e_wo_entrp">     -0.02334267 </i>
@@ -421,7 +421,7 @@
   </scstep>
   <scstep>
    <time name="dav">    0.02    0.02</time>
-   <time name="total">    0.11    0.12</time>
+   <time name="total">    0.10    0.10</time>
    <energy>
     <i name="e_fr_energy">     -0.02987920 </i>
     <i name="e_wo_entrp">     -0.02987920 </i>
@@ -439,7 +439,7 @@
   </scstep>
   <scstep>
    <time name="dav">    0.02    0.02</time>
-   <time name="total">    0.09    0.10</time>
+   <time name="total">    0.08    0.08</time>
    <energy>
     <i name="alphaZ">      0.08552978 </i>
     <i name="ewald">   -108.95061336 </i>
@@ -486,7 +486,7 @@
    <i name="e_wo_entrp">     -0.03061587 </i>
    <i name="e_0_energy">     -0.00000000 </i>
   </energy>
-  <time name="totalsc">    0.82    0.87</time>
+  <time name="totalsc">    0.76    0.79</time>
   <eigenvalues>
    <array>
     <dimension dim="1">band</dimension>

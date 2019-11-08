@@ -6,7 +6,7 @@
   <i name="subversion" type="string">05Feb16 (build Feb 08 2018 09:21:51) complex                          parallel </i>
   <i name="platform" type="string">LinuxIFC </i>
   <i name="date" type="string">2019 11 07 </i>
-  <i name="time" type="string">19:59:34 </i>
+  <i name="time" type="string">20:21:57 </i>
  </generator>
  <incar>
   <i type="string" name="PREC">normal</i>
@@ -404,7 +404,7 @@
   </scstep>
   <scstep>
    <time name="dav">    0.01    0.01</time>
-   <time name="total">    0.01    0.01</time>
+   <time name="total">    0.01    0.02</time>
    <energy>
     <i name="e_fr_energy">     -0.03352996 </i>
     <i name="e_wo_entrp">     -0.03352996 </i>
@@ -449,7 +449,7 @@
   </scstep>
   <scstep>
    <time name="dav">    0.01    0.01</time>
-   <time name="total">    0.05    0.05</time>
+   <time name="total">    0.06    0.08</time>
    <energy>
     <i name="alphaZ">      0.08552978 </i>
     <i name="ewald">   -108.95061336 </i>
@@ -496,7 +496,7 @@
    <i name="e_wo_entrp">     -0.04910333 </i>
    <i name="e_0_energy">     -0.00000000 </i>
   </energy>
-  <time name="totalsc">    0.56    0.61</time>
+  <time name="totalsc">    0.57    0.61</time>
   <eigenvalues>
    <array>
     <dimension dim="1">band</dimension>
