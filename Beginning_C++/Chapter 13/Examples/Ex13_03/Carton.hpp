@@ -29,7 +29,7 @@ public:
 
 	Carton(double side, std::string_view mat) : Box {side}, material {mat}
 	{
-		std::cout << "Carton(duble, string_view) called.\n";
+		std::cout << "Carton(double, string_view) called.\n";
 	}
 
 	Carton() { std::cout << "Carton() called.\n"; }
