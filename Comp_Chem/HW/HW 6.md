@@ -234,11 +234,11 @@ The cohesive energies of each of our metals is shown in **Table 4.1**. The calcu
 
 **Table 4.1:** Cohesive energies of Cu, Ag, and Au metals.
 
-| **Metal** | **M<sub>(g)</sub> (eV)** | **M<sub>(s)</sub> (eV)** | **Cohesive Energy (eV)** | **Literature Values** |
-|:---------:|:------------------------:|:------------------------:|:------------------------:|:---------------------:|
-| **Cu**    | -0.05220394              | -3.72941851              | 3.67721457               | 3.49                  |
-| **Ag**    | -0.05720515              | -2.71020146              | 2.65299631               | 2.95                  |
-| **Au**    | -0.04368016              | -3.19669770              | 3.15301754               | 3.81                  |
+| **Metal** | **M<sub>(g)</sub> (eV)** | **M<sub>(s)</sub> (eV)** | **Cohesive Energy (eV)** | **Literature Values (eV)** |
+|:---------:|:------------------------:|:------------------------:|:------------------------:|:--------------------------:|
+| **Cu**    | -0.05220394              | -3.72941851              | 3.67721457               | 3.49                       |
+| **Ag**    | -0.05720515              | -2.71020146              | 2.65299631               | 2.95                       |
+| **Au**    | -0.04368016              | -3.19669770              | 3.15301754               | 3.81                       |
 
 ---
 
@@ -246,7 +246,47 @@ The cohesive energies of each of our metals is shown in **Table 4.1**. The calcu
 
 ## Question 5)
 
-a)
+The following equation was used to calculate the surface energies of the metals: &#x03B3; = (E<sub>slab</sub> - n*E<sub>bulk</sub>)/ 2A. For each of the metals we looked at, the number of atoms in the surface was 12 and in the bulk it was 4, giving us an n value of 3. I obtained the surface areas for the metals by multiplying the volume of the slab by the length of the slab in z, as this is the accessible area of the slab. The values are all shown in **Table 5.1**, and the code used to run these calculations is shown in **Code 5.1**.
+
+**Table 5.1:** Surface energies of Cu, Ag, and Au metal slabs.
+
+| **Metal** | **E<sub>slab</sub> (eV)** | **E<sub>bulk</sub> (eV)** | **Surface Area (&#8491;)** | **Surface Energy (eV/&#8491;)** |
+|:---------:|:-------------------------:|:-------------------------:|:--------------------------:|:-------------------------------:|
+| **Cu**    | -40.95036609              | -14.91767405              | 22.89853514                | 0.08303274                      |
+| **Ag**    | -29.80874611              | -10.84080583              | 29.78714788                | 0.04555104                      |
+| **Au**    | -35.86586947              | -12.78679078              | 29.94527109                | 0.04165103                      |
+
+**Code 5.1:** Python code used to run VASP calculations for the metal atoms: Cu, Ag, and Au.
+
+```Python
+## VASP, ASE, and Python Packages ##
+
+VASPRC['queue.q'] = 'long'
+VASPRC['queue.nprocs'] = 24
+VASPRC['queue.pe'] = 'mpi-24'
+
+for metal in ['Cu', 'Ag', 'Au']:
+	## Question 5 - Surfaces and Surface Energies ##
+	if metal == 'Cu':
+		a = 3.636
+	elif metal == 'Ag':
+		a = 4.147
+	elif metal == 'Au':
+		a = 4.158
+	
+	atoms = fcc111(metal, size=(2,2,3), vacuum=10.0, a=a)
+
+	calc = Vasp('%s/%s-surface' %(metal, metal),
+			xc = 'PBE',
+		ismear = 1,
+		 encut = 400,
+		ibrion = 2,
+		  kpts = [9,9,1],
+		   nsw = 20,
+		 atoms = atoms)
+
+	calc.calculate()
+```
 
 ---
 
@@ -254,7 +294,48 @@ a)
 
 ## Question 6)
 
-a)
+To answer this question we used the following equation: E<sub>ads</sub> = E<sub>O-surf</sub> - E<sub>surf</sub> - (0.5*E<sub>O<sub>2</sub></sub>), and the results of those calculations are shown in **Table 6.1**. By far and away, copper has the most favorable binding with oxygen, and gold has the least favorable binding. The code used to run these calculations is shown in **Code 6.1**, however for the O<sub>2</sub> energies, we obtained those results in the previous homework, so that code was shown previously.
+
+**Table 6.1:** Binding energies of Cu, Ag, and Au metal slabs with oxygen.
+
+| **Metal** | **E<sub>O-surf</sub> (eV)** | **E<sub>surf</sub> (eV)** | **E<sub>O<sub>2</sub></sub> (eV)** | **E<sub>ads</sub> (eV)** |
+|:---------:|:---------------------------:|:-------------------------:|:----------------------------------:|:------------------------:|
+| **Cu**    | -47.60038162                | -40.95036609              | -9.86466070                        | -1.71768518              |
+| **Ag**    | -35.23772263                | -29.80874611              | -9.86466070                        | -0.49664617‬              |
+| **Au**    | -40.96021610                | -35.86586947              | -9.86466070                        | -0.16201628              |
+
+**Code 6.1:** Python code used to run VASP calculations for the metal atoms: Cu, Ag, and Au.
+
+```Python
+## VASP, ASE, and Python Packages ##
+
+VASPRC['queue.q'] = 'long'
+VASPRC['queue.nprocs'] = 24
+VASPRC['queue.pe'] = 'mpi-24'
+
+for metal in ['Cu', 'Ag', 'Au']:
+	## Question 6 - Adsorbates and Adsorption Energies ##
+	if metal == 'Cu':
+		a = 3.636
+	elif metal == 'Ag':
+		a = 4.147
+	elif metal == 'Au':
+		a = 4.158
+
+	atoms = fcc111(metal, size=(2,2,3), vacuum=10.0, a=a)
+	add_adsorbate(atoms, 'O', height=1.2, position='fcc')
+
+	calc = Vasp('%s/O-on-%s-fcc' %(metal, metal),
+			xc = 'PBE',
+		ismear = 1,
+		 encut = 400,
+		ibrion = 2,
+		  kpts = [9,9,1],
+		   nsw = 20,
+		 atoms = atoms)
+
+	calc.calculate()
+```
 
 ---
 
@@ -263,3 +344,69 @@ a)
 ## Question 7)
 
 a)
+
+**Figure 7.1:** Atom-projected densities of states for Cu, Ag, and Au metal surfaces and an adsorbate density states for an adsorbed oxygen atom on the metal surfaces.
+
+![alt text](../VASP/Metals/images/Densities-of-states.png "Density of States")
+
+<div style="page-break-after: always;"></div>
+
+**Code 7.1:** Python code used to run VASP calculations for the metal atoms: Cu, Ag, and Au.
+
+```Python
+## VASP, ASE, and Python Packages ##
+
+VASPRC['queue.q'] = 'long'
+VASPRC['queue.nprocs'] = 24
+VASPRC['queue.pe'] = 'mpi-24'
+
+for metal in ['Cu', 'Ag', 'Au']:
+	## Question 7 - Density of States ##
+
+	# Metal Surface #
+	calc = Vasp('%s/%s-surface' %(metal, metal))
+	atoms = calc.get_atoms()
+
+	calc = Vasp('%s/%s-ados' %(metal, metal),
+			xc = 'PBE',
+		ismear = 1,
+			encut = 400,
+			kpts = [9,9,1],
+		lorbit = 10,
+			atoms = atoms)
+
+	calc.calculate()
+
+	# Adsorbate #
+	calc = Vasp('%s/O-on-%s-fcc' %(metal, metal))
+	atoms = calc.get_atoms()
+
+	calc = Vasp('%s/O-on-%s-fcc-ados' %(metal, metal),
+			xc = 'PBE',
+		ismear = 1,
+			encut = 400,
+			kpts = [9,9,1],
+		lorbit = 10,
+			atoms = atoms)
+
+	calc.calculate()
+
+### Plotting ###
+elif argv[1] == "Plot7":
+	for metal in ['Cu', 'Ag', 'Au']:
+		calc = Vasp('%s/O-on-%s-fcc-ados' %(metal, metal))
+
+		p_energies, p_dos = calc.get_ados(12, 'p')
+		plt.plot(p_energies, p_dos, label='O$_p$', lw=2)
+
+		calc = Vasp('%s/%s-ados' %(metal, metal))
+		clean_energies, d_dos = calc.get_ados(11, 'd')
+		plt.plot(clean_energies, d_dos, label='%s$_d$' %metal, lw=2)
+
+		plt.axvline(ls='-.', color='k', lw=2)
+		plt.xlabel('Energy (eV)')
+		plt.ylabel('DOS (arb. units)')
+		plt.legend()
+		plt.savefig('images/%s-adsorbate-dos.png' %metal)
+		plt.show()
+```
