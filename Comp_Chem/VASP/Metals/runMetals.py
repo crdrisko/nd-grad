@@ -17,6 +17,8 @@ from ase.io import write
 from ase.visualize import view
 from ase.eos import EquationOfState
 from ase.build import bulk
+from ase.build.surface import fcc111, add_adsorbate
+from ase.dft.dos import DOS
 
 ## VASP ##
 from vasp import *
@@ -81,6 +83,82 @@ for metal in ['Cu', 'Ag', 'Au']:
 				 atoms = metal_cubic)
 
 			calc.calculate()
+	
+	elif argv[1] == "Q5":
+		## Question 5 - Surfaces and Surface Energies ##
+		if metal == 'Cu':
+			a = 3.636
+		elif metal == 'Ag':
+			a = 4.147
+		elif metal == 'Au':
+			a = 4.158
+		
+		atoms = fcc111(metal, size=(2,2,3), vacuum=10.0, a=a)
+
+		calc = Vasp('%s/%s-surface' %(metal, metal),
+				xc = 'PBE',
+			ismear = 1,
+			 encut = 400,
+			ibrion = 2,
+			  kpts = [9,9,1],
+			   nsw = 20,
+			 atoms = atoms)
+
+		calc.calculate()
+	
+	elif argv[1] == "Q6":
+		## Question 6 - Adsorbates and Adsorption Energies ##
+		if metal == 'Cu':
+			a = 3.636
+		elif metal == 'Ag':
+			a = 4.147
+		elif metal == 'Au':
+			a = 4.158
+
+		atoms = fcc111(metal, size=(2,2,3), vacuum=10.0, a=a)
+		add_adsorbate(atoms, 'O', height=1.2, position='fcc')
+
+		calc = Vasp('%s/O-on-%s-fcc' %(metal, metal),
+				xc = 'PBE',
+			ismear = 1,
+			 encut = 400,
+			ibrion = 2,
+			  kpts = [9,9,1],
+			   nsw = 20,
+			 atoms = atoms)
+
+		calc.calculate()
+
+	elif argv[1] == "Q7":
+		## Question 7 - Density of States ##
+
+		# Metal Surface #
+		calc = Vasp('%s/%s-surface' %(metal, metal))
+		atoms = calc.get_atoms()
+
+		calc = Vasp('%s/%s-ados' %(metal, metal),
+				xc = 'PBE',
+			ismear = 1,
+			 encut = 400,
+			  kpts = [9,9,1],
+			lorbit = 10,
+			 atoms = atoms)
+
+		calc.calculate()
+
+		# Adsorbate #
+		calc = Vasp('%s/O-on-%s-fcc' %(metal, metal))
+		atoms = calc.get_atoms()
+
+		calc = Vasp('%s/O-on-%s-fcc-ados' %(metal, metal),
+				xc = 'PBE',
+			ismear = 1,
+			 encut = 400,
+			  kpts = [9,9,1],
+			lorbit = 10,
+			 atoms = atoms)
+
+		calc.calculate()
 
 
 ### Plotting ###
@@ -137,3 +215,21 @@ elif argv[1] == "Plot3":
 		print('Optimal Volume = {0:1.3f} cubic angstroms'.format(v0))
 		print('Optimal lattice constant = {0:1.3f} angstroms'.format(a0))
 		print()
+
+elif argv[1] == "Plot7":
+	for metal in ['Cu', 'Ag', 'Au']:
+		calc = Vasp('%s/O-on-%s-fcc-ados' %(metal, metal))
+
+		p_energies, p_dos = calc.get_ados(12, 'p')
+		plt.plot(p_energies, p_dos, label='O$_p$', lw=2)
+
+		calc = Vasp('%s/%s-ados' %(metal, metal))
+		clean_energies, d_dos = calc.get_ados(11, 'd')
+		plt.plot(clean_energies, d_dos, label='%s$_d$' %metal, lw=2)
+
+		plt.axvline(ls='-.', color='k', lw=2)
+		plt.xlabel('Energy (eV)')
+		plt.ylabel('DOS (arb. units)')
+		plt.legend()
+		plt.savefig('images/%s-adsorbate-dos.png' %metal)
+		plt.show()
