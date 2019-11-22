@@ -44,7 +44,7 @@ for metal in ['Cu', 'Ag', 'Au']:
 
 ## Question 2)
 
-Plotted in **Figure 2.1**, we can see the energies of each of our metals converges to a differnece of 0.02 eV between 7 and 9 k-points. For Au, it actually doesn't converge to the selected tollerance until between 9 and 11 k-points, but it is close to convergence at 7. I think the most reliable and cost effective number of k-points is 9 for these three metals. The code for this analysis is shown in both **Code 2.1** and **Code 2.2**.
+Plotted in **Figure 2.1**, we can see the energies of each of our metals converges to a difference of 0.02 eV between 7 and 9 k-points. For Au, it actually doesn't converge to the selected tolerance until between 9 and 11 k-points, but it is close to convergence at 7. I think the most reliable and cost effective number of k-points is 9 for these three metals. The code for this analysis is shown in both **Code 2.1** and **Code 2.2**.
 
 **Figure 2.1:** Convergence of the energy for the Cu, Ag, and Au metals as we varied the number of k-points in the grid.
 
@@ -154,7 +154,7 @@ if argv[1] == "Plot":
 
 ## Question 3)
 
-For the experimentally determined lattice constants, I found [this](https://onlinelibrary.wiley.com/doi/pdf/10.1002/9783527633296.app5) resource and used the fcc values they presented. For fcc-copper, the experimental value of the lattice constant is 3.61 &#8491; and our optimal lattice constant was found to be 3.636 &#8491;. For fcc-silver, we calculated an optimal lattice constant of 4.147 &#8491; compared to the literature value of 4.09 &#8491;. Lastly, fcc-gold has a lattice constant of 4.08 &#8491; according to experiment and we calculated the optimal value as 4.158 &#8491;. Cu has the best aggreement with it's literature value, but Ag and Au aren't so far off.
+For the experimentally determined lattice constants, I found [this](https://onlinelibrary.wiley.com/doi/pdf/10.1002/9783527633296.app5) resource and used the fcc values they presented. For fcc-copper, the experimental value of the lattice constant is 3.61 &#8491; and our optimal lattice constant was found to be 3.636 &#8491;. For fcc-silver, we calculated an optimal lattice constant of 4.147 &#8491; compared to the literature value of 4.09 &#8491;. Lastly, fcc-gold has a lattice constant of 4.08 &#8491; according to experiment and we calculated the optimal value as 4.158 &#8491;. Cu has the best agreement with it's literature value, but Ag and Au aren't so far off.
 
 To come up with these results we used a 9 k-point grid, which we determined was best in the previous question. The code used to run these calculations is shown in **Code 2.1** and **Code 3.2**. The plots of the equation of state fitting and lattice constants are shown in **Figure 3.1**.
 
@@ -230,7 +230,16 @@ if argv[1] == "Plot":
 
 ## Question 4)
 
-a)
+The cohesive energies of each of our metals is shown in **Table 4.1**. The calculations that went into those values used the following equation: E<sub>coh</sub> = M<sub>(g)</sub> - (E<sub>bulk</sub> / N<sub>atoms</sub>). The literature values we used to compare our values to came from the source [here](http://www.knowledgedoor.com/2/elements_handbook/cohesive_energy.html). Overall, the agreement is okay, copper and silver agree with their literature values much more than gold does. Most likely a more-accurate calculation would be necessary for any useable value, but these are definitely in the ball park.
+
+**Table 4.1:** Cohesive energies of Cu, Ag, and Au metals.
+
+| **Metal** | **M<sub>(g)</sub> (eV)** | **M<sub>(s)</sub> (eV)** | **Cohesive Energy (eV)** | **Literature Values** |
+|:---------:|:------------------------:|:------------------------:|:------------------------:|:---------------------:|
+| **Cu**    | -0.05220394              | -3.72941851              | 3.67721457               | 3.49                  |
+| **Ag**    | -0.05720515              | -2.71020146              | 2.65299631               | 2.95                  |
+| **Au**    | -0.04368016              | -3.19669770              | 3.15301754               | 3.81                  |
+
 
 ---
 
