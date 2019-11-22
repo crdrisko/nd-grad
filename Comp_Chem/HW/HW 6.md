@@ -154,7 +154,7 @@ if argv[1] == "Plot":
 
 ## Question 3)
 
-For the experimentally determined lattice constants, I found [this](https://onlinelibrary.wiley.com/doi/pdf/10.1002/9783527633296.app5) resource and used the fcc values they presented. For fcc-copper, the experimental value of the lattice constant is 3.61 &#8491; and our optimal lattice constant was found to be 3.636 &#8491;. For fcc-silver, we calculated an optimal lattice constant of 4.147 &#8491; compared to the literature value of 4.09 &#8491;. Lastly, fcc-gold has a lattice constant of 4.08 &#8491; according to experiment and we calculated the optimal value as 4.158 &#8491;. Cu has the best agreement with it's literature value, but Ag and Au aren't so far off.
+For the experimentally determined lattice constants, I found [this](https://onlinelibrary.wiley.com/doi/pdf/10.1002/9783527633296.app5) resource and used the fcc values they presented. For fcc-copper, the experimental value of the lattice constant is 3.61 &#8491; and our optimal lattice constant was found to be 3.636 &#8491;. For fcc-silver, we calculated an optimal lattice constant of 4.147 &#8491; compared to the literature value of 4.09 &#8491;. Lastly, fcc-gold has a lattice constant of 4.08 &#8491; according to experiment and we calculated the optimal value as 4.158 &#8491;. Cu has the best agreement with its literature value, but Ag and Au aren't so far off.
 
 To come up with these results we used a 9 k-point grid, which we determined was best in the previous question. The code used to run these calculations is shown in **Code 2.1** and **Code 3.2**. The plots of the equation of state fitting and lattice constants are shown in **Figure 3.1**.
 
@@ -239,7 +239,6 @@ The cohesive energies of each of our metals is shown in **Table 4.1**. The calcu
 | **Cu**    | -0.05220394              | -3.72941851              | 3.67721457               | 3.49                  |
 | **Ag**    | -0.05720515              | -2.71020146              | 2.65299631               | 2.95                  |
 | **Au**    | -0.04368016              | -3.19669770              | 3.15301754               | 3.81                  |
-
 
 ---
 

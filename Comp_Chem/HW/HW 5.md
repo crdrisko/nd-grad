@@ -4,7 +4,7 @@
 
 ## Question 1)
 
-*NOTE:* For quesion 1, the VASP calculations were run through the python script shown in **Code 1.2** and analysis was done using the bash script in **Code 1.1**. All the results collected in the OUTCAR file were run through grep.
+*NOTE:* For question 1, the VASP calculations were run through the python script shown in **Code 1.2** and analysis was done using the bash script in **Code 1.1**. All the results collected in the OUTCAR file were run through grep.
 
 a) The total number of electrons for our argon atom is 18 and 8 of those are the valence electrons.
 
@@ -155,7 +155,7 @@ a) The code responsible for running these calculations is shown in **Code 3.1**.
 
 b) The magnetic moment was 0.0001, telling me something about this calculation was off. Since the oxygen atom has two unpaired electrons, we'd expect the magnetic moment to be 2.0.
 
-c) The results of these calcualtions are shown in **Table 3.1** for the up-spin electrons and **Table 3.2** for the down-spin electrons. Because the magnetic moment didn't make much sense of oxygen, I'd expect these occupancies to be off too. I'd have to try some other input flags and parameters to see if I couldn't get the calculation where I think it should be (i.e. a magnetic moment of 2).
+c) The results of these calculations are shown in **Table 3.1** for the up-spin electrons and **Table 3.2** for the down-spin electrons. Because the magnetic moment didn't make much sense of oxygen, I'd expect these occupancies to be off too. I'd have to try some other input flags and parameters to see if I couldn't get the calculation where I think it should be (i.e. a magnetic moment of 2).
 
 **Code 3.1:** Python script to run the Oxygen atom VASP calculation.
 
@@ -215,7 +215,7 @@ calc.calculate()
 
 ## Question 4)
 
-a) The code to run these calculations is shown in **Code 4.1**. The geometry did converge. We know this because it took less than the max of 20 itterations to reach a final energy value.
+a) The code to run these calculations is shown in **Code 4.1**. The geometry did converge. We know this because it took less than the max of 20 iterations to reach a final energy value.
 
 b) The optimization process took a total of 5 relaxation steps to reach convergence. This was because I gave the bond distance a good starting place r<sub>o-o</sub> = 1.25 &#8491;.
 
@@ -223,7 +223,7 @@ c) The final converged energy was -9.8646607 eV.
 
 d) The magnetic moment was 2.0, which makes sense for an O<sub>2</sub> molecule because it has two unpaired electrons so the magnetic moment should be: spin up - spin down = 2 - 0 = 2.
 
-e) The results of these calcualtions are shown in **Table 4.1** for the up-spin electrons and **Table 4.2** for the down-spin electrons.
+e) The results of these calculations are shown in **Table 4.1** for the up-spin electrons and **Table 4.2** for the down-spin electrons.
 
 **Table 4.1:** The energies and occupancies of the spin up orbitals in the oxygen molecule according to the VASP calculations.
 
