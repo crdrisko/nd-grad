@@ -118,19 +118,19 @@ elif argv[1] == "Plot3":
 		lattice = data[0:N:1, 0]
 		energies = data[0:N:1, 1]
 		volumes = data[0:N:1, 2]
-	
-		plt.figure(1)		
+			
 		plt.plot(lattice, energies, 'bo-')
 		plt.xlabel('Lattice constant ($\\AA$)')
 		plt.ylabel('Total energy (eV)')
 		plt.savefig('images/%s-fcc-lattice.png' %metal)
+		plt.show()
 	
 		# Let's fit this to an equation of state
 
 		eos = EquationOfState(volumes, energies, eos='birchmurnaghan')
 		v0, e0, b = eos.fit()
 		a0 = v0**(1/3)
-		eos.plot(filename='images/%s-EOS.png' %metal, show = False)
+		eos.plot(filename='images/%s-EOS.png' %metal, show = True)
 
 		print(metal)
 		print('Minimum Energy = {0:1.3f} eV'.format(e0))
