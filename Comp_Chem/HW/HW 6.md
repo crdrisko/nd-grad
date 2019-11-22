@@ -50,27 +50,47 @@ Plotted in **Figure 2.1**, we can see the energies of each of our metals converg
 
 ![alt text](../VASP/Metals/images/metal-kpt-convergence.png "Metal Energy Convergence")
 
-**Code 2.1:** Bash script to grab the energies from OUTCAR files, calculate the energy differences and use Python (**Code 2.2**) to plot the energies.
+<div style="page-break-after: always;"></div>
+
+**Code 2.1:** Bash script to grab the necessary data from the OUTCAR files and use Python to plot the energies.
 
 ```bash
+#!/bin/bash
 
-for metal in Cu Ag Au
-do
-  for dir in $metal/$metal-kpt-convergence/kpt-{3..11..2}
+if [ $1 = "Q2" ]
+then
+  for metal in Cu Ag Au
   do
-      energyArray=( $(grep TOTEN $dir/OUTCAR | tail -n 1) )
+    for dir in $metal/$metal-kpt-convergence/kpt-{3..11..2}
+    do
+        energyArray=( $(grep TOTEN $dir/OUTCAR | tail -n 1) )
 
-    if [ ${dir##*-} -ne 3 ]
-    then
-      lastEnergy=( $(grep $((${dir##*-} - 2)) $metal/energies.dat  | tail -n 1) )
-      echo ${dir##*-} ${energyArray[4]} $( echo "${lastEnergy[1]} - ${energyArray[4]}" | bc ) >> $metal/energies.dat
-    else
-      echo ${dir##*-} ${energyArray[4]} 0 > $metal/energies.dat
-    fi
+      if [ ${dir##*-} -ne 3 ]
+      then
+        lastEnergy=( $(grep $((${dir##*-} - 2)) $metal/energies.dat  | tail -n 1) )
+        echo ${dir##*-} ${energyArray[4]} $( echo "${lastEnergy[1]} - ${energyArray[4]}" | bc ) >> $metal/energies.dat
+      else
+        echo ${dir##*-} ${energyArray[4]} 0 > $metal/energies.dat
+      fi
+    done
   done
-done
 
-python3 runMetals.py Plot
+  python3 runMetals.py Plot2
+
+elif [ $1 = "Q3" ]
+then
+  for metal in Cu Ag Au
+  do
+    for dir in $metal/$metal-EOS/*
+    do
+      energyArray=( $(grep TOTEN $dir/OUTCAR | tail -n 1) ) 
+      volumeArray=( $(grep volume $dir/OUTCAR | tail -n 1) )
+      echo ${dir##*-} ${energyArray[4]} ${volumeArray[4]} >> $metal/$metal-EOS/energies.dat
+    done
+  done
+
+  python3 runMetals.py Plot3 > EOS-Energies.dat
+fi
 ```
 
 <div style="page-break-after: always;"></div>
@@ -136,31 +156,13 @@ if argv[1] == "Plot":
 
 For the experimentally determined lattice constants, I found [this](https://onlinelibrary.wiley.com/doi/pdf/10.1002/9783527633296.app5) resource and used the fcc values they presented. For fcc-copper, the experimental value of the lattice constant is 3.61 &#8491; and our optimal lattice constant was found to be 3.636 &#8491;. For fcc-silver, we calculated an optimal lattice constant of 4.147 &#8491; compared to the literature value of 4.09 &#8491;. Lastly, fcc-gold has a lattice constant of 4.08 &#8491; according to experiment and we calculated the optimal value as 4.158 &#8491;. Cu has the best aggreement with it's literature value, but Ag and Au aren't so far off.
 
-To come up with these results we used a 9 k-point grid, which we determined was best in the previous question. The code used to run these calculations is shown in **Code 3.1** and **Code 3.2**. The plots of the equation of state fitting and lattice constants are shown in **Figure 3.1**. 
+To come up with these results we used a 9 k-point grid, which we determined was best in the previous question. The code used to run these calculations is shown in **Code 2.1** and **Code 3.2**. The plots of the equation of state fitting and lattice constants are shown in **Figure 3.1**.
 
-**Figure 3.1:**
+**Figure 3.1:** All the lattice constant plots and equation of state fits for Cu, Ag, and Au.
 
-![alt text](../VASP/Metals/images/ "Bulk Metal Lattice Constants")
+![alt text](../VASP/Metals/images/Lattice-Constants.png "Bulk Metal Lattice Constants")
 
-**Code 3.1:** Bash script to grab the energies and volumes from OUTCAR files and use Python (**Code 3.2**) to plot the values.
-
-```bash
-#!/bin/bash
-
-for metal in Cu Ag Au
-do
-  for dir in $metal/$metal-EOS/*
-  do
-    energyArray=( $(grep TOTEN $dir/OUTCAR | tail -n 1) ) 
-    volumeArray=( $(grep volume $dir/OUTCAR | tail -n 1) )
-    echo ${dir##*-} ${energyArray[4]} ${volumeArray[4]} >> $metal/$metal-EOS/energies.dat
-  done
-done
-
-python3 runMetals.py Plot3 > EOS-Energies.dat
-```
-
-**Code 3.2:** Python code used to run VASP calculations for the metal atoms: Cu, Ag, and Au.
+**Code 3.1:** Python code used to run VASP calculations for the metal atoms: Cu, Ag, and Au.
 
 ```Python
 ## VASP, ASE, and Python Packages ##
@@ -170,56 +172,56 @@ VASPRC['queue.nprocs'] = 24
 VASPRC['queue.pe'] = 'mpi-24'
 
 for metal in ['Cu', 'Ag', 'Au']:
-	## Question 3 - Finding bulk metal lattice constants ##
-	if metal == 'Cu':
-		exp = 3.61
-	elif metal == 'Ag':
-		exp = 4.09
-	elif metal == 'Au':
-		exp = 4.08
+    ## Question 3 - Finding bulk metal lattice constants ##
+    if metal == 'Cu':
+        exp = 3.61
+    elif metal == 'Ag':
+        exp = 4.09
+    elif metal == 'Au':
+        exp = 4.08
 
-	A = np.linspace(exp * 0.9, exp * 1.1, 7)
+    A = np.linspace(exp * 0.9, exp * 1.1, 7)
 
-	for a in A:
-		metal_cubic = bulk(metal, 'fcc', a = a, cubic = True)
+    for a in A:
+        metal_cubic = bulk(metal, 'fcc', a = a, cubic = True)
 
-		calc = Vasp('%s/%s-EOS/a-%1.2f' %(metal, metal, a),
-				xc = 'PBE',
-			ismear = 1,
-			 encut = 400,
-			  kpts = [9,9,9],		## Converged k-points from Q2
-			 atoms = metal_cubic)
+        calc = Vasp('%s/%s-EOS/a-%1.2f' %(metal, metal, a),
+                xc = 'PBE',
+            ismear = 1,
+             encut = 400,
+              kpts = [9,9,9],         ## Converged k-points from Q2
+             atoms = metal_cubic)
 
-			calc.calculate()
+            calc.calculate()
 
 ### Plotting ###
 if argv[1] == "Plot":
-	for metal in ['Cu', 'Ag', 'Au']:
-		data = np.loadtxt("%s/%s-EOS/energies.dat" %(metal, metal), dtype=float)
+    for metal in ['Cu', 'Ag', 'Au']:
+        data = np.loadtxt("%s/%s-EOS/energies.dat" %(metal, metal), dtype=float)
 
-		N = np.size(data)
-		lattice = data[0:N:1, 0]
-		energies = data[0:N:1, 1]
-		volumes = data[0:N:1, 2]
-				
-		plt.plot(lattice, energies, 'bo-')
-		plt.xlabel('Lattice constant ($\\AA$)')
-		plt.ylabel('Total energy (eV)')
-		plt.savefig('images/%s-fcc-lattice.png' %metal)
-		plt.show()
-		
-		# Let's fit this to an equation of state
+        N = np.size(data)
+        lattice = data[0:N:1, 0]
+        energies = data[0:N:1, 1]
+        volumes = data[0:N:1, 2]
 
-		eos = EquationOfState(volumes, energies, eos='birchmurnaghan')
-		v0, e0, b = eos.fit()
-		a0 = v0**(1/3)
-		eos.plot(filename='images/%s-EOS.png' %metal, show = True)
+        plt.plot(lattice, energies, 'bo-')
+        plt.xlabel('Lattice constant ($\\AA$)')
+        plt.ylabel('Total energy (eV)')
+        plt.savefig('images/%s-fcc-lattice.png' %metal)
+        plt.show()
 
-		print(metal)
-		print('Minimum Energy = {0:1.3f} eV'.format(e0))
-		print('Optimal Volume = {0:1.3f} cubic angstroms'.format(v0))
-		print('Optimal lattice constant = {0:1.3f} angstroms'.format(a0))
-		print()
+        # Let's fit this to an equation of state
+
+        eos = EquationOfState(volumes, energies, eos='birchmurnaghan')
+        v0, e0, b = eos.fit()
+        a0 = v0**(1/3)
+        eos.plot(filename='images/%s-EOS.png' %metal, show = True)
+
+        print(metal)
+        print('Minimum Energy = {0:1.3f} eV'.format(e0))
+        print('Optimal Volume = {0:1.3f} cubic angstroms'.format(v0))
+        print('Optimal lattice constant = {0:1.3f} angstroms'.format(a0))
+        print()
 ```
 
 ---
