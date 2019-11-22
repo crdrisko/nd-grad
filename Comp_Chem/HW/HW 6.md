@@ -83,7 +83,7 @@ then
   do
     for dir in $metal/$metal-EOS/*
     do
-      energyArray=( $(grep TOTEN $dir/OUTCAR | tail -n 1) ) 
+      energyArray=( $(grep TOTEN $dir/OUTCAR | tail -n 1) )
       volumeArray=( $(grep volume $dir/OUTCAR | tail -n 1) )
       echo ${dir##*-} ${energyArray[4]} ${volumeArray[4]} >> $metal/$metal-EOS/energies.dat
     done
@@ -230,7 +230,7 @@ if argv[1] == "Plot":
 
 ## Question 4)
 
-The cohesive energies of each of our metals is shown in **Table 4.1**. The calculations that went into those values used the following equation: E<sub>coh</sub> = M<sub>(g)</sub> - (E<sub>bulk</sub> / N<sub>atoms</sub>). The literature values we used to compare our values to came from the source [here](http://www.knowledgedoor.com/2/elements_handbook/cohesive_energy.html). Overall, the agreement is okay, copper and silver agree with their literature values much more than gold does. Most likely a more-accurate calculation would be necessary for any useable value, but these are definitely in the ball park.
+The cohesive energies of each of our metals is shown in **Table 4.1**. The calculations that went into those values used the following equation: E<sub>coh</sub> = M<sub>(g)</sub> - (E<sub>bulk</sub> / N<sub>atoms</sub>). The literature values we used to compare our values to came from the source [here](http://www.knowledgedoor.com/2/elements_handbook/cohesive_energy.html). Overall, the agreement is okay, copper and silver agree with their literature values much more than gold does. Most likely a more-accurate calculation would be necessary for any useable value, but these are definitely in the ball park. One thing to note is that the literature's trend of Au > Cu > Ag, is not seen in our calculations.
 
 **Table 4.1:** Cohesive energies of Cu, Ag, and Au metals.
 
@@ -266,26 +266,26 @@ VASPRC['queue.nprocs'] = 24
 VASPRC['queue.pe'] = 'mpi-24'
 
 for metal in ['Cu', 'Ag', 'Au']:
-	## Question 5 - Surfaces and Surface Energies ##
-	if metal == 'Cu':
-		a = 3.636
-	elif metal == 'Ag':
-		a = 4.147
-	elif metal == 'Au':
-		a = 4.158
-	
-	atoms = fcc111(metal, size=(2,2,3), vacuum=10.0, a=a)
+    ## Question 5 - Surfaces and Surface Energies ##
+    if metal == 'Cu':
+        a = 3.636
+    elif metal == 'Ag':
+        a = 4.147
+    elif metal == 'Au':
+        a = 4.158
 
-	calc = Vasp('%s/%s-surface' %(metal, metal),
-			xc = 'PBE',
-		ismear = 1,
-		 encut = 400,
-		ibrion = 2,
-		  kpts = [9,9,1],
-		   nsw = 20,
-		 atoms = atoms)
+    atoms = fcc111(metal, size=(2,2,3), vacuum=10.0, a=a)
 
-	calc.calculate()
+    calc = Vasp('%s/%s-surface' %(metal, metal),
+            xc = 'PBE',
+        ismear = 1,
+         encut = 400,
+        ibrion = 2,
+          kpts = [9,9,1],
+           nsw = 20,
+         atoms = atoms)
+
+    calc.calculate()
 ```
 
 ---
@@ -314,27 +314,27 @@ VASPRC['queue.nprocs'] = 24
 VASPRC['queue.pe'] = 'mpi-24'
 
 for metal in ['Cu', 'Ag', 'Au']:
-	## Question 6 - Adsorbates and Adsorption Energies ##
-	if metal == 'Cu':
-		a = 3.636
-	elif metal == 'Ag':
-		a = 4.147
-	elif metal == 'Au':
-		a = 4.158
+    ## Question 6 - Adsorbates and Adsorption Energies ##
+    if metal == 'Cu':
+        a = 3.636
+    elif metal == 'Ag':
+        a = 4.147
+    elif metal == 'Au':
+        a = 4.158
 
-	atoms = fcc111(metal, size=(2,2,3), vacuum=10.0, a=a)
-	add_adsorbate(atoms, 'O', height=1.2, position='fcc')
+    atoms = fcc111(metal, size=(2,2,3), vacuum=10.0, a=a)
+    add_adsorbate(atoms, 'O', height=1.2, position='fcc')
 
-	calc = Vasp('%s/O-on-%s-fcc' %(metal, metal),
-			xc = 'PBE',
-		ismear = 1,
-		 encut = 400,
-		ibrion = 2,
-		  kpts = [9,9,1],
-		   nsw = 20,
-		 atoms = atoms)
+    calc = Vasp('%s/O-on-%s-fcc' %(metal, metal),
+            xc = 'PBE',
+        ismear = 1,
+         encut = 400,
+        ibrion = 2,
+          kpts = [9,9,1],
+           nsw = 20,
+         atoms = atoms)
 
-	calc.calculate()
+    calc.calculate()
 ```
 
 ---
@@ -343,13 +343,13 @@ for metal in ['Cu', 'Ag', 'Au']:
 
 ## Question 7)
 
-a)
+When we look at the trends from the Density of State plots shown in **Figure 7.1** and the results of the adsorption energies (**Table 6.1**), we can see that the more the oxygen atom's p-orbitals and the metal's d-orbitals overlap, the higher the adsorption energy goes. According to the [paper](https://www.nature.com/articles/376238a0.pdf), this is due to a higher amount of electron-electron repulsion as we fill up states. When the metal orbitals and oxygen orbitals overlap (each occupied), we are going to have an increase in energy. This agrees with the trend we saw in the previous question.
+
+As for the cohesive energies, it is a little difficult to say whether or not the degree of filling actually plays a role or not. For our metals, all belong to the same group, and as such, should fill similarly. On top of that, our trend for the cohesive energy did not match the literature's. Ultimately, I think we can say that regardless of whether or not the degree of filling affects the cohesive energy, the filling plays a much larger role in adsorption.
 
 **Figure 7.1:** Atom-projected densities of states for Cu, Ag, and Au metal surfaces and an adsorbate density states for an adsorbed oxygen atom on the metal surfaces.
 
 ![alt text](../VASP/Metals/images/Densities-of-states.png "Density of States")
-
-<div style="page-break-after: always;"></div>
 
 **Code 7.1:** Python code used to run VASP calculations for the metal atoms: Cu, Ag, and Au.
 
@@ -361,52 +361,52 @@ VASPRC['queue.nprocs'] = 24
 VASPRC['queue.pe'] = 'mpi-24'
 
 for metal in ['Cu', 'Ag', 'Au']:
-	## Question 7 - Density of States ##
+    ## Question 7 - Density of States ##
 
-	# Metal Surface #
-	calc = Vasp('%s/%s-surface' %(metal, metal))
-	atoms = calc.get_atoms()
+    # Metal Surface #
+    calc = Vasp('%s/%s-surface' %(metal, metal))
+    atoms = calc.get_atoms()
 
-	calc = Vasp('%s/%s-ados' %(metal, metal),
-			xc = 'PBE',
-		ismear = 1,
-			encut = 400,
-			kpts = [9,9,1],
-		lorbit = 10,
-			atoms = atoms)
+    calc = Vasp('%s/%s-ados' %(metal, metal),
+            xc = 'PBE',
+        ismear = 1,
+            encut = 400,
+            kpts = [9,9,1],
+        lorbit = 10,
+            atoms = atoms)
 
-	calc.calculate()
+    calc.calculate()
 
-	# Adsorbate #
-	calc = Vasp('%s/O-on-%s-fcc' %(metal, metal))
-	atoms = calc.get_atoms()
+    # Adsorbate #
+    calc = Vasp('%s/O-on-%s-fcc' %(metal, metal))
+    atoms = calc.get_atoms()
 
-	calc = Vasp('%s/O-on-%s-fcc-ados' %(metal, metal),
-			xc = 'PBE',
-		ismear = 1,
-			encut = 400,
-			kpts = [9,9,1],
-		lorbit = 10,
-			atoms = atoms)
+    calc = Vasp('%s/O-on-%s-fcc-ados' %(metal, metal),
+            xc = 'PBE',
+        ismear = 1,
+            encut = 400,
+            kpts = [9,9,1],
+        lorbit = 10,
+            atoms = atoms)
 
-	calc.calculate()
+    calc.calculate()
 
 ### Plotting ###
 elif argv[1] == "Plot7":
-	for metal in ['Cu', 'Ag', 'Au']:
-		calc = Vasp('%s/O-on-%s-fcc-ados' %(metal, metal))
+    for metal in ['Cu', 'Ag', 'Au']:
+        calc = Vasp('%s/O-on-%s-fcc-ados' %(metal, metal))
 
-		p_energies, p_dos = calc.get_ados(12, 'p')
-		plt.plot(p_energies, p_dos, label='O$_p$', lw=2)
+        p_energies, p_dos = calc.get_ados(12, 'p')
+        plt.plot(p_energies, p_dos, label='O$_p$', lw=2)
 
-		calc = Vasp('%s/%s-ados' %(metal, metal))
-		clean_energies, d_dos = calc.get_ados(11, 'd')
-		plt.plot(clean_energies, d_dos, label='%s$_d$' %metal, lw=2)
+        calc = Vasp('%s/%s-ados' %(metal, metal))
+        clean_energies, d_dos = calc.get_ados(11, 'd')
+        plt.plot(clean_energies, d_dos, label='%s$_d$' %metal, lw=2)
 
-		plt.axvline(ls='-.', color='k', lw=2)
-		plt.xlabel('Energy (eV)')
-		plt.ylabel('DOS (arb. units)')
-		plt.legend()
-		plt.savefig('images/%s-adsorbate-dos.png' %metal)
-		plt.show()
+        plt.axvline(ls='-.', color='k', lw=2)
+        plt.xlabel('Energy (eV)')
+        plt.ylabel('DOS (arb. units)')
+        plt.legend()
+        plt.savefig('images/%s-adsorbate-dos.png' %metal)
+        plt.show()
 ```
