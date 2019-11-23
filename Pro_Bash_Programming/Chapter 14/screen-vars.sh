@@ -63,7 +63,7 @@ underline=4
   reverse=7
 
 # set colors and attributes
-  set_fg="${CSI}4%dm"                   ## set background color
-  set_bg="${CSI}3%dm"                   ## set foreground color
+  set_bg="${CSI}4%dm"                   ## set background color
+  set_fg="${CSI}3%dm"                   ## set foreground color
 set_fgbg="${CSI}3%d;4%dm"               ## set foreground and background colors
 set_attr="${CSI}%sm"                    ## set attribute
