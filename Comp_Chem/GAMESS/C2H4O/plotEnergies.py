@@ -40,7 +40,6 @@ plt.legend()
 plt.savefig("Frequencies.png")
 
 
-
 ### Results of the Scanning Technique ###
 data_scan = np.loadtxt("scan/allEnergies.dat", dtype=float)
 

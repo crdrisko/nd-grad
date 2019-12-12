@@ -1,0 +1,26 @@
+<metadata>
+    // Radius values
+    radMin = 1.30;
+    radMax = 1.75;
+
+    // Angle values
+    angMin = 90;
+    angMax = 150;
+
+    // Algorithm Parameters 
+    nSteps = 15;
+</metadata>
+
+<data>
+    <GAMESS>
+         $BASIS GBASIS=PCSEG-1 $END
+         $CONTRL COORD=ZMT ISPHER=1 RUNTYP=ENERGY DFTTYP=PBE MULT=1 $END
+         $DATA 
+        Title SO2 single-point calculation template with Z-Matrix
+        C1
+        S    
+        O 1 RAD2 
+        O 1 RAD2 2 ANG
+         $END		 
+    </GAMESS>
+</data>

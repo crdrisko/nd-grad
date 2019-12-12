@@ -1,6 +1,6 @@
 ----- GAMESS execution script 'rungms' -----
-This job is running on host crcfe01.crc.nd.edu
-under operating system Linux at Thu Oct 17 23:43:18 EDT 2019
+This job is running on host crcfe02.crc.nd.edu
+under operating system Linux at Thu Dec 12 13:20:08 EST 2019
 Available scratch disk space (Kbyte units) at beginning of the job is
 Filesystem      1K-blocks  Used  Available Use% Mounted on
 AFS            2147483647     0 2147483647   0% /afs
@@ -85,7 +85,7 @@ Copying input file acetaldehyde.inp to your run's scratch directory...
      NAGOYA UNIVERSITY: YOSHIO NISHIMOTO, STEPHAN IRLE
      MOSCOW STATE UNIVERSITY: VLADIMIR MIRONOV
 
- EXECUTION OF GAMESS BEGUN Thu Oct 17 23:43:18 2019
+ EXECUTION OF GAMESS BEGUN Thu Dec 12 13:20:09 2019
 
             ECHO OF THE FIRST FEW INPUT CARDS -
  INPUT CARD> $CONTRL SCFTYP=RHF DFTTYP=B3LYP RUNTYP=ENERGY                                  
@@ -385,15 +385,15 @@ Copying input file acetaldehyde.inp to your run's scratch directory...
  A   =   50
 
  ..... DONE SETTING UP THE RUN .....
- STEP CPU TIME =     0.01 TOTAL CPU TIME =          0.0 (      0.0 MIN)
- TOTAL WALL CLOCK TIME=          0.0 SECONDS, CPU UTILIZATION IS    50.00%
+ STEP CPU TIME =     0.03 TOTAL CPU TIME =          0.0 (      0.0 MIN)
+ TOTAL WALL CLOCK TIME=          0.0 SECONDS, CPU UTILIZATION IS   100.00%
 
           ********************
           1 ELECTRON INTEGRALS
           ********************
  ...... END OF ONE-ELECTRON INTEGRALS ......
  STEP CPU TIME =     0.00 TOTAL CPU TIME =          0.0 (      0.0 MIN)
- TOTAL WALL CLOCK TIME=          0.0 SECONDS, CPU UTILIZATION IS    50.00%
+ TOTAL WALL CLOCK TIME=          0.0 SECONDS, CPU UTILIZATION IS   100.00%
 
           -------------
           GUESS OPTIONS
@@ -418,8 +418,8 @@ Copying input file acetaldehyde.inp to your run's scratch directory...
     11=A       12=A       13=A       14=A       15=A       16=A       17=A   
     18=A       19=A       20=A       21=A       22=A   
  ...... END OF INITIAL ORBITAL SELECTION ......
- STEP CPU TIME =     0.01 TOTAL CPU TIME =          0.0 (      0.0 MIN)
- TOTAL WALL CLOCK TIME=          0.0 SECONDS, CPU UTILIZATION IS    66.67%
+ STEP CPU TIME =     0.00 TOTAL CPU TIME =          0.0 (      0.0 MIN)
+ TOTAL WALL CLOCK TIME=          0.0 SECONDS, CPU UTILIZATION IS    75.00%
 
                     ----------------------
                     AO INTEGRAL TECHNOLOGY
@@ -466,8 +466,8 @@ Copying input file acetaldehyde.inp to your run's scratch directory...
  TOTAL NUMBER OF NONZERO TWO-ELECTRON INTEGRALS =              976273
          66 INTEGRAL RECORDS WERE STORED ON DISK FILE  8.
   ...... END OF TWO-ELECTRON INTEGRALS .....
- STEP CPU TIME =     0.10 TOTAL CPU TIME =          0.1 (      0.0 MIN)
- TOTAL WALL CLOCK TIME=          0.1 SECONDS, CPU UTILIZATION IS    92.31%
+ STEP CPU TIME =     0.12 TOTAL CPU TIME =          0.2 (      0.0 MIN)
+ TOTAL WALL CLOCK TIME=          0.2 SECONDS, CPU UTILIZATION IS    93.75%
 
           --------------------------
              R-B3LYP SCF CALCULATION
@@ -527,7 +527,7 @@ Copying input file acetaldehyde.inp to your run's scratch directory...
           -----------------
           DENSITY CONVERGED
           -----------------
-     TIME TO FORM FOCK OPERATORS=       5.4 SECONDS (       0.2 SEC/ITER)
+     TIME TO FORM FOCK OPERATORS=       5.6 SECONDS (       0.3 SEC/ITER)
      TIME TO SOLVE SCF EQUATIONS=       0.0 SECONDS (       0.0 SEC/ITER)
 
  FINAL R-B3LYP ENERGY IS     -153.5531923152 AFTER  22 ITERATIONS
@@ -1108,8 +1108,8 @@ Copying input file acetaldehyde.inp to your run's scratch directory...
    52  H  7  S   -0.118652   0.071954  -0.005693  -0.182740   0.083901
    53  H  7  S    0.103441   0.019670  -0.021962  -0.074160   0.100959
  ...... END OF RHF CALCULATION ......
- STEP CPU TIME =     5.46 TOTAL CPU TIME =          5.6 (      0.1 MIN)
- TOTAL WALL CLOCK TIME=          5.6 SECONDS, CPU UTILIZATION IS    98.94%
+ STEP CPU TIME =     5.68 TOTAL CPU TIME =          5.8 (      0.1 MIN)
+ TOTAL WALL CLOCK TIME=          5.9 SECONDS, CPU UTILIZATION IS    98.31%
 
      ---------------------------------------------------------------------
      PROPERTIES FOR THE B3LYP    DFT FUNCTIONAL (RHF  TYPE) DENSITY MATRIX
@@ -1300,23 +1300,23 @@ Copying input file acetaldehyde.inp to your run's scratch directory...
          DX          DY          DZ         /D/  (DEBYE)
     -3.127287   -2.858045   -0.180945    4.240411
  ...... END OF PROPERTY EVALUATION ......
- STEP CPU TIME =     0.01 TOTAL CPU TIME =          5.6 (      0.1 MIN)
- TOTAL WALL CLOCK TIME=          5.6 SECONDS, CPU UTILIZATION IS    98.94%
+ STEP CPU TIME =     0.01 TOTAL CPU TIME =          5.8 (      0.1 MIN)
+ TOTAL WALL CLOCK TIME=          5.9 SECONDS, CPU UTILIZATION IS    98.32%
                 580000  WORDS OF DYNAMIC MEMORY USED
- EXECUTION OF GAMESS TERMINATED NORMALLY Thu Oct 17 23:43:23 2019
+ EXECUTION OF GAMESS TERMINATED NORMALLY Thu Dec 12 13:20:15 2019
  DDI: 263640 bytes (0.3 MB / 0 MWords) used by master data server.
 
  ----------------------------------------
  CPU timing information for all processes
  ========================================
- 0: 5.489 + 0.112 = 5.601
+ 0: 5.689 + 0.162 = 5.851
  ----------------------------------------
  ddikick.x: exited gracefully.
 ----- accounting info -----
-Files used on the master node crcfe01.crc.nd.edu were:
--rw-r--r-- 1 cdrisko campus      490 Oct 17 23:43 /afs/crc.nd.edu/user/c/cdrisko/acetaldehyde.F05
--rw-r--r-- 1 cdrisko campus    45118 Oct 17 23:43 /afs/crc.nd.edu/user/c/cdrisko/acetaldehyde.F07
--rw-r--r-- 1 cdrisko campus 11881056 Oct 17 23:43 /afs/crc.nd.edu/user/c/cdrisko/acetaldehyde.F08
--rw-r--r-- 1 cdrisko campus  1799600 Oct 17 23:43 /afs/crc.nd.edu/user/c/cdrisko/acetaldehyde.F10
-Thu Oct 17 23:43:26 EDT 2019
-0.365u 0.214s 0:09.20 6.1%	0+0k 0+24io 0pf+0w
+Files used on the master node crcfe02.crc.nd.edu were:
+-rw-r--r-- 1 cdrisko campus      490 Dec 12 13:20 /afs/crc.nd.edu/user/c/cdrisko/acetaldehyde.F05
+-rw-r--r-- 1 cdrisko campus    45118 Dec 12 13:20 /afs/crc.nd.edu/user/c/cdrisko/acetaldehyde.F07
+-rw-r--r-- 1 cdrisko campus 11881056 Dec 12 13:20 /afs/crc.nd.edu/user/c/cdrisko/acetaldehyde.F08
+-rw-r--r-- 1 cdrisko campus  1799600 Dec 12 13:20 /afs/crc.nd.edu/user/c/cdrisko/acetaldehyde.F10
+Thu Dec 12 13:20:18 EST 2019
+0.355u 0.494s 0:09.69 8.6%	0+0k 0+16io 0pf+0w

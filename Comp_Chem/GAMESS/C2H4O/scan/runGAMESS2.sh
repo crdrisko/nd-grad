@@ -9,30 +9,27 @@ modifyFiles()		#@ DESCRIPTION: Modify a file using sed
   sed "s/${2?}/${3?}/g" ${1?} > tempFile && mv tempFile ${1?}
 }
 
-angles=(-180 -170 -160 -150 -140 -130 -120 -110 -90 -80 -70 -60 -50 -40 -30 -20 -10 0 10 20 30 40 50 60 70 80 90 100 110 120 130 140 150 160 170 180)
-
-for ang in ${angles[@]}
+for ang in {0..360..10}
 do
-  if [ ${ang:0:1} = '-' ]
+  if [ $ang -eq 120 ] || [ $ang -eq 240 ]
   then
-    mkdir n${ang:1:${#ang}}-deg
-    cd n${ang:1:${#ang}}-deg
-  else  
+    continue;
+  else
     mkdir ${ang}-deg
     cd ${ang}-deg
-  fi
  
-  cp ../acetaldehyde_scan.inp acetaldehyde.inp
+    cp ../acetaldehyde_scan.inp acetaldehyde.inp
 
-  modifyFiles acetaldehyde.inp ANG $ang
+    modifyFiles acetaldehyde.inp ANG $ang
 
-  rungms acetaldehyde.inp > acetaldehyde.out
+    rungms acetaldehyde.inp > acetaldehyde.out
 
-  energyArray=( $(grep FINAL\ R-B3LYP\ ENERGY\ IS acetaldehyde.out) )
-  energy=${energyArray[4]}
+    energyArray=( $(grep FINAL\ R-B3LYP\ ENERGY\ IS acetaldehyde.out) )
+    energy=${energyArray[4]}
 
-  printf "%s\t %s\n" $ang $energy >> ../allEnergies.dat
+    printf "%s\t %s\n" $ang $energy >> ../allEnergies.dat
 
-  cd ../
+    cd ../
+  fi
 done
 
