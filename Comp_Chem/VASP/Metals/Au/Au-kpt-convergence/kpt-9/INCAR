@@ -1,6 +1,0 @@
-INCAR created by Atomic Simulation Environment
- LCHARG = .FALSE.
- ISMEAR = 1
- ENCUT = 400
- SIGMA = 0.1
- LWAVE = .FALSE.
