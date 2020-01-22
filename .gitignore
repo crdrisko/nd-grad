@@ -1,0 +1,6 @@
+.vscode/*
+InProgress/*
+*.out
+test/**/*.txt
+test/**/*.fdm
+test/**/*.avg
