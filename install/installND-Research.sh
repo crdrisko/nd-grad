@@ -11,28 +11,24 @@ then
   exit 1
 fi
 
-cd ../../                           ## Go to the directory where ND-Research is located
-
-if ! [ -d Utilites-API ]
+if ! [ -d ../../Utilities-API ]
 then
   ## Install the required Utilities-API Repository ##
-  git clone https://github.com/crdrisko/Utilites-API.git
-  cd Utilites-API/install
-  bash installUtilites-API.sh
+  git clone https://github.com/crdrisko/Utilities-API.git
+  cd ../../Utilities-API/install
+  bash installUtilities-API.sh
+  cd ../../ND-Research/install
 fi
 
-source repositoryInstallation 2> tempFile.err
+source /usr/local/bin/repositoryInstallation
 
-if [ -f tempFile.err ]
+if [ $? -ne 0 ]
 then
   printf "Error with the installation of the Utilities-API repository. Refer to the\n\
     documentation at https://github.com/crdrisko/Utilities-API for installation\n\
     instructions and try again.\n"
-  rm tempFile.err
   exit 2
 fi
-
-cd ../../ND-Research/install
 
 ## Use the functionality provided by the Utilities-API scripts ##
 checkInstalDirectory                ## Verify user is in proper directory for installation
