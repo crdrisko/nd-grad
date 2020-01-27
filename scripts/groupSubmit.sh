@@ -1,5 +1,5 @@
 #!/bin/bash
-# Name: groupSubmit.sh - Version 1.0.1
+# Name: groupSubmit.sh - Version 1.0.2
 # Author: cdrisko
 # Date: 01/20/2020-10:22:05
 # Description: Gezelter group submission script creator
@@ -17,10 +17,72 @@ printHelpMessage()      #@ DESCRIPTION: Print the groupSubmit program's help mes
   printf "        should be wrapped in quotes. Default is smp 16.\n"
   printf "  -q  OPTIONAL: Queuing system you wish to use. Default is long, the other\n"
   printf "        option is debug.\n"
-  printf "  -m  OPTIONAL: Send message to cdrisko@nd.edu with any errors that arrise in\n"
+  printf "  -m  OPTIONAL: Send message to cdrisko@nd.edu with any errors that arise in\n"
   printf "        the execution of the script. Again, arguments should be wrapped in\n"
   printf "        quotes. Please be detailed in your description of the error.\n\n"
   printf "EXAMPLE: groupSubmit -i testFile -c \"mpi-24 24\" -r\n\n"
+}
+
+printCheckQuotaScript()     #@ DESCRIPTION: Print script used to notify user of potential memory overflow
+{                           #@ USAGE: printCheckQuotaScript
+  printf "#!/bin/bash\n"
+  printf "#$ -N checkQuota\n"
+  printf "#$ -M %s@nd.edu\n" $USER
+  printf "#$ -m abe\n"
+  printf "#$ -pe smp 1\n\n"
+  printf "while true\n"
+  printf "do\n"
+  printf "  quotaArray=( \$( /usr/bin/fs quota ) )\n"
+  printf "  quotaPercentage=\${quotaArray[0]}\n"
+  printf "  quotaPercentage=\${quotaPercentage%%%%\\%%*}\n\n"
+  printf "  if [ \$quotaPercentage -ge 99 ]\n"
+  printf "  then\n"
+  printf "    ## Send DANGER if within 1%% of available quota\n"
+  printf "    mail -s 'DANGER' %s@nd.edu <<< 'You have used 99%% of your available quota.'\n" $USER
+  printf "    sleepTime=5m\n\n"
+  printf "  elif [ \$quotaPercentage -ge 95 ]\n"
+  printf "  then\n"
+  printf "    ## Send WARNING if within 5%% of available quota\n"
+  printf "    mail -s 'WARNING' %s@nd.edu <<< 'You have used 95%% of your available quota.'\n" $USER
+  printf "    sleepTime=30m\n\n"
+  printf "  elif [ \$quotaPercentage -ge 90 ]\n"
+  printf "  then\n"
+  printf "    ## Send CAUTION if within 10%% of available quota\n"
+  printf "    mail -s 'CAUTION' %s@nd.edu <<< 'You have used 90%% of your available quota.'\n" $USER
+  printf "    sleepTime=1h\n"
+  printf "  fi\n\n"
+  printf "  ## Put machine to sleep before next check\n"
+  printf "  sleep \${sleepTime:=3h}\n\n"
+  printf "  qstatArray=( \$( /opt/sge/bin/lx-amd64/qstat -u %s | tail -n +3 ) )\n" $USER
+  printf "  qstatArrayLength=\$( printf \"%%s\\\n\" \${qstatArray[@]} | wc -l )\n\n"
+  printf "  if [ \${qstatArray[2]} == \"checkQuota\" ] && [ \$qstatArrayLength -eq 9 ]\n"
+  printf "  then\n"
+  printf "    exit 0\n"
+  printf "  fi\n"
+  printf "done\n"
+}
+
+printOpenmdSubmissionScript()   #@ DESCRIPTION: Print script used to run the OpenMD job
+{                               #@ USAGE: printOpenmdSubmissionScript
+  printf "#!/bin/bash\n"
+  printf "#$ -N %s\n" ${fileName:?A filename is required}
+  printf "#$ -M %s@nd.edu\n" $USER
+  printf "#$ -m abe\n"
+  printf "#$ -q %s\n" ${queue:-long}
+  printf "#$ -pe %s\n\n" "${cores:="smp 16"}"
+  printf "SIM_NAME=\"%s\"\n" $fileName
+  printf "WORK_DIR=\`pwd\`\n\n"
+  printf "module purge\n"
+  printf "module load openmd\n"
+  printf "module load CRC_default\n\n"
+  printf "fsync \${WORK_DIR}/\${SIM_NAME}.stat &\n"
+  printf "fsync \${WORK_DIR}/\${SIM_NAME}.dump &\n"
+  printf "fsync \${WORK_DIR}/\${SIM_NAME}.eor &\n"
+  printf "fsync \${WORK_DIR}/\${SIM_NAME}.rnemd &\n"
+  printf "fsync \$SGE_STDOUT_PATH &\n"
+  printf "fsync \$SGE_STDERR_PATH &\n\n"
+  printf "cd \${WORK_DIR}\n\n"
+  printf "mpirun -np %s openmd_MPI \${SIM_NAME}.omd\n" "${cores#*\ }" 
 }
 
 
@@ -46,64 +108,6 @@ done
 ### Main Code ###
 [ ${USER:?Issue finding your CRC username. Set the \$USER variable and try again.} ]
 
-## Send OSHA-compliant signal words to notify user of potential memory overflow ##
-printf -v checkQuotaScript "#!/bin/bash\n\
-#$ -N checkQuota\n\
-#$ -M %s@nd.edu\n\
-#$ -m abe\n\
-#$ -pe smp 1\n\n\
-while true\n\
-do\n\
-  quotaArray=( \$( /usr/bin/fs quota ) )\n\
-  quotaPercentage=\${quotaArray[0]}\n\
-  quotaPercentage=\${quotaPercentage%%\\%*}\n\n\
-  if [ \$quotaPercentage -ge 99 ]\n\
-  then\n\
-    ## Send DANGER if within 1% of available quota\n\
-    mail -s 'DANGER' %s@nd.edu <<< 'You have used 99% of your available quota.'\n\
-    sleepTime=5m\n\n\
-  elif [ \$quotaPercentage -ge 95 ]\n\
-  then\n\
-    ## Send WARNING if within 5% of available quota\n\
-    mail -s 'WARNING' %s@nd.edu <<< 'You have used 95% of your available quota.'\n\
-    sleepTime=30m\n\n\
-  elif [ \$quotaPercentage -ge 90 ]\n\
-  then\n\
-    ## Send CAUTION if within 10% of available quota\n\
-    mail -s 'CAUTION' %s@nd.edu <<< 'You have used 90% of your available quota.'\n\
-    sleepTime=1h\n\
-  fi\n\n\
-  ## Put machine to sleep before next check\n\
-  sleep \${sleepTime:=3h}\n\n\
-  qstatArray=( \$( /opt/sge/bin/lx-amd64/qstat -u %s | tail -n +3 ) )\n\
-  if [ \${qstatArray[2]} == \"checkQuota\" ] && [ \$( printf \"%s\\\n\" \${qstatArray[@]} | wc -l ) -eq 9 ]\n\
-  then\n\
-    exit 0\n\
-  fi\n\
-done\n" $USER $USER $USER $USER $USER $USER
-
-## The submission script to run the OpenMD job, can be changed as desired ##
-printf -v openmdSubmissionScript "#!/bin/bash\n\
-#$ -N %s\n\
-#$ -M %s@nd.edu\n\
-#$ -m abe\n\
-#$ -q %s\n\
-#$ -pe %s\n\n\
-SIM_NAME=\"%s\"\n\
-WORK_DIR=\`pwd\`\n\n\
-module purge\n\
-module load openmd\n\
-module load CRC_default\n\n\
-fsync \${WORK_DIR}/\${SIM_NAME}.stat &\n\
-fsync \${WORK_DIR}/\${SIM_NAME}.dump &\n\
-fsync \${WORK_DIR}/\${SIM_NAME}.eor &\n\
-fsync \${WORK_DIR}/\${SIM_NAME}.rnemd &\n\
-fsync \$SGE_STDOUT_PATH &\n\
-fsync \$SGE_STDERR_PATH &\n\n\
-cd \${WORK_DIR}\n\n\
-mpirun -np %s openmd_MPI \${SIM_NAME}.omd\n" ${fileName:?A filename is required} $USER ${queue:-long}\
- "${cores:="smp 16"}" $fileName "${cores#*\ }"
-
 ## If checkQuota script is already running, no need to submit it again ##
 IFS=$'\n'
 array=( $( qstat -u $USER ) )
@@ -121,11 +125,11 @@ done
 
 if [ ${checkQuota:-0} -eq 0 ]
 then
-  printf "$checkQuotaScript" > checkQuota.sh
+  printCheckQuotaScript > checkQuota.sh
   qsub checkQuota.sh
 fi
 
-printf "$openmdSubmissionScript" > openmd_multiple.sh
+printOpenmdSubmissionScript > openmd_multiple.sh
 
 ## Comment out RNEMD line if specified ##
 if [ $useRNEMD -eq 0 ]
