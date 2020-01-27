@@ -1,5 +1,5 @@
 #!/bin/bash
-# Name: installND-Research.sh - Version 1.0.0
+# Name: installND-Research.sh - Version 1.0.2
 # Author: cdrisko
 # Date: 01/08/2020-12:50:45
 # Description: Installation of the Utilities-API library and shell scripts
@@ -14,8 +14,9 @@ fi
 if ! [ -d ../../Utilities-API ]
 then
   ## Install the required Utilities-API Repository ##
+  cd ../../
   git clone https://github.com/crdrisko/Utilities-API.git
-  cd ../../Utilities-API/install
+  cd Utilities-API/install
   bash installUtilities-API.sh
   cd ../../ND-Research/install
 fi

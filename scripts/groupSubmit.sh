@@ -1,5 +1,5 @@
 #!/bin/bash
-# Name: groupSubmit.sh - Version 1.0.0
+# Name: groupSubmit.sh - Version 1.0.1
 # Author: cdrisko
 # Date: 01/20/2020-10:22:05
 # Description: Gezelter group submission script creator
@@ -54,31 +54,33 @@ printf -v checkQuotaScript "#!/bin/bash\n\
 #$ -pe smp 1\n\n\
 while true\n\
 do\n\
-  quotaArray=( \$( quota | grep u.%s ) )\n\n\
-  if [ echo \"\${quotaArray[1]} - \${quotaArray[3]}\" | bc -le 5 ]\n\
+  quotaArray=( \$( /usr/bin/fs quota ) )\n\
+  quotaPercentage=\${quotaArray[0]}\n\
+  quotaPercentage=\${quotaPercentage%%\\%*}\n\n\
+  if [ \$quotaPercentage -ge 99 ]\n\
   then\n\
-    ## Send DANGER if within 5 GB of available quota\n\
-    mail -s 'DANGER' %s@nd.edu <<< 'You have <5 GB remaining in quota.'\n\
+    ## Send DANGER if within 1% of available quota\n\
+    mail -s 'DANGER' %s@nd.edu <<< 'You have used 99% of your available quota.'\n\
     sleepTime=5m\n\n\
-  elif [ echo \"\${quotaArray[1]} - \${quotaArray[3]}\" | bc -le 50 ]\n\
+  elif [ \$quotaPercentage -ge 95 ]\n\
   then\n\
-    ## Send WARNING if within 50 GB of available quota\n\
-    mail -s 'WARNING' %s@nd.edu <<< 'You have <50 GB remaining in quota.'\n\
+    ## Send WARNING if within 5% of available quota\n\
+    mail -s 'WARNING' %s@nd.edu <<< 'You have used 95% of your available quota.'\n\
     sleepTime=30m\n\n\
-  elif [ echo \"\${quotaArray[1]} - \${quotaArray[3]}\" | bc -le 100 ]\n\
+  elif [ \$quotaPercentage -ge 90 ]\n\
   then\n\
-    ## Send CAUTION if within 100 GB of available quota\n\
-    mail -s 'CAUTION' %s@nd.edu <<< 'You have <100 GB remaining in quota.'\n\
+    ## Send CAUTION if within 10% of available quota\n\
+    mail -s 'CAUTION' %s@nd.edu <<< 'You have used 90% of your available quota.'\n\
     sleepTime=1h\n\
   fi\n\n\
   ## Put machine to sleep before next check\n\
-  sleep \${sleepTime:-3h}\n\n\
-  qstatArray=( \$( qstat -u %s | tail -n +3 ) )\n\
-  if [ \${qstatArray[2]} != \"checkQuota\" ]\n\
+  sleep \${sleepTime:=3h}\n\n\
+  qstatArray=( \$( /opt/sge/bin/lx-amd64/qstat -u %s | tail -n +3 ) )\n\
+  if [ \${qstatArray[2]} == \"checkQuota\" ] && [ \$( printf \"%s\\\n\" \${qstatArray[@]} | wc -l ) -eq 9 ]\n\
   then\n\
     exit 0\n\
   fi\n\
-done\n" $USER $USER $USER $USER $USER
+done\n" $USER $USER $USER $USER $USER $USER
 
 ## The submission script to run the OpenMD job, can be changed as desired ##
 printf -v openmdSubmissionScript "#!/bin/bash\n\
@@ -117,10 +119,7 @@ do
   fi
 done
 
-## Quota check is only relevant to jobs submitted in user-space ##
-workingDirectory=$( pwd -P )
-
-if [ "${workingDirectory:0:30}" != "/afs/crc.nd.edu/group/gezelter" ] && [ ${checkQuota:-0} -eq 0 ]
+if [ ${checkQuota:-0} -eq 0 ]
 then
   printf "$checkQuotaScript" > checkQuota.sh
   qsub checkQuota.sh
