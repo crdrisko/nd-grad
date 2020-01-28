@@ -107,7 +107,7 @@ TEST(testKE_RNEMD, KE_FluxTypeCorrectSplitting)
 {
     int sizeOfRNEMDAxis {};
     RNEMDDataPtr rnemdData { rnemdFile->getAllDataFromFile() };
-    
+
     std::vector<RNEMDRegionPtr> rnemdRegionData { rnemdFile->getRNEMDRegions() };
     RNEMDInferredParametersPtr rnemdInferred { rnemdFile->getRNEMDInferredParameters() };
 
@@ -129,7 +129,7 @@ TEST(testKE_RNEMD, KE_FluxTypeCorrectSplitting)
             outputFile << z[j] << " " << temp[j] << std::endl;
 
         outputFile.close();
-    
+
         sizeOfRNEMDAxis += z.size();
     }
 

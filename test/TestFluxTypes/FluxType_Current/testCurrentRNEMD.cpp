@@ -139,11 +139,11 @@ TEST(testCurrentRNEMD, currentFluxTypeCorrectSplitting)
         for (size_t j {}; j < z.size(); ++j)
             outputFile << z[j] << " " << temp[j] << " "
                        << concAnion[j] << " " << concCation[j] << " "
-                       << Ez[j].convertQuantity(Conversions::getMolarEnergyConversionFactor("kcal_mol", 
+                       << Ez[j].convertQuantity(Conversions::getMolarEnergyConversionFactor("kcal_mol",
                             "eV_part")) << std::endl;
 
         outputFile.close();
-        
+
         sizeOfRNEMDAxis += z.size();
     }
 

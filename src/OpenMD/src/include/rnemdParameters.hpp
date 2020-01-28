@@ -46,7 +46,7 @@ namespace OpenMD::RNEMD
         // Target one-time exchanges
         Utilities_API::PhysicalQuantities::MolarEnergy kineticTarget;
         std::array<Utilities_API::PhysicalQuantities::Momentum, 3> momentumTarget;
-        std::array<Utilities_API::PhysicalQuantities::Momentum, 3> angularMomentumTarget;  
+        std::array<Utilities_API::PhysicalQuantities::Momentum, 3> angularMomentumTarget;
 
         // Actual exchange totals
         Utilities_API::PhysicalQuantities::MolarEnergy kineticExchange;
@@ -56,7 +56,7 @@ namespace OpenMD::RNEMD
         // Actual flux
         Utilities_API::PhysicalQuantities::MolarEnergyFlux Jz;
         std::array<Utilities_API::PhysicalQuantities::MomentumFlux, 3> JzP;
-        std::array<Utilities_API::PhysicalQuantities::MomentumFlux, 3> JzL;                
+        std::array<Utilities_API::PhysicalQuantities::MomentumFlux, 3> JzL;
         Utilities_API::PhysicalQuantities::CurrentDensity Jc_total;
         Utilities_API::PhysicalQuantities::CurrentDensity Jc_cation;
         Utilities_API::PhysicalQuantities::CurrentDensity Jc_anion;
@@ -95,13 +95,13 @@ namespace OpenMD::RNEMD
                                                             "Activity(unitless)",
                                                             "Electrical Field(kcal/mol/angstroms/e)" };
 
-        std::vector<Utilities_API::PhysicalQuantities::Length> rnemdAxis;                          
+        std::vector<Utilities_API::PhysicalQuantities::Length> rnemdAxis;
         std::vector<Utilities_API::PhysicalQuantities::Length> radius;
         std::vector<Utilities_API::PhysicalQuantities::Temperature> temperature;
-        std::array<std::vector<Utilities_API::PhysicalQuantities::Velocity>, 3> velocity;          
-        std::array<std::vector<Utilities_API::PhysicalQuantities::Velocity>, 3> angularVelocity;   
+        std::array<std::vector<Utilities_API::PhysicalQuantities::Velocity>, 3> velocity;
+        std::array<std::vector<Utilities_API::PhysicalQuantities::Velocity>, 3> angularVelocity;
         std::vector<Utilities_API::PhysicalQuantities::MassDensity> density;
-        std::vector< std::vector<Utilities_API::PhysicalQuantities::Concentration> > activity;     
+        std::vector< std::vector<Utilities_API::PhysicalQuantities::Concentration> > activity;
         std::array<std::vector<Utilities_API::PhysicalQuantities::ElectricField>, 3> electricField;
     };
 

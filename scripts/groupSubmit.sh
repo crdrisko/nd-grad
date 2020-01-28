@@ -82,7 +82,7 @@ printOpenmdSubmissionScript()   #@ DESCRIPTION: Print script used to run the Ope
   printf "fsync \$SGE_STDOUT_PATH &\n"
   printf "fsync \$SGE_STDERR_PATH &\n\n"
   printf "cd \${WORK_DIR}\n\n"
-  printf "mpirun -np %s openmd_MPI \${SIM_NAME}.omd\n" "${cores#*\ }" 
+  printf "mpirun -np %s openmd_MPI \${SIM_NAME}.omd\n" "${cores#*\ }"
 }
 
 

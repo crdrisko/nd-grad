@@ -157,7 +157,7 @@ namespace OpenMD::RNEMD
 
     int RNEMDFile::RNEMDFileImpl::findDataFieldStartLocation(std::string_view dataFieldLabel)
     {
-        if ( Utilities_API::Strings::stringFinder(dataFieldLabel, 
+        if ( Utilities_API::Strings::stringFinder(dataFieldLabel,
             metaDataVector[rnemdInferred->dataFieldLabelIndex]) )
             return metaDataVector[rnemdInferred->dataFieldLabelIndex].find(dataFieldLabel);
 
@@ -317,8 +317,8 @@ namespace OpenMD::RNEMD
     }
 
     RNEMDDataPtr RNEMDFile::getAllDataFromFile() const
-    { 
-        return p_Impl->getAllDataFromFile(); 
+    {
+        return p_Impl->getAllDataFromFile();
     }
 
     std::vector<RNEMDRegionPtr> RNEMDFile::getRNEMDRegions() const

@@ -115,7 +115,7 @@ TEST(testSingleRNEMD, singleFluxTypeCorrectRegionSplitting)
 {
     int sizeOfRNEMDAxis {};
     RNEMDDataPtr rnemdData { rnemdFile->getAllDataFromFile() };
-    
+
     std::vector<RNEMDRegionPtr> rnemdRegionData { rnemdFile->getRNEMDRegions() };
     RNEMDInferredParametersPtr rnemdInferred { rnemdFile->getRNEMDInferredParameters() };
 
@@ -139,7 +139,7 @@ TEST(testSingleRNEMD, singleFluxTypeCorrectRegionSplitting)
         for (size_t j {}; j < z.size(); ++j)
             outputFile << z[j] << " " << temp[j] << " "
                        << concAnion[j] << " " << concCation[j] << " "
-                       << Ez[j].convertQuantity(Conversions::getMolarEnergyConversionFactor("kcal_mol", 
+                       << Ez[j].convertQuantity(Conversions::getMolarEnergyConversionFactor("kcal_mol",
                             "eV_part")) << std::endl;
 
         outputFile.close();

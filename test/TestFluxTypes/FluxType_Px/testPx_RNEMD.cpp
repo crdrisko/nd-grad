@@ -107,7 +107,7 @@ TEST(testPx_RNEMD, Px_FluxTypeCorrectSplitting)
 {
     int sizeOfRNEMDAxis {};
     RNEMDDataPtr rnemdData { rnemdFile->getAllDataFromFile() };
-    
+
     std::vector<RNEMDRegionPtr> rnemdRegionData { rnemdFile->getRNEMDRegions() };
     RNEMDInferredParametersPtr rnemdInferred { rnemdFile->getRNEMDInferredParameters() };
 
@@ -129,11 +129,11 @@ TEST(testPx_RNEMD, Px_FluxTypeCorrectSplitting)
 
         for (size_t j {}; j < z.size(); ++j)
             outputFile << z[j] << " " << temp[j] << " "
-                       << velocity[0][j] << " " << velocity[1][j] << " " 
+                       << velocity[0][j] << " " << velocity[1][j] << " "
                        << velocity[2][j] << " " << density[j] << std::endl;
 
         outputFile.close();
-    
+
         sizeOfRNEMDAxis += z.size();
     }
 

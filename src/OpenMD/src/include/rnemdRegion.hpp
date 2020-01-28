@@ -29,7 +29,7 @@ namespace OpenMD::RNEMD
 
         RNEMDDataPtr getRegionSpecificData() const { return regionSpecificData; }
 
-        void makeFirstRegionContinuous(Utilities_API::PhysicalQuantities::Length boxSize) 
+        void makeFirstRegionContinuous(Utilities_API::PhysicalQuantities::Length boxSize)
         {
             for (auto& z : regionSpecificData->rnemdAxis)
                 if (z > regionSpecificData->rnemdAxis.back())
