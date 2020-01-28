@@ -1,7 +1,7 @@
 // Copyright (c) 2020 Cody R. Drisko. All rights reserved.
 // Licensed under the MIT License.See the LICENSE file in the project root for license information.
 //
-// Name: rnemdParameters.hpp - Version 1.0.1
+// Name: rnemdParameters.hpp - Version 1.0.2
 // Author: cdrisko
 // Date: 01/20/2020-15:44:50
 // Description: Defines data structures dedicated to holding the data from a given RNEMD file
@@ -93,7 +93,8 @@ namespace OpenMD::RNEMD
                                                             "AngularVelocity(angstroms^2/fs)",
                                                             "Density(g cm^-3)",
                                                             "Activity(unitless)",
-                                                            "Electrical Field(kcal/mol/angstroms/e)" };
+                                                            "Electric Field(kcal/mol/angstroms/e)",
+                                                            "Electrostatic Potential(kcal/mol/e)" };
 
         std::vector<Utilities_API::PhysicalQuantities::Length> rnemdAxis;
         std::vector<Utilities_API::PhysicalQuantities::Length> radius;
@@ -103,6 +104,7 @@ namespace OpenMD::RNEMD
         std::vector<Utilities_API::PhysicalQuantities::MassDensity> density;
         std::vector< std::vector<Utilities_API::PhysicalQuantities::Concentration> > activity;
         std::array<std::vector<Utilities_API::PhysicalQuantities::ElectricField>, 3> electricField;
+        std::vector<Utilities_API::PhysicalQuantities::ElectricPotential> electricPotential;
     };
 
     using RNEMDDataPtr =  std::shared_ptr<RNEMDData>;

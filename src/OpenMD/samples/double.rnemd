@@ -36,7 +36,7 @@
 #               attempted = 5000000
 #                  failed = 1566931
 #######################################################
-#	z(Angstroms)	Temperature(K)	Velocity(angstroms/fs)			Density(g cm^-3)	Activity(unitless)(Cl-	Na+	)		Electrical Field(kcal/mol/angstroms/e)		
+#	z(Angstroms)	Temperature(K)	Velocity(angstroms/fs)			Density(g cm^-3)	Activity(unitless)(Cl-	Na+	)		Electric Field(kcal/mol/angstroms/e)		
 	0.48984446	299.68711	-4.1125758e-07	3.1147725e-06	-7.0270616e-08	1.0462683	1.0967281	1.1250035	-0.0013029217	0.01550698	-0.2255494
 	1.4695334	299.58445	2.4547898e-07	2.6492128e-06	2.2511349e-07	1.0438109	1.0379124	1.1431939	-0.011761686	0.003660232	-0.23919364
 	2.4492223	299.75195	6.8154584e-07	5.3500153e-06	3.8388123e-07	1.0453613	0.9843161	1.1504454	-0.01069055	-0.00049360676	-0.32002619

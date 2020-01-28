@@ -1,5 +1,5 @@
 #!/bin/bash
-# Name: groupSubmit.sh - Version 1.0.2
+# Name: groupSubmit.sh - Version 1.0.3
 # Author: cdrisko
 # Date: 01/20/2020-10:22:05
 # Description: Gezelter group submission script creator
@@ -12,7 +12,7 @@ printHelpMessage()      #@ DESCRIPTION: Print the groupSubmit program's help mes
   printf "    [-m message]\n\n"
   printf "  -h  Prints help information about the groupSubmit program.\n"
   printf "  -r  Check for RNEMD outputs. Defaults to false/off.\n\n"
-  printf "  -i  REQUIRED: The base filename of your .omd file to be submitted.\n"
+  printf "  -i  REQUIRED: Your input .omd file to be submitted.\n"
   printf "  -c  OPTIONAL: The queuing system and number of cores required. Arguments\n"
   printf "        should be wrapped in quotes. Default is smp 16.\n"
   printf "  -q  OPTIONAL: Queuing system you wish to use. Default is long, the other\n"
@@ -65,12 +65,12 @@ printCheckQuotaScript()     #@ DESCRIPTION: Print script used to notify user of 
 printOpenmdSubmissionScript()   #@ DESCRIPTION: Print script used to run the OpenMD job
 {                               #@ USAGE: printOpenmdSubmissionScript
   printf "#!/bin/bash\n"
-  printf "#$ -N %s\n" ${fileName:?A filename is required}
+  printf "#$ -N %s\n" ${fileName%%.*}
   printf "#$ -M %s@nd.edu\n" $USER
   printf "#$ -m abe\n"
   printf "#$ -q %s\n" ${queue:-long}
   printf "#$ -pe %s\n\n" "${cores:="smp 16"}"
-  printf "SIM_NAME=\"%s\"\n" $fileName
+  printf "SIM_NAME=\"%s\"\n" ${fileName%%.*}
   printf "WORK_DIR=\`pwd\`\n\n"
   printf "module purge\n"
   printf "module load openmd\n"
@@ -107,6 +107,7 @@ done
 
 ### Main Code ###
 [ ${USER:?Issue finding your CRC username. Set the \$USER variable and try again.} ]
+[ ${fileName:?A filename is required} ]
 
 ## If checkQuota script is already running, no need to submit it again ##
 IFS=$'\n'

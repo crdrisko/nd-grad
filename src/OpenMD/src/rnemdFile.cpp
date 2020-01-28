@@ -1,7 +1,7 @@
 // Copyright (c) 2020 Cody R. Drisko. All rights reserved.
 // Licensed under the MIT License.See the LICENSE file in the project root for license information.
 //
-// Name: rnemdFile.cpp - Version 1.0.1
+// Name: rnemdFile.cpp - Version 1.0.2
 // Author: cdrisko
 // Date: 01/21/2020-14:16:00
 // Description: The implementation of RNEMD file parsing hidden using a pointer to implementation
@@ -233,6 +233,9 @@ namespace OpenMD::RNEMD
                 else if (pair.first == allDataFromFile->dataLabels[7])
                     for (int i {}; i <= 2 ; ++i)
                         allDataFromFile->electricField[i] = (parseDataFromFile<ElectricField>(index + i));
+
+                else if (pair.first == allDataFromFile->dataLabels[8])
+                    allDataFromFile->electricPotential = parseDataFromFile<ElectricPotential>(index);
 
                 startIndex += pair.first.length();
             }
