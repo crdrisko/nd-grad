@@ -1,0 +1,79 @@
+#######################################################
+# RNEMD {
+#    exchangeMethod  = "VSS";
+#    fluxType  = "KE";
+#    privilegedAxis = z;
+#    exchangeTime = 1;
+#    objectSelection = "select SPCE_RB_0";
+#    selectionA = "select wrappedz > -2 && wrappedz < 2";
+#    selectionB = "select wrappedz > 18 || wrappedz < -18";
+#    outputSelection = "select SPCE_RB_0";
+# }
+#######################################################
+# RNEMD report:
+#      running time = 10000002 fs
+# Target flux:
+#           kinetic = 4e-06 (kcal/mol/A^2/fs)
+#          momentum = [ 0, 0, 0 ] (amu/A/fs^2)
+#  angular momentum = [ 0, 0, 0 ] (amu/A^2/fs^2)
+#   current density = 0 (electrons/A^2/fs)
+# Target one-time exchanges:
+#          kinetic = 0.0030701448 (kcal/mol)
+#          momentum = [ 0, 0, 0 ] (amu*A/fs)
+#  angular momentum = [ 0, 0, 0 ] (amu*A^2/fs)
+# Actual exchange totals:
+#          kinetic = 15350.724 (kcal/mol)
+#          momentum = [ 0, 0, 0 ] (amu*A/fs)
+#  angular momentum = [ 0, 0, 0 ] (amu*A^2/fs)
+# Actual flux:
+#          kinetic = 1.9999996e-06 (kcal/mol/A^2/fs)
+#          momentum = [ 0, 0, 0 ] (amu/A/fs^2)
+#  angular momentum = [ 0, 0, 0 ] (amu/A^2/fs^2)
+# Exchange statistics:
+#               attempted = 5000000
+#                  failed = 0
+#######################################################
+#	z(Angstroms)	Temperature(K)
+	1	298.96612
+	3	299.51503
+	5	299.95802
+	7	300.2095
+	9	300.45996
+	11	300.82464
+	13	301.39876
+	15	301.85464
+	17	302.14122
+	19	302.44322
+	21	302.73061
+	23	302.10687
+	25	301.84402
+	27	301.32657
+	29	301.14866
+	31	300.67409
+	33	300.31436
+	35	300.11751
+	37	299.55375
+	39	299.00484
+#######################################################
+# 95% confidence intervals in those quantities follow:
+#######################################################
+#	0	0.029828649
+#	0	0.029884434
+#	0	0.02989779
+#	0	0.029902414
+#	0	0.03003677
+#	0	0.029964151
+#	0	0.030085425
+#	0	0.030145418
+#	0	0.030196065
+#	0	0.030127198
+#	0	0.030209086
+#	0	0.03018987
+#	0	0.030188109
+#	0	0.03012214
+#	0	0.030102445
+#	0	0.03007256
+#	0	0.029998582
+#	0	0.03000589
+#	0	0.029920922
+#	0	0.029783424

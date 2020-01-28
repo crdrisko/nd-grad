@@ -1,15 +1,16 @@
 // Copyright (c) 2020 Cody R. Drisko. All rights reserved.
 // Licensed under the MIT License.See the LICENSE file in the project root for license information.
 //
-// Name: testSingleRNEMD.cpp - Version 1.0.0
+// Name: testSingleRNEMD.cpp - Version 1.0.1
 // Author: cdrisko
 // Date: 01/22/2020-14:01:34
-// Description: Provides 100% unit test coverage over all parameter parsing functions for FluxType=Single
+// Description: Provides 100% unit test coverage over all parameter parsing functions for FluxType = Single
 
 #include <gtest/gtest.h>
 #include "../../../src/OpenMD/src/include/rnemdFile.hpp"
 
 using namespace OpenMD::RNEMD;
+using namespace Utilities_API::PhysicalQuantities;
 
 RNEMDFilePtr rnemdFile {std::make_shared<RNEMDFile>("../../../src/OpenMD/samples/single.rnemd")};
 
@@ -112,6 +113,9 @@ TEST(testSingleRNEMD, singleFluxTypeCorrectReportParameters)
 
 TEST(testSingleRNEMD, singleFluxTypeCorrectRegionSplitting)
 {
+    int sizeOfRNEMDAxis {};
+    RNEMDDataPtr rnemdData { rnemdFile->getAllDataFromFile() };
+    
     std::vector<RNEMDRegionPtr> rnemdRegionData { rnemdFile->getRNEMDRegions() };
     RNEMDInferredParametersPtr rnemdInferred { rnemdFile->getRNEMDInferredParameters() };
 
@@ -119,6 +123,9 @@ TEST(testSingleRNEMD, singleFluxTypeCorrectRegionSplitting)
     for (int region {1}; region <= rnemdInferred->numberOfRegions; ++region)
     {
         RNEMDDataPtr individualRegionData { rnemdRegionData[region - 1]->getRegionSpecificData() };
+
+        if (region == 1)
+            rnemdRegionData[0]->makeFirstRegionContinuous(rnemdInferred->boxSize);
 
         std::vector<Length> z { individualRegionData->rnemdAxis };
         std::vector<Temperature> temp { individualRegionData->temperature };
@@ -132,9 +139,13 @@ TEST(testSingleRNEMD, singleFluxTypeCorrectRegionSplitting)
         for (size_t j {}; j < z.size(); ++j)
             outputFile << z[j] << " " << temp[j] << " "
                        << concAnion[j] << " " << concCation[j] << " "
-                       << Ez[j].convertQuantity(getMolarEnergyConversionFactor("kcal_mol", "eV_part"))
-                       << std::endl;
+                       << Ez[j].convertQuantity(Conversions::getMolarEnergyConversionFactor("kcal_mol", 
+                            "eV_part")) << std::endl;
 
         outputFile.close();
+
+        sizeOfRNEMDAxis += z.size();
     }
+
+    ASSERT_EQ(rnemdData->rnemdAxis.size(), sizeOfRNEMDAxis);
 }

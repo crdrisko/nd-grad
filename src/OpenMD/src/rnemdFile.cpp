@@ -1,7 +1,7 @@
 // Copyright (c) 2020 Cody R. Drisko. All rights reserved.
 // Licensed under the MIT License.See the LICENSE file in the project root for license information.
 //
-// Name: rnemdFile.cpp - Version 1.0.0
+// Name: rnemdFile.cpp - Version 1.0.1
 // Author: cdrisko
 // Date: 01/21/2020-14:16:00
 // Description: The implementation of RNEMD file parsing hidden using a pointer to implementation
@@ -10,7 +10,7 @@
 #include <utility>
 #include "include/rnemdFile.hpp"
 
-using namespace Utilities_API;
+using namespace Utilities_API::PhysicalQuantities;
 
 namespace OpenMD::RNEMD
 {
@@ -46,6 +46,7 @@ namespace OpenMD::RNEMD
     public:
         explicit RNEMDFileImpl(const RNEMDFile& rnemdFile);
 
+        RNEMDDataPtr getAllDataFromFile() const{ return this->allDataFromFile; }
         std::vector<RNEMDRegionPtr> getRNEMDRegions() const { return this->rnemdRegionData; }
         RNEMDBlockParametersPtr getRNEMDBlockParameters() const { return this->rnemdBlock; }
         RNEMDReportParametersPtr getRNEMDReportParameters() const { return this->rnemdReport; }
@@ -136,12 +137,12 @@ namespace OpenMD::RNEMD
             rnemdReport->trialCount = std::stoul(superMetaDataVector[32][3]);
             rnemdReport->failTrialCount = std::stoul(superMetaDataVector[33][3]);
 
-            rnemdInferred->dataFieldLabelIndex = 36;
+            rnemdInferred->dataFieldLabelIndex = 35;
 
             if (rnemdBlock->exchangeMethod == "NIVS")
             {
                 rnemdReport->failRootCount = std::stoul(superMetaDataVector[34][3]);
-                rnemdInferred->dataFieldLabelIndex = 37;
+                rnemdInferred->dataFieldLabelIndex = 36;
             }
         }
     }
@@ -156,7 +157,8 @@ namespace OpenMD::RNEMD
 
     int RNEMDFile::RNEMDFileImpl::findDataFieldStartLocation(std::string_view dataFieldLabel)
     {
-        if ( Strings::stringFinder(dataFieldLabel, metaDataVector[rnemdInferred->dataFieldLabelIndex]) )
+        if ( Utilities_API::Strings::stringFinder(dataFieldLabel, 
+            metaDataVector[rnemdInferred->dataFieldLabelIndex]) )
             return metaDataVector[rnemdInferred->dataFieldLabelIndex].find(dataFieldLabel);
 
         return std::numeric_limits<int>::max();
@@ -218,12 +220,11 @@ namespace OpenMD::RNEMD
                 {
                     // Only include concentrations for atom types that are actually printed out
                     for (int i {}; i < rnemdBlock->outputSelection.size(); ++i)
-                        if ( Strings::stringFinder(rnemdBlock->outputSelection[i],
+                        if ( Utilities_API::Strings::stringFinder(rnemdBlock->outputSelection[i],
                             metaDataVector[rnemdInferred->dataFieldLabelIndex]) )
                         {
-                            allDataFromFile->activity.push_back(parseDataFromFile<Concentration>(index + i));
-
                             startIndex += (1 + rnemdBlock->outputSelection[i].length());
+                            allDataFromFile->activity.push_back(parseDataFromFile<Concentration>(index + i));
                         }
 
                     startIndex += 2;
@@ -240,21 +241,14 @@ namespace OpenMD::RNEMD
 
     int RNEMDFile::RNEMDFileImpl::boundFinder(const Length& regionBound)
     {
-        std::vector<Length> rnemdAxis = allDataFromFile->rnemdAxis;
-
-        for (int i {}; i < rnemdAxis.size(); ++i)
+        if ( !std::is_sorted(allDataFromFile->rnemdAxis.begin(), allDataFromFile->rnemdAxis.end()) )
         {
-            int roundedValue {static_cast<int>(std::round(regionBound.getMagnitude()))};
-
-            if (static_cast<int>( std::round(rnemdAxis[i].getMagnitude()) ) == roundedValue)
-                return i;
-            else if (static_cast<int>( rnemdAxis[i].getMagnitude() ) == roundedValue)
-                return i;
-            else
-                continue;
+            std::sort(allDataFromFile->rnemdAxis.begin(), allDataFromFile->rnemdAxis.end());
+            Utilities_API::Errors::printNonFatalErrorMessage("Sorting...");
         }
 
-        return 0;
+        return std::lower_bound(allDataFromFile->rnemdAxis.begin(), allDataFromFile->rnemdAxis.end(),
+            regionBound) - allDataFromFile->rnemdAxis.begin();
     }
 
     std::vector<Length> RNEMDFile::RNEMDFileImpl::parseWrappedZSelections()
@@ -273,9 +267,6 @@ namespace OpenMD::RNEMD
             regionBounds.push_back(convertWrappedZ_to_z(rnemdBlock->selectionB[0]));
 
         regionBounds.push_back(rnemdInferred->boxSize);
-
-        for (const auto& bound : regionBounds)
-            Errors::printNonFatalErrorMessage(std::to_string(bound.getMagnitude()));
 
         return regionBounds;
     }
@@ -323,6 +314,11 @@ namespace OpenMD::RNEMD
     std::string RNEMDFile::getFileExtension() const
     {
         return p_Impl->getFileName()->getFileExtension();
+    }
+
+    RNEMDDataPtr RNEMDFile::getAllDataFromFile() const
+    { 
+        return p_Impl->getAllDataFromFile(); 
     }
 
     std::vector<RNEMDRegionPtr> RNEMDFile::getRNEMDRegions() const

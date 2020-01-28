@@ -16,41 +16,41 @@ namespace OpenMD::RNEMD
         nonRegionSpecificData = NonRegionSpecificData;
 
         if ( !nonRegionSpecificData->rnemdAxis.empty() )
-            regionSpecificData->rnemdAxis = this->regionSlicer(nonRegionSpecificData->rnemdAxis,
+            regionSpecificData->rnemdAxis = regionSlicer(nonRegionSpecificData->rnemdAxis,
                 lowerIndexOfRegion, upperIndexOfRegion, lowerIndexOfFirstRegion, upperIndexOfFirstRegion);
 
         if ( !nonRegionSpecificData->radius.empty() )
-            regionSpecificData->radius = this->regionSlicer(nonRegionSpecificData->radius,
+            regionSpecificData->radius = regionSlicer(nonRegionSpecificData->radius,
                 lowerIndexOfRegion, upperIndexOfRegion, lowerIndexOfFirstRegion, upperIndexOfFirstRegion);
 
         if ( !nonRegionSpecificData->temperature.empty() )
-            regionSpecificData->temperature = this->regionSlicer(nonRegionSpecificData->temperature,
+            regionSpecificData->temperature = regionSlicer(nonRegionSpecificData->temperature,
                 lowerIndexOfRegion, upperIndexOfRegion, lowerIndexOfFirstRegion, upperIndexOfFirstRegion);
 
         if ( !nonRegionSpecificData->density.empty() )
-            regionSpecificData->density = this->regionSlicer(nonRegionSpecificData->density,
+            regionSpecificData->density = regionSlicer(nonRegionSpecificData->density,
                 lowerIndexOfRegion, upperIndexOfRegion, lowerIndexOfFirstRegion, upperIndexOfFirstRegion );
 
         // Split all axis directions for velocity, angularVelocity and electric field seperately
         for (int i {}; i < 3; ++i)
         {
             if ( !nonRegionSpecificData->velocity[i].empty() )
-                regionSpecificData->velocity[i] = this->regionSlicer(nonRegionSpecificData->velocity[i],
+                regionSpecificData->velocity[i] = regionSlicer(nonRegionSpecificData->velocity[i],
                     lowerIndexOfRegion, upperIndexOfRegion, lowerIndexOfFirstRegion, upperIndexOfFirstRegion);
 
             if ( !nonRegionSpecificData->angularVelocity[i].empty() )
-                regionSpecificData->angularVelocity[i] = this->regionSlicer(nonRegionSpecificData->angularVelocity[i],
+                regionSpecificData->angularVelocity[i] = regionSlicer(nonRegionSpecificData->angularVelocity[i],
                     lowerIndexOfRegion, upperIndexOfRegion, lowerIndexOfFirstRegion, upperIndexOfFirstRegion);
 
             if ( !nonRegionSpecificData->electricField[i].empty() )
-                regionSpecificData->electricField[i] = this->regionSlicer(nonRegionSpecificData->electricField[i],
+                regionSpecificData->electricField[i] = regionSlicer(nonRegionSpecificData->electricField[i],
                     lowerIndexOfRegion, upperIndexOfRegion, lowerIndexOfFirstRegion, upperIndexOfFirstRegion);
         }
 
         // Split all species for concentration seperately
         for (int i {}; i < nonRegionSpecificData->activity.size(); ++i)
             if ( !nonRegionSpecificData->activity[i].empty() )
-                regionSpecificData->activity.push_back(this->regionSlicer(nonRegionSpecificData->activity[i],
+                regionSpecificData->activity.push_back(regionSlicer(nonRegionSpecificData->activity[i],
                     lowerIndexOfRegion, upperIndexOfRegion, lowerIndexOfFirstRegion, upperIndexOfFirstRegion));
     }
 
@@ -61,14 +61,14 @@ namespace OpenMD::RNEMD
     {
         std::vector<T> splitPhysicalQuantity;
 
-        for (int i {lowerIndexOfRegion + 1}; i <= upperIndexOfRegion; ++i)
+        for (int i {lowerIndexOfRegion}; i < upperIndexOfRegion; ++i)
             splitPhysicalQuantity.push_back(PhysicalQuantity[i]);
 
         // Append first region on back of the last, defaults to off
         if ( (lowerIndexOfFirstRegion != 0) || (upperIndexOfFirstRegion != 0) )
         {
             std::vector<T> temporaryStorageVector { regionSlicer(PhysicalQuantity,
-                lowerIndexOfFirstRegion - 1, upperIndexOfFirstRegion) };
+                lowerIndexOfFirstRegion, upperIndexOfFirstRegion) };
 
             for (const auto& quantity : temporaryStorageVector)
                 splitPhysicalQuantity.push_back(quantity);
