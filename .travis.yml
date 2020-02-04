@@ -21,8 +21,6 @@ notifications:
 before_script:
   - previousLocation=$( pwd )
   - bash ci/install-utilities-api.sh
-  - bash utilities-api/ci/getVersions.sh 
-  - bash utilities-api/ci/install-gtest.sh
   - cd $previousLocation
   - mkdir build && cd build
 script:

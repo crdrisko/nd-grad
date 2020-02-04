@@ -16,3 +16,8 @@ mkdir build && cd build
 cmake ../utilities-api/.
 
 make && sudo make install
+
+cd ../
+
+bash utilities-api/ci/getVersions.sh 
+bash utilities-api/ci/install-gtest.sh
