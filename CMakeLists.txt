@@ -35,6 +35,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY
     "Single directory for all executables.")
 
 find_library(Utilities_API utilities-api REQUIRED)
+include_directories(/usr/local/include/)
 
 
 ### Libraries / Executables ###
