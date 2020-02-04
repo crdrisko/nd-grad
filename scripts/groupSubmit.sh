@@ -1,5 +1,8 @@
 #!/bin/bash
-# Name: groupSubmit.sh - Version 1.0.3
+# Copyright (c) 2020 Cody R. Drisko. All rights reserved.
+# Licensed under the MIT License. See the LICENSE file in the project root for license information.
+#
+# Name: groupSubmit.sh - Version 1.0.0
 # Author: cdrisko
 # Date: 01/20/2020-10:22:05
 # Description: Gezelter group submission script creator
@@ -8,18 +11,14 @@
 ### Functions ###
 printHelpMessage()      #@ DESCRIPTION: Print the groupSubmit program's help message
 {                       #@ USAGE: printHelpMessage
-  printf "\nUSAGE: groupSubmit [-hr] [-i fileName] [-c cores] [-q queue]\n"
-  printf "    [-m message]\n\n"
+  printf "\nUSAGE: groupSubmit [-hr] [-i fileName] [-c cores] [-q queue]\n\n"
   printf "  -h  Prints help information about the groupSubmit program.\n"
   printf "  -r  Check for RNEMD outputs. Defaults to false/off.\n\n"
   printf "  -i  REQUIRED: Your input .omd file to be submitted.\n"
   printf "  -c  OPTIONAL: The queuing system and number of cores required. Arguments\n"
   printf "        should be wrapped in quotes. Default is smp 16.\n"
   printf "  -q  OPTIONAL: Queuing system you wish to use. Default is long, the other\n"
-  printf "        option is debug.\n"
-  printf "  -m  OPTIONAL: Send message to cdrisko@nd.edu with any errors that arise in\n"
-  printf "        the execution of the script. Again, arguments should be wrapped in\n"
-  printf "        quotes. Please be detailed in your description of the error.\n\n"
+  printf "        option is debug.\n\n"
   printf "EXAMPLE: groupSubmit -i testFile -c \"mpi-24 24\" -r\n\n"
 }
 
@@ -91,14 +90,12 @@ useRNEMD=0
 
 
 ### Runtime Configuration ###
-while getopts i:c:q:m:rh opt
+while getopts i:c:q:rh opt
 do
   case $opt in
     i) fileName=$OPTARG ;;
     c) cores="$OPTARG" ;;
     q) queue=$OPTARG ;;
-    m) echo "$OPTARG" | mail -s 'groupSubmit Script Issues' cdrisko@nd.edu
-       exit 1 ;;
     r) useRNEMD=1 ;;
     h) printHelpMessage
        exit 0 ;;

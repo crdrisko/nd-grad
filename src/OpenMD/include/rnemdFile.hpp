@@ -1,7 +1,7 @@
 // Copyright (c) 2020 Cody R. Drisko. All rights reserved.
 // Licensed under the MIT License.See the LICENSE file in the project root for license information.
 //
-// Name: rnemdFile.hpp - Version 1.0.1
+// Name: rnemdFile.hpp - Version 1.0.0
 // Author: cdrisko
 // Date: 01/20/2020-15:43:58
 // Description:  The "limited" public interface for the RNEMD file parsing implementation

@@ -1,7 +1,7 @@
 // Copyright (c) 2020 Cody R. Drisko. All rights reserved.
 // Licensed under the MIT License.See the LICENSE file in the project root for license information.
 //
-// Name: rnemdParameters.hpp - Version 1.0.2
+// Name: rnemdParameters.hpp - Version 1.0.0
 // Author: cdrisko
 // Date: 01/20/2020-15:44:50
 // Description: Defines data structures dedicated to holding the data from a given RNEMD file
@@ -9,10 +9,10 @@
 #ifndef RNEMDPARAMETERS_HPP
 #define RNEMDPARAMETERS_HPP
 
+#include <array>
 #include <memory>
 #include <vector>
 #include <string>
-#include <array>
 #include <utilities-api/utilities-api.hpp>
 
 namespace OpenMD::RNEMD

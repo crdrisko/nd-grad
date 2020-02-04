@@ -1,14 +1,14 @@
 // Copyright (c) 2020 Cody R. Drisko. All rights reserved.
 // Licensed under the MIT License.See the LICENSE file in the project root for license information.
 //
-// Name: rnemdFile.cpp - Version 1.0.2
+// Name: rnemdFile.cpp - Version 1.0.0
 // Author: cdrisko
 // Date: 01/21/2020-14:16:00
 // Description: The implementation of RNEMD file parsing hidden using a pointer to implementation
 
 #include <limits>
 #include <utility>
-#include "include/rnemdFile.hpp"
+#include "../include/rnemdFile.hpp"
 
 using namespace Utilities_API::PhysicalQuantities;
 

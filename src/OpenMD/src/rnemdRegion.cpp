@@ -1,12 +1,12 @@
 // Copyright (c) 2020 Cody R. Drisko. All rights reserved.
 // Licensed under the MIT License.See the LICENSE file in the project root for license information.
 //
-// Name: rnemdRegion.cpp - Version 1.0.1
+// Name: rnemdRegion.cpp - Version 1.0.0
 // Author: cdrisko
 // Date: 01/22/2020-15:21:57
 // Description: Defines the functionality pertaining to splitting the RNEMD file into separate regions
 
-#include "include/rnemdRegion.hpp"
+#include "../include/rnemdRegion.hpp"
 
 namespace OpenMD::RNEMD
 {

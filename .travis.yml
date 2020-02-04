@@ -1,0 +1,32 @@
+language: cpp
+os:
+  - linux
+  - osx
+compiler:
+  - clang
+  - gcc
+osx_image: 
+  - xcode11.2
+  - xcode10.1
+dist: bionic
+arch:
+  - arm64
+  - amd64
+
+notifications:
+  email: false
+  
+
+### Installation procedure ###
+before_script:
+  - previousLocation=$( pwd )
+  - bash ci/install-utilities-api.sh
+  - bash utilities-api/ci/getVersions.sh 
+  - bash utilities-api/ci/install-gtest.sh
+  - cd $previousLocation
+  - mkdir build && cd build
+script:
+  - cmake ../. -Dbuild_all_tests=ON
+  - make && sudo make install
+after_script:
+  - ctest

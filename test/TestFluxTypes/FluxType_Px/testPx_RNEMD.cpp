@@ -7,7 +7,7 @@
 // Description: Provides 100% unit test coverage over all parameter parsing functions for FluxType = Px
 
 #include <gtest/gtest.h>
-#include "../../../src/OpenMD/src/include/rnemdFile.hpp"
+#include "../../../src/OpenMD/include/rnemdFile.hpp"
 
 using namespace OpenMD::RNEMD;
 using namespace Utilities_API::PhysicalQuantities;

@@ -1,13 +1,13 @@
 // Copyright (c) 2020 Cody R. Drisko. All rights reserved.
 // Licensed under the MIT License.See the LICENSE file in the project root for license information.
 //
-// Name: testSingleRNEMD.cpp - Version 1.0.1
+// Name: testSingleRNEMD.cpp - Version 1.0.0
 // Author: cdrisko
 // Date: 01/22/2020-14:01:34
 // Description: Provides 100% unit test coverage over all parameter parsing functions for FluxType = Single
 
 #include <gtest/gtest.h>
-#include "../../../src/OpenMD/src/include/rnemdFile.hpp"
+#include "../../../src/OpenMD/include/rnemdFile.hpp"
 
 using namespace OpenMD::RNEMD;
 using namespace Utilities_API::PhysicalQuantities;
