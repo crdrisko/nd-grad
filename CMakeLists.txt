@@ -34,13 +34,14 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY
     CACHE PATH 
     "Single directory for all executables.")
 
-find_library(Utilities_API utilities-api REQUIRED)
-include_directories(/usr/local/include/)
-
 
 ### Libraries / Executables ###
 add_library(openmd-plugin SHARED ${SOURCES})
-target_link_libraries(openmd-plugin ${Utilities_API})
+
+find_library(Utilities_API utilities-api HINTS ${CMAKE_INSTALL_PREFIX}/lib)
+include_directories(${CMAKE_INSTALL_PREFIX}/include)
+
+target_link_libraries(openmd-plugin PUBLIC ${Utilities_API})
 
 
 ### Installation ###
@@ -50,7 +51,7 @@ install(TARGETS openmd-plugin
 install(DIRECTORY src/OpenMD/include/
         DESTINATION include/nd-research/openmd)
 
-foreach(BASH_FILE ${BASH_FILES})
+foreach (BASH_FILE ${BASH_FILES})
     ## Remove bash extensions and make scripts executable ##
     get_filename_component(filename "${BASH_FILE}" NAME_WE)
 
@@ -74,14 +75,14 @@ if (build_all_tests)
     enable_testing()
 
     ## Function to create a new test based off the pre-defined naming template ##
-    function(new_test testname interiorDirectory)
-        add_executable(test${testname}Functions test/${interiorDirectory}/test${testname}.cpp)
+    function (new_test testname interiorDirectory)
+        add_executable(test${testname} test/${interiorDirectory}/test${testname}.cpp)
 
-        target_link_libraries(test${testname}Functions ${GTEST_LIBRARIES} openmd-plugin ${Utilities_API})
+        target_link_libraries(test${testname} ${GTEST_LIBRARIES} openmd-plugin)
         
-        gtest_discover_tests(test${testname}Functions 
+        gtest_discover_tests(test${testname} 
                              WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/test/${interiorDirectory})
-    endfunction(new_test)
+    endfunction()
 
     ## Locate GTest ##
     find_package(GTest REQUIRED)
