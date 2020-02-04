@@ -16,16 +16,18 @@ namespace OpenMD::RNEMD
     class RNEMDRegion
     {
     private:
+        int lowerIndexOfRegion, upperIndexOfRegion;
+        int lowerIndexOfFirstRegion {}, upperIndexOfFirstRegion {};
+
         RNEMDDataPtr regionSpecificData { std::make_shared<RNEMDData>() };
         static inline RNEMDDataPtr nonRegionSpecificData { std::make_shared<RNEMDData>() };
 
         template<typename T>
-        std::vector<T> regionSlicer(std::vector<T> PhysicalQuantity, int lowerIndexOfRegion,
-            int upperIndexOfRegion, int lowerIndexOfFirstRegion = 0, int upperIndexOfFirstRegion = 0);
+        std::vector<T> regionSlicer(std::vector<T> PhysicalQuantity);
 
     public:
-        RNEMDRegion(const RNEMDDataPtr& NonRegionSpecificData, int lowerIndexOfRegion,
-            int upperIndexOfRegion, int lowerIndexOfFirstRegion = 0, int upperIndexOfFirstRegion = 0);
+        RNEMDRegion(const RNEMDDataPtr& NonRegionSpecificData, int LowerIndexOfRegion,
+            int UpperIndexOfRegion, int LowerIndexOfFirstRegion = 0, int UpperIndexOfFirstRegion = 0);
 
         RNEMDDataPtr getRegionSpecificData() const { return regionSpecificData; }
 
@@ -35,7 +37,6 @@ namespace OpenMD::RNEMD
                 if (z > regionSpecificData->rnemdAxis.back())
                     z -= boxSize;
         }
-
     };
 
     using RNEMDRegionPtr = std::shared_ptr<RNEMDRegion>;

@@ -10,59 +10,38 @@
 
 namespace OpenMD::RNEMD
 {
-    RNEMDRegion::RNEMDRegion(const RNEMDDataPtr& NonRegionSpecificData, int lowerIndexOfRegion,
-        int upperIndexOfRegion, int lowerIndexOfFirstRegion, int upperIndexOfFirstRegion)
+    RNEMDRegion::RNEMDRegion(const RNEMDDataPtr& NonRegionSpecificData, int LowerIndexOfRegion,
+        int UpperIndexOfRegion, int LowerIndexOfFirstRegion, int UpperIndexOfFirstRegion)
+        : lowerIndexOfRegion{LowerIndexOfRegion}, upperIndexOfRegion{UpperIndexOfRegion},
+          lowerIndexOfFirstRegion{LowerIndexOfFirstRegion}, upperIndexOfFirstRegion{UpperIndexOfFirstRegion}
     {
         nonRegionSpecificData = NonRegionSpecificData;
 
-        if ( !nonRegionSpecificData->rnemdAxis.empty() )
-            regionSpecificData->rnemdAxis = regionSlicer(nonRegionSpecificData->rnemdAxis,
-                lowerIndexOfRegion, upperIndexOfRegion, lowerIndexOfFirstRegion, upperIndexOfFirstRegion);
-
-        if ( !nonRegionSpecificData->radius.empty() )
-            regionSpecificData->radius = regionSlicer(nonRegionSpecificData->radius,
-                lowerIndexOfRegion, upperIndexOfRegion, lowerIndexOfFirstRegion, upperIndexOfFirstRegion);
-
-        if ( !nonRegionSpecificData->temperature.empty() )
-            regionSpecificData->temperature = regionSlicer(nonRegionSpecificData->temperature,
-                lowerIndexOfRegion, upperIndexOfRegion, lowerIndexOfFirstRegion, upperIndexOfFirstRegion);
-
-        if ( !nonRegionSpecificData->density.empty() )
-            regionSpecificData->density = regionSlicer(nonRegionSpecificData->density,
-                lowerIndexOfRegion, upperIndexOfRegion, lowerIndexOfFirstRegion, upperIndexOfFirstRegion );
-
-        if ( !nonRegionSpecificData->electricPotential.empty() )
-            regionSpecificData->electricPotential = regionSlicer(nonRegionSpecificData->electricPotential,
-                lowerIndexOfRegion, upperIndexOfRegion, lowerIndexOfFirstRegion, upperIndexOfFirstRegion );
+        regionSpecificData->rnemdAxis = regionSlicer(nonRegionSpecificData->rnemdAxis);
+        regionSpecificData->radius = regionSlicer(nonRegionSpecificData->radius);
+        regionSpecificData->temperature = regionSlicer(nonRegionSpecificData->temperature);
+        regionSpecificData->density = regionSlicer(nonRegionSpecificData->density);
+        regionSpecificData->electricPotential = regionSlicer(nonRegionSpecificData->electricPotential);
 
         // Split all axis directions for velocity, angularVelocity and electric field seperately
         for (int i {}; i < 3; ++i)
         {
-            if ( !nonRegionSpecificData->velocity[i].empty() )
-                regionSpecificData->velocity[i] = regionSlicer(nonRegionSpecificData->velocity[i],
-                    lowerIndexOfRegion, upperIndexOfRegion, lowerIndexOfFirstRegion, upperIndexOfFirstRegion);
-
-            if ( !nonRegionSpecificData->angularVelocity[i].empty() )
-                regionSpecificData->angularVelocity[i] = regionSlicer(nonRegionSpecificData->angularVelocity[i],
-                    lowerIndexOfRegion, upperIndexOfRegion, lowerIndexOfFirstRegion, upperIndexOfFirstRegion);
-
-            if ( !nonRegionSpecificData->electricField[i].empty() )
-                regionSpecificData->electricField[i] = regionSlicer(nonRegionSpecificData->electricField[i],
-                    lowerIndexOfRegion, upperIndexOfRegion, lowerIndexOfFirstRegion, upperIndexOfFirstRegion);
+            regionSpecificData->velocity[i] = regionSlicer(nonRegionSpecificData->velocity[i]);
+            regionSpecificData->angularVelocity[i] = regionSlicer(nonRegionSpecificData->angularVelocity[i]);
+            regionSpecificData->electricField[i] = regionSlicer(nonRegionSpecificData->electricField[i]);
         }
 
         // Split all species for concentration seperately
         for (int i {}; i < nonRegionSpecificData->activity.size(); ++i)
-            if ( !nonRegionSpecificData->activity[i].empty() )
-                regionSpecificData->activity.push_back(regionSlicer(nonRegionSpecificData->activity[i],
-                    lowerIndexOfRegion, upperIndexOfRegion, lowerIndexOfFirstRegion, upperIndexOfFirstRegion));
+            regionSpecificData->activity.push_back(regionSlicer(nonRegionSpecificData->activity[i]));
     }
 
-
     template<typename T>
-    std::vector<T> RNEMDRegion::regionSlicer(std::vector<T> PhysicalQuantity, int lowerIndexOfRegion,
-        int upperIndexOfRegion, int lowerIndexOfFirstRegion, int upperIndexOfFirstRegion)
+    std::vector<T> RNEMDRegion::regionSlicer(std::vector<T> PhysicalQuantity)
     {
+        if ( PhysicalQuantity.empty() )
+            return PhysicalQuantity;
+
         std::vector<T> splitPhysicalQuantity;
 
         for (int i {lowerIndexOfRegion}; i < upperIndexOfRegion; ++i)
@@ -71,8 +50,10 @@ namespace OpenMD::RNEMD
         // Append first region on back of the last, defaults to off
         if ( (lowerIndexOfFirstRegion != 0) || (upperIndexOfFirstRegion != 0) )
         {
-            std::vector<T> temporaryStorageVector { regionSlicer(PhysicalQuantity,
+            RNEMDRegionPtr firstRegion { std::make_shared<RNEMDRegion>(nonRegionSpecificData,
                 lowerIndexOfFirstRegion, upperIndexOfFirstRegion) };
+
+            std::vector<T> temporaryStorageVector { firstRegion->regionSlicer(PhysicalQuantity) };
 
             for (const auto& quantity : temporaryStorageVector)
                 splitPhysicalQuantity.push_back(quantity);
