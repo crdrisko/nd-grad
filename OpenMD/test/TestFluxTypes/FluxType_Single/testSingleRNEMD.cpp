@@ -1,18 +1,18 @@
 // Copyright (c) 2020 Cody R. Drisko. All rights reserved.
 // Licensed under the MIT License.See the LICENSE file in the project root for license information.
 //
-// Name: testCurrentRNEMD.cpp - Version 1.0.0
+// Name: testSingleRNEMD.cpp - Version 1.0.0
 // Author: cdrisko
-// Date: 01/22/2020-14:01:49
-// Description: Provides 100% unit test coverage over all parameter parsing functions for FluxType = Current
+// Date: 01/22/2020-14:01:34
+// Description: Provides 100% unit test coverage over all parameter parsing functions for FluxType = Single
 
 #include <gtest/gtest.h>
-#include "../../../src/OpenMD/include/rnemdFile.hpp"
+#include "../../../rnemd/include/rnemdFile.hpp"
 
 using namespace OpenMD::RNEMD;
 using namespace Utilities_API::PhysicalQuantities;
 
-RNEMDFilePtr rnemdFile {std::make_shared<RNEMDFile>("../../../src/OpenMD/samples/double.rnemd")};
+RNEMDFilePtr rnemdFile {std::make_shared<RNEMDFile>("../../../rnemd/samples/single.rnemd")};
 
 int main(int argc, char** argv)
 {
@@ -20,12 +20,12 @@ int main(int argc, char** argv)
     return RUN_ALL_TESTS();
 }
 
-TEST(testCurrentRNEMD, currentFluxTypeCorrectBlockParameters)
+TEST(testSingleRNEMD, singleFluxTypeCorrectBlockParameters)
 {
     RNEMDBlockParametersPtr rnemdBlock { rnemdFile->getRNEMDBlockParameters() };
 
     ASSERT_EQ("VSS", rnemdBlock->exchangeMethod);
-    ASSERT_EQ("Current", rnemdBlock->fluxType);
+    ASSERT_EQ("Single", rnemdBlock->fluxType);
     ASSERT_EQ("z", rnemdBlock->privilegedAxis);
     ASSERT_DOUBLE_EQ(1.0, rnemdBlock->exchangeTime.getMagnitude());
 
@@ -33,29 +33,29 @@ TEST(testCurrentRNEMD, currentFluxTypeCorrectBlockParameters)
     ASSERT_EQ("Na+", rnemdBlock->objectSelection[1]);
     ASSERT_EQ("Cl-", rnemdBlock->objectSelection[2]);
 
-    ASSERT_DOUBLE_EQ(-8.0, rnemdBlock->selectionA[0].getMagnitude());
-    ASSERT_DOUBLE_EQ(8.0, rnemdBlock->selectionA[1].getMagnitude());
+    ASSERT_DOUBLE_EQ(-19.5938, rnemdBlock->selectionA[0].getMagnitude());
+    ASSERT_DOUBLE_EQ(19.5938, rnemdBlock->selectionA[1].getMagnitude());
 
-    ASSERT_DOUBLE_EQ(31.1876, rnemdBlock->selectionB[0].getMagnitude());
-    ASSERT_DOUBLE_EQ(-31.1876, rnemdBlock->selectionB[1].getMagnitude());
+    ASSERT_DOUBLE_EQ(0.0, rnemdBlock->selectionB[0].getMagnitude());
+    ASSERT_DOUBLE_EQ(0.0, rnemdBlock->selectionB[1].getMagnitude());
 
     ASSERT_EQ("Cl-", rnemdBlock->outputSelection[0]);
     ASSERT_EQ("Na+", rnemdBlock->outputSelection[1]);
     ASSERT_EQ("SPCE_RB_0", rnemdBlock->outputSelection[2]);
 }
 
-TEST(testCurrentRNEMD, currentFluxTypeCorrectInferredParameters)
+TEST(testSingleRNEMD, singleFluxTypeCorrectInferredParameters)
 {
     RNEMDInferredParametersPtr rnemdInferred { rnemdFile->getRNEMDInferredParameters() };
 
-    ASSERT_EQ(4, rnemdInferred->numberOfRegions);
-    ASSERT_DOUBLE_EQ(16.0, rnemdInferred->slabWidth.getMagnitude());
+    ASSERT_EQ(2, rnemdInferred->numberOfRegions);
+    ASSERT_DOUBLE_EQ(39.1876, rnemdInferred->slabWidth.getMagnitude());
     ASSERT_EQ(38, rnemdInferred->dataFieldLabelIndex);
     ASSERT_DOUBLE_EQ(78.37511346, rnemdInferred->boxSize.getMagnitude());
-    ASSERT_TRUE(rnemdInferred->hasSelectionB);
+    ASSERT_FALSE(rnemdInferred->hasSelectionB);
 }
 
-TEST(testCurrentRNEMD, currentFluxTypeCorrectReportParameters)
+TEST(testSingleRNEMD, singleFluxTypeCorrectReportParameters)
 {
     RNEMDReportParametersPtr rnemdReport { rnemdFile->getRNEMDReportParameters() };
 
@@ -103,15 +103,15 @@ TEST(testCurrentRNEMD, currentFluxTypeCorrectReportParameters)
     ASSERT_DOUBLE_EQ(0.0, rnemdReport->JzL[1].getMagnitude());
     ASSERT_DOUBLE_EQ(0.0, rnemdReport->JzL[2].getMagnitude());
 
-    ASSERT_DOUBLE_EQ(4.2855502e-09, rnemdReport->Jc_total.getMagnitude());
-    ASSERT_DOUBLE_EQ(2.5987457e-09, rnemdReport->Jc_cation.getMagnitude());
-    ASSERT_DOUBLE_EQ(1.6868045e-09, rnemdReport->Jc_anion.getMagnitude());
+    ASSERT_DOUBLE_EQ(3.2316331e-09, rnemdReport->Jc_total.getMagnitude());
+    ASSERT_DOUBLE_EQ(1.9603903e-09, rnemdReport->Jc_cation.getMagnitude());
+    ASSERT_DOUBLE_EQ(1.2712428e-09, rnemdReport->Jc_anion.getMagnitude());
 
     ASSERT_EQ(5000000, rnemdReport->trialCount);
-    ASSERT_EQ(1566931, rnemdReport->failTrialCount);
+    ASSERT_EQ(2411203, rnemdReport->failTrialCount);
 }
 
-TEST(testCurrentRNEMD, currentFluxTypeCorrectSplitting)
+TEST(testSingleRNEMD, singleFluxTypeCorrectRegionSplitting)
 {
     int sizeOfRNEMDAxis {};
     RNEMDDataPtr rnemdData { rnemdFile->getAllDataFromFile() };
@@ -134,7 +134,7 @@ TEST(testCurrentRNEMD, currentFluxTypeCorrectSplitting)
         std::vector<ElectricField> Ez { individualRegionData->electricField[2] };
 
         std::ofstream outputFile;
-        outputFile.open("Current" + std::to_string(region) + ".txt");
+        outputFile.open("Single" + std::to_string(region) + ".txt");
 
         for (size_t j {}; j < z.size(); ++j)
             outputFile << z[j] << " " << temp[j] << " "

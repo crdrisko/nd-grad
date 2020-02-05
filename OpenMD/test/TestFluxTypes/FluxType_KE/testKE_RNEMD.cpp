@@ -7,12 +7,12 @@
 // Description: Provides 100% unit test coverage over all parameter parsing functions for FluxType = KE
 
 #include <gtest/gtest.h>
-#include "../../../src/OpenMD/include/rnemdFile.hpp"
+#include "../../../rnemd/include/rnemdFile.hpp"
 
 using namespace OpenMD::RNEMD;
 using namespace Utilities_API::PhysicalQuantities;
 
-RNEMDFilePtr rnemdFile {std::make_shared<RNEMDFile>("../../../src/OpenMD/samples/thermal.rnemd")};
+RNEMDFilePtr rnemdFile {std::make_shared<RNEMDFile>("../../../rnemd/samples/thermal.rnemd")};
 
 int main(int argc, char** argv)
 {

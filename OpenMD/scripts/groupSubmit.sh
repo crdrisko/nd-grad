@@ -11,10 +11,12 @@
 ### Functions ###
 printHelpMessage()      #@ DESCRIPTION: Print the groupSubmit program's help message
 {                       #@ USAGE: printHelpMessage
-  printf "\nUSAGE: groupSubmit [-hr] [-i fileName] [-c cores] [-q queue]\n\n"
+  printf "\nUSAGE: groupSubmit [-hr] [-i fileName] [-u username] [-c cores] [-q queue]\n\n"
   printf "  -h  Prints help information about the groupSubmit program.\n"
   printf "  -r  Check for RNEMD outputs. Defaults to false/off.\n\n"
   printf "  -i  REQUIRED: Your input .omd file to be submitted.\n"
+  printf "  -u  OPTIONAL: Your ND email username. Defaults to your CRC username and\n"
+  printf "        should only be set if the two are different.\n"
   printf "  -c  OPTIONAL: The queuing system and number of cores required. Arguments\n"
   printf "        should be wrapped in quotes. Default is smp 16.\n"
   printf "  -q  OPTIONAL: Queuing system you wish to use. Default is long, the other\n"
@@ -26,7 +28,7 @@ printCheckQuotaScript()     #@ DESCRIPTION: Print script used to notify user of 
 {                           #@ USAGE: printCheckQuotaScript
   printf "#!/bin/bash\n"
   printf "#$ -N checkQuota\n"
-  printf "#$ -M %s@nd.edu\n" $USER
+  printf "#$ -M %s@nd.edu\n" $username
   printf "#$ -m abe\n"
   printf "#$ -pe smp 1\n\n"
   printf "while true\n"
@@ -37,17 +39,17 @@ printCheckQuotaScript()     #@ DESCRIPTION: Print script used to notify user of 
   printf "  if [ \$quotaPercentage -ge 99 ]\n"
   printf "  then\n"
   printf "    ## Send DANGER if within 1%% of available quota\n"
-  printf "    mail -s 'DANGER' %s@nd.edu <<< 'You have used 99%% of your available quota.'\n" $USER
+  printf "    mail -s 'DANGER' %s@nd.edu <<< 'You have used 99%% of your available quota.'\n" $username
   printf "    sleepTime=5m\n\n"
   printf "  elif [ \$quotaPercentage -ge 95 ]\n"
   printf "  then\n"
   printf "    ## Send WARNING if within 5%% of available quota\n"
-  printf "    mail -s 'WARNING' %s@nd.edu <<< 'You have used 95%% of your available quota.'\n" $USER
+  printf "    mail -s 'WARNING' %s@nd.edu <<< 'You have used 95%% of your available quota.'\n" $username
   printf "    sleepTime=30m\n\n"
   printf "  elif [ \$quotaPercentage -ge 90 ]\n"
   printf "  then\n"
   printf "    ## Send CAUTION if within 10%% of available quota\n"
-  printf "    mail -s 'CAUTION' %s@nd.edu <<< 'You have used 90%% of your available quota.'\n" $USER
+  printf "    mail -s 'CAUTION' %s@nd.edu <<< 'You have used 90%% of your available quota.'\n" $username
   printf "    sleepTime=1h\n"
   printf "  fi\n\n"
   printf "  ## Put machine to sleep before next check\n"
@@ -65,7 +67,7 @@ printOpenmdSubmissionScript()   #@ DESCRIPTION: Print script used to run the Ope
 {                               #@ USAGE: printOpenmdSubmissionScript
   printf "#!/bin/bash\n"
   printf "#$ -N %s\n" ${fileName%%.*}
-  printf "#$ -M %s@nd.edu\n" $USER
+  printf "#$ -M %s@nd.edu\n" $username
   printf "#$ -m abe\n"
   printf "#$ -q %s\n" ${queue:-long}
   printf "#$ -pe %s\n\n" "${cores:="smp 16"}"
@@ -87,13 +89,15 @@ printOpenmdSubmissionScript()   #@ DESCRIPTION: Print script used to run the Ope
 
 ### Initial Variables / Default Values ###
 useRNEMD=0
+username=$USER
 
 
 ### Runtime Configuration ###
-while getopts i:c:q:rh opt
+while getopts i:u:c:q:rh opt
 do
   case $opt in
     i) fileName=$OPTARG ;;
+    u) username=$OPTARG ;;
     c) cores="$OPTARG" ;;
     q) queue=$OPTARG ;;
     r) useRNEMD=1 ;;
@@ -101,6 +105,7 @@ do
        exit 0 ;;
   esac
 done
+
 
 ### Main Code ###
 [ ${USER:?Issue finding your CRC username. Set the \$USER variable and try again.} ]
