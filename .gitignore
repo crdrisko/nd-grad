@@ -1,3 +1,4 @@
 .vscode/*
 InProgress/*
 OpenMD/test/**/*.txt
+OpenMD/test/**/*.out

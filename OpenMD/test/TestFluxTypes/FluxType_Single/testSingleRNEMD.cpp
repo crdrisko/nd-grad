@@ -27,7 +27,7 @@ TEST(testSingleRNEMD, singleFluxTypeCorrectBlockParameters)
     ASSERT_EQ("VSS", rnemdBlock->exchangeMethod);
     ASSERT_EQ("Single", rnemdBlock->fluxType);
     ASSERT_EQ("z", rnemdBlock->privilegedAxis);
-    ASSERT_DOUBLE_EQ(1.0, rnemdBlock->exchangeTime.getMagnitude());
+    ASSERT_DOUBLE_EQ(2.0, rnemdBlock->exchangeTime.getMagnitude());
 
     ASSERT_EQ("SPCE_RB_0", rnemdBlock->objectSelection[0]);
     ASSERT_EQ("Na+", rnemdBlock->objectSelection[1]);
@@ -132,6 +132,7 @@ TEST(testSingleRNEMD, singleFluxTypeCorrectRegionSplitting)
         std::vector<Concentration> concAnion { individualRegionData->activity[0] };
         std::vector<Concentration> concCation { individualRegionData->activity[1] };
         std::vector<ElectricField> Ez { individualRegionData->electricField[2] };
+        std::vector<ElectricPotential> Phi { individualRegionData->electricPotential };
 
         std::ofstream outputFile;
         outputFile.open("Single" + std::to_string(region) + ".txt");
@@ -140,8 +141,9 @@ TEST(testSingleRNEMD, singleFluxTypeCorrectRegionSplitting)
             outputFile << z[j] << " " << temp[j] << " "
                        << concAnion[j] << " " << concCation[j] << " "
                        << Ez[j].convertQuantity(Conversions::getMolarEnergyConversionFactor("kcal_mol",
+                            "eV_part")) << " "
+                       << Phi[j].convertQuantity(Conversions::getMolarEnergyConversionFactor("kcal_mol",
                             "eV_part")) << std::endl;
-
         outputFile.close();
 
         sizeOfRNEMDAxis += z.size();

@@ -79,6 +79,7 @@ if (build_all_tests)
     include_directories(${GTEST_INCLUDE_DIRS})
 
     ## Create all tests ##
+    new_test(ChargedRNEMDParameters TestChargedRNEMD)
     new_test(CurrentRNEMD TestFluxTypes/FluxType_Current)
     new_test(KE_RNEMD TestFluxTypes/FluxType_KE)
     new_test(Px_RNEMD TestFluxTypes/FluxType_Px)
