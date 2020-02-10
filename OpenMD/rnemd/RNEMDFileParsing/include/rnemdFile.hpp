@@ -15,9 +15,8 @@ namespace OpenMD::RNEMD
 {
     class RNEMDFile
     {
-        class RNEMDFileImpl;
-
     private:
+        class RNEMDFileImpl;
         std::string fullFileName;
         std::unique_ptr<RNEMDFileImpl> p_Impl;
 

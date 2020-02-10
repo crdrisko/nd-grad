@@ -6,8 +6,7 @@
 // Date: 01/28/2020-12:30:00
 // Description: Provides 100% unit test coverage over all parameter parsing functions for FluxType = Px
 
-#include <gtest/gtest.h>
-#include "../../../rnemd/include/rnemdFile.hpp"
+#include "../testAssertions.hpp"
 
 using namespace OpenMD::RNEMD;
 using namespace Utilities_API::PhysicalQuantities;
@@ -24,83 +23,93 @@ TEST(testPx_RNEMD, Px_FluxTypeCorrectBlockParameters)
 {
     RNEMDBlockParametersPtr rnemdBlock { rnemdFile->getRNEMDBlockParameters() };
 
-    ASSERT_EQ("VSS", rnemdBlock->exchangeMethod);
-    ASSERT_EQ("Px", rnemdBlock->fluxType);
-    ASSERT_EQ("z", rnemdBlock->privilegedAxis);
-    ASSERT_DOUBLE_EQ(2.0, rnemdBlock->exchangeTime.getMagnitude());
+    assertThat(rnemdFile, rnemdBlock->exchangeMethod).hasAValueOf("VSS");
+    assertThat(rnemdFile, rnemdBlock->fluxType).hasAValueOf("Px");
+    assertThat(rnemdFile, rnemdBlock->privilegedAxis).hasAValueOf("z");
+    assertThat(rnemdFile, rnemdBlock->exchangeTime.getMagnitude()).hasAValueNear(2.0);
 
-    ASSERT_EQ("Ar", rnemdBlock->objectSelection[0]);
+    assertThat(rnemdFile, rnemdBlock->objectSelection[0]).hasAValueOf("Ar");
 
-    ASSERT_DOUBLE_EQ(-10.0917, rnemdBlock->selectionA[0].getMagnitude());
-    ASSERT_DOUBLE_EQ(10.0917, rnemdBlock->selectionA[1].getMagnitude());
+    assertThat(rnemdFile, rnemdBlock->selectionA[0].getMagnitude()).hasAValueNear(-10.0917);
+    assertThat(rnemdFile, rnemdBlock->selectionA[1].getMagnitude()).hasAValueNear(10.0917);
 
-    ASSERT_DOUBLE_EQ(90.8257, rnemdBlock->selectionB[0].getMagnitude());
-    ASSERT_DOUBLE_EQ(-90.8257, rnemdBlock->selectionB[1].getMagnitude());
+    assertThat(rnemdFile, rnemdBlock->selectionB[0].getMagnitude()).hasAValueNear(90.8257);
+    assertThat(rnemdFile, rnemdBlock->selectionB[1].getMagnitude()).hasAValueNear(-90.8257);
 
-    ASSERT_EQ("Ar", rnemdBlock->outputSelection[0]);
+    assertThat(rnemdFile, rnemdBlock->outputSelection[0]).hasAValueOf("Ar");
 }
 
 TEST(testPx_RNEMD, Px_FluxTypeCorrectInferredParameters)
 {
     RNEMDInferredParametersPtr rnemdInferred { rnemdFile->getRNEMDInferredParameters() };
 
-    ASSERT_EQ(4, rnemdInferred->numberOfRegions);
-    ASSERT_DOUBLE_EQ(20.1834, rnemdInferred->slabWidth.getMagnitude());
-    ASSERT_EQ(35, rnemdInferred->dataFieldLabelIndex);
-    ASSERT_DOUBLE_EQ(201.83479699, rnemdInferred->boxSize.getMagnitude());
-    ASSERT_TRUE(rnemdInferred->hasSelectionB);
+    assertThat(rnemdFile, rnemdInferred->numberOfRegions).hasAValueOf(4);
+    assertThat(rnemdFile, rnemdInferred->slabWidth.getMagnitude()).hasAValueNear(20.1834);
+    assertThat(rnemdFile, rnemdInferred->dataFieldLabelIndex).hasAValueOf(35);
+    assertThat(rnemdFile, rnemdInferred->boxSize.getMagnitude()).hasAValueNear(201.83479699);
+    assertThat(rnemdFile, rnemdInferred->hasSelectionB).isTrue();
 }
 
 TEST(testPx_RNEMD, Px_FluxTypeCorrectReportParameters)
 {
     RNEMDReportParametersPtr rnemdReport { rnemdFile->getRNEMDReportParameters() };
 
-    ASSERT_DOUBLE_EQ(10000001.0, rnemdReport->runningTime.getMagnitude());
+    assertThat(rnemdFile, rnemdReport->runningTime.getMagnitude()).hasAValueNear(10000001.0);
 
-    ASSERT_DOUBLE_EQ(0, rnemdReport->kineticFlux.getMagnitude());
 
-    ASSERT_DOUBLE_EQ(1e-7, rnemdReport->momentumFlux[0].getMagnitude());
-    ASSERT_DOUBLE_EQ(0.0, rnemdReport->momentumFlux[1].getMagnitude());
-    ASSERT_DOUBLE_EQ(0.0, rnemdReport->momentumFlux[2].getMagnitude());
+    // Target Fluxes
+    assertThat(rnemdFile, rnemdReport->kineticFlux.getMagnitude()).hasAValueNear(0.0);
 
-    ASSERT_DOUBLE_EQ(0.0, rnemdReport->angularMomentumFlux[0].getMagnitude());
-    ASSERT_DOUBLE_EQ(0.0, rnemdReport->angularMomentumFlux[1].getMagnitude());
-    ASSERT_DOUBLE_EQ(0.0, rnemdReport->angularMomentumFlux[2].getMagnitude());
+    assertThat(rnemdFile, rnemdReport->momentumFlux[0].getMagnitude()).hasAValueNear(1e-7);
+    assertThat(rnemdFile, rnemdReport->momentumFlux[1].getMagnitude()).hasAValueNear(0.0);
+    assertThat(rnemdFile, rnemdReport->momentumFlux[2].getMagnitude()).hasAValueNear(0.0);
 
-    ASSERT_DOUBLE_EQ(0.0, rnemdReport->currentDensity.getMagnitude());
+    assertThat(rnemdFile, rnemdReport->angularMomentumFlux[0].getMagnitude()).hasAValueNear(0.0);
+    assertThat(rnemdFile, rnemdReport->angularMomentumFlux[1].getMagnitude()).hasAValueNear(0.0);
+    assertThat(rnemdFile, rnemdReport->angularMomentumFlux[2].getMagnitude()).hasAValueNear(0.0);
 
-    ASSERT_DOUBLE_EQ(0, rnemdReport->kineticTarget.getMagnitude());
+    assertThat(rnemdFile, rnemdReport->currentDensity.getMagnitude()).hasAValueNear(0.0);
 
-    ASSERT_DOUBLE_EQ(0.0012573236, rnemdReport->momentumTarget[0].getMagnitude());
-    ASSERT_DOUBLE_EQ(0.0, rnemdReport->momentumTarget[1].getMagnitude());
-    ASSERT_DOUBLE_EQ(0.0, rnemdReport->momentumTarget[2].getMagnitude());
 
-    ASSERT_DOUBLE_EQ(0.0, rnemdReport->angularMomentumTarget[0].getMagnitude());
-    ASSERT_DOUBLE_EQ(0.0, rnemdReport->angularMomentumTarget[1].getMagnitude());
-    ASSERT_DOUBLE_EQ(0.0, rnemdReport->angularMomentumTarget[2].getMagnitude());
+    // Target One-Time Exchanges
+    assertThat(rnemdFile, rnemdReport->kineticTarget.getMagnitude()).hasAValueNear(0.0);
 
-    ASSERT_DOUBLE_EQ(0.0, rnemdReport->kineticExchange.getMagnitude());
+    assertThat(rnemdFile, rnemdReport->momentumTarget[0].getMagnitude()).hasAValueNear(0.0012573236);
+    assertThat(rnemdFile, rnemdReport->momentumTarget[1].getMagnitude()).hasAValueNear(0.0);
+    assertThat(rnemdFile, rnemdReport->momentumTarget[2].getMagnitude()).hasAValueNear(0.0);
 
-    ASSERT_DOUBLE_EQ(6286.618, rnemdReport->momentumExchange[0].getMagnitude());
-    ASSERT_DOUBLE_EQ(0.0, rnemdReport->momentumExchange[1].getMagnitude());
-    ASSERT_DOUBLE_EQ(0.0, rnemdReport->momentumExchange[2].getMagnitude());
+    assertThat(rnemdFile, rnemdReport->angularMomentumTarget[0].getMagnitude()).hasAValueNear(0.0);
+    assertThat(rnemdFile, rnemdReport->angularMomentumTarget[1].getMagnitude()).hasAValueNear(0.0);
+    assertThat(rnemdFile, rnemdReport->angularMomentumTarget[2].getMagnitude()).hasAValueNear(0.0);
 
-    ASSERT_DOUBLE_EQ(0.0, rnemdReport->angularMomentumExchange[0].getMagnitude());
-    ASSERT_DOUBLE_EQ(0.0, rnemdReport->angularMomentumExchange[1].getMagnitude());
-    ASSERT_DOUBLE_EQ(0.0, rnemdReport->angularMomentumExchange[2].getMagnitude());
 
-    ASSERT_DOUBLE_EQ(0.0, rnemdReport->Jz.getMagnitude());
+    // Actual Exchange Totals
+    assertThat(rnemdFile, rnemdReport->kineticExchange.getMagnitude()).hasAValueNear(0.0);
 
-    ASSERT_DOUBLE_EQ(9.999999e-8, rnemdReport->JzP[0].getMagnitude());
-    ASSERT_DOUBLE_EQ(0.0, rnemdReport->JzP[1].getMagnitude());
-    ASSERT_DOUBLE_EQ(0.0, rnemdReport->JzP[2].getMagnitude());
+    assertThat(rnemdFile, rnemdReport->momentumExchange[0].getMagnitude()).hasAValueNear(6286.618);
+    assertThat(rnemdFile, rnemdReport->momentumExchange[1].getMagnitude()).hasAValueNear(0.0);
+    assertThat(rnemdFile, rnemdReport->momentumExchange[2].getMagnitude()).hasAValueNear(0.0);
 
-    ASSERT_DOUBLE_EQ(0.0, rnemdReport->JzL[0].getMagnitude());
-    ASSERT_DOUBLE_EQ(0.0, rnemdReport->JzL[1].getMagnitude());
-    ASSERT_DOUBLE_EQ(0.0, rnemdReport->JzL[2].getMagnitude());
+    assertThat(rnemdFile, rnemdReport->angularMomentumExchange[0].getMagnitude()).hasAValueNear(0.0);
+    assertThat(rnemdFile, rnemdReport->angularMomentumExchange[1].getMagnitude()).hasAValueNear(0.0);
+    assertThat(rnemdFile, rnemdReport->angularMomentumExchange[2].getMagnitude()).hasAValueNear(0.0);
 
-    ASSERT_EQ(5000000, rnemdReport->trialCount);
-    ASSERT_EQ(0, rnemdReport->failTrialCount);
+
+    // Actual Fluxes
+    assertThat(rnemdFile, rnemdReport->Jz.getMagnitude()).hasAValueNear(0.0);
+
+    assertThat(rnemdFile, rnemdReport->JzP[0].getMagnitude()).hasAValueNear(9.999999e-8);
+    assertThat(rnemdFile, rnemdReport->JzP[1].getMagnitude()).hasAValueNear(0.0);
+    assertThat(rnemdFile, rnemdReport->JzP[2].getMagnitude()).hasAValueNear(0.0);
+
+    assertThat(rnemdFile, rnemdReport->JzL[0].getMagnitude()).hasAValueNear(0.0);
+    assertThat(rnemdFile, rnemdReport->JzL[1].getMagnitude()).hasAValueNear(0.0);
+    assertThat(rnemdFile, rnemdReport->JzL[2].getMagnitude()).hasAValueNear(0.0);
+
+
+    // Exchange Statistics
+    assertThat(rnemdFile, rnemdReport->trialCount).hasAValueOf(5000000);
+    assertThat(rnemdFile, rnemdReport->failTrialCount).hasAValueOf(0);
 }
 
 TEST(testPx_RNEMD, Px_FluxTypeCorrectSplitting)

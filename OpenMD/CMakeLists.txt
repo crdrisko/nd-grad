@@ -1,7 +1,7 @@
 ### Files / Directories ###
 set(SOURCES
-    rnemd/src/rnemdFile.cpp
-    rnemd/src/rnemdRegion.cpp)
+    rnemd/RNEMDFileParsing/src/rnemdFile.cpp
+    rnemd/RNEMDFileParsing/src/rnemdRegion.cpp)
 
 set(BASH_FILES
     scripts/groupSubmit.sh)
@@ -38,8 +38,11 @@ target_link_libraries(openmd-plugin-static PUBLIC ${Utilities_API_static})
 install(TARGETS openmd-plugin openmd-plugin-static
         DESTINATION lib)
 
-install(DIRECTORY rnemd/include/
-        DESTINATION include/nd-research/openmd)
+install(DIRECTORY rnemd/RNEMDFileParsing/include/
+        DESTINATION include/nd-research/openmd/RNEMDFileParsing)
+
+install(DIRECTORY rnemd/ChargedRNEMD/include/
+        DESTINATION include/nd-research/openmd/ChargedRNEMD)
 
 foreach (BASH_FILE ${BASH_FILES})
     ## Remove bash extensions and make scripts executable ##

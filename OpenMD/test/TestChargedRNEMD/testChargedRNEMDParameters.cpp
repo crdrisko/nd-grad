@@ -4,10 +4,10 @@
 // Name: testChargedRNEMDParameters.cpp - Version 1.0.0
 // Author: cdrisko
 // Date: 01/23/2020-16:10:23
-// Description: Provides 100% unit test coverage over all parameter parsing functions for Charged-RNEMD FluxTypes
+// Description: Provides 100% unit test coverage over all parameter parsing functions for Charged-RNEMD
 
 #include <gtest/gtest.h>
-#include "../../rnemd/include/ChargedRNEMD/chargedRNEMDFile.hpp"
+#include "../../rnemd/ChargedRNEMD/include/chargedRNEMDFile.hpp"
 
 using namespace OpenMD::RNEMD::ChargedRNEMD;
 using namespace Utilities_API;
@@ -29,7 +29,8 @@ TEST(testChargedRNEMDParameters, correctChargeParameters)
     {
         Files::FileNamePtr fileName { std::make_shared<Files::FileName>(file) };
 
-        if ( (fileName->getBaseFileName() ==  "thermal.rnemd") || (fileName->getBaseFileName() ==  "momentum.rnemd") )
+        if ( (fileName->getBaseFileName() ==  "thermal.rnemd") 
+            || (fileName->getBaseFileName() ==  "momentum.rnemd") )
         {
             ASSERT_DEATH(
             {
@@ -43,6 +44,9 @@ TEST(testChargedRNEMDParameters, correctChargeParameters)
 
             ASSERT_EQ("Na+", rnemdParameters->cation->getIonName());
             ASSERT_EQ("Cl-", rnemdParameters->anion->getIonName());
+
+            ASSERT_EQ(1, rnemdParameters->cation->getIonIndex());
+            ASSERT_EQ(0, rnemdParameters->anion->getIonIndex());
 
             ASSERT_EQ(1.0, rnemdParameters->cation->getIonCharge().getMagnitude());
             ASSERT_EQ(-1.0, rnemdParameters->anion->getIonCharge().getMagnitude());

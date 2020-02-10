@@ -295,17 +295,15 @@ namespace OpenMD::RNEMD
                 upperBoundOfRegion = boundFinder(regionBounds[rnemdInferred->numberOfRegions + 1]);
             }
 
-            this->rnemdRegionData.push_back(std::make_shared<RNEMDRegion>(allDataFromFile, lowerBoundOfRegion,
-                upperBoundOfRegion, lowerBoundOfFirstRegion, upperBoundOfFirstRegion));
+            this->rnemdRegionData.push_back(std::make_shared<RNEMDRegion>(allDataFromFile, 
+                lowerBoundOfRegion, upperBoundOfRegion, lowerBoundOfFirstRegion, upperBoundOfFirstRegion));
         }
     }
 
 
-    // Definition of the RNEMDFile's public interface
-    RNEMDFile::RNEMDFile(std::string_view FullFileName) : fullFileName{FullFileName}
-    {
-        p_Impl = std::make_unique<RNEMDFileImpl>(*this);
-    }
+    // Definition of the RNEMDFile public interface
+    RNEMDFile::RNEMDFile(std::string_view FullFileName) : fullFileName{FullFileName}, 
+        p_Impl{ std::make_unique<RNEMDFileImpl>(*this) } {}
 
     RNEMDFile::~RNEMDFile() = default;
 

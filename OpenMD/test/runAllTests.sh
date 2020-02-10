@@ -25,16 +25,21 @@ compileAndRunTests()    #@ DESCRIPTION: Compile and run the test scripts using t
 }
 
 cd TestFluxTypes/FluxType_Current
-compileAndRunTests CurrentRNEMD "../../../rnemd/src/rnemdFile ../../../rnemd/src/rnemdRegion"
+compileAndRunTests CurrentRNEMD\
+    "../../../rnemd/RNEMDFileParsing/src/rnemdFile ../../../rnemd/RNEMDFileParsing/src/rnemdRegion"
 
 cd ../FluxType_KE
-compileAndRunTests KE_RNEMD "../../../rnemd/src/rnemdFile ../../../rnemd/src/rnemdRegion"
+compileAndRunTests KE_RNEMD\
+    "../../../rnemd/RNEMDFileParsing/src/rnemdFile ../../../rnemd/RNEMDFileParsing/src/rnemdRegion"
 
 cd ../FluxType_Px
-compileAndRunTests Px_RNEMD "../../../rnemd/src/rnemdFile ../../../rnemd/src/rnemdRegion"
+compileAndRunTests Px_RNEMD\
+    "../../../rnemd/RNEMDFileParsing/src/rnemdFile ../../../rnemd/RNEMDFileParsing/src/rnemdRegion"
 
 cd ../FluxType_Single
-compileAndRunTests SingleRNEMD "../../../rnemd/src/rnemdFile ../../../rnemd/src/rnemdRegion"
+compileAndRunTests SingleRNEMD\
+    "../../../rnemd/RNEMDFileParsing/src/rnemdFile ../../../rnemd/RNEMDFileParsing/src/rnemdRegion"
 
 cd ../../TestChargedRNEMD
-compileAndRunTests ChargedRNEMDParameters "../../rnemd/src/rnemdFile ../../rnemd/src/rnemdRegion"
+compileAndRunTests ChargedRNEMDParameters\
+    "../../rnemd/RNEMDFileParsing/src/rnemdFile ../../rnemd/RNEMDFileParsing/src/rnemdRegion"

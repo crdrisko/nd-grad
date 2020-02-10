@@ -9,7 +9,7 @@
 #ifndef CHARGEDRNEMDFILE_HPP
 #define CHARGEDRNEMDFILE_HPP
 
-#include "../rnemdFile.hpp"
+#include "../../RNEMDFileParsing/include/rnemdFile.hpp"
 #include "chargedRNEMDParameters.hpp"
 
 namespace OpenMD::RNEMD::ChargedRNEMD
@@ -35,13 +35,20 @@ namespace OpenMD::RNEMD::ChargedRNEMD
                 Utilities_API::Errors::printFatalErrorMessage(1,
                     "The supplied flux type does not match one of the Charged-RNEMD flux types");
 
+            int ionicSpeciesCount {};
+
             for (const auto& selection : rnemdParamters->block->outputSelection)
             {
                 if ( Utilities_API::Strings::stringFinder("-", selection) )
-                    rnemdParamters->anion = std::make_shared<IonicSpecies>(selection);
+                    rnemdParamters->anion = std::make_shared<IonicSpecies>(selection, ionicSpeciesCount);
 
                 else if ( Utilities_API::Strings::stringFinder("+", selection) )
-                    rnemdParamters->cation = std::make_shared<IonicSpecies>(selection);
+                    rnemdParamters->cation = std::make_shared<IonicSpecies>(selection, ionicSpeciesCount);
+
+                else
+                    continue;
+
+                ++ionicSpeciesCount;
             }
         }
 

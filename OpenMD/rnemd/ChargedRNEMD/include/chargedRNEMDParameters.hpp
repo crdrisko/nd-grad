@@ -9,13 +9,14 @@
 #ifndef CHARGEDRNEMDPARAMETERS_HPP
 #define CHARGEDRNEMDPARAMETERS_HPP
 
-#include "../rnemdParameters.hpp"
+#include "../../RNEMDFileParsing/include/rnemdParameters.hpp"
 
 namespace OpenMD::RNEMD::ChargedRNEMD
 {
     class IonicSpecies
     {
     private:
+        int ionIndex {};
         std::string ionName;
         Utilities_API::PhysicalQuantities::ElectricCharge ionCharge;
 
@@ -36,12 +37,12 @@ namespace OpenMD::RNEMD::ChargedRNEMD
         }
 
     public:
-        IonicSpecies() = default;
-        explicit IonicSpecies(std::string_view IonName) : ionName{IonName}
+        IonicSpecies(std::string_view IonName, int IonIndex = 0) : ionName{IonName}, ionIndex{IonIndex}
         {
             ionCharge = this->getChargeOfIon(ionName);
         }
 
+        int getIonIndex() const { return this->ionIndex; }
         std::string getIonName() const { return this->ionName; }
         Utilities_API::PhysicalQuantities::ElectricCharge getIonCharge() const { return this->ionCharge; }
     };
