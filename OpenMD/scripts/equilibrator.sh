@@ -185,4 +185,4 @@ performRunType Equilibration
 
 [ $outputFile ] && cp equil.eor $outputFile
 
-printf "Equilibration process is now complete."
+printf "Equilibration process is now complete.\n"
