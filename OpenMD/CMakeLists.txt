@@ -4,7 +4,8 @@ set(SOURCES
     rnemd/RNEMDFileParsing/src/rnemdRegion.cpp)
 
 set(BASH_FILES
-    scripts/groupSubmit.sh)
+    scripts/groupSubmit.sh
+    scripts/equilibrator.sh)
 
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY
     ${PROJECT_BINARY_DIR}/lib

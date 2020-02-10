@@ -31,10 +31,9 @@ Optional:
 Installation of ND-Research is designed to be as easy as possible. Using CMake, the following commands can be run:
 
 ```bash
-$ mkdir ND-Research && cd ND-Research
-$ git clone https://github.com/crdrisko/ND-Research.git
+$ git clone https://github.com/crdrisko/nd-research.git
 $ mkdir build && cd build
-$ cmake ../ND-Research/.
+$ cmake ../nd-research/.
 $ make && [sudo] make install
 ```
 
