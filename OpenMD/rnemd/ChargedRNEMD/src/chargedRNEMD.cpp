@@ -6,6 +6,7 @@
 // Date: 02/11/2020-12:42:57
 // Description: Main ChargedRNEMD program, takes a rnemd file as input and returns the analysis in a ecp file
 
+#include <iomanip>
 #include <utilities-api/files.hpp>
 #include "../include/chargedRNEMDFile.hpp"
 
