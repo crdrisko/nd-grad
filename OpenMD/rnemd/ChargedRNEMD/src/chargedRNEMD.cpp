@@ -4,9 +4,8 @@
 // Name: chargedRNEMD.cpp - Version 1.0.0
 // Author: cdrisko
 // Date: 02/11/2020-12:42:57
-// Description: Main ChargedRNEMD program, takes a .rnemd file as input and returns the analysis in a .ecp file
+// Description: Main ChargedRNEMD program, takes a rnemd file as input and returns the analysis in a ecp file
 
-#include <experimental/filesystem>
 #include <utilities-api/files.hpp>
 #include "../include/chargedRNEMDFile.hpp"
 
@@ -20,18 +19,10 @@ int main(int argc, char* argv[])
 {
     Utilities_API::Files::FileNamePtr fileName { std::make_shared<Utilities_API::Files::FileName>(argv[1]) };
 
-    // Sanatize user input with filesystem library
-    if ( !std::experimental::filesystem::is_directory(fileName->getRelativePathToFile()) )
-        Utilities_API::Errors::printFatalErrorMessage(1, "Input directory does not exist.");
-
-    std::experimental::filesystem::current_path(fileName->getRelativePathToFile());
-
-    if ( ( fileName->getFileExtension() != "rnemd" )
-        || ( !std::experimental::filesystem::is_regular_file(fileName->getBaseFileName()) ) )
+    if ( fileName->getFileExtension() != "rnemd" )
         Utilities_API::Errors::printFatalErrorMessage(1, "ChargedRNEMD input requires a valid .rnemd file.");
 
-
-    ChargedRNEMDFilePtr rnemdFile { std::make_shared<ChargedRNEMDFile>(fileName->getBaseFileName()) };
+    ChargedRNEMDFilePtr rnemdFile { std::make_shared<ChargedRNEMDFile>(fileName->getFullFileName()) };
     ChargedRNEMDParametersPtr rnemdParameters { rnemdFile->getChargedRNEMDParameters() };
     std::vector<OpenMD::RNEMD::RNEMDDataPtr> individualRegionData { rnemdFile->getIndividualRegionData() };
 
@@ -52,7 +43,7 @@ int main(int argc, char* argv[])
     Phi = advancedMathematicalFunctionCall<ElectricPotentialDimensionality>(cumulativeTrapz, z, Ez);
 
 
-    std::string outputFileName { fileName->getBaseFileName() };
+    std::string outputFileName { fileName->getFullFileName() };
     outputFileName = outputFileName.replace(outputFileName.find("rnemd"), 5, "ecp");
 
     std::ofstream newFile;

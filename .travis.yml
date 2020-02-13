@@ -6,7 +6,7 @@ compiler:
   - clang
   - gcc
 osx_image: 
-  - xcode11.2
+#  - xcode11.2
   - xcode10.1
 # dist: bionic
 # arch:
