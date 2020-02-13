@@ -6,6 +6,7 @@
 // Date: 01/24/2020-10:07:51
 // Description: Provides 100% unit test coverage over all parameter parsing functions for FluxType = KE
 
+#include <fstream>
 #include "../testAssertions.hpp"
 
 using namespace OpenMD::RNEMD;

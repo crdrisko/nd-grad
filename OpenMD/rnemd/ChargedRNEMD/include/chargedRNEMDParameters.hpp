@@ -9,6 +9,7 @@
 #ifndef CHARGEDRNEMDPARAMETERS_HPP
 #define CHARGEDRNEMDPARAMETERS_HPP
 
+#include <utilities-api/errors.hpp>
 #include "../../RNEMDFileParsing/include/rnemdParameters.hpp"
 
 namespace OpenMD::RNEMD::ChargedRNEMD
@@ -53,7 +54,6 @@ namespace OpenMD::RNEMD::ChargedRNEMD
     struct ChargedRNEMDParameters
     {
         IonicSpeciesPtr anion, cation;
-
         RNEMDBlockParametersPtr block;
         RNEMDReportParametersPtr report;
         RNEMDInferredParametersPtr inferred;

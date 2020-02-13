@@ -6,6 +6,7 @@
 // Date: 01/22/2020-14:01:34
 // Description: Provides 100% unit test coverage over all parameter parsing functions for FluxType = Single
 
+#include <fstream>
 #include "../testAssertions.hpp"
 
 using namespace OpenMD::RNEMD;

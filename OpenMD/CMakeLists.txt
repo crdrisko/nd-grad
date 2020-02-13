@@ -34,10 +34,19 @@ add_library(openmd-plugin-static STATIC ${SOURCES})
 find_library(Utilities_API_static utilities-api-static HINTS ${CMAKE_INSTALL_PREFIX}/lib)
 target_link_libraries(openmd-plugin-static PUBLIC ${Utilities_API_static})
 
+add_executable(chargedRNEMD rnemd/ChargedRNEMD/src/chargedRNEMD.cpp)
+target_link_libraries(chargedRNEMD openmd-plugin)
+
 
 ### Installation ###
 install(TARGETS openmd-plugin openmd-plugin-static
         DESTINATION lib)
+
+install(TARGETS chargedRNEMD
+        DESTINATION bin
+        PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE
+                    GROUP_READ             GROUP_EXECUTE
+                    WORLD_READ             WORLD_EXECUTE)
 
 install(DIRECTORY rnemd/RNEMDFileParsing/include/
         DESTINATION include/nd-research/openmd/RNEMDFileParsing)

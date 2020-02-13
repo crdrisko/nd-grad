@@ -24,8 +24,6 @@ namespace OpenMD::RNEMD
         explicit RNEMDFile(std::string_view FullFileName);
         ~RNEMDFile();
 
-        std::string getBaseFileName() const;
-        std::string getFileExtension() const;
         RNEMDDataPtr getAllDataFromFile() const;
         std::vector<RNEMDRegionPtr> getRNEMDRegions() const;
         RNEMDBlockParametersPtr getRNEMDBlockParameters() const;

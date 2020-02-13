@@ -13,7 +13,7 @@
 #include <memory>
 #include <vector>
 #include <string>
-#include <utilities-api/utilities-api.hpp>
+#include <utilities-api/physicalQuantities.hpp>
 
 namespace OpenMD::RNEMD
 {

@@ -7,6 +7,7 @@
 // Description: Provides 100% unit test coverage over all parameter parsing functions for Charged-RNEMD
 
 #include <gtest/gtest.h>
+#include <utilities-api/files.hpp>
 #include "../../rnemd/ChargedRNEMD/include/chargedRNEMDFile.hpp"
 
 using namespace OpenMD::RNEMD::ChargedRNEMD;
@@ -29,7 +30,7 @@ TEST(testChargedRNEMDParameters, correctChargeParameters)
     {
         Files::FileNamePtr fileName { std::make_shared<Files::FileName>(file) };
 
-        if ( (fileName->getBaseFileName() ==  "thermal.rnemd") 
+        if ( (fileName->getBaseFileName() ==  "thermal.rnemd")
             || (fileName->getBaseFileName() ==  "momentum.rnemd") )
         {
             ASSERT_DEATH(

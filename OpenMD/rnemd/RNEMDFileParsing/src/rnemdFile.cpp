@@ -8,6 +8,7 @@
 
 #include <limits>
 #include <utility>
+#include <utilities-api/files.hpp>
 #include "../include/rnemdFile.hpp"
 
 using namespace Utilities_API::PhysicalQuantities;
@@ -33,7 +34,6 @@ namespace OpenMD::RNEMD
         void setRNEMDReportParameters();
         void setRNEMDInferredParameters();
 
-        int boundFinder(const Length& regionBound);
         std::vector<Length> parseWrappedZSelections();
         int findDataFieldStartLocation(std::string_view dataFieldLabel);
         template<typename T> std::vector<T> parseDataFromFile(int startIndex = 0);
@@ -41,6 +41,13 @@ namespace OpenMD::RNEMD
         Length convertWrappedZ_to_z(Length wrapped_z) const
         {
             return (rnemdInferred->boxSize / 2.0_) + wrapped_z;
+        }
+
+        int boundFinder(const Length& regionBound) const
+        {
+            /* Need to account for the (binNumber * 0.5) * (boxSize / numberOfBins) issue */
+            return std::lower_bound(allDataFromFile->rnemdAxis.begin(), allDataFromFile->rnemdAxis.end(),
+                regionBound) - allDataFromFile->rnemdAxis.begin();
         }
 
     public:
@@ -242,18 +249,6 @@ namespace OpenMD::RNEMD
         }
     }
 
-    int RNEMDFile::RNEMDFileImpl::boundFinder(const Length& regionBound)
-    {
-        if ( !std::is_sorted(allDataFromFile->rnemdAxis.begin(), allDataFromFile->rnemdAxis.end()) )
-        {
-            std::sort(allDataFromFile->rnemdAxis.begin(), allDataFromFile->rnemdAxis.end());
-            Utilities_API::Errors::printNonFatalErrorMessage("Sorting...");
-        }
-
-        return std::lower_bound(allDataFromFile->rnemdAxis.begin(), allDataFromFile->rnemdAxis.end(),
-            regionBound) - allDataFromFile->rnemdAxis.begin();
-    }
-
     std::vector<Length> RNEMDFile::RNEMDFileImpl::parseWrappedZSelections()
     {
         std::vector<Length> regionBounds;
@@ -295,27 +290,17 @@ namespace OpenMD::RNEMD
                 upperBoundOfRegion = boundFinder(regionBounds[rnemdInferred->numberOfRegions + 1]);
             }
 
-            this->rnemdRegionData.push_back(std::make_shared<RNEMDRegion>(allDataFromFile, 
+            this->rnemdRegionData.push_back(std::make_shared<RNEMDRegion>(allDataFromFile,
                 lowerBoundOfRegion, upperBoundOfRegion, lowerBoundOfFirstRegion, upperBoundOfFirstRegion));
         }
     }
 
 
     // Definition of the RNEMDFile public interface
-    RNEMDFile::RNEMDFile(std::string_view FullFileName) : fullFileName{FullFileName}, 
+    RNEMDFile::RNEMDFile(std::string_view FullFileName) : fullFileName{FullFileName},
         p_Impl{ std::make_unique<RNEMDFileImpl>(*this) } {}
 
     RNEMDFile::~RNEMDFile() = default;
-
-    std::string RNEMDFile::getBaseFileName() const
-    {
-        return p_Impl->getFileName()->getBaseFileName();
-    }
-
-    std::string RNEMDFile::getFileExtension() const
-    {
-        return p_Impl->getFileName()->getFileExtension();
-    }
 
     RNEMDDataPtr RNEMDFile::getAllDataFromFile() const
     {
