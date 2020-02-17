@@ -16,8 +16,14 @@ using namespace Utilities_API::PhysicalQuantities;
 Energy calculateElectrochemicalPotential(Temperature temperature, Concentration conc, ElectricPotential Phi,
     ElectricCharge charge);
 
+ElectricConductivity calculateElectricalConductivity(CurrentDensity Jc, ElectricCharge q_ion, 
+    Force gradientOfElectrochemcialPotential);
+
 int main(int argc, char* argv[])
 {
+    if (argc != 1)
+        Utilities_API::Errors::printFatalErrorMessage(1, "The only valid command-line option is the filename.");
+
     Utilities_API::Files::FileNamePtr fileName { std::make_shared<Utilities_API::Files::FileName>(argv[1]) };
 
     if ( fileName->getFileExtension() != "rnemd" )
@@ -40,12 +46,62 @@ int main(int argc, char* argv[])
             z.push_back(individualRegionData[region - 1]->rnemdAxis[i]);
             Ez.push_back(individualRegionData[region - 1]->electricField[2][i]);
         }
+    
+    Phi = Mathematics::mathematicalFunction<Length, ElectricField, int, ElectricPotential>
+        (z, Ez, 0, Mathematics::cumulativeTrapz);       // Shift to the middle of the box as the reference point
 
-    Phi = advancedMathematicalFunctionCall<ElectricPotentialDimensionality>(cumulativeTrapz, z, Ez);
+
+    std::vector< std::vector<Energy> > electrochemicalPotential_anion;
+    std::vector< std::vector<Energy> > electrochemicalPotential_cation;
+
+    size_t runningIndex {};
+
+    for (int region {1}; region <= rnemdParameters->inferred->numberOfRegions; ++region)
+    {
+        std::vector<Energy> temporaryStorageVector_anion;
+        std::vector<Energy> temporaryStorageVector_cation;
+
+        for (size_t i {}; i < individualRegionData[region - 1]->rnemdAxis.size(); ++i)
+        {
+            temporaryStorageVector_anion.push_back( calculateElectrochemicalPotential(
+                individualRegionData[region - 1]->temperature[i],
+                individualRegionData[region - 1]->activity[rnemdParameters->anion->getIonIndex()][i],
+                Phi[runningIndex],
+                rnemdParameters->anion->getIonCharge()) );
+
+            temporaryStorageVector_cation.push_back( calculateElectrochemicalPotential(
+                individualRegionData[region - 1]->temperature[i],
+                individualRegionData[region - 1]->activity[rnemdParameters->cation->getIonIndex()][i],
+                Phi[runningIndex],
+                rnemdParameters->cation->getIonCharge()) );
+        }
+
+        electrochemicalPotential_anion.push_back(temporaryStorageVector_anion);
+        electrochemicalPotential_cation.push_back(temporaryStorageVector_cation);
+
+        ++runningIndex;
+    }
+
+
+    std::vector< std::map<std::string, long double> > fittingParameters_anion;
+    std::vector< std::map<std::string, long double> > fittingParameters_cation;
+
+    for (int region {1}; region <= rnemdParameters->inferred->numberOfRegions; ++region)
+    {
+        fittingParameters_anion.push_back( 
+            Mathematics::mathematicalFunction< Length, Energy, std::map<std::string, long double> >
+                (individualRegionData[region - 1]->rnemdAxis, electrochemicalPotential_anion[region - 1], 
+                    Mathematics::linearLeastSquaresFitting) );
+
+        fittingParameters_cation.push_back(
+            Mathematics::mathematicalFunction< Length, Energy, std::map<std::string, long double> >
+                (individualRegionData[region - 1]->rnemdAxis, electrochemicalPotential_cation[region - 1], 
+                    Mathematics::linearLeastSquaresFitting) );
+    }
 
 
     std::string outputFileName { fileName->getFullFileName() };
-    outputFileName = outputFileName.replace(outputFileName.find("rnemd"), 5, "ecp");
+    outputFileName = outputFileName.replace(outputFileName.find_last_of("rnemd"), 5, "ecp");
 
     std::ofstream newFile;
     newFile.open (outputFileName);
@@ -54,28 +110,24 @@ int main(int argc, char* argv[])
     newFile << "# BoxSize: " << rnemdParameters->inferred->boxSize << "\n";
     newFile << "# SlabWidth: " << rnemdParameters->inferred->slabWidth << "\n";
     newFile << "# Jc " << rnemdParameters->anion->getIonName() << " = "
-            << rnemdParameters->report->Jc_anion
-                .convertQuantity(Conversions::getElectricChargeConversionFactor("e", "C"))
-                .convertQuantity(1.0_ / Conversions::getAreaConversionFactor("Ang2", "m2"))
-                .convertQuantity(1.0_ / Conversions::getSIPrexixConversionFactor("femto", "base"))
-            << " (e/Ang^2/fs)\n";
+            << rnemdParameters->report->Jc_anion << " (e/Ang^2/fs)\n";
     newFile << "# Jc " << rnemdParameters->cation->getIonName() << " = "
-            << rnemdParameters->report->Jc_cation
-                .convertQuantity(Conversions::getElectricChargeConversionFactor("e", "C"))
-                .convertQuantity(1.0_ / Conversions::getAreaConversionFactor("Ang2", "m2"))
-                .convertQuantity(1.0_ / Conversions::getSIPrexixConversionFactor("femto", "base"))
-            << " (e/Ang^2/fs)\n\n";
+            << rnemdParameters->report->Jc_cation << " (e/Ang^2/fs)\n\n";
 
-    size_t runningIndex {};
+    runningIndex = 0;
 
     for (int region {1}; region <= rnemdParameters->inferred->numberOfRegions; ++region)
     {
         newFile << "############################################ Region " << region
                 << " Data ############################################\n";
         newFile << "# Ionic Conductivity " << rnemdParameters->anion->getIonName()
-                << " = SIGMA_ANION (S/m)\n";
+                << " = "<< calculateElectricalConductivity(
+                    rnemdParameters->report->Jc_anion, rnemdParameters->anion->getIonCharge(), 
+                    Force(fittingParameters_anion[region - 1]["slope"]) ) << " (S/m)\n";
         newFile << "# Ionic Conductivity " << rnemdParameters->cation->getIonName()
-                << " = SIGMA_CATION (S/m)\n";
+                << " = "<< calculateElectricalConductivity(
+                    rnemdParameters->report->Jc_cation, rnemdParameters->cation->getIonCharge(), 
+                    Force(fittingParameters_cation[region - 1]["slope"]) ) << " (S/m)\n";
         newFile << "# Molar Conductivity " << rnemdParameters->anion->getIonName()
                 << " = LAMBDA_ANION (S cm^2/mol)\n";
         newFile << "# Molar Conductivity " << rnemdParameters->cation->getIonName()
@@ -102,16 +154,8 @@ int main(int argc, char* argv[])
                     Conversions::getMolarEnergyConversionFactor("kcal_mol", "eV_part")) << "\t"
                 << std::setw(8) << Phi[runningIndex].convertQuantity(
                     Conversions::getMolarEnergyConversionFactor("kcal_mol", "eV_part")) << "\t"
-                << std::setw(8) << calculateElectrochemicalPotential(
-                    individualRegionData[region - 1]->temperature[i],
-                    individualRegionData[region - 1]->activity[rnemdParameters->anion->getIonIndex()][i],
-                    Phi[runningIndex],
-                    rnemdParameters->anion->getIonCharge()) << "\t"
-                << std::setw(8) << calculateElectrochemicalPotential(
-                    individualRegionData[region - 1]->temperature[i],
-                    individualRegionData[region - 1]->activity[rnemdParameters->cation->getIonIndex()][i],
-                    Phi[runningIndex],
-                    rnemdParameters->cation->getIonCharge()) << "\n";
+                << std::setw(8) << electrochemicalPotential_anion[region - 1][i] << "\t"
+                << std::setw(8) << electrochemicalPotential_cation[region - 1][i] << "\n";
 
             ++runningIndex;
         }
@@ -129,8 +173,19 @@ Energy calculateElectrochemicalPotential(Temperature temperature, Concentration 
             * temperature * conc.takeNaturalLogarithm();
 
     Energy electricFieldContribution
-        = Phi.convertQuantity(Conversions::getMolarEnergyConversionFactor("kcal_mol", "eV_part"))
-                * charge;
+        = Phi.convertQuantity(Conversions::getMolarEnergyConversionFactor("kcal_mol", "eV_part")) * charge;
 
     return diffusionContribution + electricFieldContribution;
+}
+
+
+ElectricConductivity calculateElectricalConductivity(CurrentDensity Jc_ion, ElectricCharge q_ion, 
+    Force gradientOfElectrochemcialPotential)
+{
+    ElectricConductivity sigma_ion = q_ion * Jc_ion / gradientOfElectrochemcialPotential;
+    
+    return sigma_ion.negateQuantity()
+        .convertQuantity(Conversions::getElectricChargeConversionFactor("e", "C"))
+        .convertQuantity(1.0_ / Conversions::getLengthConversionFactor("Ang", "m"))
+        .convertQuantity(1.0_ / Conversions::getSIPrexixConversionFactor("femto", "base")); 
 }

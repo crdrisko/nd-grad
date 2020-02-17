@@ -32,7 +32,7 @@ namespace OpenMD::RNEMD
         }
 
         // Split all species for concentration seperately
-        for (int i {}; i < nonRegionSpecificData->activity.size(); ++i)
+        for (size_t i {}; i < nonRegionSpecificData->activity.size(); ++i)
             regionSpecificData->activity.push_back(regionSlicer(nonRegionSpecificData->activity[i]));
     }
 

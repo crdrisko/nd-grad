@@ -11,10 +11,12 @@ if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Release")
 endif()
 
+add_compile_options(-Wall -Wextra -pedantic -Werror)
+
 if (CMAKE_COMPILER_IS_GNUCXX)
-    add_definitions("-Wno-psabi")
+    add_definitions(-Wno-psabi)
 endif()
 
 
-### The ND-Research Projects to Include ###
+### The ND-Research projects to include ###
 add_subdirectory(OpenMD)

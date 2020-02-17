@@ -226,7 +226,7 @@ namespace OpenMD::RNEMD
                 else if (pair.first == allDataFromFile->dataLabels[6])
                 {
                     // Only include concentrations for atom types that are actually printed out
-                    for (int i {}; i < rnemdBlock->outputSelection.size(); ++i)
+                    for (size_t i {}; i < rnemdBlock->outputSelection.size(); ++i)
                         if ( Utilities_API::Strings::stringFinder(rnemdBlock->outputSelection[i],
                             metaDataVector[rnemdInferred->dataFieldLabelIndex]) )
                         {

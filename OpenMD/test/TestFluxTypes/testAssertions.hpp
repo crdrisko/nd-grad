@@ -10,7 +10,6 @@
 #define TESTASSERTIONS_HPP
 
 #include <gtest/gtest.h>
-#include "../../rnemd/RNEMDFileParsing/include/rnemdFile.hpp"
 
 namespace OpenMD::RNEMD
 {
@@ -19,12 +18,10 @@ namespace OpenMD::RNEMD
     {
     private:
         T parameter;
-        RNEMDFilePtr rnemdFile;
 
     public:
         FluxTypeAssert() = delete;
-        FluxTypeAssert(const RNEMDFilePtr& RNEMDFile, const T& Parameter = 0) : rnemdFile{RNEMDFile},
-            parameter{Parameter} {}
+        FluxTypeAssert(const T& Parameter = 0) : parameter{Parameter} {}
 
         void isTrue() const { ASSERT_TRUE(parameter); }
         void isFalse() const { ASSERT_FALSE(parameter); }
@@ -33,9 +30,9 @@ namespace OpenMD::RNEMD
     };
 
     template<typename T>
-    FluxTypeAssert<T> assertThat(const RNEMDFilePtr& rnemdFile, const T& parameter)
+    FluxTypeAssert<T> assertThat(const T& parameter)
     {
-        FluxTypeAssert<T> assert {rnemdFile, parameter};
+        FluxTypeAssert<T> assert {parameter};
         return assert;
     }
 }

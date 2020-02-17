@@ -17,8 +17,8 @@ namespace OpenMD::RNEMD::ChargedRNEMD
     class IonicSpecies
     {
     private:
-        int ionIndex {};
         std::string ionName;
+        int ionIndex;
         Utilities_API::PhysicalQuantities::ElectricCharge ionCharge;
 
         static inline std::map<std::string_view, int> magnitudeOfIonicCharge { {"Na+",  1},

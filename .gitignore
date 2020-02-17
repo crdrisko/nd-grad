@@ -1,2 +1,2 @@
-OpenMD/test/**/*.txt
+OpenMD/test/TestFluxTypes/**/*.txt
 OpenMD/test/**/*.out
