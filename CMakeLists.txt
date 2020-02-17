@@ -11,7 +11,11 @@ if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Release")
 endif()
 
-add_compile_options(-Wall -Wextra -pedantic -Werror)
+option(strict_compilation "Compile with all warnings and errors shown." OFF)
+
+if (strict_compilation)
+    add_compile_options(-Wall -Wextra -pedantic -Werror)
+endif()
 
 if (CMAKE_COMPILER_IS_GNUCXX)
     add_definitions(-Wno-psabi)

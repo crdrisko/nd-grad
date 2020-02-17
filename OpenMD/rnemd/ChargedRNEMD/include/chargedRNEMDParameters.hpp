@@ -28,11 +28,11 @@ namespace OpenMD::RNEMD::ChargedRNEMD
 
         Utilities_API::PhysicalQuantities::ElectricCharge getChargeOfIon(std::string_view ionName)
         {
-            Utilities_API::PhysicalQuantities::ElectricCharge charge(magnitudeOfIonicCharge[ionName]);
-
             if (magnitudeOfIonicCharge.count(ionName) != 1)
                 Utilities_API::Errors::printFatalErrorMessage(1,
-                    "Only Cl-, Na+, Li+, and Ca+2 are currently supported.");
+                    "Only Cl-, Na+, Li+, and Ca+2 are currently supported");
+
+            Utilities_API::PhysicalQuantities::ElectricCharge charge(magnitudeOfIonicCharge[ionName]);
 
             return (ionName == "Cl-") ? charge.negateQuantity() : charge;
         }
