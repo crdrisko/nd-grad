@@ -32,20 +32,30 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY
 ### Libraries / Executables ###
 include_directories(${CMAKE_INSTALL_PREFIX}/include)
 
-add_library(openmd-plugin SHARED ${RNEMDFileParsing_SOURCES})
-find_library(Utilities_API utilities-api HINTS ${CMAKE_INSTALL_PREFIX}/lib)
-target_link_libraries(openmd-plugin PUBLIC ${Utilities_API})
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../cmake")
 
-add_library(openmd-plugin-static STATIC ${RNEMDFileParsing_SOURCES})
-find_library(Utilities_API_static utilities-api-static HINTS ${CMAKE_INSTALL_PREFIX}/lib)
-target_link_libraries(openmd-plugin-static PUBLIC ${Utilities_API_static})
+find_package(Utilities_API REQUIRED)
+
+if (UTILITIES_API_FOUND)
+    set(UTILITIES_API_INCLUDE_DIR ${UTILITIES_API_INCLUDE_DIR})
+    set(UTILITIES_API_LIBRARIES ${UTILITIES_API_LIBRARIES})
+    include_directories(${UTILITIES_API_INCLUDE_DIR})
+endif()
+
+add_library(openmd-plugin SHARED ${RNEMDFileParsing_SOURCES})
+# find_library(Utilities_API utilities-api HINTS ${CMAKE_INSTALL_PREFIX}/lib)
+target_link_libraries(openmd-plugin PUBLIC ${UTILITIES_API_LIBRARIES})
+
+# add_library(openmd-plugin-static STATIC ${RNEMDFileParsing_SOURCES})
+# find_library(Utilities_API_static utilities-api-static HINTS ${CMAKE_INSTALL_PREFIX}/lib)
+# target_link_libraries(openmd-plugin-static PUBLIC ${Utilities_API_static})
 
 add_executable(chargedRNEMD ${ChargedRNEMD_SOURCES})
 target_link_libraries(chargedRNEMD openmd-plugin)
 
 
 ### Installation ###
-install(TARGETS openmd-plugin openmd-plugin-static
+install(TARGETS openmd-plugin # openmd-plugin-static
         DESTINATION lib)
 
 install(TARGETS chargedRNEMD
