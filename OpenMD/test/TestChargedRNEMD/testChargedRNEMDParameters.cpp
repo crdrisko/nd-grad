@@ -43,14 +43,14 @@ TEST(testChargedRNEMDParameters, correctChargeParameters)
             ChargedRNEMDFilePtr rnemdFile { std::make_shared<ChargedRNEMDFile>(file) };
             ChargedRNEMDParametersPtr rnemdParameters { rnemdFile->getChargedRNEMDParameters() };
 
-            ASSERT_EQ("Na+", rnemdParameters->cation->getIonName());
-            ASSERT_EQ("Cl-", rnemdParameters->anion->getIonName());
+            ASSERT_EQ("Na+", rnemdParameters->ionicSpecies[1]->getIonName());
+            ASSERT_EQ("Cl-", rnemdParameters->ionicSpecies[0]->getIonName());
 
-            ASSERT_EQ(1, rnemdParameters->cation->getIonIndex());
-            ASSERT_EQ(0, rnemdParameters->anion->getIonIndex());
+            ASSERT_EQ(1, rnemdParameters->ionicSpecies[1]->getIonIndex());
+            ASSERT_EQ(0, rnemdParameters->ionicSpecies[0]->getIonIndex());
 
-            ASSERT_EQ(1.0, rnemdParameters->cation->getIonCharge().getMagnitude());
-            ASSERT_EQ(-1.0, rnemdParameters->anion->getIonCharge().getMagnitude());
+            ASSERT_EQ(1.0, rnemdParameters->ionicSpecies[1]->getIonCharge().getMagnitude());
+            ASSERT_EQ(-1.0, rnemdParameters->ionicSpecies[0]->getIonCharge().getMagnitude());
         }
     }
 }
