@@ -41,11 +41,10 @@ namespace OpenMD::RNEMD::ChargedRNEMD
 
             for (const auto& selection : rnemdParameters->block->outputSelection)
             {
-                if ( Utilities_API::Strings::stringFinder("-", selection) )
-                    rnemdParameters->anion = std::make_shared<IonicSpecies>(selection, ionicSpeciesCount);
-
-                else if ( Utilities_API::Strings::stringFinder("+", selection) )
-                    rnemdParameters->cation = std::make_shared<IonicSpecies>(selection, ionicSpeciesCount);
+                if ( (Utilities_API::Strings::stringFinder("-", selection))
+                  || (Utilities_API::Strings::stringFinder("+", selection)) )
+                    rnemdParameters->ionicSpecies.push_back(std::make_shared<IonicSpecies>(selection,
+                        ionicSpeciesCount));
 
                 else
                     continue;

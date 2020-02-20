@@ -1,7 +1,13 @@
 ### Files / Directories ###
-set(SOURCES
+set(RNEMDFileParsing_SOURCES
     rnemd/RNEMDFileParsing/src/rnemdFile.cpp
     rnemd/RNEMDFileParsing/src/rnemdRegion.cpp)
+
+set(ChargedRNEMD_SOURCES
+    rnemd/ChargedRNEMD/src/chargedRNEMD.cpp
+    rnemd/ChargedRNEMD/src/chargedRNEMDAnalysisMethod.cpp
+    rnemd/ChargedRNEMD/src/regionFitting.cpp
+    rnemd/ChargedRNEMD/src/regionDifference.cpp)
 
 set(BASH_FILES
     scripts/groupSubmit.sh
@@ -26,15 +32,15 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY
 ### Libraries / Executables ###
 include_directories(${CMAKE_INSTALL_PREFIX}/include)
 
-add_library(openmd-plugin SHARED ${SOURCES})
+add_library(openmd-plugin SHARED ${RNEMDFileParsing_SOURCES})
 find_library(Utilities_API utilities-api HINTS ${CMAKE_INSTALL_PREFIX}/lib)
 target_link_libraries(openmd-plugin PUBLIC ${Utilities_API})
 
-add_library(openmd-plugin-static STATIC ${SOURCES})
+add_library(openmd-plugin-static STATIC ${RNEMDFileParsing_SOURCES})
 find_library(Utilities_API_static utilities-api-static HINTS ${CMAKE_INSTALL_PREFIX}/lib)
 target_link_libraries(openmd-plugin-static PUBLIC ${Utilities_API_static})
 
-add_executable(chargedRNEMD rnemd/ChargedRNEMD/src/chargedRNEMD.cpp)
+add_executable(chargedRNEMD ${ChargedRNEMD_SOURCES})
 target_link_libraries(chargedRNEMD openmd-plugin)
 
 

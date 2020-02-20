@@ -8,7 +8,6 @@
 
 #include <limits>
 #include <utility>
-#include <utilities-api/files.hpp>
 #include "../include/rnemdFile.hpp"
 
 using namespace Utilities_API::PhysicalQuantities;
@@ -301,6 +300,11 @@ namespace OpenMD::RNEMD
         p_Impl{ std::make_unique<RNEMDFileImpl>(*this) } {}
 
     RNEMDFile::~RNEMDFile() = default;
+
+    Utilities_API::Files::FileNamePtr RNEMDFile::getFileName() const
+    {
+        return p_Impl->getFileName();
+    }
 
     RNEMDDataPtr RNEMDFile::getAllDataFromFile() const
     {

@@ -53,10 +53,10 @@ namespace OpenMD::RNEMD::ChargedRNEMD
 
     struct ChargedRNEMDParameters
     {
-        IonicSpeciesPtr anion, cation;
         RNEMDBlockParametersPtr block;
         RNEMDReportParametersPtr report;
         RNEMDInferredParametersPtr inferred;
+        std::vector<IonicSpeciesPtr> ionicSpecies;
     };
 
     using ChargedRNEMDParametersPtr = std::shared_ptr<ChargedRNEMDParameters>;
