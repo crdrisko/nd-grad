@@ -1,6 +1,6 @@
 language: cpp
 os:
-  - linux
+  # - linux
   - osx
 compiler:
   - clang
@@ -8,10 +8,10 @@ compiler:
 osx_image: 
 #  - xcode11.2
   - xcode10.1
-dist: bionic
-arch:
-  - arm64
-  - amd64
+# dist: bionic
+# arch:
+#   - arm64
+#   - amd64
 
 notifications:
   email: false
@@ -27,5 +27,5 @@ script:
   - cmake ../. -Dbuild_all_tests=ON
   - make && sudo make install
 after_script:
-  - cd OpenMD
+  - cd OpenMD/test
   - ctest

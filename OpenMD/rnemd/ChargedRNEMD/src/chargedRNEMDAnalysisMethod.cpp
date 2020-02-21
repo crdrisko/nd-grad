@@ -204,12 +204,15 @@ namespace OpenMD::RNEMD::ChargedRNEMD
         std::ofstream outputFile;
         outputFile.open(outputFileName);
 
-        outputFile << "# FileName: " << outputFileName << "\n";
-        outputFile << "# FluxType: " << rnemdParameters->block->fluxType << "\n";
-        outputFile << "# BoxSize: " << rnemdParameters->inferred->boxSize << "\n";
-        outputFile << "# SlabWidth: " << rnemdParameters->inferred->slabWidth << "\n";
+        outputFile << "# FileName = " << outputFileName << "\n";
+        outputFile << "# FluxType = " << rnemdParameters->block->fluxType << "\n";
+        outputFile << "# BoxSize = " << rnemdParameters->inferred->boxSize << "\n";
+        outputFile << "# SlabWidth = " << rnemdParameters->inferred->slabWidth << "\n";
         outputFile << "# Jc anion = " << rnemdParameters->report->Jc_anion << " (e/Ang^2/fs)\n";
-        outputFile << "# Jc cation = " << rnemdParameters->report->Jc_cation << " (e/Ang^2/fs)\n\n";
+        outputFile << "# Jc cation = " << rnemdParameters->report->Jc_cation << " (e/Ang^2/fs)\n";
+        outputFile << "# Percentage Of Kicks Failed = " << 
+            ( static_cast<double>(rnemdParameters->report->failTrialCount) 
+                / static_cast<double>(rnemdParameters->report->trialCount) ) * 100 << "%\n#\n";
 
         for (int region {1}; region <= rnemdParameters->inferred->numberOfRegions; ++region)
         {
@@ -230,7 +233,7 @@ namespace OpenMD::RNEMD::ChargedRNEMD
                            << mobility[ion->getIonIndex()][region - 1] << " (m^2/V/s)\n";
             }
 
-            outputFile << "\n# z (Ang)\t Temp (K)\t";
+            outputFile << "#\n# z (Ang)\t Temp (K)\t";
             for (const auto& ion : rnemdParameters->ionicSpecies)
                 outputFile << " [" << ion->getIonName() << "] (M)\t";
             outputFile << " Ez (V/Ang)\t Phi (V)\t";
@@ -267,6 +270,8 @@ namespace OpenMD::RNEMD::ChargedRNEMD
 
                     outputFile << "\n";
             }
+
+            outputFile << "\n";
         }
     }
 
