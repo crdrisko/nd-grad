@@ -10,7 +10,7 @@
 #define RNEMDFILE_HPP
 
 #include <utilities-api/files.hpp>
-#include "rnemdRegion.hpp"
+#include "rnemdParameters.hpp"
 
 namespace OpenMD::RNEMD
 {
@@ -26,10 +26,7 @@ namespace OpenMD::RNEMD
         ~RNEMDFile();
 
         RNEMDDataPtr getAllDataFromFile() const;
-        std::vector<RNEMDRegionPtr> getRNEMDRegions() const;
-        RNEMDBlockParametersPtr getRNEMDBlockParameters() const;
-        RNEMDReportParametersPtr getRNEMDReportParameters() const;
-        RNEMDInferredParametersPtr getRNEMDInferredParameters() const;
+        RNEMDParametersPtr getRNEMDParameters() const;
         Utilities_API::Files::FileNamePtr getFileName() const;
     };
 

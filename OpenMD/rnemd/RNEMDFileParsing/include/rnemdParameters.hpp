@@ -84,6 +84,16 @@ namespace OpenMD::RNEMD
     using RNEMDInferredParametersPtr = std::shared_ptr<RNEMDInferredParameters>;
 
 
+    struct RNEMDParameters
+    {
+        RNEMDBlockParametersPtr block { std::make_shared<RNEMDBlockParameters>() };
+        RNEMDReportParametersPtr report { std::make_shared<RNEMDReportParameters>() };
+        RNEMDInferredParametersPtr inferred { std::make_shared<RNEMDInferredParameters>() };
+    };
+
+    using RNEMDParametersPtr = std::shared_ptr<RNEMDParameters>;
+
+
     struct RNEMDData
     {
         static inline std::vector<std::string> dataLabels { "z(Angstroms)",

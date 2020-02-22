@@ -23,7 +23,7 @@ int main(int argc, char** argv)
 
 TEST(testKE_RNEMD, KE_FluxTypeCorrectBlockParameters)
 {
-    RNEMDBlockParametersPtr rnemdBlock { rnemdFile->getRNEMDBlockParameters() };
+    RNEMDBlockParametersPtr rnemdBlock { rnemdFile->getRNEMDParameters()->block };
 
     assertThat(rnemdBlock->exchangeMethod).hasAValueOf("VSS");
     assertThat(rnemdBlock->fluxType).hasAValueOf("KE");
@@ -43,7 +43,7 @@ TEST(testKE_RNEMD, KE_FluxTypeCorrectBlockParameters)
 
 TEST(testKE_RNEMD, KE_FluxTypeCorrectInferredParameters)
 {
-    RNEMDInferredParametersPtr rnemdInferred { rnemdFile->getRNEMDInferredParameters() };
+    RNEMDInferredParametersPtr rnemdInferred { rnemdFile->getRNEMDParameters()->inferred };
 
     assertThat(rnemdInferred->numberOfRegions).hasAValueOf(4);
     assertThat(rnemdInferred->slabWidth.getMagnitude()).hasAValueNear(4.0);
@@ -54,7 +54,7 @@ TEST(testKE_RNEMD, KE_FluxTypeCorrectInferredParameters)
 
 TEST(testKE_RNEMD, KE_FluxTypeCorrectReportParameters)
 {
-    RNEMDReportParametersPtr rnemdReport { rnemdFile->getRNEMDReportParameters() };
+    RNEMDReportParametersPtr rnemdReport { rnemdFile->getRNEMDParameters()->report };
 
     assertThat(rnemdReport->runningTime.getMagnitude()).hasAValueNear(10000002.0);
 
@@ -112,37 +112,4 @@ TEST(testKE_RNEMD, KE_FluxTypeCorrectReportParameters)
     // Exchange Statistics
     assertThat(rnemdReport->trialCount).hasAValueOf(5000000);
     assertThat(rnemdReport->failTrialCount).hasAValueOf(0);
-}
-
-TEST(testKE_RNEMD, KE_FluxTypeCorrectSplitting)
-{
-    int sizeOfRNEMDAxis {};
-    RNEMDDataPtr rnemdData { rnemdFile->getAllDataFromFile() };
-
-    std::vector<RNEMDRegionPtr> rnemdRegionData { rnemdFile->getRNEMDRegions() };
-    RNEMDInferredParametersPtr rnemdInferred { rnemdFile->getRNEMDInferredParameters() };
-
-    // Test Correct Region Specific Data
-    for (int region {1}; region <= rnemdInferred->numberOfRegions; ++region)
-    {
-        RNEMDDataPtr individualRegionData { rnemdRegionData[region - 1]->getRegionSpecificData() };
-
-        if (region == 1)
-            rnemdRegionData[0]->makeFirstRegionContinuous(rnemdInferred->boxSize);
-
-        std::vector<Length> z { individualRegionData->rnemdAxis };
-        std::vector<Temperature> temp { individualRegionData->temperature };
-
-        std::ofstream outputFile;
-        outputFile.open("Thermal" + std::to_string(region) + ".txt");
-
-        for (size_t j {}; j < z.size(); ++j)
-            outputFile << z[j] << " " << temp[j] << std::endl;
-
-        outputFile.close();
-
-        sizeOfRNEMDAxis += z.size();
-    }
-
-    ASSERT_EQ(rnemdData->rnemdAxis.size(), sizeOfRNEMDAxis);
 }

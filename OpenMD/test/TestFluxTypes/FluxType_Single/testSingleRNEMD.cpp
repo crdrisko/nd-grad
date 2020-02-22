@@ -23,7 +23,7 @@ int main(int argc, char** argv)
 
 TEST(testSingleRNEMD, singleFluxTypeCorrectBlockParameters)
 {
-    RNEMDBlockParametersPtr rnemdBlock { rnemdFile->getRNEMDBlockParameters() };
+    RNEMDBlockParametersPtr rnemdBlock { rnemdFile->getRNEMDParameters()->block };
 
     assertThat(rnemdBlock->exchangeMethod).hasAValueOf("VSS");
     assertThat(rnemdBlock->fluxType).hasAValueOf("Single");
@@ -47,7 +47,7 @@ TEST(testSingleRNEMD, singleFluxTypeCorrectBlockParameters)
 
 TEST(testSingleRNEMD, singleFluxTypeCorrectInferredParameters)
 {
-    RNEMDInferredParametersPtr rnemdInferred { rnemdFile->getRNEMDInferredParameters() };
+    RNEMDInferredParametersPtr rnemdInferred { rnemdFile->getRNEMDParameters()->inferred };
 
     assertThat(rnemdInferred->numberOfRegions).hasAValueOf(2);
     assertThat(rnemdInferred->slabWidth.getMagnitude()).hasAValueNear(39.1876);
@@ -58,7 +58,7 @@ TEST(testSingleRNEMD, singleFluxTypeCorrectInferredParameters)
 
 TEST(testSingleRNEMD, singleFluxTypeCorrectReportParameters)
 {
-    RNEMDReportParametersPtr rnemdReport { rnemdFile->getRNEMDReportParameters() };
+    RNEMDReportParametersPtr rnemdReport { rnemdFile->getRNEMDParameters()->report };
 
     assertThat(rnemdReport->runningTime.getMagnitude()).hasAValueNear(10000002.0);
 
@@ -120,45 +120,4 @@ TEST(testSingleRNEMD, singleFluxTypeCorrectReportParameters)
     // Exchange Statistics
     assertThat(rnemdReport->trialCount).hasAValueOf(5000000);
     assertThat(rnemdReport->failTrialCount).hasAValueOf(2411203);
-}
-
-TEST(testSingleRNEMD, singleFluxTypeCorrectRegionSplitting)
-{
-    int sizeOfRNEMDAxis {};
-    RNEMDDataPtr rnemdData { rnemdFile->getAllDataFromFile() };
-
-    std::vector<RNEMDRegionPtr> rnemdRegionData { rnemdFile->getRNEMDRegions() };
-    RNEMDInferredParametersPtr rnemdInferred { rnemdFile->getRNEMDInferredParameters() };
-
-    // Test Correct Region Specific Data
-    for (int region {1}; region <= rnemdInferred->numberOfRegions; ++region)
-    {
-        RNEMDDataPtr individualRegionData { rnemdRegionData[region - 1]->getRegionSpecificData() };
-
-        if (region == 1)
-            rnemdRegionData[0]->makeFirstRegionContinuous(rnemdInferred->boxSize);
-
-        std::vector<Length> z { individualRegionData->rnemdAxis };
-        std::vector<Temperature> temp { individualRegionData->temperature };
-        std::vector<Concentration> concAnion { individualRegionData->activity[0] };
-        std::vector<Concentration> concCation { individualRegionData->activity[1] };
-        std::vector<ElectricField> Ez { individualRegionData->electricField[2] };
-        std::vector<ElectricPotential> Phi { individualRegionData->electricPotential };
-
-        std::ofstream outputFile;
-        outputFile.open("Single" + std::to_string(region) + ".txt");
-
-        for (size_t j {}; j < z.size(); ++j)
-            outputFile << z[j] << " " << temp[j] << " "
-                       << concAnion[j] << " " << concCation[j] << " "
-                       << Ez[j].convertQuantity(Conversions::getMolarEnergyConversionFactor("kcal_mol",
-                            "eV_part")) << " "
-                       << Phi[j].convertQuantity(Conversions::getMolarEnergyConversionFactor("kcal_mol",
-                            "eV_part")) << std::endl;
-        outputFile.close();
-
-        sizeOfRNEMDAxis += z.size();
-    }
-
-    ASSERT_EQ(rnemdData->rnemdAxis.size(), sizeOfRNEMDAxis);
 }
