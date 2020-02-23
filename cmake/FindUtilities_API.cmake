@@ -4,12 +4,12 @@ if (UTILITIES_API_INCLUDE_DIR AND UTILITIES_API_LIBRARIES)
 
 else()
     if (NOT UTILITIES_API_INCLUDE_DIR)
-        find_path(UTILITIES_API_INCLUDE_DIR utilities-api
-                  PATHS /usr/include/utilities-api
+        find_path(UTILITIES_API_INCLUDE_DIR utils-api
+                  PATHS /usr/include/utils-api
                         /usr/include
-                        /usr/local/include/utilities-api
+                        /usr/local/include/utils-api
                         /usr/local/include
-                        ~/include/utilities-api
+                        ~/include/utils-api
                         ~/include)
     endif()
 

@@ -22,8 +22,8 @@ namespace OpenMD::RNEMD::ChargedRNEMD
 
             for (int region {1}; region <= rnemdParameters->inferred->numberOfRegions; ++region)
             {
-                temporaryFittingParameters.push_back(Mathematics::mathematicalFunction< Length, Energy,
-                    std::map<std::string, long double> >(individualRegionData[region - 1]->rnemdAxis,
+                temporaryFittingParameters.push_back(Mathematics::mathematicalFunction< std::map<std::string,
+                    long double> >(individualRegionData[region - 1]->rnemdAxis,
                         electrochemicalPotential[ion->getIonIndex()][region - 1],
                             Mathematics::linearLeastSquaresFitting));
 

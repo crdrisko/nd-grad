@@ -7,7 +7,6 @@
 // Description: Provides 100% unit test coverage over all parameter parsing functions for Charged-RNEMD
 
 #include <gtest/gtest.h>
-#include <utilities-api/files.hpp>
 #include "../../rnemd/ChargedRNEMD/include/chargedRNEMDFile.hpp"
 
 using namespace OpenMD::RNEMD::ChargedRNEMD;

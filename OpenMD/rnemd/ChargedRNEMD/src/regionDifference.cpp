@@ -21,19 +21,19 @@ namespace OpenMD::RNEMD::ChargedRNEMD
             std::vector< std::map<std::string, long double> > temporaryFittingParameters;
 
             Energy avgElectrochemicalPotential_region2
-                = Mathematics::mathematicalFunction<Energy>(electrochemicalPotential[ion->getIonIndex()][1],
+                = Mathematics::mathematicalFunction(electrochemicalPotential[ion->getIonIndex()][1],
                     Mathematics::calculateAverage);
 
             Energy avgElectrochemicalPotential_region4
-                = Mathematics::mathematicalFunction<Energy>(electrochemicalPotential[ion->getIonIndex()][3],
+                = Mathematics::mathematicalFunction(electrochemicalPotential[ion->getIonIndex()][3],
                     Mathematics::calculateAverage);
 
             for (int region {1}; region <= rnemdParameters->inferred->numberOfRegions; ++region)
             {
                 if (region == 1 || region == 3)
                 {
-                    temporaryFittingParameters.push_back(Mathematics::mathematicalFunction< Length, Energy,
-                        std::map<std::string, long double> >(individualRegionData[region - 1]->rnemdAxis,
+                    temporaryFittingParameters.push_back(Mathematics::mathematicalFunction< std::map<std::string,
+                        long double> >(individualRegionData[region - 1]->rnemdAxis,
                             electrochemicalPotential[ion->getIonIndex()][region - 1],
                                 Mathematics::linearLeastSquaresFitting));
 

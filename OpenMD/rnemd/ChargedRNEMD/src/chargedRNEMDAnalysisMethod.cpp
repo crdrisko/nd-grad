@@ -63,7 +63,7 @@ namespace OpenMD::RNEMD::ChargedRNEMD
     MolarConductivity ChargedRNEMDAnalysisMethod::InternalCalculations::calculateMolarConductivity(
         ElectricConductivity sigma_ion, const std::vector<Concentration>& conc_ion) const
     {
-        Concentration averageConcentration { Mathematics::mathematicalFunction<Concentration>(conc_ion,
+        Concentration averageConcentration { Mathematics::mathematicalFunction(conc_ion,
             Mathematics::calculateAverage) };
 
         MolarConductivity lambda_ion = Calculations::calculateMolarConductivity(sigma_ion,
@@ -119,8 +119,8 @@ namespace OpenMD::RNEMD::ChargedRNEMD
             }
         }
 
-        Phi = Mathematics::mathematicalFunction<Length, ElectricField, int, ElectricPotential>(z, Ez,
-            referencePoint, Mathematics::cumulativeTrapz);
+        Phi = Mathematics::mathematicalFunction<ElectricPotential, int>(z, Ez, referencePoint,
+            Mathematics::cumulativeTrapz);
 
         size_t runningIndex {};
 

@@ -9,7 +9,7 @@
 #ifndef CHARGEDRNEMDFILE_HPP
 #define CHARGEDRNEMDFILE_HPP
 
-#include <utilities-api/strings.hpp>
+#include <utils-api/strings.hpp>
 #include "chargedRNEMDParameters.hpp"
 #include "../../RNEMDFileParsing/include/rnemdFile.hpp"
 

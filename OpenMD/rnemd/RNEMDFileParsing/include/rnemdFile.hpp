@@ -9,7 +9,7 @@
 #ifndef RNEMDFILE_HPP
 #define RNEMDFILE_HPP
 
-#include <utilities-api/files.hpp>
+#include <utils-api/files.hpp>
 #include "rnemdParameters.hpp"
 
 namespace OpenMD::RNEMD
