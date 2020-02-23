@@ -1,9 +1,9 @@
 ### Files / Directories ###
-set(RNEMDFileParsing_SOURCES
+set(RNEMD_FILE_PARSING_SOURCES
     rnemd/RNEMDFileParsing/src/rnemdFile.cpp)
     #rnemd/RNEMDFileParsing/src/rnemdRegion.cpp)
 
-# set(ChargedRNEMD_SOURCES
+# set(CHARGED_RNEMD_SOURCES
 #     rnemd/ChargedRNEMD/src/chargedRNEMD.cpp
 #     rnemd/ChargedRNEMD/src/chargedRNEMDAnalysisMethod.cpp
 #     rnemd/ChargedRNEMD/src/regionFitting.cpp
@@ -13,57 +13,27 @@ set(BASH_FILES
     scripts/groupSubmit.sh
     scripts/equilibrator.sh)
 
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY
-    ${PROJECT_BINARY_DIR}/lib
-    CACHE PATH
-    "Single directory for all shared libraries.")
-
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY
     ${PROJECT_BINARY_DIR}/bin
     CACHE PATH
     "Single directory for all executables.")
 
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY
-    ${PROJECT_BINARY_DIR}/lib
-    CACHE PATH
-    "Single directory for all static libraries.")
-
 
 ### Libraries / Executables ###
-include_directories(${CMAKE_INSTALL_PREFIX}/include)
-
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../cmake")
 
 find_package(Utilities_API REQUIRED)
 
-if (UTILITIES_API_FOUND)
-    set(UTILITIES_API_INCLUDE_DIR ${UTILITIES_API_INCLUDE_DIR})
-    set(UTILITIES_API_LIBRARIES ${UTILITIES_API_LIBRARIES})
-    include_directories(${UTILITIES_API_INCLUDE_DIR})
-endif()
-
-add_library(openmd-plugin SHARED ${RNEMDFileParsing_SOURCES})
-target_link_libraries(openmd-plugin PUBLIC ${UTILITIES_API_LIBRARIES})
-
-# add_library(openmd-plugin-static STATIC ${RNEMDFileParsing_SOURCES})
-# target_link_libraries(openmd-plugin-static PUBLIC ${Utilities_API_static})
-
-# add_executable(chargedRNEMD ${ChargedRNEMD_SOURCES})
+# add_executable(chargedRNEMD ${CHARGED_RNEMD_SOURCES})
 # target_link_libraries(chargedRNEMD openmd-plugin)
 
 
 ### Installation ###
-install(TARGETS openmd-plugin # openmd-plugin-static
-        DESTINATION lib)
-
 # install(TARGETS chargedRNEMD
 #         DESTINATION bin
 #         PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE
 #                     GROUP_READ             GROUP_EXECUTE
 #                     WORLD_READ             WORLD_EXECUTE)
-
-install(DIRECTORY rnemd/RNEMDFileParsing/include/
-        DESTINATION include/nd-research/openmd/RNEMDFileParsing)
 
 # install(DIRECTORY rnemd/ChargedRNEMD/include/
 #         DESTINATION include/nd-research/openmd/ChargedRNEMD)

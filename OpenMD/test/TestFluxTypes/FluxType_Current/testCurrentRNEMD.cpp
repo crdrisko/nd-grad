@@ -13,8 +13,6 @@
 using namespace OpenMD::RNEMD;
 using namespace Utilities_API::PhysicalQuantities;
 
-RNEMDFilePtr rnemdFile { std::make_shared<RNEMDFile>("../../../rnemd/samples/double.rnemd") };
-
 int main(int argc, char** argv)
 {
     testing::InitGoogleTest(&argc, argv);
@@ -23,6 +21,7 @@ int main(int argc, char** argv)
 
 TEST(testCurrentRNEMD, currentFluxTypeCorrectBlockParameters)
 {
+    RNEMDFilePtr rnemdFile { std::make_shared<RNEMDFile>("../../../rnemd/samples/double.rnemd") };
     RNEMDBlockParametersPtr rnemdBlock { rnemdFile->getRNEMDParameters()->block };
 
     assertThat(rnemdBlock->exchangeMethod).hasAValueOf("VSS");
@@ -47,6 +46,7 @@ TEST(testCurrentRNEMD, currentFluxTypeCorrectBlockParameters)
 
 TEST(testCurrentRNEMD, currentFluxTypeCorrectInferredParameters)
 {
+    RNEMDFilePtr rnemdFile { std::make_shared<RNEMDFile>("../../../rnemd/samples/double.rnemd") };
     RNEMDInferredParametersPtr rnemdInferred { rnemdFile->getRNEMDParameters()->inferred };
 
     assertThat(rnemdInferred->numberOfRegions).hasAValueOf(4);
@@ -58,6 +58,7 @@ TEST(testCurrentRNEMD, currentFluxTypeCorrectInferredParameters)
 
 TEST(testCurrentRNEMD, currentFluxTypeCorrectReportParameters)
 {
+    RNEMDFilePtr rnemdFile { std::make_shared<RNEMDFile>("../../../rnemd/samples/double.rnemd") };
     RNEMDReportParametersPtr rnemdReport { rnemdFile->getRNEMDParameters()->report };
 
     assertThat(rnemdReport->runningTime.getMagnitude()).hasAValueNear(10000002.0);

@@ -73,7 +73,7 @@ namespace OpenMD::RNEMD
             rnemdParameters->block->outputSelection.push_back(superMetaDataVector[9][i]);
 
         // The order of outputSelection is reversed before the RNEMD procedure
-        std::reverse(rnemdParameters->block->outputSelection.begin(), 
+        std::reverse(rnemdParameters->block->outputSelection.begin(),
             rnemdParameters->block->outputSelection.end());
     }
 
@@ -138,7 +138,7 @@ namespace OpenMD::RNEMD
 
     void RNEMDFile::RNEMDFileImpl::setRNEMDInferredParameters()
     {
-        rnemdParameters->inferred->slabWidth 
+        rnemdParameters->inferred->slabWidth
             = rnemdParameters->block->selectionA[1] - rnemdParameters->block->selectionA[0];
 
         rnemdParameters->inferred->numberOfRegions = (rnemdParameters->block->fluxType == "Single") ? 2 : 4;
