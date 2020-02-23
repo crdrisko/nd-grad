@@ -3,11 +3,11 @@ set(RNEMD_FILE_PARSING_SOURCES
     rnemd/RNEMDFileParsing/src/rnemdFile.cpp
     rnemd/RNEMDFileParsing/src/rnemdRegion.cpp)
 
-# set(CHARGED_RNEMD_SOURCES
-#     rnemd/ChargedRNEMD/src/chargedRNEMD.cpp
-#     rnemd/ChargedRNEMD/src/chargedRNEMDAnalysisMethod.cpp
-#     rnemd/ChargedRNEMD/src/regionFitting.cpp
-#     rnemd/ChargedRNEMD/src/regionDifference.cpp)
+set(CHARGED_RNEMD_SOURCES
+    rnemd/ChargedRNEMD/src/chargedRNEMD.cpp
+    rnemd/ChargedRNEMD/src/chargedRNEMDAnalysisMethod.cpp
+    rnemd/ChargedRNEMD/src/regionFitting.cpp
+    rnemd/ChargedRNEMD/src/regionDifference.cpp)
 
 set(BASH_FILES
     scripts/groupSubmit.sh
@@ -23,20 +23,18 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../cmake")
 
 find_package(Utilities_API REQUIRED)
+include_directories(${UTILITIES_API_INCLUDE_DIR})
 
-# add_executable(chargedRNEMD ${CHARGED_RNEMD_SOURCES})
-# target_link_libraries(chargedRNEMD openmd-plugin)
+add_executable(chargedRNEMD ${CHARGED_RNEMD_SOURCES} ${RNEMD_FILE_PARSING_SOURCES})
+target_link_libraries(chargedRNEMD ${UTILITIES_API_LIBRARIES})
 
 
 ### Installation ###
-# install(TARGETS chargedRNEMD
-#         DESTINATION bin
-#         PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE
-#                     GROUP_READ             GROUP_EXECUTE
-#                     WORLD_READ             WORLD_EXECUTE)
-
-# install(DIRECTORY rnemd/ChargedRNEMD/include/
-#         DESTINATION include/nd-research/openmd/ChargedRNEMD)
+install(TARGETS chargedRNEMD
+        DESTINATION bin
+        PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE
+                    GROUP_READ             GROUP_EXECUTE
+                    WORLD_READ             WORLD_EXECUTE)
 
 foreach (BASH_FILE ${BASH_FILES})
     ## Remove bash extensions and make scripts executable ##

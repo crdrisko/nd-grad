@@ -19,7 +19,6 @@ namespace OpenMD::RNEMD::ChargedRNEMD
     {
     private:
         ChargedRNEMDParametersPtr rnemdParameters { std::make_shared<ChargedRNEMDParameters>() };
-        std::vector<RNEMDDataPtr> individualRegionData;
 
         bool hasChargedRNEMDFluxType(std::string_view fluxType) const
         {
@@ -29,9 +28,9 @@ namespace OpenMD::RNEMD::ChargedRNEMD
     public:
         explicit ChargedRNEMDFile(std::string_view FullFileName) : RNEMDFile{FullFileName}
         {
-            rnemdParameters->block = this->getRNEMDBlockParameters();
-            rnemdParameters->report = this->getRNEMDReportParameters();
-            rnemdParameters->inferred = this->getRNEMDInferredParameters();
+            rnemdParameters->block = this->getRNEMDParameters()->block;
+            rnemdParameters->report = this->getRNEMDParameters()->report;
+            rnemdParameters->inferred = this->getRNEMDParameters()->inferred;
 
             if ( !hasChargedRNEMDFluxType(rnemdParameters->block->fluxType) )
                 Utilities_API::Errors::printFatalErrorMessage(1,
@@ -45,26 +44,14 @@ namespace OpenMD::RNEMD::ChargedRNEMD
                   || (Utilities_API::Strings::stringFinder("+", selection)) )
                     rnemdParameters->ionicSpecies.push_back(std::make_shared<IonicSpecies>(selection,
                         ionicSpeciesCount));
-
                 else
                     continue;
 
                 ++ionicSpeciesCount;
             }
-
-            std::vector<RNEMDRegionPtr> rnemdRegionData { this->getRNEMDRegions() };
-
-            for (int region {1}; region <= rnemdParameters->inferred->numberOfRegions; ++region)
-            {
-                individualRegionData.push_back(rnemdRegionData[region - 1]->getRegionSpecificData());
-
-                if (region == 1)
-                    rnemdRegionData[0]->makeFirstRegionContinuous(rnemdParameters->inferred->boxSize);
-            }
         }
 
         ChargedRNEMDParametersPtr getChargedRNEMDParameters() const { return this->rnemdParameters; }
-        std::vector<RNEMDDataPtr> getIndividualRegionData() const { return this->individualRegionData; }
     };
 
     using ChargedRNEMDFilePtr = std::shared_ptr<ChargedRNEMDFile>;

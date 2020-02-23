@@ -30,8 +30,8 @@ TEST(testChargedRNEMDParameters, correctChargeParameters)
     {
         Files::FileNamePtr fileName { std::make_shared<Files::FileName>(file) };
 
-        if ( (fileName->getBaseFileName() ==  "thermal.rnemd")
-            || (fileName->getBaseFileName() ==  "momentum.rnemd") )
+        if ( (fileName->getBaseFileName() == "thermal.rnemd")
+            || (fileName->getBaseFileName() == "momentum.rnemd") )
         {
             ASSERT_DEATH(
             {

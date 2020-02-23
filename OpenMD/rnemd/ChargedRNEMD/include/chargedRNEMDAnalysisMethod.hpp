@@ -4,12 +4,13 @@
 // Name: chargedRNEMDAnalysisMethod.hpp - Version 1.0.0
 // Author: cdrisko
 // Date: 02/19/2020-12:18:42
-// Description: An abstract class interface utilizing the template method design pattern for the chargedRNEMD program
+// Description: Template method interface for the chargedRNEMD program
 
 #ifndef CHARGEDRNEMDANALYSISMETHOD_HPP
 #define CHARGEDRNEMDANALYSISMETHOD_HPP
 
 #include "chargedRNEMDFile.hpp"
+#include "../../RNEMDFileParsing/include/rnemdRegion.hpp"
 
 namespace OpenMD::RNEMD::ChargedRNEMD
 {

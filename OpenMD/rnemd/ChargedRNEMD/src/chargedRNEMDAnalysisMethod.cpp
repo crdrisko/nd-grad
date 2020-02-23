@@ -88,8 +88,10 @@ namespace OpenMD::RNEMD::ChargedRNEMD
     ChargedRNEMDAnalysisMethod::ChargedRNEMDAnalysisMethod(const ChargedRNEMDFilePtr& RNEMDFile)
         : p_Impl{ std::make_unique<InternalCalculations>() }, rnemdFile{RNEMDFile}
     {
+        RNEMDRegionPtr rnemdRegionData { std::make_shared<RNEMDRegion>(rnemdFile) };
+
         rnemdParameters = rnemdFile->getChargedRNEMDParameters();
-        individualRegionData = rnemdFile->getIndividualRegionData();
+        individualRegionData = rnemdRegionData->getRegionSpecificData();
     }
 
 
@@ -210,8 +212,8 @@ namespace OpenMD::RNEMD::ChargedRNEMD
         outputFile << "# SlabWidth = " << rnemdParameters->inferred->slabWidth << "\n";
         outputFile << "# Jc anion = " << rnemdParameters->report->Jc_anion << " (e/Ang^2/fs)\n";
         outputFile << "# Jc cation = " << rnemdParameters->report->Jc_cation << " (e/Ang^2/fs)\n";
-        outputFile << "# Percentage Of Kicks Failed = " << 
-            ( static_cast<double>(rnemdParameters->report->failTrialCount) 
+        outputFile << "# Percentage Of Kicks Failed = " <<
+            ( static_cast<double>(rnemdParameters->report->failTrialCount)
                 / static_cast<double>(rnemdParameters->report->trialCount) ) * 100 << "%\n#\n";
 
         for (int region {1}; region <= rnemdParameters->inferred->numberOfRegions; ++region)
