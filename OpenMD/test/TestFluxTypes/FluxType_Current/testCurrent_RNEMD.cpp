@@ -1,17 +1,15 @@
 // Copyright (c) 2020 Cody R. Drisko. All rights reserved.
 // Licensed under the MIT License.See the LICENSE file in the project root for license information.
 //
-// Name: testCurrentRNEMD.cpp - Version 1.0.0
+// Name: testCurrent_RNEMD.cpp - Version 1.0.0
 // Author: cdrisko
 // Date: 01/22/2020-14:01:49
 // Description: Provides 100% unit test coverage over all parameter parsing functions for FluxType = Current
 
-#include <fstream>
 #include "../testAssertions.hpp"
 #include "../../../rnemd/RNEMDFileParsing/include/rnemdFile.hpp"
 
 using namespace OpenMD::RNEMD;
-using namespace Utilities_API::PhysicalQuantities;
 
 int main(int argc, char** argv)
 {
@@ -19,7 +17,7 @@ int main(int argc, char** argv)
     return RUN_ALL_TESTS();
 }
 
-TEST(testCurrentRNEMD, currentFluxTypeCorrectBlockParameters)
+TEST(testCurrent_RNEMD, currentFluxTypeCorrectBlockParameters)
 {
     RNEMDFilePtr rnemdFile { std::make_shared<RNEMDFile>("../../../rnemd/samples/double.rnemd") };
     RNEMDBlockParametersPtr rnemdBlock { rnemdFile->getRNEMDParameters()->block };
@@ -44,7 +42,7 @@ TEST(testCurrentRNEMD, currentFluxTypeCorrectBlockParameters)
     assertThat(rnemdBlock->outputSelection[2]).hasAValueOf("SPCE_RB_0");
 }
 
-TEST(testCurrentRNEMD, currentFluxTypeCorrectInferredParameters)
+TEST(testCurrent_RNEMD, currentFluxTypeCorrectInferredParameters)
 {
     RNEMDFilePtr rnemdFile { std::make_shared<RNEMDFile>("../../../rnemd/samples/double.rnemd") };
     RNEMDInferredParametersPtr rnemdInferred { rnemdFile->getRNEMDParameters()->inferred };
@@ -56,7 +54,7 @@ TEST(testCurrentRNEMD, currentFluxTypeCorrectInferredParameters)
     assertThat(rnemdInferred->hasSelectionB).isTrue();
 }
 
-TEST(testCurrentRNEMD, currentFluxTypeCorrectReportParameters)
+TEST(testCurrent_RNEMD, currentFluxTypeCorrectReportParameters)
 {
     RNEMDFilePtr rnemdFile { std::make_shared<RNEMDFile>("../../../rnemd/samples/double.rnemd") };
     RNEMDReportParametersPtr rnemdReport { rnemdFile->getRNEMDParameters()->report };

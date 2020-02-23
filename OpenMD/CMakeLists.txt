@@ -1,7 +1,7 @@
 ### Files / Directories ###
 set(RNEMD_FILE_PARSING_SOURCES
-    rnemd/RNEMDFileParsing/src/rnemdFile.cpp)
-    #rnemd/RNEMDFileParsing/src/rnemdRegion.cpp)
+    rnemd/RNEMDFileParsing/src/rnemdFile.cpp
+    rnemd/RNEMDFileParsing/src/rnemdRegion.cpp)
 
 # set(CHARGED_RNEMD_SOURCES
 #     rnemd/ChargedRNEMD/src/chargedRNEMD.cpp

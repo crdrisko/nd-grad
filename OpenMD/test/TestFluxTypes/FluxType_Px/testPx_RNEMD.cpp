@@ -6,12 +6,10 @@
 // Date: 01/28/2020-12:30:00
 // Description: Provides 100% unit test coverage over all parameter parsing functions for FluxType = Px
 
-#include <fstream>
 #include "../testAssertions.hpp"
 #include "../../../rnemd/RNEMDFileParsing/include/rnemdFile.hpp"
 
 using namespace OpenMD::RNEMD;
-using namespace Utilities_API::PhysicalQuantities;
 
 int main(int argc, char** argv)
 {

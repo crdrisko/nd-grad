@@ -1,17 +1,15 @@
 // Copyright (c) 2020 Cody R. Drisko. All rights reserved.
 // Licensed under the MIT License.See the LICENSE file in the project root for license information.
 //
-// Name: testSingleRNEMD.cpp - Version 1.0.0
+// Name: testSingle_RNEMD.cpp - Version 1.0.0
 // Author: cdrisko
 // Date: 01/22/2020-14:01:34
 // Description: Provides 100% unit test coverage over all parameter parsing functions for FluxType = Single
 
-#include <fstream>
 #include "../testAssertions.hpp"
 #include "../../../rnemd/RNEMDFileParsing/include/rnemdFile.hpp"
 
 using namespace OpenMD::RNEMD;
-using namespace Utilities_API::PhysicalQuantities;
 
 int main(int argc, char** argv)
 {
@@ -19,7 +17,7 @@ int main(int argc, char** argv)
     return RUN_ALL_TESTS();
 }
 
-TEST(testSingleRNEMD, singleFluxTypeCorrectBlockParameters)
+TEST(testSingle_RNEMD, singleFluxTypeCorrectBlockParameters)
 {
     RNEMDFilePtr rnemdFile {std::make_shared<RNEMDFile>("../../../rnemd/samples/single.rnemd")};
     RNEMDBlockParametersPtr rnemdBlock { rnemdFile->getRNEMDParameters()->block };
@@ -44,7 +42,7 @@ TEST(testSingleRNEMD, singleFluxTypeCorrectBlockParameters)
     assertThat(rnemdBlock->outputSelection[2]).hasAValueOf("SPCE_RB_0");
 }
 
-TEST(testSingleRNEMD, singleFluxTypeCorrectInferredParameters)
+TEST(testSingle_RNEMD, singleFluxTypeCorrectInferredParameters)
 {
     RNEMDFilePtr rnemdFile {std::make_shared<RNEMDFile>("../../../rnemd/samples/single.rnemd")};
     RNEMDInferredParametersPtr rnemdInferred { rnemdFile->getRNEMDParameters()->inferred };
@@ -56,7 +54,7 @@ TEST(testSingleRNEMD, singleFluxTypeCorrectInferredParameters)
     assertThat(rnemdInferred->hasSelectionB).isFalse();
 }
 
-TEST(testSingleRNEMD, singleFluxTypeCorrectReportParameters)
+TEST(testSingle_RNEMD, singleFluxTypeCorrectReportParameters)
 {
     RNEMDFilePtr rnemdFile {std::make_shared<RNEMDFile>("../../../rnemd/samples/single.rnemd")};
     RNEMDReportParametersPtr rnemdReport { rnemdFile->getRNEMDParameters()->report };

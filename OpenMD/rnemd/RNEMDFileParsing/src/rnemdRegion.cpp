@@ -8,36 +8,130 @@
 
 #include "../include/rnemdRegion.hpp"
 
+using namespace Utilities_API::PhysicalQuantities;
+
 namespace OpenMD::RNEMD
 {
-    RNEMDRegion::RNEMDRegion(const RNEMDDataPtr& NonRegionSpecificData, int LowerIndexOfRegion,
-        int UpperIndexOfRegion, int LowerIndexOfFirstRegion, int UpperIndexOfFirstRegion)
-        : lowerIndexOfRegion{LowerIndexOfRegion}, upperIndexOfRegion{UpperIndexOfRegion},
-          lowerIndexOfFirstRegion{LowerIndexOfFirstRegion}, upperIndexOfFirstRegion{UpperIndexOfFirstRegion}
+    class RNEMDRegion::RNEMDRegionImpl
     {
-        nonRegionSpecificData = NonRegionSpecificData;
+    private:
+        int lowerIndexOfRegion, upperIndexOfRegion;
+        int lowerIndexOfFirstRegion {}, upperIndexOfFirstRegion {};
 
-        regionSpecificData->rnemdAxis = regionSlicer(nonRegionSpecificData->rnemdAxis);
-        regionSpecificData->radius = regionSlicer(nonRegionSpecificData->radius);
-        regionSpecificData->temperature = regionSlicer(nonRegionSpecificData->temperature);
-        regionSpecificData->density = regionSlicer(nonRegionSpecificData->density);
-        regionSpecificData->electricPotential = regionSlicer(nonRegionSpecificData->electricPotential);
+        std::vector<Length> regionBounds;
 
-        // Split all axis directions for velocity, angularVelocity and electric field seperately
-        for (int i {}; i < 3; ++i)
+        RNEMDParametersPtr rnemdParameters { std::make_shared<RNEMDParameters>() };
+        RNEMDDataPtr nonRegionSpecificData { std::make_shared<RNEMDData>() };
+        std::vector<RNEMDDataPtr> regionSpecificData;
+
+        void parseWrappedZSelections();
+        void setRNEMDRegionBounds(const int& region);
+
+        template<typename T>
+        std::vector<T> regionSlicer(std::vector<T> PhysicalQuantity);
+
+        Length convertWrappedZ_to_z(Length wrapped_z) const
         {
-            regionSpecificData->velocity[i] = regionSlicer(nonRegionSpecificData->velocity[i]);
-            regionSpecificData->angularVelocity[i] = regionSlicer(nonRegionSpecificData->angularVelocity[i]);
-            regionSpecificData->electricField[i] = regionSlicer(nonRegionSpecificData->electricField[i]);
+            return (rnemdParameters->inferred->boxSize / 2.0_) + wrapped_z;
         }
 
-        // Split all species for concentration seperately
-        for (size_t i {}; i < nonRegionSpecificData->activity.size(); ++i)
-            regionSpecificData->activity.push_back(regionSlicer(nonRegionSpecificData->activity[i]));
+        int boundFinder(const Length& regionBound) const
+        {
+            return std::upper_bound(nonRegionSpecificData->rnemdAxis.begin(), nonRegionSpecificData->rnemdAxis.end(),
+                (regionBound - nonRegionSpecificData->rnemdAxis[0])) - nonRegionSpecificData->rnemdAxis.begin();
+        }
+
+        void makeFirstRegionContinuous()
+        {
+            for (auto& z : regionSpecificData[0]->rnemdAxis)
+                if (z > regionSpecificData[0]->rnemdAxis.back())
+                    z -= rnemdParameters->inferred->boxSize;
+        }
+
+    public:
+        explicit RNEMDRegionImpl(const RNEMDRegion& rnemdRegion);
+
+        std::vector<RNEMDDataPtr> getRegionSpecificData() const { return this->regionSpecificData; }
+    };
+
+
+    RNEMDRegion::RNEMDRegionImpl::RNEMDRegionImpl(const RNEMDRegion& rnemdRegion)
+    {
+        rnemdParameters = rnemdRegion.rnemdFile->getRNEMDParameters();
+        nonRegionSpecificData = rnemdRegion.rnemdFile->getAllDataFromFile();
+
+        this->parseWrappedZSelections();
+
+        for (int region {1}; region <= rnemdParameters->inferred->numberOfRegions; ++region)
+        {
+            this->setRNEMDRegionBounds(region);
+
+            regionSpecificData.push_back( std::make_shared<RNEMDData>() );
+
+            regionSpecificData[region - 1]->rnemdAxis = regionSlicer(nonRegionSpecificData->rnemdAxis);
+
+            regionSpecificData[region - 1]->radius = regionSlicer(nonRegionSpecificData->radius);
+            regionSpecificData[region - 1]->temperature = regionSlicer(nonRegionSpecificData->temperature);
+            regionSpecificData[region - 1]->density = regionSlicer(nonRegionSpecificData->density);
+            regionSpecificData[region - 1]->electricPotential = regionSlicer(nonRegionSpecificData->electricPotential);
+
+            // Split all axis directions for velocity, angularVelocity and electric field seperately
+            for (int i {}; i < 3; ++i)
+            {
+                regionSpecificData[region - 1]->velocity[i] = regionSlicer(nonRegionSpecificData->velocity[i]);
+                regionSpecificData[region - 1]->angularVelocity[i] = regionSlicer(nonRegionSpecificData->angularVelocity[i]);
+                regionSpecificData[region - 1]->electricField[i] = regionSlicer(nonRegionSpecificData->electricField[i]);
+            }
+
+            // Split all species for activity seperately
+            for (size_t i {}; i < nonRegionSpecificData->activity.size(); ++i)
+                regionSpecificData[region - 1]->activity.push_back(regionSlicer(nonRegionSpecificData->activity[i]));
+
+            lowerIndexOfRegion = 0;
+            upperIndexOfRegion = 0;
+            lowerIndexOfFirstRegion = 0;
+            upperIndexOfFirstRegion = 0;
+        }
+
+        this->makeFirstRegionContinuous();
     }
 
+
+    void RNEMDRegion::RNEMDRegionImpl::parseWrappedZSelections()
+    {
+        regionBounds.push_back(0.0_Ang);
+
+        if (rnemdParameters->inferred->hasSelectionB)
+            regionBounds.push_back(convertWrappedZ_to_z(rnemdParameters->block->selectionB[1]));
+
+        regionBounds.push_back(convertWrappedZ_to_z(rnemdParameters->block->selectionA[0]));
+        regionBounds.push_back(convertWrappedZ_to_z(rnemdParameters->block->selectionA[1]));
+
+        if (rnemdParameters->inferred->hasSelectionB)
+            regionBounds.push_back(convertWrappedZ_to_z(rnemdParameters->block->selectionB[0]));
+
+        regionBounds.push_back(rnemdParameters->inferred->boxSize);
+    }
+
+
+    void RNEMDRegion::RNEMDRegionImpl::setRNEMDRegionBounds(const int& region)
+    {
+        lowerIndexOfRegion = boundFinder(regionBounds[region - 1]);
+        upperIndexOfRegion = boundFinder(regionBounds[region]);
+
+        if (region == 1)
+        {
+            lowerIndexOfFirstRegion = lowerIndexOfRegion;
+            upperIndexOfFirstRegion = upperIndexOfRegion;
+
+            lowerIndexOfRegion = boundFinder(regionBounds[rnemdParameters->inferred->numberOfRegions]);
+            upperIndexOfRegion = boundFinder(regionBounds[rnemdParameters->inferred->numberOfRegions + 1]);
+        }
+    }
+
+
     template<typename T>
-    std::vector<T> RNEMDRegion::regionSlicer(std::vector<T> PhysicalQuantity)
+    std::vector<T> RNEMDRegion::RNEMDRegionImpl::regionSlicer(std::vector<T> PhysicalQuantity)
     {
         if ( PhysicalQuantity.empty() )
             return PhysicalQuantity;
@@ -50,15 +144,35 @@ namespace OpenMD::RNEMD
         // Append first region on back of the last, defaults to off
         if ( (lowerIndexOfFirstRegion != 0) || (upperIndexOfFirstRegion != 0) )
         {
-            RNEMDRegionPtr firstRegion { std::make_shared<RNEMDRegion>(nonRegionSpecificData,
-                lowerIndexOfFirstRegion, upperIndexOfFirstRegion) };
+            int copyLowerIndexOfRegion {lowerIndexOfRegion};
+            int copyUpperIndexOfRegion {upperIndexOfRegion};
 
-            std::vector<T> temporaryStorageVector { firstRegion->regionSlicer(PhysicalQuantity) };
+            // Switch the indicies before recursive call so we don't retrigger this condition
+            lowerIndexOfRegion = lowerIndexOfFirstRegion;
+            upperIndexOfRegion = upperIndexOfFirstRegion;
+            lowerIndexOfFirstRegion = 0;
+            upperIndexOfFirstRegion = 0;
+
+            std::vector<T> temporaryStorageVector { regionSlicer(PhysicalQuantity) };
 
             for (const auto& quantity : temporaryStorageVector)
                 splitPhysicalQuantity.push_back(quantity);
+
+            // Reset the index values so the other physical quantities can use the same
+            lowerIndexOfRegion = copyLowerIndexOfRegion;
+            upperIndexOfRegion = copyUpperIndexOfRegion;
+            lowerIndexOfFirstRegion = lowerIndexOfRegion;
+            upperIndexOfFirstRegion = upperIndexOfRegion;
         }
 
         return splitPhysicalQuantity;
     }
+
+
+    RNEMDRegion::RNEMDRegion(const RNEMDFilePtr& RNEMDFile) : rnemdFile{RNEMDFile},
+        p_Impl{ std::make_unique<RNEMDRegionImpl>(*this) } {}
+
+    RNEMDRegion::~RNEMDRegion() = default;
+
+    std::vector<RNEMDDataPtr> RNEMDRegion::getRegionSpecificData() const { return p_Impl->getRegionSpecificData(); }
 }

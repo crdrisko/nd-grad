@@ -10,6 +10,8 @@ The ND-Research repository has been built and tested on a number of operating sy
 
 - Mac OS X
 
+- Linux
+
 ## Requirements
 
 ND-Research requires

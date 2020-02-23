@@ -9,34 +9,22 @@
 #ifndef RNEMDREGION_HPP
 #define RNEMDREGION_HPP
 
-#include "rnemdParameters.hpp"
+#include "rnemdFile.hpp"
 
 namespace OpenMD::RNEMD
 {
     class RNEMDRegion
     {
     private:
-        int lowerIndexOfRegion, upperIndexOfRegion;
-        int lowerIndexOfFirstRegion {}, upperIndexOfFirstRegion {};
-
-        RNEMDDataPtr regionSpecificData { std::make_shared<RNEMDData>() };
-        static inline RNEMDDataPtr nonRegionSpecificData { std::make_shared<RNEMDData>() };
-
-        template<typename T>
-        std::vector<T> regionSlicer(std::vector<T> PhysicalQuantity);
+        class RNEMDRegionImpl;
+        RNEMDFilePtr rnemdFile;
+        std::unique_ptr<RNEMDRegionImpl> p_Impl;
 
     public:
-        RNEMDRegion(const RNEMDDataPtr& NonRegionSpecificData, int LowerIndexOfRegion,
-            int UpperIndexOfRegion, int LowerIndexOfFirstRegion = 0, int UpperIndexOfFirstRegion = 0);
+        RNEMDRegion(const RNEMDFilePtr& RNEMDFile);
+        ~RNEMDRegion();
 
-        RNEMDDataPtr getRegionSpecificData() const { return regionSpecificData; }
-
-        void makeFirstRegionContinuous(Utilities_API::PhysicalQuantities::Length boxSize)
-        {
-            for (auto& z : regionSpecificData->rnemdAxis)
-                if (z > regionSpecificData->rnemdAxis.back())
-                    z -= boxSize;
-        }
+        std::vector<RNEMDDataPtr> getRegionSpecificData() const;
     };
 
     using RNEMDRegionPtr = std::shared_ptr<RNEMDRegion>;
