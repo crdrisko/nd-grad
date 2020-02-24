@@ -6,6 +6,7 @@
 // Date: 02/11/2020-12:42:57
 // Description: Main ChargedRNEMD program, takes a rnemd file as input and returns the analysis in an ecp file
 
+#include <cstring>
 #include "../include/methodFactory.hpp"
 
 using namespace Utilities_API;
@@ -22,7 +23,7 @@ int main(int argc, char* argv[])
 
     for (int option {1}; option < argc; ++option)
     {
-        if ( ('-' ==  argv[option][0]) && (strlen(argv[option]) == 2) )
+        if ( ('-' ==  argv[option][0]) && (std::strlen(argv[option]) == 2) )
         {
             switch (argv[option][1])
             {

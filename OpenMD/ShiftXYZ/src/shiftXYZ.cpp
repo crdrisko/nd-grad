@@ -6,8 +6,9 @@
 // Date: 02/23/2020-17:45:38
 // Description: Main ShiftXYZ program, takes a xyz file and region boundary as input and returns a new xyz file
 
-#include "../include/xyzFile.hpp"
+#include <cstring>
 #include <utils-api/errors.hpp>
+#include "../include/xyzFile.hpp"
 
 using namespace Utilities_API;
 using namespace OpenMD::RNEMD;
@@ -25,7 +26,7 @@ int main(int argc, char* argv[])
 
     for (int option {1}; option < argc; ++option)
     {
-        if ( ('-' ==  argv[option][0]) && (strlen(argv[option]) == 2) )
+        if ( ('-' ==  argv[option][0]) && (std::strlen(argv[option]) == 2) )
         {
             switch (argv[option][1])
             {
