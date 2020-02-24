@@ -63,12 +63,16 @@ TEST(testChargedRNEMDParameters, testIonicChargeFunction)
         IonicSpeciesPtr ion { std::make_shared<IonicSpecies>(ionName) };
 
         if ( (ionName == "Na+") || (ionName == "Li+") )
+        {
             ASSERT_EQ(1.0, ion->getIonCharge().getMagnitude());
-
+        }
         else if (ionName == "Ca+2")
+        {
             ASSERT_EQ(2.0, ion->getIonCharge().getMagnitude());
-
+        }
         else if (ionName == "Cl-")
+        {
             ASSERT_EQ(-1.0, ion->getIonCharge().getMagnitude());
+        }
     }
 }
