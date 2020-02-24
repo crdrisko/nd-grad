@@ -35,7 +35,7 @@ namespace OpenMD::RNEMD
 
     void XYZFile::printOutputToFile(std::string outputFileName) const
     {
-        if (outputFileName == "")
+        if ( outputFileName.empty() )
         {
             outputFileName = this->getFileName()->getFullFileName();
             outputFileName.insert(outputFileName.find_last_of("/") + 1, "shifted_");

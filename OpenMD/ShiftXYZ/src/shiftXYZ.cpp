@@ -8,16 +8,15 @@
 
 #include "../include/xyzFile.hpp"
 #include <utils-api/errors.hpp>
-#include <utils-api/strings.hpp>
 
 using namespace Utilities_API;
 using namespace OpenMD::RNEMD;
 
-void printHelpMessage();
+void printHelpMessageAndExit();
 
 int main(int argc, char* argv[])
 {
-    Files::FileNamePtr inputFileName {nullptr};
+    Files::FileNamePtr inputFileName;
     PhysicalQuantities::Length firstRegionIndex;
     std::string outputFileName;
 
@@ -26,35 +25,45 @@ int main(int argc, char* argv[])
 
     for (int option {1}; option < argc; ++option)
     {
-        if ( '-' ==  argv[option][0] )
+        if ( ('-' ==  argv[option][0]) && (strlen(argv[option]) == 2) )
         {
             switch (argv[option][1])
             {
             case 'i':
-                inputFileName = std::make_shared<Files::FileName>(argv[++option]);
-                ++currentInputCount;
+                ++option;
+
+                if ( (argv[option] != NULL) && (Strings::stringFinder(".xyz", argv[option])) )
+                {
+                    inputFileName = std::make_shared<Files::FileName>(argv[option]);
+                    ++currentInputCount;
+                }
                 break;
 
             case 'n':
+                ++option;
+
                 try
                 {
-                    firstRegionIndex = PhysicalQuantities::Length(argv[++option]);
+                    firstRegionIndex = PhysicalQuantities::Length(argv[option]);
                     ++currentInputCount;
                 }
                 catch(const std::exception& e)
                 {
-                    Errors::printFatalErrorMessage(1, "Exception thrown, could not convert input to Length.");
+                    Errors::printFatalErrorMessage(1,
+                        "Exception thrown (and caught), could not convert string to Length.");
                 }
                 break;
 
             case 'o':
-                outputFileName = argv[++option];
+                ++option;
+
+                outputFileName = argv[option];
                 break;
 
             case 'h':
-                printHelpMessage();
-                Errors::printFatalErrorMessage(0, "");
+                printHelpMessageAndExit();
                 break;
+
             default:
                 Errors::printFatalErrorMessage(1, "Unknown option passed to the shiftXYZ program.");
                 break;
@@ -64,7 +73,7 @@ int main(int argc, char* argv[])
 
     if ( currentInputCount != requiredInputCount )
         Errors::printFatalErrorMessage(1,
-            "ShiftXYZ input requires a single valid .xyz file and a single RNEMD region index.");
+            "ShiftXYZ input requires a single valid .xyz file and RNEMD region index.");
 
     XYZFilePtr xyzFile { std::make_shared<XYZFile>(inputFileName) };
 
@@ -72,14 +81,17 @@ int main(int argc, char* argv[])
     xyzFile->printOutputToFile(outputFileName);
 }
 
-void printHelpMessage()
+
+void printHelpMessageAndExit()
 {
-    std::cout << "\nUSAGE: groupSubmit [-h] [-i inputFile] [-n regionIndex] [-o outputFile]\n\n"
+    std::cout << "\nUSAGE: shiftXYZ [-h] [-i inputFile] [-n regionIndex] [-o outputFile]\n\n"
               << "  -h  Prints help information about the shiftXYZ program.\n\n"
               << "  -i  REQUIRED: The input .xyz file to be shifted.\n"
               << "  -n  REQUIRED: The lower index of the wrapped RNEMD region.\n"
               << "  -o  OPTIONAL: The name of the output .xyz file to write to. Defaults to the\n"
               << "        input file name preceded by 'shifted_'\n\n"
-              << "EXAMPLE: shiftXYZ -i single.xyz -n 19.5938"
+              << "EXAMPLE: shiftXYZ -i single.xyz -n 19.5938\n"
               << std::endl;
+
+    std::exit(0);
 }

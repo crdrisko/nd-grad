@@ -38,10 +38,10 @@ namespace OpenMD::RNEMD
         void parseInputXYZFile();
 
     public:
-        XYZFile(std::string_view FullFileName)
+        explicit XYZFile(std::string_view FullFileName)
             : Utilities_API::Files::TextFile{FullFileName} { this->parseInputXYZFile(); }
 
-        XYZFile(Utilities_API::Files::FileNamePtr FileName) : XYZFile{ FileName->getFullFileName() } {}
+        explicit XYZFile(Utilities_API::Files::FileNamePtr FileName) : XYZFile{ FileName->getFullFileName() } {}
 
         void shiftXYZPositions(const Utilities_API::PhysicalQuantities::Length& firstRegionBound)
         {

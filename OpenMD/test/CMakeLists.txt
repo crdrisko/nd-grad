@@ -2,6 +2,10 @@
 include(CTest)
 include(GoogleTest)
 
+## Locate GTest ##
+find_package(GTest REQUIRED)
+include_directories(${GTEST_INCLUDE_DIRS})
+
 enable_testing()
 
 ## Function to create a new test based off the pre-defined naming template ##
@@ -19,16 +23,14 @@ function (new_fluxtype_test testname)
     new_test(${testname}_RNEMD TestFluxTypes/FluxType_${testname})
 endfunction()
 
-## Locate GTest ##
-find_package(GTest REQUIRED)
-include_directories(${GTEST_INCLUDE_DIRS})
 
-## ShiftXYZ Tests ##
+### ShiftXYZ Tests ###
 set(NEW_SOURCES ../ShiftXYZ/src/xyzFile.cpp)
 
 new_test(ShiftXYZ TestShiftXYZ)
 
-## RNEMDFileParsing Tests ##
+
+### RNEMDFileParsing Tests ###
 unset(NEW_SOURCES)
 
 foreach (FILE ${RNEMD_FILE_PARSING_SOURCES})
@@ -42,7 +44,8 @@ new_fluxtype_test(Single)
 
 new_test(RegionSplitting TestRNEMDRegions)
 
-## ChargedRNEMD Tests ##
+
+### ChargedRNEMD Tests ###
 foreach (FILE ${CHARGED_RNEMD_SOURCES})
     if (NOT ${FILE} EQUAL ChargedRNEMD/src/chargedRNEMD.cpp)
         list(APPEND ${NEW_SOURCES} ../${FILE})
