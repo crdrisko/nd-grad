@@ -11,8 +11,6 @@
 
 #include <array>
 #include <memory>
-#include <vector>
-#include <string>
 #include <utils-api/physicalQuantities.hpp>
 
 namespace OpenMD::RNEMD

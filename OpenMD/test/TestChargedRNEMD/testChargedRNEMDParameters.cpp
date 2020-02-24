@@ -7,7 +7,7 @@
 // Description: Provides 100% unit test coverage over all parameter parsing functions for Charged-RNEMD
 
 #include <gtest/gtest.h>
-#include "../../rnemd/ChargedRNEMD/include/chargedRNEMDFile.hpp"
+#include "../../ChargedRNEMD/include/chargedRNEMDFile.hpp"
 
 using namespace OpenMD::RNEMD::ChargedRNEMD;
 using namespace Utilities_API;
@@ -20,10 +20,10 @@ int main(int argc, char** argv)
 
 TEST(testChargedRNEMDParameters, correctChargeParameters)
 {
-    std::vector<std::string> files { "../../rnemd/samples/double.rnemd",
-                                     "../../rnemd/samples/single.rnemd",
-                                     "../../rnemd/samples/thermal.rnemd",
-                                     "../../rnemd/samples/momentum.rnemd" };
+    std::vector<std::string> files { "../../samples/double.rnemd",
+                                     "../../samples/single.rnemd",
+                                     "../../samples/thermal.rnemd",
+                                     "../../samples/momentum.rnemd" };
 
     for (const auto& file : files)
     {

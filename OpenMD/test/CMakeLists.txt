@@ -23,12 +23,18 @@ endfunction()
 find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
 
-## Adjust source code paths to account for different directory ##
+## ShiftXYZ Tests ##
+set(NEW_SOURCES ../ShiftXYZ/src/xyzFile.cpp)
+
+new_test(ShiftXYZ TestShiftXYZ)
+
+## RNEMDFileParsing Tests ##
+unset(NEW_SOURCES)
+
 foreach (FILE ${RNEMD_FILE_PARSING_SOURCES})
     list(APPEND NEW_SOURCES ../${FILE})
 endforeach()
 
-## Create all tests ##
 new_fluxtype_test(Current)
 new_fluxtype_test(KE)
 new_fluxtype_test(Px)
@@ -36,8 +42,9 @@ new_fluxtype_test(Single)
 
 new_test(RegionSplitting TestRNEMDRegions)
 
+## ChargedRNEMD Tests ##
 foreach (FILE ${CHARGED_RNEMD_SOURCES})
-    if (NOT ${FILE} EQUAL rnemd/ChargedRNEMD/src/chargedRNEMD.cpp)
+    if (NOT ${FILE} EQUAL ChargedRNEMD/src/chargedRNEMD.cpp)
         list(APPEND ${NEW_SOURCES} ../${FILE})
     endif()
 endforeach()

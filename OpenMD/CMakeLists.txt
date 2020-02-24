@@ -1,13 +1,17 @@
 ### Files / Directories ###
 set(RNEMD_FILE_PARSING_SOURCES
-    rnemd/RNEMDFileParsing/src/rnemdFile.cpp
-    rnemd/RNEMDFileParsing/src/rnemdRegion.cpp)
+    RNEMDFileParsing/src/rnemdFile.cpp
+    RNEMDFileParsing/src/rnemdRegion.cpp)
 
 set(CHARGED_RNEMD_SOURCES
-    rnemd/ChargedRNEMD/src/chargedRNEMD.cpp
-    rnemd/ChargedRNEMD/src/chargedRNEMDAnalysisMethod.cpp
-    rnemd/ChargedRNEMD/src/regionFitting.cpp
-    rnemd/ChargedRNEMD/src/regionDifference.cpp)
+    ChargedRNEMD/src/chargedRNEMD.cpp
+    ChargedRNEMD/src/chargedRNEMDAnalysisMethod.cpp
+    ChargedRNEMD/src/regionFitting.cpp
+    ChargedRNEMD/src/regionDifference.cpp)
+
+set(SHIFTXYZ_SOURCES
+    ShiftXYZ/src/shiftXYZ.cpp
+    ShiftXYZ/src/xyzFile.cpp)
 
 set(BASH_FILES
     scripts/groupSubmit.sh
@@ -28,9 +32,12 @@ include_directories(${UTILITIES_API_INCLUDE_DIR})
 add_executable(chargedRNEMD ${CHARGED_RNEMD_SOURCES} ${RNEMD_FILE_PARSING_SOURCES})
 target_link_libraries(chargedRNEMD ${UTILITIES_API_LIBRARIES})
 
+add_executable(shiftXYZ ${SHIFTXYZ_SOURCES})
+target_link_libraries(shiftXYZ ${UTILITIES_API_LIBRARIES})
+
 
 ### Installation ###
-install(TARGETS chargedRNEMD
+install(TARGETS chargedRNEMD shiftXYZ
         DESTINATION bin
         PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE
                     GROUP_READ             GROUP_EXECUTE

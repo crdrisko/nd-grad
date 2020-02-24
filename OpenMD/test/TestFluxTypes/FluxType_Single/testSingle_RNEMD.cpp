@@ -7,7 +7,7 @@
 // Description: Provides 100% unit test coverage over all parameter parsing functions for FluxType = Single
 
 #include "../testAssertions.hpp"
-#include "../../../rnemd/RNEMDFileParsing/include/rnemdFile.hpp"
+#include "../../../RNEMDFileParsing/include/rnemdFile.hpp"
 
 using namespace OpenMD::RNEMD;
 
@@ -19,7 +19,7 @@ int main(int argc, char** argv)
 
 TEST(testSingle_RNEMD, singleFluxTypeCorrectBlockParameters)
 {
-    RNEMDFilePtr rnemdFile {std::make_shared<RNEMDFile>("../../../rnemd/samples/single.rnemd")};
+    RNEMDFilePtr rnemdFile {std::make_shared<RNEMDFile>("../../../samples/single.rnemd")};
     RNEMDBlockParametersPtr rnemdBlock { rnemdFile->getRNEMDParameters()->block };
 
     assertThat(rnemdBlock->exchangeMethod).hasAValueOf("VSS");
@@ -44,7 +44,7 @@ TEST(testSingle_RNEMD, singleFluxTypeCorrectBlockParameters)
 
 TEST(testSingle_RNEMD, singleFluxTypeCorrectInferredParameters)
 {
-    RNEMDFilePtr rnemdFile {std::make_shared<RNEMDFile>("../../../rnemd/samples/single.rnemd")};
+    RNEMDFilePtr rnemdFile {std::make_shared<RNEMDFile>("../../../samples/single.rnemd")};
     RNEMDInferredParametersPtr rnemdInferred { rnemdFile->getRNEMDParameters()->inferred };
 
     assertThat(rnemdInferred->numberOfRegions).hasAValueOf(2);
@@ -56,7 +56,7 @@ TEST(testSingle_RNEMD, singleFluxTypeCorrectInferredParameters)
 
 TEST(testSingle_RNEMD, singleFluxTypeCorrectReportParameters)
 {
-    RNEMDFilePtr rnemdFile {std::make_shared<RNEMDFile>("../../../rnemd/samples/single.rnemd")};
+    RNEMDFilePtr rnemdFile {std::make_shared<RNEMDFile>("../../../samples/single.rnemd")};
     RNEMDReportParametersPtr rnemdReport { rnemdFile->getRNEMDParameters()->report };
 
     assertThat(rnemdReport->runningTime.getMagnitude()).hasAValueNear(10000002.0);

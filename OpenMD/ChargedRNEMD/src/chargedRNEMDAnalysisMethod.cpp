@@ -7,7 +7,6 @@
 // Description: Internal implementation details for the ChargedRNEMDAnalysisMethod class
 
 #include <iomanip>
-#include <fstream>
 #include "../include/chargedRNEMDAnalysisMethod.hpp"
 
 using std::vector;

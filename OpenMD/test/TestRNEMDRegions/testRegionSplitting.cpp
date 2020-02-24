@@ -7,7 +7,7 @@
 // Description: Provides 100% unit test coverage over all region splitting functions
 
 #include <gtest/gtest.h>
-#include "../../rnemd/RNEMDFileParsing/include/rnemdRegion.hpp"
+#include "../../RNEMDFileParsing/include/rnemdRegion.hpp"
 
 using namespace OpenMD::RNEMD;
 using namespace Utilities_API::PhysicalQuantities;
@@ -20,9 +20,9 @@ int main(int argc, char** argv)
 
 TEST(testRegionSplitting, currentFluxTypeCorrectSplitting)
 {
-    RNEMDFilePtr rnemdFile { std::make_shared<RNEMDFile>("../../rnemd/samples/double.rnemd") };
+    RNEMDFilePtr rnemdFile { std::make_shared<RNEMDFile>("../../samples/double.rnemd") };
 
-    int sizeOfRNEMDAxis {};
+    unsigned int sizeOfRNEMDAxis {};
     RNEMDDataPtr rnemdData { rnemdFile->getAllDataFromFile() };
 
     RNEMDRegionPtr rnemdRegionData { std::make_shared<RNEMDRegion>(rnemdFile) };
@@ -59,9 +59,9 @@ TEST(testRegionSplitting, currentFluxTypeCorrectSplitting)
 
 TEST(testRegionSplitting, KE_FluxTypeCorrectSplitting)
 {
-    RNEMDFilePtr rnemdFile { std::make_shared<RNEMDFile>("../../rnemd/samples/thermal.rnemd") };
+    RNEMDFilePtr rnemdFile { std::make_shared<RNEMDFile>("../../samples/thermal.rnemd") };
 
-    int sizeOfRNEMDAxis {};
+    unsigned int sizeOfRNEMDAxis {};
     RNEMDDataPtr rnemdData { rnemdFile->getAllDataFromFile() };
 
     RNEMDRegionPtr rnemdRegionData { std::make_shared<RNEMDRegion>(rnemdFile) };
@@ -89,9 +89,9 @@ TEST(testRegionSplitting, KE_FluxTypeCorrectSplitting)
 
 TEST(testRegionSplitting, Px_FluxTypeCorrectSplitting)
 {
-    RNEMDFilePtr rnemdFile { std::make_shared<RNEMDFile>("../../rnemd/samples/momentum.rnemd") };
+    RNEMDFilePtr rnemdFile { std::make_shared<RNEMDFile>("../../samples/momentum.rnemd") };
 
-    int sizeOfRNEMDAxis {};
+    unsigned int sizeOfRNEMDAxis {};
     RNEMDDataPtr rnemdData { rnemdFile->getAllDataFromFile() };
 
     RNEMDRegionPtr rnemdRegionData { std::make_shared<RNEMDRegion>(rnemdFile) };
@@ -123,9 +123,9 @@ TEST(testRegionSplitting, Px_FluxTypeCorrectSplitting)
 
 TEST(testRegionSplitting, singleFluxTypeCorrectRegionSplitting)
 {
-    RNEMDFilePtr rnemdFile { std::make_shared<RNEMDFile>("../../rnemd/samples/single.rnemd") };
+    RNEMDFilePtr rnemdFile { std::make_shared<RNEMDFile>("../../samples/single.rnemd") };
 
-    int sizeOfRNEMDAxis {};
+    unsigned int sizeOfRNEMDAxis {};
     RNEMDDataPtr rnemdData { rnemdFile->getAllDataFromFile() };
 
     RNEMDRegionPtr rnemdRegionData { std::make_shared<RNEMDRegion>(rnemdFile) };

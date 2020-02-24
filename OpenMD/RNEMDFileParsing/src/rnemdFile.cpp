@@ -7,9 +7,9 @@
 // Description: The implementation of RNEMD file parsing hidden using a pointer to implementation
 
 #include <limits>
-#include <utility>
 #include "../include/rnemdFile.hpp"
 
+using std::vector;
 using namespace Utilities_API::PhysicalQuantities;
 
 namespace OpenMD::RNEMD
@@ -20,8 +20,8 @@ namespace OpenMD::RNEMD
         RNEMDDataPtr allDataFromFile { std::make_shared<RNEMDData>() };
         RNEMDParametersPtr rnemdParameters { std::make_shared<RNEMDParameters>() };
 
-        std::vector< std::vector<std::string> > superDataVector { getSuperDataVector() };
-        std::vector< std::vector<std::string> > superMetaDataVector { getSuperMetaDataVector(" \t\n\";") };
+        vector< vector<std::string> > superDataVector { this->getSuperDataVector() };
+        vector< vector<std::string> > superMetaDataVector { this->getSuperMetaDataVector(" \t\n\";") };
 
         void setRNEMDData();
         void setRNEMDBlockParameters();
@@ -29,7 +29,7 @@ namespace OpenMD::RNEMD
         void setRNEMDInferredParameters();
 
         int findDataFieldStartLocation(std::string_view dataFieldLabel);
-        template<typename T> std::vector<T> parseDataFromFile(int startIndex = 0);
+        template<typename T> vector<T> parseDataFromFile(int startIndex = 0);
 
     public:
         explicit RNEMDFileImpl(const RNEMDFile& rnemdFile);
@@ -159,9 +159,9 @@ namespace OpenMD::RNEMD
 
 
     template<typename T>
-    std::vector<T> RNEMDFile::RNEMDFileImpl::parseDataFromFile(int startIndex)
+    vector<T> RNEMDFile::RNEMDFileImpl::parseDataFromFile(int startIndex)
     {
-        std::vector<T> PhysicalQuantity;
+        vector<T> PhysicalQuantity;
 
         for (const auto& vec : superDataVector)
             PhysicalQuantity.push_back( T(std::stold(vec[startIndex])) );
@@ -172,7 +172,7 @@ namespace OpenMD::RNEMD
 
     void RNEMDFile::RNEMDFileImpl::setRNEMDData()
     {
-        std::vector< std::pair<std::string, int> > locations;
+        vector< std::pair<std::string, int> > locations;
 
         if (rnemdParameters->block->privilegedAxis != "z")
             allDataFromFile->dataLabels[0] = rnemdParameters->block->privilegedAxis + "(Angstroms)";

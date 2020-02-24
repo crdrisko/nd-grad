@@ -7,7 +7,7 @@
 // Description: Provides 100% unit test coverage over all parameter parsing functions for FluxType = Px
 
 #include "../testAssertions.hpp"
-#include "../../../rnemd/RNEMDFileParsing/include/rnemdFile.hpp"
+#include "../../../RNEMDFileParsing/include/rnemdFile.hpp"
 
 using namespace OpenMD::RNEMD;
 
@@ -19,7 +19,7 @@ int main(int argc, char** argv)
 
 TEST(testPx_RNEMD, Px_FluxTypeCorrectBlockParameters)
 {
-    RNEMDFilePtr rnemdFile {std::make_shared<RNEMDFile>("../../../rnemd/samples/momentum.rnemd")};
+    RNEMDFilePtr rnemdFile {std::make_shared<RNEMDFile>("../../../samples/momentum.rnemd")};
     RNEMDBlockParametersPtr rnemdBlock { rnemdFile->getRNEMDParameters()->block };
 
     assertThat(rnemdBlock->exchangeMethod).hasAValueOf("VSS");
@@ -40,7 +40,7 @@ TEST(testPx_RNEMD, Px_FluxTypeCorrectBlockParameters)
 
 TEST(testPx_RNEMD, Px_FluxTypeCorrectInferredParameters)
 {
-    RNEMDFilePtr rnemdFile {std::make_shared<RNEMDFile>("../../../rnemd/samples/momentum.rnemd")};
+    RNEMDFilePtr rnemdFile {std::make_shared<RNEMDFile>("../../../samples/momentum.rnemd")};
     RNEMDInferredParametersPtr rnemdInferred { rnemdFile->getRNEMDParameters()->inferred };
 
     assertThat(rnemdInferred->numberOfRegions).hasAValueOf(4);
@@ -52,7 +52,7 @@ TEST(testPx_RNEMD, Px_FluxTypeCorrectInferredParameters)
 
 TEST(testPx_RNEMD, Px_FluxTypeCorrectReportParameters)
 {
-    RNEMDFilePtr rnemdFile {std::make_shared<RNEMDFile>("../../../rnemd/samples/momentum.rnemd")};
+    RNEMDFilePtr rnemdFile {std::make_shared<RNEMDFile>("../../../samples/momentum.rnemd")};
     RNEMDReportParametersPtr rnemdReport { rnemdFile->getRNEMDParameters()->report };
 
     assertThat(rnemdReport->runningTime.getMagnitude()).hasAValueNear(10000001.0);
