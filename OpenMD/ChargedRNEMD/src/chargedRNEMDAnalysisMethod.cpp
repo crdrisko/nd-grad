@@ -46,8 +46,7 @@ namespace OpenMD::RNEMD::ChargedRNEMD
     ElectricConductivity ChargedRNEMDAnalysisMethod::InternalCalculations::calculateElectricalConductivity(
         CurrentDensity Jc, ElectricCharge q_ion, Force gradientOfElectrochemcialPotential) const
     {
-        ElectricConductivity sigma_ion = Calculations::calculateElectricalConductivity(q_ion, Jc,
-            gradientOfElectrochemcialPotential);
+        ElectricConductivity sigma_ion = q_ion * Jc / gradientOfElectrochemcialPotential;
 
         if ( sigma_ion < ElectricConductivity(0.0) )
             sigma_ion = sigma_ion.negateQuantity();
@@ -65,8 +64,7 @@ namespace OpenMD::RNEMD::ChargedRNEMD
         Concentration averageConcentration { Mathematics::mathematicalFunction(conc_ion,
             Mathematics::calculateAverage) };
 
-        MolarConductivity lambda_ion = Calculations::calculateMolarConductivity(sigma_ion,
-            averageConcentration);
+        MolarConductivity lambda_ion = sigma_ion / averageConcentration;
 
         return lambda_ion
             .convertQuantity(Conversions::getVolumeConversionFactor("L", "m3"))
@@ -77,7 +75,7 @@ namespace OpenMD::RNEMD::ChargedRNEMD
     Mobility ChargedRNEMDAnalysisMethod::InternalCalculations::calculateMobility(MolarConductivity lambda_ion,
         ElectricCharge q_ion) const
     {
-        Mobility mobility_ion = Calculations::calculateMobility(lambda_ion, q_ion);
+        Mobility mobility_ion = lambda_ion / (q_ion.raisePower(2) * Constants::faradaysConstant);
 
         return mobility_ion
             .convertQuantity(Conversions::getSIPrexixConversionFactor("centi", "base").raisePower(2));
@@ -205,6 +203,8 @@ namespace OpenMD::RNEMD::ChargedRNEMD
         std::ofstream outputFile;
         outputFile.open(outputFileName);
 
+        outputFile << std::setprecision(8);
+
         outputFile << "# FileName = " << outputFileName << "\n";
         outputFile << "# FluxType = " << rnemdParameters->block->fluxType << "\n";
         outputFile << "# BoxSize = " << rnemdParameters->inferred->boxSize << "\n";
@@ -217,8 +217,8 @@ namespace OpenMD::RNEMD::ChargedRNEMD
 
         for (int region {1}; region <= rnemdParameters->inferred->numberOfRegions; ++region)
         {
-            outputFile << "############################################ Region " << region
-                       << " Data ############################################\n";
+            outputFile << "###################################################### Region " << region
+                       << " Data ######################################################\n";
 
             printAdditionalRegionHeader(outputFile, region);
 
@@ -230,49 +230,47 @@ namespace OpenMD::RNEMD::ChargedRNEMD
                            << sigma[ion->getIonIndex()][region - 1] << " (S/m)\n";
                 outputFile << "#     Molar Conductivity " << " = "
                            << lambda[ion->getIonIndex()][region - 1] << " (S cm^2/mol)\n";
-                outputFile << "#     Ionic Mobility " << "     = "
+                outputFile << "#     Ionic Mobility " << "     = " << std::scientific
                            << mobility[ion->getIonIndex()][region - 1] << " (m^2/V/s)\n";
+                outputFile << std::fixed;
             }
 
-            outputFile << "#\n# z (Ang)\t Temp (K)\t";
+            outputFile << "#\n# ";
+            outputFile << std::setw(11) << "z (Ang)" << std::setw(15) << "Temp (K)";
             for (const auto& ion : rnemdParameters->ionicSpecies)
-                outputFile << " [" << ion->getIonName() << "] (M)\t";
-            outputFile << " Ez (V/Ang)\t Phi (V)\t";
+                outputFile << std::setw(8) << "[" << ion->getIonName() << "] (M)";
+            outputFile << std::setw(15) << "Ez (V/Ang)" << std::setw(13) << "Phi (V)";
             for (const auto& ion : rnemdParameters->ionicSpecies)
-                outputFile << " ECP " << ion->getIonName() << " (eV)\t";
+                outputFile << std::setw(9) << "ECP " << ion->getIonName() << " (eV)";
             outputFile << "\n";
 
             for (size_t i {}; i < individualRegionData[region - 1]->rnemdAxis.size(); ++i)
             {
                 outputFile
-                    << std::setw(8) << individualRegionData[region - 1]->rnemdAxis[i] << "\t"
-                    << std::setw(8) << individualRegionData[region - 1]->temperature[i] << "\t";
+                    << std::setw(15) << individualRegionData[region - 1]->rnemdAxis[i]
+                    << std::setw(15) << individualRegionData[region - 1]->temperature[i];
 
                     for (const auto& ion : rnemdParameters->ionicSpecies)
                         outputFile
-                            << std::setw(8)
-                            << individualRegionData[region - 1]->activity[ion->getIonIndex()][i]
-                            << "\t";;
+                            << std::setw(15)
+                            << individualRegionData[region - 1]->activity[ion->getIonIndex()][i];
 
                     outputFile
-                        << std::setw(8)
+                        << std::setw(15)
                         << individualRegionData[region - 1]->electricField[2][i]
                             .convertQuantity(Conversions::getMolarEnergyConversionFactor("kcal_mol", "eV_part"))
-                        << "\t"
-                        << std::setw(8)
+                        << std::setw(15)
                         << individualRegionData[region - 1]->electricPotential[i]
-                            .convertQuantity(Conversions::getMolarEnergyConversionFactor("kcal_mol", "eV_part"))
-                        << "\t";
+                            .convertQuantity(Conversions::getMolarEnergyConversionFactor("kcal_mol", "eV_part"));
 
                     for (const auto& ion : rnemdParameters->ionicSpecies)
                         outputFile
-                            << std::setw(8) << electrochemicalPotential[ion->getIonIndex()][region - 1][i]
-                            << "\t";
+                            << std::setw(15) << electrochemicalPotential[ion->getIonIndex()][region - 1][i];
 
                     outputFile << "\n";
             }
 
-            outputFile << "\n";
+            outputFile << std::endl;
         }
     }
 

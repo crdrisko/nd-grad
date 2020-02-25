@@ -64,6 +64,7 @@ namespace OpenMD::RNEMD
             for (size_t j {}; j < 3; ++j)
                 outputFile << std::setw(15) << xyzParameters->coordinates[j][i];
         }
+
         outputFile << std::endl;
     }
 }
