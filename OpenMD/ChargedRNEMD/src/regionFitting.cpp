@@ -42,8 +42,9 @@ namespace OpenMD::RNEMD::ChargedRNEMD
 
         for (const auto& ion : rnemdParameters->ionicSpecies)
             outputFileStream << "#   " << ion->getIonName()
-                             << ": y = " << fittingParameters[ion->getIonIndex()][region - 1]["slope"]
-                             << "x + " << fittingParameters[ion->getIonIndex()][region - 1]["intercept"]
+                             << ": y = (" << fittingParameters[ion->getIonIndex()][region - 1]["slope"]
+                             << " +/- "   << fittingParameters[ion->getIonIndex()][region - 1]["stdDev(slope)"]
+                             << ")x + "   << fittingParameters[ion->getIonIndex()][region - 1]["intercept"]
                              << "\n";
     }
 }

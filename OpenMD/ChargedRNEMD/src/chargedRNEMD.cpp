@@ -55,6 +55,7 @@ int main(int argc, char* argv[])
     ChargedRNEMDAnalysisMethodPtr rnemdAnalysisMethod { methodFactory.createMethod() };
 
     rnemdAnalysisMethod->process();
+    rnemdAnalysisMethod->printOutputToFile();
 }
 
 

@@ -86,11 +86,6 @@ namespace OpenMD::RNEMD
             // Split all species for activity seperately
             for (size_t i {}; i < nonRegionSpecificData->activity.size(); ++i)
                 regionSpecificData[region - 1]->activity.push_back(regionSlicer(nonRegionSpecificData->activity[i]));
-
-            lowerIndexOfRegion = 0;
-            upperIndexOfRegion = 0;
-            lowerIndexOfFirstRegion = 0;
-            upperIndexOfFirstRegion = 0;
         }
 
         this->makeFirstRegionContinuous();
@@ -118,6 +113,8 @@ namespace OpenMD::RNEMD
     {
         lowerIndexOfRegion = boundFinder(regionBounds[region - 1]);
         upperIndexOfRegion = boundFinder(regionBounds[region]);
+        lowerIndexOfFirstRegion = 0;
+        upperIndexOfFirstRegion = 0;
 
         if (region == 1)
         {

@@ -21,6 +21,8 @@ namespace OpenMD::RNEMD::ChargedRNEMD
         virtual void calculateGradientOfElectrochemicalPotential() override;
         virtual void printAdditionalRegionHeader(std::ofstream& outputFileStream, int region) override;
 
+        virtual void preProcess() override { calculateElectricPotential(); }
+
     public:
         explicit RegionDifference(const ChargedRNEMDFilePtr& rnemdFile)
             : ChargedRNEMDAnalysisMethod{rnemdFile} {}

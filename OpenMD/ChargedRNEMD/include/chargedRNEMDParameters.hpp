@@ -51,12 +51,24 @@ namespace OpenMD::RNEMD::ChargedRNEMD
     using IonicSpeciesPtr = std::shared_ptr<IonicSpecies>;
 
 
+    // template <typename T>
+    // struct TransportProperty
+    // {
+    //     std::vector< std::vector<T> > magnitude;
+    //     std::vector< std::vector<T> > standardDeviation;
+    // };
+
+
     struct ChargedRNEMDParameters
     {
         RNEMDBlockParametersPtr block;
         RNEMDReportParametersPtr report;
         RNEMDInferredParametersPtr inferred;
         std::vector<IonicSpeciesPtr> ionicSpecies;
+
+        // TransportProperty<Utilities_API::PhysicalQuantities::ElectricConductivity> sigma;
+        // TransportProperty<Utilities_API::PhysicalQuantities::MolarConductivity> lambda;
+        // TransportProperty<Utilities_API::PhysicalQuantities::Mobility> mobility;
     };
 
     using ChargedRNEMDParametersPtr = std::shared_ptr<ChargedRNEMDParameters>;

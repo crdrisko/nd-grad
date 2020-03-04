@@ -22,8 +22,6 @@ namespace OpenMD::RNEMD::ChargedRNEMD
 
         void calculateElectrochemicalPotential();
         void calculateTransportProperties();
-        void printOutputToFile();
-        void calculateElectricPotential(const size_t& referencePoint = 0);
 
         // Required Implementation
         virtual void calculateGradientOfElectrochemicalPotential() = 0;
@@ -40,6 +38,8 @@ namespace OpenMD::RNEMD::ChargedRNEMD
         std::vector< std::vector<Utilities_API::PhysicalQuantities::MolarConductivity> > lambda;
         std::vector< std::vector<Utilities_API::PhysicalQuantities::Mobility> > mobility;
 
+        void calculateElectricPotential(const size_t& referencePoint = 0);
+
         // Optional Implementation
         virtual void preProcess() {};
         virtual void postProcess() {};
@@ -50,6 +50,7 @@ namespace OpenMD::RNEMD::ChargedRNEMD
         virtual ~ChargedRNEMDAnalysisMethod();
 
         void process();
+        void printOutputToFile();
     };
 
     using ChargedRNEMDAnalysisMethodPtr = std::shared_ptr<ChargedRNEMDAnalysisMethod>;

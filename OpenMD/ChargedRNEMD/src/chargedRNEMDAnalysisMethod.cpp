@@ -168,14 +168,14 @@ namespace OpenMD::RNEMD::ChargedRNEMD
             vector<ElectricConductivity> sigmaTemporaryStorageVector;
             vector<MolarConductivity> lambdaTemporaryStorageVector;
             vector<Mobility> mobilityTemporaryStorageVector;
+            vector<Concentration> stdDevConcentration;
 
             for (int region {1}; region <= rnemdParameters->inferred->numberOfRegions; ++region)
             {
                 CurrentDensity Jc_ion = (ion->getIonCharge() < 0.0_e ) ? rnemdParameters->report->Jc_anion
                     : rnemdParameters->report->Jc_cation;
 
-                vector<Concentration> conc_ion = individualRegionData[region - 1]->
-                    activity[ion->getIonIndex()];
+                vector<Concentration> conc_ion = individualRegionData[region - 1]->activity[ion->getIonIndex()];
 
                 sigmaTemporaryStorageVector.push_back(
                     p_Impl->calculateElectricalConductivity(Jc_ion, ion->getIonCharge(),
@@ -279,8 +279,6 @@ namespace OpenMD::RNEMD::ChargedRNEMD
     {
         preProcess();
 
-        calculateElectricPotential();
-
         calculateElectrochemicalPotential();
 
         calculateGradientOfElectrochemicalPotential();
@@ -288,7 +286,5 @@ namespace OpenMD::RNEMD::ChargedRNEMD
         calculateTransportProperties();
 
         postProcess();
-
-        printOutputToFile();
     }
 }
