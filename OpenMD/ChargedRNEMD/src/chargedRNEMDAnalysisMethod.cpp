@@ -6,11 +6,21 @@
 // Date: 02/19/2020-12:43:05
 // Description: Internal implementation details for the ChargedRNEMDAnalysisMethod class
 
+#include <cmath>
+#include <fstream>
 #include <iomanip>
+#include <memory>
+#include <string>
+#include <string_view>
+#include <vector>
+
+#include <utils-api/math.hpp>
+#include <cpp-units/physicalQuantities.hpp>
+
 #include "../include/chargedRNEMDAnalysisMethod.hpp"
 
-using std::vector;
-using namespace Utilities_API::PhysicalQuantities;
+using namespace PhysicalQuantities;
+using namespace PhysicalQuantities::Literals;
 
 namespace OpenMD::RNEMD::ChargedRNEMD
 {
@@ -32,12 +42,10 @@ namespace OpenMD::RNEMD::ChargedRNEMD
     Energy ChargedRNEMDAnalysisMethod::InternalCalculations::calculateElectrochemicalPotential(
         Temperature temperature, Concentration conc, ElectricPotential Phi, ElectricCharge charge) const
     {
-        Energy diffusionContribution
-            = Constants::boltzmannConstant.convertQuantity(Conversions::getEnergyConversionFactor("J", "eV"))
-                * temperature * conc.takeNaturalLogarithm();
+        Energy diffusionContribution = Constants::boltzmannConstant.convertQuantity("J", "eV") * temperature
+            * Math::log(conc);
 
-        Energy electricFieldContribution
-            = Phi.convertQuantity(Conversions::getMolarEnergyConversionFactor("kcal_mol", "eV_part")) * charge;
+        Energy electricFieldContribution = Phi.convertQuantity("kcal_mol", "eV_part") * charge;
 
         return diffusionContribution + electricFieldContribution;
     }
@@ -49,36 +57,35 @@ namespace OpenMD::RNEMD::ChargedRNEMD
         ElectricConductivity sigma_ion = q_ion * Jc / gradientOfElectrochemcialPotential;
 
         if ( sigma_ion < ElectricConductivity(0.0) )
-            sigma_ion = sigma_ion.negateQuantity();
+            sigma_ion = -sigma_ion;
 
-        return sigma_ion
-            .convertQuantity(Conversions::getElectricChargeConversionFactor("e", "C"))
-            .convertQuantity(1.0_ / Conversions::getLengthConversionFactor("Ang", "m"))
-            .convertQuantity(1.0_ / Conversions::getSIPrexixConversionFactor("femto", "base"));
+        return sigma_ion.convertQuantity("e", "C")
+                        .convertQuantity("m", "Ang")
+                        .convertQuantity("base", "femto");
     }
 
 
     MolarConductivity ChargedRNEMDAnalysisMethod::InternalCalculations::calculateMolarConductivity(
         ElectricConductivity sigma_ion, const std::vector<Concentration>& conc_ion) const
     {
-        Concentration averageConcentration { Mathematics::mathematicalFunction(conc_ion,
-            Mathematics::calculateAverage) };
+        Concentration averageConcentration { Math::calculateAverage(conc_ion) };
 
         MolarConductivity lambda_ion = sigma_ion / averageConcentration;
 
-        return lambda_ion
-            .convertQuantity(Conversions::getVolumeConversionFactor("L", "m3"))
-            .convertQuantity(Conversions::getSIPrexixConversionFactor("base", "centi").raisePower(2));
+        return lambda_ion.convertQuantity("L", "m3")
+                         .convertQuantity("base", "centi")
+                         .convertQuantity("base", "centi");
     }
 
 
     Mobility ChargedRNEMDAnalysisMethod::InternalCalculations::calculateMobility(MolarConductivity lambda_ion,
         ElectricCharge q_ion) const
     {
-        Mobility mobility_ion = lambda_ion / (q_ion.raisePower(2) * Constants::faradaysConstant);
+        Mobility mobility_ion
+            = lambda_ion / ( Math::pow<DimensionlessQuantity>(q_ion, 2) * Constants::faradaysConstant );
 
-        return mobility_ion
-            .convertQuantity(Conversions::getSIPrexixConversionFactor("centi", "base").raisePower(2));
+        return mobility_ion.convertQuantity("centi", "base")
+                           .convertQuantity("centi", "base");
     }
 
 
@@ -99,13 +106,13 @@ namespace OpenMD::RNEMD::ChargedRNEMD
     ChargedRNEMDAnalysisMethod::~ChargedRNEMDAnalysisMethod() = default;
 
 
-    void ChargedRNEMDAnalysisMethod::calculateElectricPotential(const size_t& referencePoint)
+    void ChargedRNEMDAnalysisMethod::calculateElectricPotential()
     {
         /* Due to the dependence on z when taking the integral of Ez, the Electric Potential values in the
             .rnemd file cannot be used with this method, so we implement our own integral here */
-        vector<Length> z;
-        vector<ElectricField> Ez;
-        vector<ElectricPotential> Phi;
+        std::vector<Length> z;
+        std::vector<ElectricField> Ez;
+        std::vector<ElectricPotential> Phi;
 
         for (int region {1}; region <= rnemdParameters->inferred->numberOfRegions; ++region)
         {
@@ -116,20 +123,13 @@ namespace OpenMD::RNEMD::ChargedRNEMD
             }
         }
 
-        Phi = Mathematics::mathematicalFunction<ElectricPotential, int>(z, Ez, referencePoint,
-            Mathematics::cumulativeTrapz);
+        Phi = Math::cumulativeTrapzIntegration(z, Ez);
 
         size_t runningIndex {};
 
         for (int region {1}; region <= rnemdParameters->inferred->numberOfRegions; ++region)
-        {
             for (size_t i {}; i < individualRegionData[region - 1]->rnemdAxis.size(); ++i)
-            {
-                individualRegionData[region - 1]->electricPotential[i] = Phi[runningIndex];
-
-                ++runningIndex;
-            }
-        }
+                individualRegionData[region - 1]->electricPotential[i] = Phi[runningIndex++];
     }
 
 
@@ -137,11 +137,11 @@ namespace OpenMD::RNEMD::ChargedRNEMD
     {
         for (const auto& ion : rnemdParameters->ionicSpecies)
         {
-            vector< vector<Energy> > externalTemporaryStorageVector;
+            std::vector< std::vector<Energy> > externalTemporaryStorageVector;
 
             for (int region {1}; region <= rnemdParameters->inferred->numberOfRegions; ++region)
             {
-                vector<Energy> internalTemporaryStorageVector;
+                std::vector<Energy> internalTemporaryStorageVector;
 
                 for (size_t i {}; i < individualRegionData[region - 1]->rnemdAxis.size(); ++i)
                 {
@@ -165,21 +165,21 @@ namespace OpenMD::RNEMD::ChargedRNEMD
     {
         for (const auto& ion : rnemdParameters->ionicSpecies)
         {
-            vector<ElectricConductivity> sigmaTemporaryStorageVector;
-            vector<MolarConductivity> lambdaTemporaryStorageVector;
-            vector<Mobility> mobilityTemporaryStorageVector;
-            vector<Concentration> stdDevConcentration;
+            std::vector<ElectricConductivity> sigmaTemporaryStorageVector;
+            std::vector<MolarConductivity> lambdaTemporaryStorageVector;
+            std::vector<Mobility> mobilityTemporaryStorageVector;
 
             for (int region {1}; region <= rnemdParameters->inferred->numberOfRegions; ++region)
             {
                 CurrentDensity Jc_ion = (ion->getIonCharge() < 0.0_e ) ? rnemdParameters->report->Jc_anion
                     : rnemdParameters->report->Jc_cation;
 
-                vector<Concentration> conc_ion = individualRegionData[region - 1]->activity[ion->getIonIndex()];
+                std::vector<Concentration> conc_ion = individualRegionData[region - 1]->activity[ion->getIonIndex()];
 
                 sigmaTemporaryStorageVector.push_back(
                     p_Impl->calculateElectricalConductivity(Jc_ion, ion->getIonCharge(),
                         gradientOfElectrochemicalPotential[ion->getIonIndex()][region - 1]) );
+
 
                 lambdaTemporaryStorageVector.push_back(
                     p_Impl->calculateMolarConductivity(sigmaTemporaryStorageVector[region - 1], conc_ion) );
@@ -197,15 +197,18 @@ namespace OpenMD::RNEMD::ChargedRNEMD
 
     void ChargedRNEMDAnalysisMethod::printOutputToFile()
     {
-        std::string outputFileName { rnemdFile->getFileName()->getFullFileName() };
+        std::string outputFileName { rnemdFile->getFileName().getFullFileName() };
         outputFileName = outputFileName.replace(outputFileName.find(".rnemd"), 6, ".ecp");
+
+        std::string bar {"######################################################"};
 
         std::ofstream outputFile;
         outputFile.open(outputFileName);
 
         outputFile << std::setprecision(8);
 
-        outputFile << "# FileName = " << outputFileName << "\n";
+        outputFile << bar << bar << "\n";
+        outputFile << "# FileName = " << outputFileName << "###############\n";
         outputFile << "# FluxType = " << rnemdParameters->block->fluxType << "\n";
         outputFile << "# BoxSize = " << rnemdParameters->inferred->boxSize << "\n";
         outputFile << "# SlabWidth = " << rnemdParameters->inferred->slabWidth << "\n";
@@ -217,8 +220,7 @@ namespace OpenMD::RNEMD::ChargedRNEMD
 
         for (int region {1}; region <= rnemdParameters->inferred->numberOfRegions; ++region)
         {
-            outputFile << "###################################################### Region " << region
-                       << " Data ######################################################\n";
+            outputFile << bar << " Region " << region << " Data " << bar << "\n";
 
             printAdditionalRegionHeader(outputFile, region);
 
@@ -257,11 +259,9 @@ namespace OpenMD::RNEMD::ChargedRNEMD
 
                     outputFile
                         << std::setw(15)
-                        << individualRegionData[region - 1]->electricField[2][i]
-                            .convertQuantity(Conversions::getMolarEnergyConversionFactor("kcal_mol", "eV_part"))
+                        << individualRegionData[region - 1]->electricField[2][i].convertQuantity("kcal_mol", "eV_part")
                         << std::setw(15)
-                        << individualRegionData[region - 1]->electricPotential[i]
-                            .convertQuantity(Conversions::getMolarEnergyConversionFactor("kcal_mol", "eV_part"));
+                        << individualRegionData[region - 1]->electricPotential[i].convertQuantity("kcal_mol", "eV_part");
 
                     for (const auto& ion : rnemdParameters->ionicSpecies)
                         outputFile

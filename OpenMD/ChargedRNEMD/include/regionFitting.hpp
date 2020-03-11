@@ -6,8 +6,13 @@
 // Date: 02/19/2020-12:20:07
 // Description: A chargedRNEMD method which performs a linear fit on the electrochemical potential curves
 
-#ifndef REGIONFITTING_HPP
-#define REGIONFITTING_HPP
+#ifndef ND_RESEARCH_OPENMD_REGIONFITTING_HPP
+#define ND_RESEARCH_OPENMD_REGIONFITTING_HPP
+
+#include <fstream>
+#include <vector>
+
+#include <cpp-units/physicalQuantities.hpp>
 
 #include "chargedRNEMDAnalysisMethod.hpp"
 
@@ -16,7 +21,7 @@ namespace OpenMD::RNEMD::ChargedRNEMD
     class RegionFitting : public ChargedRNEMDAnalysisMethod
     {
     private:
-        std::vector< std::vector< std::map<std::string, long double> > > fittingParameters;
+        std::vector< std::vector< std::vector<PhysicalQuantities::Force> > > fittingParameters;
 
         virtual void calculateGradientOfElectrochemicalPotential() override;
         virtual void printAdditionalRegionHeader(std::ofstream& outputFileStream, int region) override;

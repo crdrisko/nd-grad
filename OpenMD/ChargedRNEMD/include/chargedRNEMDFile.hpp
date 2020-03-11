@@ -6,10 +6,15 @@
 // Date: 02/05/2020-11:05:12
 // Description: Parses RNEMD files that classify as ChargedRNEMD files - depends on the supplied flux type
 
-#ifndef CHARGEDRNEMDFILE_HPP
-#define CHARGEDRNEMDFILE_HPP
+#ifndef ND_RESEARCH_OPENMD_CHARGEDRNEMDFILE_HPP
+#define ND_RESEARCH_OPENMD_CHARGEDRNEMDFILE_HPP
 
+#include <memory>
+#include <string_view>
+
+#include <utils-api/errors.hpp>
 #include <utils-api/strings.hpp>
+
 #include "chargedRNEMDParameters.hpp"
 #include "../../RNEMDFileParsing/include/rnemdFile.hpp"
 
@@ -20,6 +25,9 @@ namespace OpenMD::RNEMD::ChargedRNEMD
     private:
         ChargedRNEMDParametersPtr rnemdParameters { std::make_shared<ChargedRNEMDParameters>() };
 
+        Utilities_API::Errors::ErrorMessagePtr errorMessage
+            = std::make_shared<Utilities_API::Errors::FatalErrorMessage>("ChargedRNEMD", 2);
+
         bool hasChargedRNEMDFluxType(std::string_view fluxType) const
         {
             return (fluxType == "Current") || (fluxType == "Single") || (fluxType == "KE+Current");
@@ -28,13 +36,13 @@ namespace OpenMD::RNEMD::ChargedRNEMD
     public:
         explicit ChargedRNEMDFile(std::string_view FullFileName) : RNEMDFile{FullFileName}
         {
-            rnemdParameters->block = this->getRNEMDParameters()->block;
-            rnemdParameters->report = this->getRNEMDParameters()->report;
-            rnemdParameters->inferred = this->getRNEMDParameters()->inferred;
+            rnemdParameters->block = getRNEMDParameters()->block;
+            rnemdParameters->report = getRNEMDParameters()->report;
+            rnemdParameters->inferred = getRNEMDParameters()->inferred;
 
             if ( !hasChargedRNEMDFluxType(rnemdParameters->block->fluxType) )
-                Utilities_API::Errors::printFatalErrorMessage(1,
-                    "The supplied flux type does not match one of the Charged-RNEMD flux types");
+                errorMessage->printErrorMessage(
+                    "The supplied flux type does not match one of the ChargedRNEMD flux types.");
 
             int ionicSpeciesCount {};
 
@@ -51,7 +59,7 @@ namespace OpenMD::RNEMD::ChargedRNEMD
             }
         }
 
-        ChargedRNEMDParametersPtr getChargedRNEMDParameters() const { return this->rnemdParameters; }
+        ChargedRNEMDParametersPtr getChargedRNEMDParameters() const { return rnemdParameters; }
     };
 
     using ChargedRNEMDFilePtr = std::shared_ptr<ChargedRNEMDFile>;

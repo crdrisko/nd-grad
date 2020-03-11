@@ -6,8 +6,12 @@
 // Date: 02/20/2020-13:35:11
 // Description: A factory class designed to generate the appropriate analysis method depending on the fluxType
 
-#ifndef METHODFACTORY_HPP
-#define METHODFACTORY_HPP
+#ifndef ND_RESEARCH_OPENMD_METHODFACTORY_HPP
+#define ND_RESEARCH_OPENMD_METHODFACTORY_HPP
+
+#include <memory>
+#include <string>
+#include <string_view>
 
 #include "regionFitting.hpp"
 #include "regionDifference.hpp"
@@ -20,17 +24,17 @@ namespace OpenMD::RNEMD::ChargedRNEMD
         ChargedRNEMDFilePtr rnemdFile;
 
     public:
-        explicit MethodFactory(const Utilities_API::Files::FileNamePtr& FileName)
-            : rnemdFile{ std::make_shared<ChargedRNEMDFile>(FileName->getFullFileName()) } {}
+        explicit MethodFactory(std::string_view FileName)
+            : rnemdFile{ std::make_shared<ChargedRNEMDFile>(FileName) } {}
 
         ChargedRNEMDAnalysisMethodPtr createMethod() const
         {
-            const std::string fluxType {rnemdFile->getChargedRNEMDParameters()->block->fluxType};
+            const std::string fluxType { rnemdFile->getChargedRNEMDParameters()->block->fluxType };
 
             if (fluxType == "Single")
-                return std::make_shared<RegionFitting>(this->rnemdFile);
+                return std::make_shared<RegionFitting>(rnemdFile);
             else
-                return std::make_shared<RegionDifference>(this->rnemdFile);
+                return std::make_shared<RegionDifference>(rnemdFile);
         }
     };
 }

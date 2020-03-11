@@ -6,11 +6,16 @@
 // Date: 01/23/2020-16:10:23
 // Description: Provides 100% unit test coverage over all parameter parsing functions for Charged-RNEMD
 
+#include <memory>
+#include <string>
+#include <vector>
+
 #include <gtest/gtest.h>
+#include <utils-api/files.hpp>
+
 #include "../../ChargedRNEMD/include/chargedRNEMDFile.hpp"
 
 using namespace OpenMD::RNEMD::ChargedRNEMD;
-using namespace Utilities_API;
 
 int main(int argc, char** argv)
 {
@@ -27,15 +32,15 @@ TEST(testChargedRNEMDParameters, correctChargeParameters)
 
     for (const auto& file : files)
     {
-        Files::FileNamePtr fileName { std::make_shared<Files::FileName>(file) };
+        Utilities_API::Files::FileName fileName {file};
 
-        if ( (fileName->getBaseFileName() == "thermal.rnemd")
-            || (fileName->getBaseFileName() == "momentum.rnemd") )
+        if ( (fileName.getBaseFileName() == "thermal.rnemd")
+            || (fileName.getBaseFileName() == "momentum.rnemd") )
         {
             ASSERT_DEATH(
             {
                 ChargedRNEMDFilePtr rnemdFile { std::make_shared<ChargedRNEMDFile>(file) };
-            }, "The supplied flux type does not match one of the Charged-RNEMD flux types");
+            }, "ChargedRNEMD:\n\tThe supplied flux type does not match one of the ChargedRNEMD flux types.");
         }
         else
         {

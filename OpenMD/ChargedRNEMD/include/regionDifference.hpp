@@ -6,8 +6,13 @@
 // Date: 02/19/2020-12:19:58
 // Description: A chargedRNEMD method which calculates the difference between two electrochemical potentials
 
-#ifndef REGIONDIFFERENCE_HPP
-#define REGIONDIFFERENCE_HPP
+#ifndef ND_RESEARCH_OPENMD_REGIONDIFFERENCE_HPP
+#define ND_RESEARCH_OPENMD_REGIONDIFFERENCE_HPP
+
+#include <fstream>
+#include <vector>
+
+#include <cpp-units/physicalQuantities.hpp>
 
 #include "chargedRNEMDAnalysisMethod.hpp"
 
@@ -16,7 +21,7 @@ namespace OpenMD::RNEMD::ChargedRNEMD
     class RegionDifference : public ChargedRNEMDAnalysisMethod
     {
     private:
-        std::vector< std::vector< std::map<std::string, long double> > > fittingParameters;
+        std::vector< std::vector< std::vector<PhysicalQuantities::Force> > > fittingParameters;
 
         virtual void calculateGradientOfElectrochemicalPotential() override;
         virtual void printAdditionalRegionHeader(std::ofstream& outputFileStream, int region) override;

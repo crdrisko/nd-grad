@@ -6,7 +6,7 @@ compiler:
   - clang
   - gcc
 osx_image: 
-#  - xcode11.2
+  - xcode11.2
   - xcode10.1
 dist: bionic
 arch:
@@ -20,12 +20,11 @@ notifications:
 ### Installation procedure ###
 before_script:
   - previousLocation=$( pwd )
-  - bash ci/install-utilities-api.sh
+  - bash ci/install-cpp-units.sh
   - cd $previousLocation
   - mkdir build && cd build
 script:
   - cmake ../. -Dbuild_all_tests=ON
   - make && sudo make install
-after_script:
   - cd OpenMD/test
   - ctest

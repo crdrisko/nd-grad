@@ -6,10 +6,14 @@
 // Date: 01/22/2020-15:21:57
 // Description: Defines the functionality pertaining to splitting the RNEMD file into separate regions
 
+#include <algorithm>
+#include <memory>
+#include <vector>
+
 #include "../include/rnemdRegion.hpp"
 
-using std::vector;
-using namespace Utilities_API::PhysicalQuantities;
+using namespace PhysicalQuantities;
+using namespace PhysicalQuantities::Literals;
 
 namespace OpenMD::RNEMD
 {
@@ -19,17 +23,17 @@ namespace OpenMD::RNEMD
         int lowerIndexOfRegion, upperIndexOfRegion;
         int lowerIndexOfFirstRegion {}, upperIndexOfFirstRegion {};
 
-        vector<Length> regionBounds;
+        std::vector<Length> regionBounds;
 
         RNEMDParametersPtr rnemdParameters { std::make_shared<RNEMDParameters>() };
         RNEMDDataPtr nonRegionSpecificData { std::make_shared<RNEMDData>() };
-        vector<RNEMDDataPtr> regionSpecificData;
+        std::vector<RNEMDDataPtr> regionSpecificData;
 
         void parseWrappedZSelections();
         void setRNEMDRegionIndicies(int region);
 
         template<typename T>
-        vector<T> regionSlicer(const vector<T>& PhysicalQuantity);
+        std::vector<T> regionSlicer(const std::vector<T>& PhysicalQuantity);
 
         Length convertWrappedZ_to_z(const Length& wrapped_z) const
         {
@@ -52,7 +56,7 @@ namespace OpenMD::RNEMD
     public:
         explicit RNEMDRegionImpl(const RNEMDRegion& rnemdRegion);
 
-        vector<RNEMDDataPtr> getRegionSpecificData() const { return this->regionSpecificData; }
+        std::vector<RNEMDDataPtr> getRegionSpecificData() const { return regionSpecificData; }
     };
 
 
@@ -61,11 +65,11 @@ namespace OpenMD::RNEMD
         rnemdParameters = rnemdRegion.rnemdFile->getRNEMDParameters();
         nonRegionSpecificData = rnemdRegion.rnemdFile->getAllDataFromFile();
 
-        this->parseWrappedZSelections();
+        parseWrappedZSelections();
 
         for (int region {1}; region <= rnemdParameters->inferred->numberOfRegions; ++region)
         {
-            this->setRNEMDRegionIndicies(region);
+            setRNEMDRegionIndicies(region);
 
             regionSpecificData.push_back( std::make_shared<RNEMDData>() );
 
@@ -88,7 +92,7 @@ namespace OpenMD::RNEMD
                 regionSpecificData[region - 1]->activity.push_back(regionSlicer(nonRegionSpecificData->activity[i]));
         }
 
-        this->makeFirstRegionContinuous();
+        makeFirstRegionContinuous();
     }
 
 
@@ -128,12 +132,12 @@ namespace OpenMD::RNEMD
 
 
     template<typename T>
-    vector<T> RNEMDRegion::RNEMDRegionImpl::regionSlicer(const vector<T>& PhysicalQuantity)
+    std::vector<T> RNEMDRegion::RNEMDRegionImpl::regionSlicer(const std::vector<T>& PhysicalQuantity)
     {
         if ( PhysicalQuantity.empty() )
             return PhysicalQuantity;
 
-        vector<T> splitPhysicalQuantity;
+        std::vector<T> splitPhysicalQuantity;
 
         for (int i {lowerIndexOfRegion}; i < upperIndexOfRegion; ++i)
             splitPhysicalQuantity.push_back(PhysicalQuantity[i]);
@@ -150,7 +154,7 @@ namespace OpenMD::RNEMD
             lowerIndexOfFirstRegion = 0;
             upperIndexOfFirstRegion = 0;
 
-            vector<T> temporaryStorageVector { regionSlicer(PhysicalQuantity) };
+            std::vector<T> temporaryStorageVector { regionSlicer(PhysicalQuantity) };
 
             for (const auto& quantity : temporaryStorageVector)
                 splitPhysicalQuantity.push_back(quantity);
@@ -171,5 +175,5 @@ namespace OpenMD::RNEMD
 
     RNEMDRegion::~RNEMDRegion() = default;
 
-    vector<RNEMDDataPtr> RNEMDRegion::getRegionSpecificData() const { return p_Impl->getRegionSpecificData(); }
+    std::vector<RNEMDDataPtr> RNEMDRegion::getRegionSpecificData() const { return p_Impl->getRegionSpecificData(); }
 }

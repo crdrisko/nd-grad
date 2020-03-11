@@ -11,30 +11,27 @@
 
 #include <gtest/gtest.h>
 
-namespace OpenMD::RNEMD
+template<typename T>
+class FluxTypeAssert
 {
-    template<typename T>
-    class FluxTypeAssert
-    {
-    private:
-        T parameter;
+private:
+    T parameter;
 
-    public:
-        FluxTypeAssert() = delete;
-        FluxTypeAssert(const T& Parameter = 0) : parameter{Parameter} {}
+public:
+    FluxTypeAssert() = delete;
+    FluxTypeAssert(const T& Parameter = 0) : parameter{Parameter} {}
 
-        void isTrue() const { ASSERT_TRUE(parameter); }
-        void isFalse() const { ASSERT_FALSE(parameter); }
-        void hasAValueOf(const T& expectedValue) const { ASSERT_EQ(expectedValue, parameter); }
-        void hasAValueNear(const double& expectedValue) const { ASSERT_DOUBLE_EQ(expectedValue, parameter); }
-    };
+    void isTrue() const { ASSERT_TRUE(parameter); }
+    void isFalse() const { ASSERT_FALSE(parameter); }
+    void hasAValueOf(const T& expectedValue) const { ASSERT_EQ(expectedValue, parameter); }
+    void hasAValueNear(const double& expectedValue) const { ASSERT_DOUBLE_EQ(expectedValue, parameter); }
+};
 
-    template<typename T>
-    FluxTypeAssert<T> assertThat(const T& parameter)
-    {
-        FluxTypeAssert<T> assert {parameter};
-        return assert;
-    }
+template<typename T>
+FluxTypeAssert<T> assertThat(const T& parameter)
+{
+    FluxTypeAssert<T> assert {parameter};
+    return assert;
 }
 
 #endif

@@ -29,6 +29,9 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../cmake")
 find_package(Utilities_API REQUIRED)
 include_directories(${UTILITIES_API_INCLUDE_DIR})
 
+find_package(CPP_UNITS REQUIRED)
+include_directories(${CPP_UNITS_INCLUDE_DIR})
+
 add_executable(chargedRNEMD ${CHARGED_RNEMD_SOURCES} ${RNEMD_FILE_PARSING_SOURCES})
 target_link_libraries(chargedRNEMD ${UTILITIES_API_LIBRARIES})
 

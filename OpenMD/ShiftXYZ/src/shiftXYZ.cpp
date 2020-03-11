@@ -6,20 +6,31 @@
 // Date: 02/23/2020-17:45:38
 // Description: Main ShiftXYZ program, takes a xyz file and region boundary as input and returns a new xyz file
 
+#include <cstdlib>
 #include <cstring>
+#include <exception>
+#include <iostream>
+#include <memory>
+#include <string>
+
 #include <utils-api/errors.hpp>
+#include <utils-api/strings.hpp>
+#include <cpp-units/physicalQuantities.hpp>
+
 #include "../include/xyzFile.hpp"
 
-using namespace Utilities_API;
 using namespace OpenMD::RNEMD;
 
 void printHelpMessageAndExit();
 
 int main(int argc, char* argv[])
 {
-    Files::FileNamePtr inputFileName;
-    PhysicalQuantities::Length firstRegionIndex;
+    std::string inputFileName;
     std::string outputFileName;
+    PhysicalQuantities::Length firstRegionIndex;
+
+    Utilities_API::Errors::ErrorMessagePtr errorMessage
+        = std::make_shared<Utilities_API::Errors::FatalErrorMessage>("ShiftXYZ", 1);
 
     int requiredInputCount {2};
     int currentInputCount {};
@@ -33,9 +44,9 @@ int main(int argc, char* argv[])
             case 'i':
                 ++option;
 
-                if ( (argv[option] != NULL) && (Strings::stringFinder(".xyz", argv[option])) )
+                if ( (argv[option] != NULL) && (Utilities_API::Strings::stringFinder(".xyz", argv[option])) )
                 {
-                    inputFileName = std::make_shared<Files::FileName>(argv[option]);
+                    inputFileName = argv[option];
                     ++currentInputCount;
                 }
                 break;
@@ -50,8 +61,8 @@ int main(int argc, char* argv[])
                 }
                 catch(const std::exception& e)
                 {
-                    Errors::printFatalErrorMessage(1,
-                        "Exception thrown (and caught), could not convert string to Length.");
+                    errorMessage->printErrorMessage(
+                        "Exception thrown (and caught), could not convert string to PhysicalQuantities::Length.");
                 }
                 break;
 
@@ -66,15 +77,14 @@ int main(int argc, char* argv[])
                 break;
 
             default:
-                Errors::printFatalErrorMessage(1, "Unknown option passed to the shiftXYZ program.");
+                errorMessage->printErrorMessage("Unknown option passed to the program.");
                 break;
             }
         }
     }
 
-    if ( currentInputCount != requiredInputCount )
-        Errors::printFatalErrorMessage(1,
-            "ShiftXYZ input requires a single valid .xyz file and RNEMD region index.");
+    if (currentInputCount != requiredInputCount)
+        errorMessage->printErrorMessage("Required input is a single valid .xyz file and RNEMD region index.");
 
     XYZFilePtr xyzFile { std::make_shared<XYZFile>(inputFileName) };
 

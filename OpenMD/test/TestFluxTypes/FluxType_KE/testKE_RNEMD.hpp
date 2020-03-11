@@ -1,26 +1,25 @@
 // Copyright (c) 2020 Cody R. Drisko. All rights reserved.
-// Licensed under the MIT License.See the LICENSE file in the project root for license information.
+// Licensed under the MIT License. See the LICENSE file in the project root for license information.
 //
-// Name: testKE_RNEMD.cpp - Version 1.0.0
+// Name: testKE_RNEMD.hpp - Version 1.0.0
 // Author: cdrisko
-// Date: 01/24/2020-10:07:51
+// Date: 03/10/2020-07:29:11
 // Description: Provides 100% unit test coverage over all parameter parsing functions for FluxType = KE
+
+#ifndef TESTKE_RNEMD_HPP
+#define TESTKE_RNEMD_HPP
+
+#include <memory>
 
 #include "../testAssertions.hpp"
 #include "../../../RNEMDFileParsing/include/rnemdFile.hpp"
 
-using namespace OpenMD::RNEMD;
-
-int main(int argc, char** argv)
-{
-    testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
-}
-
 TEST(testKE_RNEMD, KE_FluxTypeCorrectBlockParameters)
 {
-    RNEMDFilePtr rnemdFile {std::make_shared<RNEMDFile>("../../../samples/thermal.rnemd")};
-    RNEMDBlockParametersPtr rnemdBlock { rnemdFile->getRNEMDParameters()->block };
+    OpenMD::RNEMD::RNEMDFilePtr rnemdFile
+        = std::make_shared<OpenMD::RNEMD::RNEMDFile>("../../samples/thermal.rnemd");
+
+    OpenMD::RNEMD::RNEMDBlockParametersPtr rnemdBlock { rnemdFile->getRNEMDParameters()->block };
 
     assertThat(rnemdBlock->exchangeMethod).hasAValueOf("VSS");
     assertThat(rnemdBlock->fluxType).hasAValueOf("KE");
@@ -40,8 +39,10 @@ TEST(testKE_RNEMD, KE_FluxTypeCorrectBlockParameters)
 
 TEST(testKE_RNEMD, KE_FluxTypeCorrectInferredParameters)
 {
-    RNEMDFilePtr rnemdFile {std::make_shared<RNEMDFile>("../../../samples/thermal.rnemd")};
-    RNEMDInferredParametersPtr rnemdInferred { rnemdFile->getRNEMDParameters()->inferred };
+    OpenMD::RNEMD::RNEMDFilePtr rnemdFile
+        = std::make_shared<OpenMD::RNEMD::RNEMDFile>("../../samples/thermal.rnemd");
+
+    OpenMD::RNEMD::RNEMDInferredParametersPtr rnemdInferred { rnemdFile->getRNEMDParameters()->inferred };
 
     assertThat(rnemdInferred->numberOfRegions).hasAValueOf(4);
     assertThat(rnemdInferred->slabWidth.getMagnitude()).hasAValueNear(4.0);
@@ -52,8 +53,10 @@ TEST(testKE_RNEMD, KE_FluxTypeCorrectInferredParameters)
 
 TEST(testKE_RNEMD, KE_FluxTypeCorrectReportParameters)
 {
-    RNEMDFilePtr rnemdFile {std::make_shared<RNEMDFile>("../../../samples/thermal.rnemd")};
-    RNEMDReportParametersPtr rnemdReport { rnemdFile->getRNEMDParameters()->report };
+    OpenMD::RNEMD::RNEMDFilePtr rnemdFile
+        = std::make_shared<OpenMD::RNEMD::RNEMDFile>("../../samples/thermal.rnemd");
+
+    OpenMD::RNEMD::RNEMDReportParametersPtr rnemdReport { rnemdFile->getRNEMDParameters()->report };
 
     assertThat(rnemdReport->runningTime.getMagnitude()).hasAValueNear(10000002.0);
 
@@ -112,3 +115,5 @@ TEST(testKE_RNEMD, KE_FluxTypeCorrectReportParameters)
     assertThat(rnemdReport->trialCount).hasAValueOf(5000000);
     assertThat(rnemdReport->failTrialCount).hasAValueOf(0);
 }
+
+#endif

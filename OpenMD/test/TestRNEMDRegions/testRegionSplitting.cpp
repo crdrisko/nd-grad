@@ -6,11 +6,19 @@
 // Date: 02/22/2020-20:37:57
 // Description: Provides 100% unit test coverage over all region splitting functions
 
+#include <array>
+#include <fstream>
+#include <memory>
+#include <string>
+#include <vector>
+
 #include <gtest/gtest.h>
+#include <cpp-units/physicalQuantities.hpp>
+
 #include "../../RNEMDFileParsing/include/rnemdRegion.hpp"
 
 using namespace OpenMD::RNEMD;
-using namespace Utilities_API::PhysicalQuantities;
+using namespace PhysicalQuantities;
 
 int main(int argc, char** argv)
 {
@@ -39,15 +47,13 @@ TEST(testRegionSplitting, currentFluxTypeCorrectSplitting)
         std::vector<ElectricPotential> Phi { individualRegionData[region - 1]->electricPotential };
 
         std::ofstream outputFile;
-        outputFile.open("Current" + std::to_string(region) + ".txt");
+        outputFile.open(".text-files/Current" + std::to_string(region) + ".txt");
 
         for (size_t j {}; j < z.size(); ++j)
             outputFile << z[j] << " " << temp[j] << " "
                        << concAnion[j] << " " << concCation[j] << " "
-                       << Ez[j].convertQuantity(Conversions::getMolarEnergyConversionFactor("kcal_mol",
-                            "eV_part")) << " "
-                       << Phi[j].convertQuantity(Conversions::getMolarEnergyConversionFactor("kcal_mol",
-                            "eV_part")) << std::endl;
+                       << Ez[j].convertQuantity("kcal_mol", "eV_part") << " "
+                       << Phi[j].convertQuantity("kcal_mol", "eV_part") << std::endl;
 
         outputFile.close();
 
@@ -74,7 +80,7 @@ TEST(testRegionSplitting, KE_FluxTypeCorrectSplitting)
         std::vector<Temperature> temp { individualRegionData[region - 1]->temperature };
 
         std::ofstream outputFile;
-        outputFile.open("Thermal" + std::to_string(region) + ".txt");
+        outputFile.open(".text-files/Thermal" + std::to_string(region) + ".txt");
 
         for (size_t j {}; j < z.size(); ++j)
             outputFile << z[j] << " " << temp[j] << std::endl;
@@ -106,7 +112,7 @@ TEST(testRegionSplitting, Px_FluxTypeCorrectSplitting)
         std::vector<MassDensity> density { individualRegionData[region - 1]->density };
 
         std::ofstream outputFile;
-        outputFile.open("Momentum" + std::to_string(region) + ".txt");
+        outputFile.open(".text-files/Momentum" + std::to_string(region) + ".txt");
 
         for (size_t j {}; j < z.size(); ++j)
             outputFile << z[j] << " " << temp[j] << " "
@@ -142,15 +148,14 @@ TEST(testRegionSplitting, singleFluxTypeCorrectRegionSplitting)
         std::vector<ElectricPotential> Phi { individualRegionData[region - 1]->electricPotential };
 
         std::ofstream outputFile;
-        outputFile.open("Single" + std::to_string(region) + ".txt");
+        outputFile.open(".text-files/Single" + std::to_string(region) + ".txt");
 
         for (size_t j {}; j < z.size(); ++j)
             outputFile << z[j] << " " << temp[j] << " "
                        << concAnion[j] << " " << concCation[j] << " "
-                       << Ez[j].convertQuantity(Conversions::getMolarEnergyConversionFactor("kcal_mol",
-                            "eV_part")) << " "
-                       << Phi[j].convertQuantity(Conversions::getMolarEnergyConversionFactor("kcal_mol",
-                            "eV_part")) << std::endl;
+                       << Ez[j].convertQuantity("kcal_mol", "eV_part") << " "
+                       << Phi[j].convertQuantity("kcal_mol", "eV_part") << std::endl;
+
         outputFile.close();
 
         sizeOfRNEMDAxis += z.size();

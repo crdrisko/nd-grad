@@ -6,12 +6,15 @@
 // Date: 01/20/2020-15:44:50
 // Description: Defines data structures dedicated to holding the data from a given RNEMD file
 
-#ifndef RNEMDPARAMETERS_HPP
-#define RNEMDPARAMETERS_HPP
+#ifndef ND_RESEARCH_OPENMD_RNEMDPARAMETERS_HPP
+#define ND_RESEARCH_OPENMD_RNEMDPARAMETERS_HPP
 
 #include <array>
 #include <memory>
-#include <utils-api/physicalQuantities.hpp>
+#include <string>
+#include <vector>
+
+#include <cpp-units/physicalQuantities.hpp>
 
 namespace OpenMD::RNEMD
 {
@@ -21,10 +24,10 @@ namespace OpenMD::RNEMD
         std::string fluxType;
 
         std::string privilegedAxis;
-        Utilities_API::PhysicalQuantities::Time exchangeTime;
+        PhysicalQuantities::Time exchangeTime;
         std::vector<std::string> objectSelection;
-        std::array<Utilities_API::PhysicalQuantities::Length, 2> selectionA;
-        std::array<Utilities_API::PhysicalQuantities::Length, 2> selectionB;
+        std::array<PhysicalQuantities::Length, 2> selectionA;
+        std::array<PhysicalQuantities::Length, 2> selectionB;
         std::vector<std::string> outputSelection;
     };
 
@@ -33,31 +36,31 @@ namespace OpenMD::RNEMD
 
     struct RNEMDReportParameters
     {
-        Utilities_API::PhysicalQuantities::Time runningTime;
+        PhysicalQuantities::Time runningTime;
 
         // Target flux
-        Utilities_API::PhysicalQuantities::MolarEnergyFlux kineticFlux;
-        std::array<Utilities_API::PhysicalQuantities::MomentumFlux, 3> momentumFlux;
-        std::array<Utilities_API::PhysicalQuantities::MomentumFlux, 3> angularMomentumFlux;
-        Utilities_API::PhysicalQuantities::CurrentDensity currentDensity;
+        PhysicalQuantities::MolarEnergyFlux kineticFlux;
+        std::array<PhysicalQuantities::MomentumFlux, 3> momentumFlux;
+        std::array<PhysicalQuantities::MomentumFlux, 3> angularMomentumFlux;
+        PhysicalQuantities::CurrentDensity currentDensity;
 
         // Target one-time exchanges
-        Utilities_API::PhysicalQuantities::MolarEnergy kineticTarget;
-        std::array<Utilities_API::PhysicalQuantities::Momentum, 3> momentumTarget;
-        std::array<Utilities_API::PhysicalQuantities::Momentum, 3> angularMomentumTarget;
+        PhysicalQuantities::MolarEnergy kineticTarget;
+        std::array<PhysicalQuantities::Momentum, 3> momentumTarget;
+        std::array<PhysicalQuantities::Momentum, 3> angularMomentumTarget;
 
         // Actual exchange totals
-        Utilities_API::PhysicalQuantities::MolarEnergy kineticExchange;
-        std::array<Utilities_API::PhysicalQuantities::Momentum, 3> momentumExchange;
-        std::array<Utilities_API::PhysicalQuantities::Momentum, 3> angularMomentumExchange;
+        PhysicalQuantities::MolarEnergy kineticExchange;
+        std::array<PhysicalQuantities::Momentum, 3> momentumExchange;
+        std::array<PhysicalQuantities::Momentum, 3> angularMomentumExchange;
 
         // Actual flux
-        Utilities_API::PhysicalQuantities::MolarEnergyFlux Jz;
-        std::array<Utilities_API::PhysicalQuantities::MomentumFlux, 3> JzP;
-        std::array<Utilities_API::PhysicalQuantities::MomentumFlux, 3> JzL;
-        Utilities_API::PhysicalQuantities::CurrentDensity Jc_total;
-        Utilities_API::PhysicalQuantities::CurrentDensity Jc_cation;
-        Utilities_API::PhysicalQuantities::CurrentDensity Jc_anion;
+        PhysicalQuantities::MolarEnergyFlux Jz;
+        std::array<PhysicalQuantities::MomentumFlux, 3> JzP;
+        std::array<PhysicalQuantities::MomentumFlux, 3> JzL;
+        PhysicalQuantities::CurrentDensity Jc_total;
+        PhysicalQuantities::CurrentDensity Jc_cation;
+        PhysicalQuantities::CurrentDensity Jc_anion;
 
         // Exchange statistics
         size_t trialCount;
@@ -75,8 +78,8 @@ namespace OpenMD::RNEMD
         int dataFieldLabelIndex;
         int numberOfRegions;
 
-        Utilities_API::PhysicalQuantities::Length slabWidth;
-        Utilities_API::PhysicalQuantities::Length boxSize;
+        PhysicalQuantities::Length slabWidth;
+        PhysicalQuantities::Length boxSize;
     };
 
     using RNEMDInferredParametersPtr = std::shared_ptr<RNEMDInferredParameters>;
@@ -104,15 +107,15 @@ namespace OpenMD::RNEMD
                                                             "Electric Field(kcal/mol/angstroms/e)",
                                                             "Electrostatic Potential(kcal/mol/e)" };
 
-        std::vector<Utilities_API::PhysicalQuantities::Length> rnemdAxis;
-        std::vector<Utilities_API::PhysicalQuantities::Length> radius;
-        std::vector<Utilities_API::PhysicalQuantities::Temperature> temperature;
-        std::array<std::vector<Utilities_API::PhysicalQuantities::Velocity>, 3> velocity;
-        std::array<std::vector<Utilities_API::PhysicalQuantities::Velocity>, 3> angularVelocity;
-        std::vector<Utilities_API::PhysicalQuantities::MassDensity> density;
-        std::vector< std::vector<Utilities_API::PhysicalQuantities::Concentration> > activity;
-        std::array<std::vector<Utilities_API::PhysicalQuantities::ElectricField>, 3> electricField;
-        std::vector<Utilities_API::PhysicalQuantities::ElectricPotential> electricPotential;
+        std::vector<PhysicalQuantities::Length> rnemdAxis;
+        std::vector<PhysicalQuantities::Length> radius;
+        std::vector<PhysicalQuantities::Temperature> temperature;
+        std::array<std::vector<PhysicalQuantities::Velocity>, 3> velocity;
+        std::array<std::vector<PhysicalQuantities::Velocity>, 3> angularVelocity;
+        std::vector<PhysicalQuantities::MassDensity> density;
+        std::vector< std::vector<PhysicalQuantities::Concentration> > activity;
+        std::array<std::vector<PhysicalQuantities::ElectricField>, 3> electricField;
+        std::vector<PhysicalQuantities::ElectricPotential> electricPotential;
     };
 
     using RNEMDDataPtr =  std::shared_ptr<RNEMDData>;

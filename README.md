@@ -1,8 +1,12 @@
 # ND-Research
 
-### Build Status - Version 1.0.0
+## Release: Version 0.0.1 (Pre-Release)
+
+### Build Status
 
 [![Build Status](https://travis-ci.com/crdrisko/ND-Research.svg?branch=master)](https://travis-ci.com/crdrisko/ND-Research)
+
+- NOTE: Until Version 1.0.0 is released, the project's interface is subject to change at any time without warning.
 
 ## Platforms
 
@@ -20,7 +24,9 @@ ND-Research requires
 
 - A C++17-standard-compliant compiler.
 
-- [Utilities-API](https://github.com/crdrisko/utilities-api): used for a number of the utilities found throughout the various projects and scripts. More information about the API can be found in the repository's README. The `ci/install-utilities-api.sh` script can be used to install the repository where desired.
+- [CPP-Units](https://github.com/crdrisko/cpp-units): a compile-time, header-only, API providing access to a number of Physical Quantities and units for cleaner code throughout the project. More information about the API can be found in the repository's README. The procedure outlined in the `ci/install-cpp-units.sh` script can be followed to install the repository where desired.
+
+- [Utilities-API](https://github.com/crdrisko/utilities-api): used for a number of the utilities found throughout the various projects and scripts. More information about the API can be found in the repository's README.
 
 Optional:
 

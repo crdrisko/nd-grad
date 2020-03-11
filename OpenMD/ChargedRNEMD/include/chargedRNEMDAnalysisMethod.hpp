@@ -4,10 +4,17 @@
 // Name: chargedRNEMDAnalysisMethod.hpp - Version 1.0.0
 // Author: cdrisko
 // Date: 02/19/2020-12:18:42
-// Description: Template method interface for the chargedRNEMD program
+// Description: Template method interface for the ChargedRNEMD program
 
-#ifndef CHARGEDRNEMDANALYSISMETHOD_HPP
-#define CHARGEDRNEMDANALYSISMETHOD_HPP
+#ifndef ND_RESEARCH_OPENMD_CHARGEDRNEMDANALYSISMETHOD_HPP
+#define ND_RESEARCH_OPENMD_CHARGEDRNEMDANALYSISMETHOD_HPP
+
+#include <fstream>
+#include <memory>
+#include <string_view>
+#include <vector>
+
+#include <cpp-units/physicalQuantities.hpp>
 
 #include "chargedRNEMDFile.hpp"
 #include "../../RNEMDFileParsing/include/rnemdRegion.hpp"
@@ -32,13 +39,13 @@ namespace OpenMD::RNEMD::ChargedRNEMD
         ChargedRNEMDParametersPtr rnemdParameters;
         std::vector<RNEMDDataPtr> individualRegionData;
 
-        std::vector< std::vector< std::vector<Utilities_API::PhysicalQuantities::Energy> > > electrochemicalPotential;
-        std::vector <std::vector<Utilities_API::PhysicalQuantities::Force> > gradientOfElectrochemicalPotential;
-        std::vector< std::vector<Utilities_API::PhysicalQuantities::ElectricConductivity> > sigma;
-        std::vector< std::vector<Utilities_API::PhysicalQuantities::MolarConductivity> > lambda;
-        std::vector< std::vector<Utilities_API::PhysicalQuantities::Mobility> > mobility;
+        std::vector< std::vector< std::vector<PhysicalQuantities::Energy> > > electrochemicalPotential;
+        std::vector <std::vector<PhysicalQuantities::Force> > gradientOfElectrochemicalPotential;
+        std::vector< std::vector<PhysicalQuantities::ElectricConductivity> > sigma;
+        std::vector< std::vector<PhysicalQuantities::MolarConductivity> > lambda;
+        std::vector< std::vector<PhysicalQuantities::Mobility> > mobility;
 
-        void calculateElectricPotential(const size_t& referencePoint = 0);
+        void calculateElectricPotential();
 
         // Optional Implementation
         virtual void preProcess() {};

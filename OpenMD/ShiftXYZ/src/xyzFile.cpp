@@ -6,10 +6,15 @@
 // Date: 02/24/2020-07:57:37
 // Description: Funtion definitions for the XYZFile class
 
+#include <fstream>
 #include <iomanip>
+#include <string>
+
+#include <cpp-units/physicalQuantities.hpp>
+
 #include "../include/xyzFile.hpp"
 
-using namespace Utilities_API::PhysicalQuantities;
+using namespace PhysicalQuantities;
 
 namespace OpenMD::RNEMD
 {
@@ -29,7 +34,7 @@ namespace OpenMD::RNEMD
             xyzParameters->atomLabels.push_back(superDataVector[i][0]);
 
             for (size_t j {}; j < 3; ++j)
-                xyzParameters->coordinates[j].push_back(Length(superDataVector[i][j + 1]));
+                xyzParameters->coordinates[j].push_back( Length(superDataVector[i][j + 1]) );
         }
     }
 
@@ -37,7 +42,7 @@ namespace OpenMD::RNEMD
     {
         if ( outputFileName.empty() )
         {
-            outputFileName = this->getFileName()->getFullFileName();
+            outputFileName = getFileName().getFullFileName();
             outputFileName.insert(outputFileName.find_last_of("/") + 1, "shifted_");
         }
 

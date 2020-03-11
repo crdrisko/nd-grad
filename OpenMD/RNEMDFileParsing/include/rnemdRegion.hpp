@@ -6,8 +6,11 @@
 // Date: 01/08/2020-21:39:44
 // Description: Functionality pertaining to splitting the RNEMD file into separate regions
 
-#ifndef RNEMDREGION_HPP
-#define RNEMDREGION_HPP
+#ifndef ND_RESEARCH_OPENMD_RNEMDREGION_HPP
+#define ND_RESEARCH_OPENMD_RNEMDREGION_HPP
+
+#include <memory>
+#include <vector>
 
 #include "rnemdFile.hpp"
 

@@ -1,1 +1,2 @@
-OpenMD/test/**/*.txt
+OpenMD/test/TestRNEMDRegions/.text-files/*
+OpenMD/test/TestShiftXYZ/.text-files/*

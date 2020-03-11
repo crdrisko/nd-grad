@@ -6,11 +6,17 @@
 // Date: 02/24/2020-07:42:39
 // Description: Provides 100% unit test coverage over all functions for the ShiftXYZ program
 
+#include <fstream>
+#include <memory>
+#include <vector>
+
 #include <gtest/gtest.h>
+#include <cpp-units/physicalQuantities.hpp>
+
 #include "../../ShiftXYZ/include/xyzFile.hpp"
 
 using namespace OpenMD::RNEMD;
-using namespace Utilities_API::PhysicalQuantities;
+using namespace PhysicalQuantities::Literals;
 
 int main(int argc, char** argv)
 {
@@ -49,9 +55,11 @@ TEST(testShiftXYZ, testProperOutputFilePrinting)
     XYZFilePtr xyzFile { std::make_shared<XYZFile>("../../samples/single.xyz") };
 
     xyzFile->shiftXYZPositions( 19.5938_Ang );
-    xyzFile->printOutputToFile("shifted_single.txt");
+    xyzFile->printOutputToFile(".text-files/shifted_single.txt");
 
-    ASSERT_TRUE(fs::is_regular_file("shifted_single.txt"));
+    std::ifstream outputFile { ".text-files/shifted_single.txt" };
+
+    ASSERT_TRUE(outputFile);
 }
 
 TEST(testShiftXYZ, testOnlySpecifiedChangesAreMade)
@@ -59,7 +67,7 @@ TEST(testShiftXYZ, testOnlySpecifiedChangesAreMade)
     XYZFilePtr xyzFile { std::make_shared<XYZFile>("../../samples/single.xyz") };
     XYZParametersPtr xyzParameters { xyzFile->getXYZParameters() };
 
-    std::vector<Length> initialZCoordinates { xyzParameters->coordinates[2] };
+    std::vector<PhysicalQuantities::Length> initialZCoordinates { xyzParameters->coordinates[2] };
 
     xyzFile->shiftXYZPositions( 19.5938_Ang );
 

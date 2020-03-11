@@ -6,24 +6,28 @@
 // Date: 02/23/2020-17:45:49
 // Description: The XYZFile class used for storing the data and functions associated with a .xyz file
 
-#ifndef XYZFILE_HPP
-#define XYZFILE_HPP
+#ifndef ND_RESEARCH_OPENMD_XYZFILE_HPP
+#define ND_RESEARCH_OPENMD_XYZFILE_HPP
 
 #include <array>
+#include <memory>
+#include <string>
+#include <vector>
+
 #include <utils-api/files.hpp>
-#include <utils-api/physicalQuantities.hpp>
+#include <cpp-units/physicalQuantities.hpp>
 
 namespace OpenMD::RNEMD
 {
     struct XYZParameters
     {
         int numberOfAtoms;
-        Utilities_API::PhysicalQuantities::Time runTime;
+        PhysicalQuantities::Time runTime;
 
-        std::array<std::array<Utilities_API::PhysicalQuantities::Length, 3>, 3> Hmat;
+        std::array<std::array<PhysicalQuantities::Length, 3>, 3> Hmat;
 
         std::vector<std::string> atomLabels;
-        std::array<std::vector<Utilities_API::PhysicalQuantities::Length>, 3> coordinates;
+        std::array<std::vector<PhysicalQuantities::Length>, 3> coordinates;
     };
 
     using XYZParametersPtr = std::shared_ptr<XYZParameters>;
@@ -33,17 +37,19 @@ namespace OpenMD::RNEMD
     {
     private:
         XYZParametersPtr xyzParameters { std::make_shared<XYZParameters>() };
-        std::vector< std::vector<std::string> > superDataVector { this->getSuperDataVector(" \t\n\";") };
+        std::vector< std::vector<std::string> > superDataVector { getSuperDataVector(" \t\n\";") };
 
         void parseInputXYZFile();
 
     public:
-        explicit XYZFile(std::string_view FullFileName)
-            : Utilities_API::Files::TextFile{FullFileName} { this->parseInputXYZFile(); }
+        explicit XYZFile(std::string_view FullFileName) : Utilities_API::Files::TextFile{FullFileName}
+        {
+            parseInputXYZFile();
+        }
 
-        explicit XYZFile(Utilities_API::Files::FileNamePtr FileName) : XYZFile{ FileName->getFullFileName() } {}
+        explicit XYZFile(const Utilities_API::Files::FileName& FileName) : XYZFile{ FileName.getFullFileName() } {}
 
-        void shiftXYZPositions(const Utilities_API::PhysicalQuantities::Length& firstRegionBound)
+        void shiftXYZPositions(const PhysicalQuantities::Length& firstRegionBound)
         {
             for (auto& z : xyzParameters->coordinates[2])
                 if (z > firstRegionBound)
@@ -51,7 +57,7 @@ namespace OpenMD::RNEMD
         }
 
         void printOutputToFile(std::string outputFileName = "") const;
-        XYZParametersPtr getXYZParameters() const { return this->xyzParameters; }
+        XYZParametersPtr getXYZParameters() const { return xyzParameters; }
     };
 
     using XYZFilePtr = std::shared_ptr<XYZFile>;

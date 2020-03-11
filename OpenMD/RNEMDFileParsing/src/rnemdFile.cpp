@@ -6,22 +6,33 @@
 // Date: 01/21/2020-14:16:00
 // Description: The implementation of RNEMD file parsing hidden using a pointer to implementation
 
+#include <algorithm>
 #include <limits>
+#include <memory>
+#include <string>
+#include <string_view>
+#include <utility>
+#include <vector>
+
+#include <utils-api/files.hpp>
+#include <utils-api/strings.hpp>
+#include <cpp-units/physicalQuantities.hpp>
+
 #include "../include/rnemdFile.hpp"
 
-using std::vector;
-using namespace Utilities_API::PhysicalQuantities;
+using namespace Utilities_API;
+using namespace PhysicalQuantities;
 
 namespace OpenMD::RNEMD
 {
-    class RNEMDFile::RNEMDFileImpl : public Utilities_API::Files::TextFile
+    class RNEMDFile::RNEMDFileImpl : public Files::TextFile
     {
     private:
         RNEMDDataPtr allDataFromFile { std::make_shared<RNEMDData>() };
         RNEMDParametersPtr rnemdParameters { std::make_shared<RNEMDParameters>() };
 
-        vector< vector<std::string> > superDataVector { this->getSuperDataVector() };
-        vector< vector<std::string> > superMetaDataVector { this->getSuperMetaDataVector(" \t\n\";") };
+        std::vector< std::vector<std::string> > superDataVector { getSuperDataVector() };
+        std::vector< std::vector<std::string> > superMetaDataVector { getSuperMetaDataVector(" \t\n\";") };
 
         void setRNEMDData();
         void setRNEMDBlockParameters();
@@ -29,23 +40,25 @@ namespace OpenMD::RNEMD
         void setRNEMDInferredParameters();
 
         int findDataFieldStartLocation(std::string_view dataFieldLabel);
-        template<typename T> vector<T> parseDataFromFile(int startIndex = 0);
+
+        template <typename T>
+        std::vector<T> parseDataFromFile(int startIndex = 0);
 
     public:
         explicit RNEMDFileImpl(const RNEMDFile& rnemdFile);
 
-        RNEMDDataPtr getAllDataFromFile() const { return this->allDataFromFile; }
-        RNEMDParametersPtr getRNEMDParameters() const { return this->rnemdParameters; }
+        RNEMDDataPtr getAllDataFromFile() const { return allDataFromFile; }
+        RNEMDParametersPtr getRNEMDParameters() const { return rnemdParameters; }
     };
 
 
     RNEMDFile::RNEMDFileImpl::RNEMDFileImpl(const RNEMDFile& rnemdFile)
-        : Utilities_API::Files::TextFile{rnemdFile.fullFileName}
+        : Files::TextFile{rnemdFile.fullFileName}
     {
-        this->setRNEMDBlockParameters();
-        this->setRNEMDReportParameters();
-        this->setRNEMDData();
-        this->setRNEMDInferredParameters();
+        setRNEMDBlockParameters();
+        setRNEMDReportParameters();
+        setRNEMDData();
+        setRNEMDInferredParameters();
     }
 
 
@@ -80,34 +93,34 @@ namespace OpenMD::RNEMD
 
     void RNEMDFile::RNEMDFileImpl::setRNEMDReportParameters()
     {
-        rnemdParameters->report->runningTime = Time(std::stold(superMetaDataVector[13][4]));
+        rnemdParameters->report->runningTime = Time(superMetaDataVector[13][4]);
 
-        rnemdParameters->report->kineticFlux = MolarEnergyFlux(std::stold(superMetaDataVector[15][3]));
-        rnemdParameters->report->kineticTarget = MolarEnergy(std::stold(superMetaDataVector[20][3]));
-        rnemdParameters->report->kineticExchange = MolarEnergy(std::stold(superMetaDataVector[24][3]));
-        rnemdParameters->report->Jz = MolarEnergyFlux(std::stold(superMetaDataVector[28][3]));
+        rnemdParameters->report->kineticFlux = MolarEnergyFlux(superMetaDataVector[15][3]);
+        rnemdParameters->report->kineticTarget = MolarEnergy(superMetaDataVector[20][3]);
+        rnemdParameters->report->kineticExchange = MolarEnergy(superMetaDataVector[24][3]);
+        rnemdParameters->report->Jz = MolarEnergyFlux(superMetaDataVector[28][3]);
 
         for (int i {}; i <=2; ++i)
         {
-            rnemdParameters->report->momentumFlux[i] = MomentumFlux(std::stold(superMetaDataVector[16][i + 4]));
-            rnemdParameters->report->momentumTarget[i] = Momentum(std::stold(superMetaDataVector[21][i + 4]));
-            rnemdParameters->report->momentumExchange[i] = Momentum(std::stold(superMetaDataVector[25][i + 4]));
-            rnemdParameters->report->JzP[i] = MomentumFlux(std::stold(superMetaDataVector[29][i + 4]));
+            rnemdParameters->report->momentumFlux[i] = MomentumFlux(superMetaDataVector[16][i + 4]);
+            rnemdParameters->report->momentumTarget[i] = Momentum(superMetaDataVector[21][i + 4]);
+            rnemdParameters->report->momentumExchange[i] = Momentum(superMetaDataVector[25][i + 4]);
+            rnemdParameters->report->JzP[i] = MomentumFlux(superMetaDataVector[29][i + 4]);
 
-            rnemdParameters->report->angularMomentumFlux[i] = MomentumFlux(std::stold(superMetaDataVector[17][i + 5]));
-            rnemdParameters->report->angularMomentumTarget[i] = Momentum(std::stold(superMetaDataVector[22][i + 5]));
-            rnemdParameters->report->angularMomentumExchange[i] = Momentum(std::stold(superMetaDataVector[26][i + 5]));
-            rnemdParameters->report->JzL[i] = MomentumFlux(std::stold(superMetaDataVector[30][i + 5]));
+            rnemdParameters->report->angularMomentumFlux[i] = MomentumFlux(superMetaDataVector[17][i + 5]);
+            rnemdParameters->report->angularMomentumTarget[i] = Momentum(superMetaDataVector[22][i + 5]);
+            rnemdParameters->report->angularMomentumExchange[i] = Momentum(superMetaDataVector[26][i + 5]);
+            rnemdParameters->report->JzL[i] = MomentumFlux(superMetaDataVector[30][i + 5]);
         }
 
-        rnemdParameters->report->currentDensity = CurrentDensity(std::stold(superMetaDataVector[18][4]));
+        rnemdParameters->report->currentDensity = CurrentDensity(superMetaDataVector[18][4]);
 
         if ( (rnemdParameters->block->fluxType == "Single") || (rnemdParameters->block->fluxType == "Current")
                 || (rnemdParameters->block->fluxType == "KE+Current") )
         {
-            rnemdParameters->report->Jc_total = CurrentDensity(std::stold(superMetaDataVector[31][5]));
-            rnemdParameters->report->Jc_cation = CurrentDensity(std::stold(superMetaDataVector[32][5]));
-            rnemdParameters->report->Jc_anion = CurrentDensity(std::stold(superMetaDataVector[33][5]));
+            rnemdParameters->report->Jc_total = CurrentDensity(superMetaDataVector[31][5]);
+            rnemdParameters->report->Jc_cation = CurrentDensity(superMetaDataVector[32][5]);
+            rnemdParameters->report->Jc_anion = CurrentDensity(superMetaDataVector[33][5]);
 
             rnemdParameters->report->trialCount = std::stoul(superMetaDataVector[35][3]);
             rnemdParameters->report->failTrialCount = std::stoul(superMetaDataVector[36][3]);
@@ -159,12 +172,12 @@ namespace OpenMD::RNEMD
 
 
     template<typename T>
-    vector<T> RNEMDFile::RNEMDFileImpl::parseDataFromFile(int startIndex)
+    std::vector<T> RNEMDFile::RNEMDFileImpl::parseDataFromFile(int startIndex)
     {
-        vector<T> PhysicalQuantity;
+        std::vector<T> PhysicalQuantity;
 
         for (const auto& vec : superDataVector)
-            PhysicalQuantity.push_back( T(std::stold(vec[startIndex])) );
+            PhysicalQuantity.push_back( T(vec[startIndex]) );
 
         return PhysicalQuantity;
     }
@@ -172,7 +185,7 @@ namespace OpenMD::RNEMD
 
     void RNEMDFile::RNEMDFileImpl::setRNEMDData()
     {
-        vector< std::pair<std::string, int> > locations;
+        std::vector< std::pair<std::string, int> > locations;
 
         if (rnemdParameters->block->privilegedAxis != "z")
             allDataFromFile->dataLabels[0] = rnemdParameters->block->privilegedAxis + "(Angstroms)";
@@ -215,7 +228,7 @@ namespace OpenMD::RNEMD
                 {
                     // Only include concentrations for atom types that are actually printed out
                     for (size_t i {}; i < rnemdParameters->block->outputSelection.size(); ++i)
-                        if ( Utilities_API::Strings::stringFinder(rnemdParameters->block->outputSelection[i],
+                        if ( Strings::stringFinder(rnemdParameters->block->outputSelection[i],
                             metaDataVector[rnemdParameters->inferred->dataFieldLabelIndex]) )
                         {
                             startIndex += (1 + rnemdParameters->block->outputSelection[i].length());
@@ -245,5 +258,5 @@ namespace OpenMD::RNEMD
 
     RNEMDDataPtr RNEMDFile::getAllDataFromFile() const { return p_Impl->getAllDataFromFile(); }
     RNEMDParametersPtr RNEMDFile::getRNEMDParameters() const { return p_Impl->getRNEMDParameters(); }
-    Utilities_API::Files::FileNamePtr RNEMDFile::getFileName() const { return p_Impl->getFileName(); }
+    Files::FileName RNEMDFile::getFileName() const { return p_Impl->getFileName(); }
 }

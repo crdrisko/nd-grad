@@ -6,10 +6,15 @@
 // Date: 01/20/2020-15:43:58
 // Description:  The "limited" public interface for the RNEMD file parsing implementation
 
-#ifndef RNEMDFILE_HPP
-#define RNEMDFILE_HPP
+#ifndef ND_RESEARCH_OPENMD_RNEMDFILE_HPP
+#define ND_RESEARCH_OPENMD_RNEMDFILE_HPP
+
+#include <memory>
+#include <string>
+#include <string_view>
 
 #include <utils-api/files.hpp>
+
 #include "rnemdParameters.hpp"
 
 namespace OpenMD::RNEMD
@@ -27,7 +32,7 @@ namespace OpenMD::RNEMD
 
         RNEMDDataPtr getAllDataFromFile() const;
         RNEMDParametersPtr getRNEMDParameters() const;
-        Utilities_API::Files::FileNamePtr getFileName() const;
+        Utilities_API::Files::FileName getFileName() const;
     };
 
     using RNEMDFilePtr = std::shared_ptr<RNEMDFile>;

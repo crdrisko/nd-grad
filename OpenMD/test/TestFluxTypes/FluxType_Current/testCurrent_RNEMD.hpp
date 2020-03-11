@@ -1,29 +1,28 @@
 // Copyright (c) 2020 Cody R. Drisko. All rights reserved.
-// Licensed under the MIT License.See the LICENSE file in the project root for license information.
+// Licensed under the MIT License. See the LICENSE file in the project root for license information.
 //
-// Name: testSingle_RNEMD.cpp - Version 1.0.0
+// Name: testCurrent_RNEMD.hpp - Version 1.0.0
 // Author: cdrisko
-// Date: 01/22/2020-14:01:34
-// Description: Provides 100% unit test coverage over all parameter parsing functions for FluxType = Single
+// Date: 03/10/2020-07:29:11
+// Description: Provides 100% unit test coverage over all parameter parsing functions for FluxType = Current
+
+#ifndef TESTCURRENT_RNEMD_HPP
+#define TESTCURRENT_RNEMD_HPP
+
+#include <memory>
 
 #include "../testAssertions.hpp"
 #include "../../../RNEMDFileParsing/include/rnemdFile.hpp"
 
-using namespace OpenMD::RNEMD;
-
-int main(int argc, char** argv)
+TEST(testCurrent_RNEMD, currentFluxTypeCorrectBlockParameters)
 {
-    testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
-}
+    OpenMD::RNEMD::RNEMDFilePtr rnemdFile
+        = std::make_shared<OpenMD::RNEMD::RNEMDFile>("../../samples/double.rnemd");
 
-TEST(testSingle_RNEMD, singleFluxTypeCorrectBlockParameters)
-{
-    RNEMDFilePtr rnemdFile {std::make_shared<RNEMDFile>("../../../samples/single.rnemd")};
-    RNEMDBlockParametersPtr rnemdBlock { rnemdFile->getRNEMDParameters()->block };
+    OpenMD::RNEMD::RNEMDBlockParametersPtr rnemdBlock { rnemdFile->getRNEMDParameters()->block };
 
     assertThat(rnemdBlock->exchangeMethod).hasAValueOf("VSS");
-    assertThat(rnemdBlock->fluxType).hasAValueOf("Single");
+    assertThat(rnemdBlock->fluxType).hasAValueOf("Current");
     assertThat(rnemdBlock->privilegedAxis).hasAValueOf("z");
     assertThat(rnemdBlock->exchangeTime.getMagnitude()).hasAValueNear(2.0);
 
@@ -31,33 +30,37 @@ TEST(testSingle_RNEMD, singleFluxTypeCorrectBlockParameters)
     assertThat(rnemdBlock->objectSelection[1]).hasAValueOf("Na+");
     assertThat(rnemdBlock->objectSelection[2]).hasAValueOf("Cl-");
 
-    assertThat(rnemdBlock->selectionA[0].getMagnitude()).hasAValueNear(-19.5938);
-    assertThat(rnemdBlock->selectionA[1].getMagnitude()).hasAValueNear(19.5938);
+    assertThat(rnemdBlock->selectionA[0].getMagnitude()).hasAValueNear(-8.0);
+    assertThat(rnemdBlock->selectionA[1].getMagnitude()).hasAValueNear(8.0);
 
-    assertThat(rnemdBlock->selectionB[0].getMagnitude()).hasAValueNear(0.0);
-    assertThat(rnemdBlock->selectionB[1].getMagnitude()).hasAValueNear(0.0);
+    assertThat(rnemdBlock->selectionB[0].getMagnitude()).hasAValueNear(31.1876);
+    assertThat(rnemdBlock->selectionB[1].getMagnitude()).hasAValueNear(-31.1876);
 
     assertThat(rnemdBlock->outputSelection[0]).hasAValueOf("Cl-");
     assertThat(rnemdBlock->outputSelection[1]).hasAValueOf("Na+");
     assertThat(rnemdBlock->outputSelection[2]).hasAValueOf("SPCE_RB_0");
 }
 
-TEST(testSingle_RNEMD, singleFluxTypeCorrectInferredParameters)
+TEST(testCurrent_RNEMD, currentFluxTypeCorrectInferredParameters)
 {
-    RNEMDFilePtr rnemdFile {std::make_shared<RNEMDFile>("../../../samples/single.rnemd")};
-    RNEMDInferredParametersPtr rnemdInferred { rnemdFile->getRNEMDParameters()->inferred };
+    OpenMD::RNEMD::RNEMDFilePtr rnemdFile
+        = std::make_shared<OpenMD::RNEMD::RNEMDFile>("../../samples/double.rnemd");
 
-    assertThat(rnemdInferred->numberOfRegions).hasAValueOf(2);
-    assertThat(rnemdInferred->slabWidth.getMagnitude()).hasAValueNear(39.1876);
+    OpenMD::RNEMD::RNEMDInferredParametersPtr rnemdInferred { rnemdFile->getRNEMDParameters()->inferred };
+
+    assertThat(rnemdInferred->numberOfRegions).hasAValueOf(4);
+    assertThat(rnemdInferred->slabWidth.getMagnitude()).hasAValueNear(16.0);
     assertThat(rnemdInferred->dataFieldLabelIndex).hasAValueOf(38);
     assertThat(rnemdInferred->boxSize.getMagnitude()).hasAValueNear(78.37511346);
-    assertThat(rnemdInferred->hasSelectionB).isFalse();
+    assertThat(rnemdInferred->hasSelectionB).isTrue();
 }
 
-TEST(testSingle_RNEMD, singleFluxTypeCorrectReportParameters)
+TEST(testCurrent_RNEMD, currentFluxTypeCorrectReportParameters)
 {
-    RNEMDFilePtr rnemdFile {std::make_shared<RNEMDFile>("../../../samples/single.rnemd")};
-    RNEMDReportParametersPtr rnemdReport { rnemdFile->getRNEMDParameters()->report };
+    OpenMD::RNEMD::RNEMDFilePtr rnemdFile
+        = std::make_shared<OpenMD::RNEMD::RNEMDFile>("../../samples/double.rnemd");
+
+    OpenMD::RNEMD::RNEMDReportParametersPtr rnemdReport { rnemdFile->getRNEMDParameters()->report };
 
     assertThat(rnemdReport->runningTime.getMagnitude()).hasAValueNear(10000002.0);
 
@@ -111,12 +114,14 @@ TEST(testSingle_RNEMD, singleFluxTypeCorrectReportParameters)
     assertThat(rnemdReport->JzL[1].getMagnitude()).hasAValueNear(0.0);
     assertThat(rnemdReport->JzL[2].getMagnitude()).hasAValueNear(0.0);
 
-    assertThat(rnemdReport->Jc_total.getMagnitude()).hasAValueNear(3.2316331e-09);
-    assertThat(rnemdReport->Jc_cation.getMagnitude()).hasAValueNear(1.9603903e-09);
-    assertThat(rnemdReport->Jc_anion.getMagnitude()).hasAValueNear(1.2712428e-09);
+    assertThat(rnemdReport->Jc_total.getMagnitude()).hasAValueNear(4.2855502e-09);
+    assertThat(rnemdReport->Jc_cation.getMagnitude()).hasAValueNear(2.5987457e-09);
+    assertThat(rnemdReport->Jc_anion.getMagnitude()).hasAValueNear(1.6868045e-09);
 
 
     // Exchange Statistics
     assertThat(rnemdReport->trialCount).hasAValueOf(5000000);
-    assertThat(rnemdReport->failTrialCount).hasAValueOf(2411203);
+    assertThat(rnemdReport->failTrialCount).hasAValueOf(1566931);
 }
+
+#endif

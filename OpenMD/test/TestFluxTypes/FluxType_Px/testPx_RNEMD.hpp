@@ -1,26 +1,25 @@
 // Copyright (c) 2020 Cody R. Drisko. All rights reserved.
-// Licensed under the MIT License.See the LICENSE file in the project root for license information.
+// Licensed under the MIT License. See the LICENSE file in the project root for license information.
 //
-// Name: testPx_RNEMD.cpp - Version 1.0.0
+// Name: testPx_RNEMD.hpp - Version 1.0.0
 // Author: cdrisko
-// Date: 01/28/2020-12:30:00
+// Date: 03/10/2020-07:29:11
 // Description: Provides 100% unit test coverage over all parameter parsing functions for FluxType = Px
+
+#ifndef TESTPX_RNEMD_HPP
+#define TESTPX_RNEMD_HPP
+
+#include <memory>
 
 #include "../testAssertions.hpp"
 #include "../../../RNEMDFileParsing/include/rnemdFile.hpp"
 
-using namespace OpenMD::RNEMD;
-
-int main(int argc, char** argv)
-{
-    testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
-}
-
 TEST(testPx_RNEMD, Px_FluxTypeCorrectBlockParameters)
 {
-    RNEMDFilePtr rnemdFile {std::make_shared<RNEMDFile>("../../../samples/momentum.rnemd")};
-    RNEMDBlockParametersPtr rnemdBlock { rnemdFile->getRNEMDParameters()->block };
+    OpenMD::RNEMD::RNEMDFilePtr rnemdFile
+        = std::make_shared<OpenMD::RNEMD::RNEMDFile>("../../samples/momentum.rnemd");
+
+    OpenMD::RNEMD::RNEMDBlockParametersPtr rnemdBlock { rnemdFile->getRNEMDParameters()->block };
 
     assertThat(rnemdBlock->exchangeMethod).hasAValueOf("VSS");
     assertThat(rnemdBlock->fluxType).hasAValueOf("Px");
@@ -40,8 +39,10 @@ TEST(testPx_RNEMD, Px_FluxTypeCorrectBlockParameters)
 
 TEST(testPx_RNEMD, Px_FluxTypeCorrectInferredParameters)
 {
-    RNEMDFilePtr rnemdFile {std::make_shared<RNEMDFile>("../../../samples/momentum.rnemd")};
-    RNEMDInferredParametersPtr rnemdInferred { rnemdFile->getRNEMDParameters()->inferred };
+    OpenMD::RNEMD::RNEMDFilePtr rnemdFile
+        = std::make_shared<OpenMD::RNEMD::RNEMDFile>("../../samples/momentum.rnemd");
+
+    OpenMD::RNEMD::RNEMDInferredParametersPtr rnemdInferred { rnemdFile->getRNEMDParameters()->inferred };
 
     assertThat(rnemdInferred->numberOfRegions).hasAValueOf(4);
     assertThat(rnemdInferred->slabWidth.getMagnitude()).hasAValueNear(20.1834);
@@ -52,8 +53,10 @@ TEST(testPx_RNEMD, Px_FluxTypeCorrectInferredParameters)
 
 TEST(testPx_RNEMD, Px_FluxTypeCorrectReportParameters)
 {
-    RNEMDFilePtr rnemdFile {std::make_shared<RNEMDFile>("../../../samples/momentum.rnemd")};
-    RNEMDReportParametersPtr rnemdReport { rnemdFile->getRNEMDParameters()->report };
+    OpenMD::RNEMD::RNEMDFilePtr rnemdFile
+        = std::make_shared<OpenMD::RNEMD::RNEMDFile>("../../samples/momentum.rnemd");
+
+    OpenMD::RNEMD::RNEMDReportParametersPtr rnemdReport { rnemdFile->getRNEMDParameters()->report };
 
     assertThat(rnemdReport->runningTime.getMagnitude()).hasAValueNear(10000001.0);
 
@@ -112,3 +115,5 @@ TEST(testPx_RNEMD, Px_FluxTypeCorrectReportParameters)
     assertThat(rnemdReport->trialCount).hasAValueOf(5000000);
     assertThat(rnemdReport->failTrialCount).hasAValueOf(0);
 }
+
+#endif

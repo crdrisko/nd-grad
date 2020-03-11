@@ -18,11 +18,6 @@ function (new_test testname interiorDirectory)
                             WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/${interiorDirectory})
 endfunction()
 
-## Function to create a new test based off the pre-defined naming template for the different fluxtypes ##
-function (new_fluxtype_test testname)
-    new_test(${testname}_RNEMD TestFluxTypes/FluxType_${testname})
-endfunction()
-
 
 ### ShiftXYZ Tests ###
 set(NEW_SOURCES ../ShiftXYZ/src/xyzFile.cpp)
@@ -37,11 +32,7 @@ foreach (FILE ${RNEMD_FILE_PARSING_SOURCES})
     list(APPEND NEW_SOURCES ../${FILE})
 endforeach()
 
-new_fluxtype_test(Current)
-new_fluxtype_test(KE)
-new_fluxtype_test(Px)
-new_fluxtype_test(Single)
-
+new_test(AllFluxTypes TestFluxTypes)
 new_test(RegionSplitting TestRNEMDRegions)
 
 

@@ -6,17 +6,27 @@
 // Date: 02/11/2020-12:42:57
 // Description: Main ChargedRNEMD program, takes a rnemd file as input and returns the analysis in an ecp file
 
+#include <cstdlib>
 #include <cstring>
+#include <iostream>
+#include <memory>
+#include <string>
+
+#include <utils-api/errors.hpp>
+#include <utils-api/strings.hpp>
+
 #include "../include/methodFactory.hpp"
 
-using namespace Utilities_API;
 using namespace OpenMD::RNEMD::ChargedRNEMD;
 
 void printHelpMessageAndExit();
 
 int main(int argc, char* argv[])
 {
-    Files::FileNamePtr inputFileName;
+    std::string inputFileName;
+
+    Utilities_API::Errors::ErrorMessagePtr errorMessage
+        = std::make_shared<Utilities_API::Errors::FatalErrorMessage>("ChargedRNEMD", 3);
 
     int requiredInputCount {1};
     int currentInputCount {};
@@ -30,9 +40,9 @@ int main(int argc, char* argv[])
             case 'i':
                 ++option;
 
-                if ( (argv[option] != NULL) && (Strings::stringFinder(".rnemd", argv[option])) )
+                if ( (argv[option] != NULL) && (Utilities_API::Strings::stringFinder(".rnemd", argv[option])) )
                 {
-                    inputFileName = std::make_shared<Files::FileName>(argv[option]);
+                    inputFileName = argv[option];
                     ++currentInputCount;
                 }
                 break;
@@ -42,14 +52,14 @@ int main(int argc, char* argv[])
                 break;
 
             default:
-                Errors::printFatalErrorMessage(1, "Unknown option passed to the shiftXYZ program.");
+                errorMessage->printErrorMessage("Unknown option passed to the program.");
                 break;
             }
         }
     }
 
     if ( currentInputCount != requiredInputCount )
-        Errors::printFatalErrorMessage(1, "ChargedRNEMD input requires a single valid .rnemd file.");
+        errorMessage->printErrorMessage("Required input is a single valid .rnemd file.");
 
     MethodFactory methodFactory {inputFileName};
     ChargedRNEMDAnalysisMethodPtr rnemdAnalysisMethod { methodFactory.createMethod() };
