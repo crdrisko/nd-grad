@@ -11,6 +11,8 @@ mkdir ~/CPP-Units && cd ~/CPP-Units
 
 git clone https://github.com/crdrisko/cpp-units.git
 
+bash cpp-units/ci/install-utilities-api.sh
+
 mkdir build && cd build
 
 cmake ../cpp-units/.
@@ -18,5 +20,3 @@ cmake ../cpp-units/.
 make && sudo make install
 
 cd ../
-
-bash cpp-units/ci/install-utilities-api.sh
