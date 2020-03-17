@@ -118,7 +118,7 @@ namespace OpenMD::RNEMD
         std::vector<PhysicalQuantities::ElectricPotential> electricPotential;
     };
 
-    using RNEMDDataPtr =  std::shared_ptr<RNEMDData>;
+    using RNEMDDataPtr = std::shared_ptr<RNEMDData>;
 }
 
 #endif

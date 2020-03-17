@@ -30,7 +30,7 @@ namespace OpenMD::RNEMD::ChargedRNEMD
         void calculateElectrochemicalPotential();
         void calculateTransportProperties();
 
-        // Required Implementation
+        // Required implementation for a given analysis method
         virtual void calculateGradientOfElectrochemicalPotential() = 0;
         virtual void printAdditionalRegionHeader(std::ofstream& outputFileStream, int region) = 0;
 
@@ -40,14 +40,16 @@ namespace OpenMD::RNEMD::ChargedRNEMD
         std::vector<RNEMDDataPtr> individualRegionData;
 
         std::vector< std::vector< std::vector<PhysicalQuantities::Energy> > > electrochemicalPotential;
-        std::vector <std::vector<PhysicalQuantities::Force> > gradientOfElectrochemicalPotential;
-        std::vector< std::vector<PhysicalQuantities::ElectricConductivity> > sigma;
-        std::vector< std::vector<PhysicalQuantities::MolarConductivity> > lambda;
-        std::vector< std::vector<PhysicalQuantities::Mobility> > mobility;
+
+        // Use arrays of physical quantities to propagate error through our transport property calculations
+        std::vector< std::vector< std::array<PhysicalQuantities::Force, 2> > > gradientOfElectrochemicalPotential;
+        std::vector< std::vector< std::array<PhysicalQuantities::ElectricConductivity, 2> > > sigma;
+        std::vector< std::vector< std::array<PhysicalQuantities::MolarConductivity, 2> > > lambda;
+        std::vector< std::vector< std::array<PhysicalQuantities::Mobility, 2> > > mobility;
 
         void calculateElectricPotential();
 
-        // Optional Implementation
+        // Optional implementation for a given analysis method
         virtual void preProcess() {};
         virtual void postProcess() {};
 

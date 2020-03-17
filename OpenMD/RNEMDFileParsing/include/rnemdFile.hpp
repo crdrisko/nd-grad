@@ -4,7 +4,7 @@
 // Name: rnemdFile.hpp - Version 1.0.0
 // Author: cdrisko
 // Date: 01/20/2020-15:43:58
-// Description:  The "limited" public interface for the RNEMD file parsing implementation
+// Description: The "limited" public interface for the RNEMD file parsing implementation
 
 #ifndef ND_RESEARCH_OPENMD_RNEMDFILE_HPP
 #define ND_RESEARCH_OPENMD_RNEMDFILE_HPP

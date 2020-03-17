@@ -1,4 +1,4 @@
-### Top level cmake script for ND-Research ###
+### Top Level CMake Script for ND-Research ###
 cmake_minimum_required(VERSION 3.10.0)
 project(ND-Research VERSION 1.0.0)
 
@@ -18,5 +18,5 @@ if (CMAKE_COMPILER_IS_GNUCXX)
 endif()
 
 
-### The ND-Research projects to include ###
+### The ND-Research Projects to Include ###
 add_subdirectory(OpenMD)

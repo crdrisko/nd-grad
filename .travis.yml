@@ -1,3 +1,4 @@
+### ND-Research Build Matrix ###
 language: cpp
 os:
   - linux
@@ -5,7 +6,7 @@ os:
 compiler:
   - clang
   - gcc
-osx_image: 
+osx_image:
   - xcode11.2
   - xcode10.1
 dist: bionic
@@ -15,9 +16,9 @@ arch:
 
 notifications:
   email: false
-  
 
-### Installation procedure ###
+
+### Installation Procedure ###
 before_script:
   - previousLocation=$( pwd )
   - bash ci/install-cpp-units.sh

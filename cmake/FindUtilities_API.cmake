@@ -1,5 +1,4 @@
-if (UTILITIES_API_INCLUDE_DIR AND UTILITIES_API_LIBRARIES)
-    # in cache already or user-specified
+if (UTILITIES_API_INCLUDE_DIR AND UTILITIES_API_LIBRARIES)      ## In cache already or user-specified
     set(UTILITIES_API_FOUND TRUE)
 
 else()

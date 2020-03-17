@@ -6,6 +6,7 @@
 // Date: 02/19/2020-12:43:05
 // Description: Internal implementation details for the ChargedRNEMDAnalysisMethod class
 
+#include <array>
 #include <cmath>
 #include <fstream>
 #include <iomanip>
@@ -14,8 +15,8 @@
 #include <string_view>
 #include <vector>
 
-#include <utils-api/math.hpp>
 #include <cpp-units/physicalQuantities.hpp>
+#include <utils-api/math.hpp>
 
 #include "../include/chargedRNEMDAnalysisMethod.hpp"
 
@@ -27,66 +28,74 @@ namespace OpenMD::RNEMD::ChargedRNEMD
     struct ChargedRNEMDAnalysisMethod::InternalCalculations
     {
         Energy calculateElectrochemicalPotential(Temperature temperature, Concentration conc,
-            ElectricPotential Phi, ElectricCharge charge) const;
+            ElectricPotential Phi, ElectricCharge charge) const
+        {
+            Energy diffusionContribution = Constants::boltzmannConstant.convertQuantity("J", "eV") * temperature
+                * Math::log(conc / 1.0_M);
 
-        ElectricConductivity calculateElectricalConductivity(CurrentDensity Jc, ElectricCharge q_ion,
-            Force gradientOfElectrochemcialPotential) const;
+            Energy electricFieldContribution = Phi.convertQuantity("kcal_mol", "eV_part") * charge;
 
-        MolarConductivity calculateMolarConductivity(ElectricConductivity sigma_ion,
-            const std::vector<Concentration>& conc_ion) const;
+            return diffusionContribution + electricFieldContribution;
+        }
 
-        Mobility calculateMobility(MolarConductivity lambda_ion, ElectricCharge q_ion) const;
+        std::array<ElectricConductivity, 2> calculateElectricalConductivity(CurrentDensity Jc, ElectricCharge q_ion,
+            std::array<Force, 2> gradientOfElectrochemcialPotential) const
+        {
+            std::array<ElectricConductivity, 2> sigma_ion;
+
+            sigma_ion[0] = Math::abs( q_ion * Jc / gradientOfElectrochemcialPotential[0] );
+            sigma_ion[1] = Math::abs( sigma_ion[0] * (gradientOfElectrochemcialPotential[1] / gradientOfElectrochemcialPotential[0]) );
+
+            for (auto& value : sigma_ion)
+                value = value.convertQuantity("e", "C")
+                             .convertQuantity("m", "Ang")
+                             .convertQuantity("base", "femto");
+
+            return sigma_ion;
+        }
+
+        std::array<MolarConductivity, 2> calculateMolarConductivity(std::array<ElectricConductivity, 2> sigma_ion,
+            const std::vector<Concentration>& conc_ion) const
+        {
+            std::array<MolarConductivity, 2> lambda_ion;
+
+            Concentration averageConcentration { Math::calculateAverage(conc_ion) };
+
+            Concentration stdDevConcentration
+                = Math::calculateStandardDeviation(conc_ion) / DimensionlessQuantity( std::sqrt(conc_ion.size()) );
+
+            lambda_ion[0] = sigma_ion[0] / averageConcentration;
+
+            long double valueInsideTheSquareRoot
+                = (Math::square(sigma_ion[1]) + Math::square(lambda_ion[0] * stdDevConcentration)).getMagnitude();
+
+            lambda_ion[1] = ElectricConductivity(std::sqrt(valueInsideTheSquareRoot)) / averageConcentration;
+
+            for (auto& value : lambda_ion)
+                value = value.convertQuantity("L", "m3")
+                             .convertQuantity("base", "centi")
+                             .convertQuantity("base", "centi");
+
+            return lambda_ion;
+        }
+
+        std::array<Mobility, 2> calculateMobility(std::array<MolarConductivity, 2> lambda_ion,
+            ElectricCharge q_ion) const
+        {
+            std::array<Mobility, 2> mobility_ion;
+
+            for (size_t i {}; i < lambda_ion.size(); ++i)
+            {
+                mobility_ion[i] = lambda_ion[i] / ( Math::pow<DimensionlessQuantity>(q_ion, 2)
+                    * Constants::faradaysConstant );
+
+                mobility_ion[i] = mobility_ion[i].convertQuantity("centi", "base")
+                                                 .convertQuantity("centi", "base");
+            }
+
+            return mobility_ion;
+        }
     };
-
-
-    Energy ChargedRNEMDAnalysisMethod::InternalCalculations::calculateElectrochemicalPotential(
-        Temperature temperature, Concentration conc, ElectricPotential Phi, ElectricCharge charge) const
-    {
-        Energy diffusionContribution = Constants::boltzmannConstant.convertQuantity("J", "eV") * temperature
-            * Math::log(conc);
-
-        Energy electricFieldContribution = Phi.convertQuantity("kcal_mol", "eV_part") * charge;
-
-        return diffusionContribution + electricFieldContribution;
-    }
-
-
-    ElectricConductivity ChargedRNEMDAnalysisMethod::InternalCalculations::calculateElectricalConductivity(
-        CurrentDensity Jc, ElectricCharge q_ion, Force gradientOfElectrochemcialPotential) const
-    {
-        ElectricConductivity sigma_ion = q_ion * Jc / gradientOfElectrochemcialPotential;
-
-        if ( sigma_ion < ElectricConductivity(0.0) )
-            sigma_ion = -sigma_ion;
-
-        return sigma_ion.convertQuantity("e", "C")
-                        .convertQuantity("m", "Ang")
-                        .convertQuantity("base", "femto");
-    }
-
-
-    MolarConductivity ChargedRNEMDAnalysisMethod::InternalCalculations::calculateMolarConductivity(
-        ElectricConductivity sigma_ion, const std::vector<Concentration>& conc_ion) const
-    {
-        Concentration averageConcentration { Math::calculateAverage(conc_ion) };
-
-        MolarConductivity lambda_ion = sigma_ion / averageConcentration;
-
-        return lambda_ion.convertQuantity("L", "m3")
-                         .convertQuantity("base", "centi")
-                         .convertQuantity("base", "centi");
-    }
-
-
-    Mobility ChargedRNEMDAnalysisMethod::InternalCalculations::calculateMobility(MolarConductivity lambda_ion,
-        ElectricCharge q_ion) const
-    {
-        Mobility mobility_ion
-            = lambda_ion / ( Math::pow<DimensionlessQuantity>(q_ion, 2) * Constants::faradaysConstant );
-
-        return mobility_ion.convertQuantity("centi", "base")
-                           .convertQuantity("centi", "base");
-    }
 
 
     ChargedRNEMDAnalysisMethod::ChargedRNEMDAnalysisMethod(const ChargedRNEMDFilePtr& RNEMDFile)
@@ -165,9 +174,9 @@ namespace OpenMD::RNEMD::ChargedRNEMD
     {
         for (const auto& ion : rnemdParameters->ionicSpecies)
         {
-            std::vector<ElectricConductivity> sigmaTemporaryStorageVector;
-            std::vector<MolarConductivity> lambdaTemporaryStorageVector;
-            std::vector<Mobility> mobilityTemporaryStorageVector;
+            std::vector< std::array<ElectricConductivity, 2> > sigmaTemporaryStorageVector;
+            std::vector< std::array<MolarConductivity, 2> > lambdaTemporaryStorageVector;
+            std::vector< std::array<Mobility, 2> > mobilityTemporaryStorageVector;
 
             for (int region {1}; region <= rnemdParameters->inferred->numberOfRegions; ++region)
             {
@@ -179,7 +188,6 @@ namespace OpenMD::RNEMD::ChargedRNEMD
                 sigmaTemporaryStorageVector.push_back(
                     p_Impl->calculateElectricalConductivity(Jc_ion, ion->getIonCharge(),
                         gradientOfElectrochemicalPotential[ion->getIonIndex()][region - 1]) );
-
 
                 lambdaTemporaryStorageVector.push_back(
                     p_Impl->calculateMolarConductivity(sigmaTemporaryStorageVector[region - 1], conc_ion) );
@@ -207,8 +215,8 @@ namespace OpenMD::RNEMD::ChargedRNEMD
 
         outputFile << std::setprecision(8);
 
-        outputFile << bar << bar << "\n";
-        outputFile << "# FileName = " << outputFileName << "###############\n";
+        outputFile << bar << bar << "###############\n";
+        outputFile << "# FileName = " << outputFileName << "\n";
         outputFile << "# FluxType = " << rnemdParameters->block->fluxType << "\n";
         outputFile << "# BoxSize = " << rnemdParameters->inferred->boxSize << "\n";
         outputFile << "# SlabWidth = " << rnemdParameters->inferred->slabWidth << "\n";
@@ -224,16 +232,19 @@ namespace OpenMD::RNEMD::ChargedRNEMD
 
             printAdditionalRegionHeader(outputFile, region);
 
-            outputFile << "# Transport Properties:\n";
+            outputFile << "# Region Transport Properties:\n";
             for (const auto& ion : rnemdParameters->ionicSpecies)
             {
                 outputFile << "#   " << ion->getIonName() << ":\n";
                 outputFile << "#     Ionic Conductivity " << " = "
-                           << sigma[ion->getIonIndex()][region - 1] << " (S/m)\n";
+                           << sigma[ion->getIonIndex()][region - 1][0] << " +/- "
+                           << sigma[ion->getIonIndex()][region - 1][1] << " (S/m)\n";
                 outputFile << "#     Molar Conductivity " << " = "
-                           << lambda[ion->getIonIndex()][region - 1] << " (S cm^2/mol)\n";
+                           << lambda[ion->getIonIndex()][region - 1][0] << " +/- "
+                           << lambda[ion->getIonIndex()][region - 1][1] << " (S cm^2/mol)\n";
                 outputFile << "#     Ionic Mobility " << "     = " << std::scientific
-                           << mobility[ion->getIonIndex()][region - 1] << " (m^2/V/s)\n";
+                           << mobility[ion->getIonIndex()][region - 1][0] << " +/- "
+                           << mobility[ion->getIonIndex()][region - 1][1] << " (m^2/V/s)\n";
                 outputFile << std::fixed;
             }
 

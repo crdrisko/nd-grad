@@ -12,8 +12,8 @@
 #include <string>
 #include <vector>
 
-#include <gtest/gtest.h>
 #include <cpp-units/physicalQuantities.hpp>
+#include <gtest/gtest.h>
 
 #include "../../RNEMDFileParsing/include/rnemdRegion.hpp"
 
@@ -47,7 +47,7 @@ TEST(testRegionSplitting, currentFluxTypeCorrectSplitting)
         std::vector<ElectricPotential> Phi { individualRegionData[region - 1]->electricPotential };
 
         std::ofstream outputFile;
-        outputFile.open(".text-files/Current" + std::to_string(region) + ".txt");
+        outputFile.open("Current" + std::to_string(region) + ".txt");
 
         for (size_t j {}; j < z.size(); ++j)
             outputFile << z[j] << " " << temp[j] << " "
@@ -80,7 +80,7 @@ TEST(testRegionSplitting, KE_FluxTypeCorrectSplitting)
         std::vector<Temperature> temp { individualRegionData[region - 1]->temperature };
 
         std::ofstream outputFile;
-        outputFile.open(".text-files/Thermal" + std::to_string(region) + ".txt");
+        outputFile.open("Thermal" + std::to_string(region) + ".txt");
 
         for (size_t j {}; j < z.size(); ++j)
             outputFile << z[j] << " " << temp[j] << std::endl;
@@ -112,7 +112,7 @@ TEST(testRegionSplitting, Px_FluxTypeCorrectSplitting)
         std::vector<MassDensity> density { individualRegionData[region - 1]->density };
 
         std::ofstream outputFile;
-        outputFile.open(".text-files/Momentum" + std::to_string(region) + ".txt");
+        outputFile.open("Momentum" + std::to_string(region) + ".txt");
 
         for (size_t j {}; j < z.size(); ++j)
             outputFile << z[j] << " " << temp[j] << " "
@@ -148,7 +148,7 @@ TEST(testRegionSplitting, singleFluxTypeCorrectRegionSplitting)
         std::vector<ElectricPotential> Phi { individualRegionData[region - 1]->electricPotential };
 
         std::ofstream outputFile;
-        outputFile.open(".text-files/Single" + std::to_string(region) + ".txt");
+        outputFile.open("Single" + std::to_string(region) + ".txt");
 
         for (size_t j {}; j < z.size(); ++j)
             outputFile << z[j] << " " << temp[j] << " "

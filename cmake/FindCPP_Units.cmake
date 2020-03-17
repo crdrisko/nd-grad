@@ -1,5 +1,4 @@
-if (CPP_UNITS_INCLUDE_DIR)
-    # in cache already or user-specified
+if (CPP_UNITS_INCLUDE_DIR)                                      ## in cache already or user-specified
     set(CPP_UNITS_FOUND TRUE)
 
 else()

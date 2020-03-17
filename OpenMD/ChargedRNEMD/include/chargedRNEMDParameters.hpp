@@ -13,9 +13,10 @@
 #include <memory>
 #include <string>
 #include <string_view>
+#include <vector>
 
-#include <utils-api/errors.hpp>
 #include <cpp-units/physicalQuantities.hpp>
+#include <utils-api/errors.hpp>
 
 #include "../../RNEMDFileParsing/include/rnemdParameters.hpp"
 
@@ -52,20 +53,12 @@ namespace OpenMD::RNEMD::ChargedRNEMD
             ionCharge = getChargeOfIon(ionName);
         }
 
-        int getIonIndex() const { return this->ionIndex; }
-        std::string getIonName() const { return this->ionName; }
-        PhysicalQuantities::ElectricCharge getIonCharge() const { return this->ionCharge; }
+        int getIonIndex() const { return ionIndex; }
+        std::string getIonName() const { return ionName; }
+        PhysicalQuantities::ElectricCharge getIonCharge() const { return ionCharge; }
     };
 
     using IonicSpeciesPtr = std::shared_ptr<IonicSpecies>;
-
-
-    // template <typename T>
-    // struct ValueWithError
-    // {
-    //     std::vector< std::vector<T> > magnitude;
-    //     std::vector< std::vector<T> > standardDeviation;
-    // };
 
 
     struct ChargedRNEMDParameters
@@ -74,11 +67,6 @@ namespace OpenMD::RNEMD::ChargedRNEMD
         RNEMDReportParametersPtr report;
         RNEMDInferredParametersPtr inferred;
         std::vector<IonicSpeciesPtr> ionicSpecies;
-
-        // ValueWithError<PhysicalQuantities::Force> gradientOfElectrochemicalPotential;
-        // ValueWithError<PhysicalQuantities::ElectricConductivity> sigma;
-        // ValueWithError<PhysicalQuantities::MolarConductivity> lambda;
-        // ValueWithError<PhysicalQuantities::Mobility> mobility;
     };
 
     using ChargedRNEMDParametersPtr = std::shared_ptr<ChargedRNEMDParameters>;

@@ -6,6 +6,7 @@
 // Date: 02/19/2020-12:43:08
 // Description: Implementation of the pure virtual functions defined in the chargedRNEMDAnalysisMethod class
 
+#include <array>
 #include <fstream>
 #include <vector>
 
@@ -22,7 +23,7 @@ namespace OpenMD::RNEMD::ChargedRNEMD
     {
         for (const auto& ion : rnemdParameters->ionicSpecies)
         {
-            std::vector<Force> temporaryStorageVector;
+            std::vector< std::array<Force, 2> > temporaryStorageVector;
             std::vector< std::vector<Force> > temporaryFittingParameters;
 
             for (int region {1}; region <= rnemdParameters->inferred->numberOfRegions; ++region)
@@ -31,7 +32,10 @@ namespace OpenMD::RNEMD::ChargedRNEMD
                     Math::linearLeastSquaresFitting(individualRegionData[region - 1]->rnemdAxis,
                         electrochemicalPotential[ion->getIonIndex()][region - 1]) );
 
-                temporaryStorageVector.push_back(temporaryFittingParameters[region - 1][0]);
+                std::array<Force, 2> temporaryArray { temporaryFittingParameters[region - 1][0],
+                                                      temporaryFittingParameters[region - 1][2] };
+
+                temporaryStorageVector.push_back(temporaryArray);
             }
 
             gradientOfElectrochemicalPotential.push_back(temporaryStorageVector);
@@ -42,7 +46,7 @@ namespace OpenMD::RNEMD::ChargedRNEMD
 
     void RegionFitting::printAdditionalRegionHeader(std::ofstream& outputFileStream, int region)
     {
-        outputFileStream << "# Fitting Parameters:\n";
+        outputFileStream << "# Region Fitting Parameters:\n";
 
         for (const auto& ion : rnemdParameters->ionicSpecies)
             outputFileStream << "#   " << ion->getIonName()

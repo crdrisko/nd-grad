@@ -10,12 +10,13 @@
 #define ND_RESEARCH_OPENMD_XYZFILE_HPP
 
 #include <array>
+#include <map>
 #include <memory>
 #include <string>
 #include <vector>
 
-#include <utils-api/files.hpp>
 #include <cpp-units/physicalQuantities.hpp>
+#include <utils-api/files.hpp>
 
 namespace OpenMD::RNEMD
 {
@@ -28,6 +29,8 @@ namespace OpenMD::RNEMD
 
         std::vector<std::string> atomLabels;
         std::array<std::vector<PhysicalQuantities::Length>, 3> coordinates;
+
+        // std::multimap<std::string_view, std::array<PhysicalQuantities::Length, 3> > atomCoordinates;
     };
 
     using XYZParametersPtr = std::shared_ptr<XYZParameters>;
@@ -47,14 +50,21 @@ namespace OpenMD::RNEMD
             parseInputXYZFile();
         }
 
-        explicit XYZFile(const Utilities_API::Files::FileName& FileName) : XYZFile{ FileName.getFullFileName() } {}
-
         void shiftXYZPositions(const PhysicalQuantities::Length& firstRegionBound)
         {
             for (auto& z : xyzParameters->coordinates[2])
                 if (z > firstRegionBound)
                     z -= xyzParameters->Hmat[2][2];
         }
+
+        // void shiftXYZPositions(const PhysicalQuantities::Length& firstRegionBound)
+        // {
+        //     const PhysicalQuantities::Length SPCE_bondLength = 1.0_Ang;
+
+        //     for (auto& [atomLabel, coordinates] : xyzParameters->atomCoordinates)
+        //         if (coordinates[2] > firstRegionBound)
+        //             coordinates[2] -= xyzParameters->Hmat[2][2];
+        // }
 
         void printOutputToFile(std::string outputFileName = "") const;
         XYZParametersPtr getXYZParameters() const { return xyzParameters; }

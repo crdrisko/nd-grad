@@ -10,8 +10,8 @@
 #include <memory>
 #include <vector>
 
-#include <gtest/gtest.h>
 #include <cpp-units/physicalQuantities.hpp>
+#include <gtest/gtest.h>
 
 #include "../../ShiftXYZ/include/xyzFile.hpp"
 
@@ -55,9 +55,9 @@ TEST(testShiftXYZ, testProperOutputFilePrinting)
     XYZFilePtr xyzFile { std::make_shared<XYZFile>("../../samples/single.xyz") };
 
     xyzFile->shiftXYZPositions( 19.5938_Ang );
-    xyzFile->printOutputToFile(".text-files/shifted_single.txt");
+    xyzFile->printOutputToFile("shifted_single.txt");
 
-    std::ifstream outputFile { ".text-files/shifted_single.txt" };
+    std::ifstream outputFile {"shifted_single.txt"};
 
     ASSERT_TRUE(outputFile);
 }
