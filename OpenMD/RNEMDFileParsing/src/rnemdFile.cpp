@@ -158,6 +158,10 @@ namespace OpenMD::RNEMD
 
         rnemdParameters->inferred->boxSize = allDataFromFile->rnemdAxis[allDataFromFile->rnemdAxis.size() - 1]
             + allDataFromFile->rnemdAxis[0];
+
+        rnemdParameters->inferred->percentageOfKicksFailed
+            = static_cast<double>(rnemdParameters->report->failTrialCount)
+                / static_cast<double>(rnemdParameters->report->trialCount) * 100;
     }
 
 

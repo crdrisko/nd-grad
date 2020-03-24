@@ -183,6 +183,11 @@ namespace OpenMD::RNEMD::ChargedRNEMD
                 CurrentDensity Jc_ion = (ion->getIonCharge() < 0.0_e ) ? rnemdParameters->report->Jc_anion
                     : rnemdParameters->report->Jc_cation;
 
+                /* Since twice the current density enters a single region, we need to multiply the applied current
+                    density by two to reflect this change */
+                if (rnemdParameters->block->fluxType == "Current")
+                    Jc_ion = Jc_ion * 2.0_;
+
                 std::vector<Concentration> conc_ion = individualRegionData[region - 1]->activity[ion->getIonIndex()];
 
                 sigmaTemporaryStorageVector.push_back(
@@ -222,9 +227,7 @@ namespace OpenMD::RNEMD::ChargedRNEMD
         outputFile << "# SlabWidth = " << rnemdParameters->inferred->slabWidth << "\n";
         outputFile << "# Jc anion = " << rnemdParameters->report->Jc_anion << " (e/Ang^2/fs)\n";
         outputFile << "# Jc cation = " << rnemdParameters->report->Jc_cation << " (e/Ang^2/fs)\n";
-        outputFile << "# Percentage Of Kicks Failed = " <<
-            ( static_cast<double>(rnemdParameters->report->failTrialCount)
-                / static_cast<double>(rnemdParameters->report->trialCount) ) * 100 << "%\n#\n";
+        outputFile << "# Percentage Of Kicks Failed = " << rnemdParameters->inferred->percentageOfKicksFailed << "%\n#\n";
 
         for (int region {1}; region <= rnemdParameters->inferred->numberOfRegions; ++region)
         {
@@ -233,6 +236,7 @@ namespace OpenMD::RNEMD::ChargedRNEMD
             printAdditionalRegionHeader(outputFile, region);
 
             outputFile << "# Region Transport Properties:\n";
+
             for (const auto& ion : rnemdParameters->ionicSpecies)
             {
                 outputFile << "#   " << ion->getIonName() << ":\n";
@@ -280,6 +284,36 @@ namespace OpenMD::RNEMD::ChargedRNEMD
 
                     outputFile << "\n";
             }
+
+            outputFile << std::endl;
+        }
+    }
+
+
+    void ChargedRNEMDAnalysisMethod::printOptimizationAnalysisToFile(std::string outputFileName)
+    {
+        std::ofstream outputFile;
+        outputFile.open(outputFileName, std::ofstream::out | std::ofstream::app);
+
+        outputFile << std::setprecision(8);
+
+        outputFile << "# FileName = " << rnemdFile->getFileName().getBaseFileName() << "\n";
+
+        for (int region {1}; region <= rnemdParameters->inferred->numberOfRegions; ++region)
+        {
+            outputFile << region;
+            outputFile << std::setw(15) << rnemdParameters->report->Jc_anion;
+            outputFile << std::setw(15) << rnemdParameters->report->Jc_cation;
+            outputFile << std::setw(15) << rnemdParameters->inferred->slabWidth;
+            outputFile << std::setw(15) << rnemdParameters->inferred->percentageOfKicksFailed;
+
+            for (const auto& ion : rnemdParameters->ionicSpecies)
+                outputFile << std::setw(15) << gradientOfElectrochemicalPotential[ion->getIonIndex()][region - 1][0]
+                           << std::setw(15) << gradientOfElectrochemicalPotential[ion->getIonIndex()][region - 1][1];
+
+            for (const auto& ion : rnemdParameters->ionicSpecies)
+                outputFile << std::setw(15) << lambda[ion->getIonIndex()][region - 1][0]
+                           << std::setw(15) << lambda[ion->getIonIndex()][region - 1][1];
 
             outputFile << std::endl;
         }

@@ -53,6 +53,7 @@ TEST(testCurrent_RNEMD, currentFluxTypeCorrectInferredParameters)
     assertThat(rnemdInferred->dataFieldLabelIndex).hasAValueOf(38);
     assertThat(rnemdInferred->boxSize.getMagnitude()).hasAValueNear(78.37511346);
     assertThat(rnemdInferred->hasSelectionB).isTrue();
+    assertThat(rnemdInferred->percentageOfKicksFailed).hasAValueOf(31.33862);
 }
 
 TEST(testCurrent_RNEMD, currentFluxTypeCorrectReportParameters)

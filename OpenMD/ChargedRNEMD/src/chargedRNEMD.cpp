@@ -25,6 +25,9 @@ int main(int argc, char* argv[])
 {
     std::string inputFileName;
 
+    bool doMethodOptimization {false};
+    std::string methodOptimizationOutputFileName;
+
     Utilities_API::Errors::ErrorMessagePtr errorMessage
         = std::make_shared<Utilities_API::Errors::FatalErrorMessage>("ChargedRNEMD", 3);
 
@@ -46,11 +49,20 @@ int main(int argc, char* argv[])
                     ++currentInputCount;
                 }
                 break;
+            case 'o':
+                ++option;
 
+                if (argv[option] != NULL)
+                {
+                    doMethodOptimization = true;
+                    methodOptimizationOutputFileName = argv[option];
+                }
+                else
+                    errorMessage->printErrorMessage("The -o option requires a fileName for output.");
+                break;
             case 'h':
                 printHelpMessageAndExit();
                 break;
-
             default:
                 errorMessage->printErrorMessage("Unknown option passed to the program.");
                 break;
@@ -58,7 +70,7 @@ int main(int argc, char* argv[])
         }
     }
 
-    if ( currentInputCount != requiredInputCount )
+    if (currentInputCount != requiredInputCount)
         errorMessage->printErrorMessage("Required input is a single valid .rnemd file.");
 
     MethodFactory methodFactory {inputFileName};
@@ -66,15 +78,19 @@ int main(int argc, char* argv[])
 
     rnemdAnalysisMethod->process();
     rnemdAnalysisMethod->printOutputToFile();
+
+    if (doMethodOptimization)
+        rnemdAnalysisMethod->printOptimizationAnalysisToFile(methodOptimizationOutputFileName);
 }
 
 
 void printHelpMessageAndExit()
 {
-    std::cout << "\nUSAGE: chargedRNEMD [-h] [-i inputFile]\n\n"
+    std::cout << "\nUSAGE: chargedRNEMD [-h] [-i inputFile] [-o outputFile]\n\n"
               << "  -h  Prints help information about the chargedRNEMD program.\n\n"
-              << "  -i  REQUIRED: The input .rnemd file to be analyzed.\n\n"
-              << "EXAMPLE: chargedRNEMD -i single.rnemd\n"
+              << "  -i  REQUIRED: The input .rnemd file to be analyzed.\n"
+              << "  -o  OPTIONAL: The output file for easy method optimization analysis.\n\n"
+              << "EXAMPLE: chargedRNEMD -i single.rnemd -o single.opt\n"
               << std::endl;
 
     std::exit(0);

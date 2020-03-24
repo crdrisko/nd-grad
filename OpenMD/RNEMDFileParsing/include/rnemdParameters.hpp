@@ -80,6 +80,8 @@ namespace OpenMD::RNEMD
 
         PhysicalQuantities::Length slabWidth;
         PhysicalQuantities::Length boxSize;
+
+        double percentageOfKicksFailed;
     };
 
     using RNEMDInferredParametersPtr = std::shared_ptr<RNEMDInferredParameters>;

@@ -49,6 +49,7 @@ TEST(testKE_RNEMD, KE_FluxTypeCorrectInferredParameters)
     assertThat(rnemdInferred->dataFieldLabelIndex).hasAValueOf(35);
     assertThat(rnemdInferred->boxSize.getMagnitude()).hasAValueNear(40.0);
     assertThat(rnemdInferred->hasSelectionB).isTrue();
+    assertThat(rnemdInferred->percentageOfKicksFailed).hasAValueOf(0.0);
 }
 
 TEST(testKE_RNEMD, KE_FluxTypeCorrectReportParameters)

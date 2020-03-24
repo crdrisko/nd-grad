@@ -13,9 +13,10 @@ set(SHIFTXYZ_SOURCES
     ShiftXYZ/src/shiftXYZ.cpp
     ShiftXYZ/src/xyzFile.cpp)
 
-set(BASH_FILES
+set(SCRIPTS
     scripts/groupSubmit.sh
-    scripts/equilibrator.sh)
+    scripts/equilibrator.sh
+    ChargedRNEMD/scripts/plotOptimizationAnalysis.py)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY
     ${PROJECT_BINARY_DIR}/bin
@@ -46,11 +47,11 @@ install(TARGETS chargedRNEMD shiftXYZ
                     GROUP_READ             GROUP_EXECUTE
                     WORLD_READ             WORLD_EXECUTE)
 
-foreach (BASH_FILE ${BASH_FILES})
-    ## Remove bash extensions and make scripts executable ##
-    get_filename_component(filename "${BASH_FILE}" NAME_WE)
+foreach (SCRIPT ${SCRIPTS})
+    ## Remove extensions and make scripts executable ##
+    get_filename_component(filename "${SCRIPT}" NAME_WE)
 
-    configure_file(${BASH_FILE} "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${filename}" @ONLY)
+    configure_file(${SCRIPT} "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${filename}" @ONLY)
 
     install(FILES "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${filename}"
             DESTINATION bin

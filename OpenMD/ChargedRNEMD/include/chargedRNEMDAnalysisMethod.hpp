@@ -60,6 +60,7 @@ namespace OpenMD::RNEMD::ChargedRNEMD
 
         void process();
         void printOutputToFile();
+        void printOptimizationAnalysisToFile(std::string outputFileName = "");
     };
 
     using ChargedRNEMDAnalysisMethodPtr = std::shared_ptr<ChargedRNEMDAnalysisMethod>;
