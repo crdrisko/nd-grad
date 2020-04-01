@@ -19,13 +19,9 @@ notifications:
 
 
 ### Installation Procedure ###
-before_script:
-  - previousLocation=$( pwd )
-  - bash ci/install-cpp-units.sh
-  - cd $previousLocation
-  - mkdir build && cd build
 script:
-  - cmake ../. -Dbuild_all_tests=ON
+  - mkdir build && cd build
+  - cmake ../. -Dnd-research_build_tests=ON
   - make && sudo make install
   - cd OpenMD/test
   - ctest

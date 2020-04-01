@@ -1,48 +1,50 @@
 # ND-Research
 
-## Release: Version 0.0.1 (Pre-Release)
-
-### Build Status
-
 [![Build Status](https://travis-ci.com/crdrisko/ND-Research.svg?branch=master)](https://travis-ci.com/crdrisko/ND-Research)
 
-- NOTE: Until Version 1.0.0 is released, the project's interface is subject to change at any time without warning.
+Welcome to the ND-Research project!
+
+<!--More detailed documentation for using nd-research can be found in the [`docs/primer.md`](https://github.com/crdrisko/nd-research/tree/master/docs/primer.md) file.
+
+## Features
+
+- ...-->
 
 ## Platforms
 
-The ND-Research repository has been built and tested on a number of operating systems, computer architectures, and compiler combinations.
+The ND-Research project has been built and tested on a number of operating systems, computer architectures, and compiler combinations.
 
 - Mac OS X
-
 - Linux
+- Windows Subsystem for Linux (WSL)
+
+**Coming Soon:**
+
+- Windows
+- Cygwin
 
 ## Requirements
 
-ND-Research requires
+The ND-Research project was designed to have as few external dependencies as possible so it could be easily built and used by other projects. The project requires:
 
-- [CMake](https://cmake.org): Version 3.10.0 or higher.
+- A C++17-standard-compliant compiler with support for the Standard Library.
 
-- A C++17-standard-compliant compiler.
+- [Utilities-API](https://github.com/crdrisko/utilities-api) was used for a number of the utilities found throughout the various projects and scripts. More information about the API can be found in the repository's README.
 
-- [CPP-Units](https://github.com/crdrisko/cpp-units): a compile-time, header-only, API providing access to a number of Physical Quantities and units for cleaner code throughout the project. More information about the API can be found in the repository's README. The procedure outlined in the `ci/install-cpp-units.sh` script can be followed to install the repository where desired.
+- [CPP-Units](https://github.com/crdrisko/cpp-units) is a compile-time, header-only, API providing access to a number of physical quantities and units for cleaner code throughout the project. More information about the API can be found in the repository's README.
 
-- [Utilities-API](https://github.com/crdrisko/utilities-api): used for a number of the utilities found throughout the various projects and scripts. More information about the API can be found in the repository's README.
-
-Optional:
-
-- [GoogleTest](https://github.com/google/googletest): used for the testing of all source code in the project (see the `test` directory). The `ci/install-gtest.sh` script in the utilities-api repository (see above) can be used to install GoogleTest where desired. Running all these tests is optional and can be turned on using the `-Dbuild_all_tests=ON` flag during the build.
+- [GoogleTest](https://github.com/google/googletest) was used for the testing all the source code in the project. Building and running all these tests is optional and more information can be found in the testing section of [`docs/build.md`](https://github.com/crdrisko/nd-research/tree/master/docs/build.md).
 
 - The Bourne Again SHell (bash) is required if the use of any of the scripts in the `scripts` directory is desired. While other versions of bash may work, the lowest version of bash I have tested these scripts on is 3.2. Many, if not all, shell scripts in this repository are *not* compliant with the POSIX shell.
 
-## Installation
+- Python3 is needed for a number of the analysis scripts. These scripts may work with python2, but I haven't actually tested for that.
 
-Installation of ND-Research is designed to be as easy as possible. Using CMake, the following commands can be run:
+### Build Requirements
 
-```bash
-$ git clone https://github.com/crdrisko/nd-research.git
-$ mkdir build && cd build
-$ cmake ../nd-research/.
-$ make && [sudo] make install
-```
+- [CMake](https://cmake.org): Version 3.10.0 or higher. See the documentation in the [`docs/build.md`](https://github.com/crdrisko/nd-research/tree/master/docs/build.md) file for specific instructions on installing the project.
 
-- NOTE: the default install directory is `/usr/local`.
+## License
+
+Copyright (c) 2020 Cody R. Drisko. All rights reserved.
+
+Licensed under the [MIT License](https://github.com/crdrisko/nd-research/blob/master/LICENSE).

@@ -2,20 +2,16 @@
 include(CTest)
 include(GoogleTest)
 
-## Locate GTest ##
-find_package(GTest REQUIRED)
-include_directories(${GTEST_INCLUDE_DIRS})
-
 enable_testing()
 
 ## Function to create a new test based off the pre-defined naming template ##
 function (new_test testname interiorDirectory)
     add_executable(test${testname} ${interiorDirectory}/test${testname}.cpp ${NEW_SOURCES})
 
-    target_link_libraries(test${testname} ${GTEST_LIBRARIES} ${UTILITIES_API_LIBRARIES})
+    target_link_libraries(test${testname} ${GTEST_LIBRARIES})
 
     gtest_discover_tests(test${testname}
-                            WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/${interiorDirectory})
+                         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/${interiorDirectory})
 endfunction()
 
 ## ShiftXYZ Tests ##

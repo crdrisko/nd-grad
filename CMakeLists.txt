@@ -18,5 +18,15 @@ if (CMAKE_COMPILER_IS_GNUCXX)
 endif()
 
 
-### The ND-Research Projects to Include ###
+### External Modules ###
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules")
+
+find_package(Utilities_API REQUIRED)
+include_directories(${UTILITIES_API_INCLUDE_DIR})
+
+find_package(CPP_Units REQUIRED)
+include_directories(${CPP_UNITS_INCLUDE_DIR})
+
+
+### ND-Research Subprojects ###
 add_subdirectory(OpenMD)

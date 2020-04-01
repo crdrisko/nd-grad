@@ -16,7 +16,8 @@ set(SHIFTXYZ_SOURCES
 set(SCRIPTS
     scripts/groupSubmit.sh
     scripts/equilibrator.sh
-    ChargedRNEMD/scripts/plotOptimizationAnalysis.py)
+    ChargedRNEMD/scripts/plotOptimizationAnalysis.py
+    ChargedRNEMD/scripts/findConcentration.py)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY
     ${PROJECT_BINARY_DIR}/bin
@@ -25,19 +26,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY
 
 
 ### Libraries / Executables ###
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../cmake")
-
-find_package(Utilities_API REQUIRED)
-include_directories(${UTILITIES_API_INCLUDE_DIR})
-
-find_package(CPP_Units REQUIRED)
-include_directories(${CPP_UNITS_INCLUDE_DIR})
-
 add_executable(chargedRNEMD ${CHARGED_RNEMD_SOURCES} ${RNEMD_FILE_PARSING_SOURCES})
-target_link_libraries(chargedRNEMD ${UTILITIES_API_LIBRARIES})
-
 add_executable(shiftXYZ ${SHIFTXYZ_SOURCES})
-target_link_libraries(shiftXYZ ${UTILITIES_API_LIBRARIES})
 
 
 ### Installation ###
@@ -62,8 +52,18 @@ endforeach()
 
 
 ### Unit Testing ###
-option(build_all_tests "Build all unit tests in the test directory." OFF)
+option(nd-research_build_tests "Build all unit tests in the test directory." OFF)
 
-if (build_all_tests)
+if (nd-research_build_tests)
+    find_package(GTest)
+
+    if (NOT ${GTest_FOUND})
+        ## If GTest isn't installed or can't be found, look in the external modules file ##
+        find_package(GoogleTest)
+    endif()
+
+    include_directories(${GTEST_INCLUDE_DIRS})
+    add_compile_options(-pthread)
+
     add_subdirectory(test)
 endif()

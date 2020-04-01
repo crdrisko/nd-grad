@@ -1,0 +1,42 @@
+cmake_minimum_required(VERSION 3.10.0)
+
+include(ExternalProject)
+
+
+project(utilities-api-download NONE)
+
+ExternalProject_Add(utilities-api
+    GIT_REPOSITORY    https://github.com/crdrisko/utilities-api.git
+    GIT_TAG           master
+    SOURCE_DIR        "${CMAKE_CURRENT_BINARY_DIR}/utilities-api-src"
+    BINARY_DIR        "${CMAKE_CURRENT_BINARY_DIR}/utilities-api-build"
+    CONFIGURE_COMMAND ""
+    BUILD_COMMAND     ""
+    INSTALL_COMMAND   ""
+    TEST_COMMAND      "")
+
+
+project(cpp-units-download NONE)
+
+ExternalProject_Add(cpp-units
+    GIT_REPOSITORY    https://github.com/crdrisko/cpp-units.git
+    GIT_TAG           master
+    SOURCE_DIR        "${CMAKE_CURRENT_BINARY_DIR}/cpp-units-src"
+    BINARY_DIR        "${CMAKE_CURRENT_BINARY_DIR}/cpp-units-build"
+    CONFIGURE_COMMAND ""
+    BUILD_COMMAND     ""
+    INSTALL_COMMAND   ""
+    TEST_COMMAND      "")
+
+
+project(googletest-download NONE)
+
+ExternalProject_Add(googletest
+    GIT_REPOSITORY    https://github.com/google/googletest.git
+    GIT_TAG           master
+    SOURCE_DIR        "${CMAKE_CURRENT_BINARY_DIR}/googletest-src"
+    BINARY_DIR        "${CMAKE_CURRENT_BINARY_DIR}/googletest-build"
+    CONFIGURE_COMMAND ""
+    BUILD_COMMAND     ""
+    INSTALL_COMMAND   ""
+    TEST_COMMAND      "")
