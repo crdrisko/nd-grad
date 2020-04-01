@@ -1,6 +1,6 @@
 if (NOT ${GTest_FOUND})
     ## Download and unpack googletest at configure time ##
-    configure_file(cmake/CMakeLists.txt.in googletest-download/CMakeLists.txt)
+    configure_file(../cmake/CMakeLists.txt.in googletest-download/CMakeLists.txt)
 
     execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
                     RESULT_VARIABLE result
