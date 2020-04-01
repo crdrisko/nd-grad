@@ -20,7 +20,8 @@ N = np.size(data)
 Regions     = data[0:N:1, 0]
 Jc_Anion    = data[0:N:1, 1]
 Jc_Cation   = data[0:N:1, 2]
-FailedKicks = data[0:N:1, 3]
+SlabWidth   = data[0:N:1, 3]
+FailedKicks = data[0:N:1, 4]
 Jc_target   = np.array( (Jc_Anion + Jc_Cation) / (1 - (FailedKicks / 100)) )
 
 ## Plot for the target current density vs. the actual applied current density ##
@@ -52,10 +53,11 @@ for ionicSpecies in range (0, 2):
 
     for currentRegion in range (0, numberOfRegions):
         Jc_Applied   = data[currentRegion:N:numberOfRegions,     ionicSpecies + 1]
-        GradECP      = data[currentRegion:N:numberOfRegions, 2 * ionicSpecies + 4]
-        GradECPError = data[currentRegion:N:numberOfRegions, 2 * ionicSpecies + 5]
-        Lambda       = data[currentRegion:N:numberOfRegions, 2 * ionicSpecies + 8]
-        LambdaError  = data[currentRegion:N:numberOfRegions, 2 * ionicSpecies + 9]
+        GradECP      = data[currentRegion:N:numberOfRegions, 2 * ionicSpecies + 5]
+        GradECPError = data[currentRegion:N:numberOfRegions, 2 * ionicSpecies + 6]
+        Lambda       = data[currentRegion:N:numberOfRegions, 2 * ionicSpecies + 9]
+        LambdaError  = data[currentRegion:N:numberOfRegions, 2 * ionicSpecies + 10]
+        slabWidth    = SlabWidth[currentRegion:N:numberOfRegions]
 
 
         ## Plot for the Gradient of the Electrochemical Potential ##
