@@ -23,5 +23,5 @@ script:
   - mkdir build && cd build
   - cmake ../. -Dnd-research_build_tests=ON
   - make && sudo make install
-  - cd OpenMD/test
+  - cd nd-research/test
   - ctest

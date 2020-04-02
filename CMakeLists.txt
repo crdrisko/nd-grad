@@ -29,4 +29,4 @@ include_directories(${CPP_UNITS_INCLUDE_DIR})
 
 
 ### ND-Research Subprojects ###
-add_subdirectory(OpenMD)
+add_subdirectory(nd-research)
