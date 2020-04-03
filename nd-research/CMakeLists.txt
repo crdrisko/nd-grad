@@ -58,8 +58,12 @@ if (nd-research_build_tests)
     find_package(GTest)
 
     if (NOT ${GTest_FOUND})
-        ## If GTest isn't installed or can't be found, look in the external modules file ##
-        find_package(GoogleTest)
+        ## If GTest isn't installed or can't be found, download it from github ##
+        externalDownload(PROJECT googletest
+                         REPOSITORY "https://github.com/google/googletest.git")
+
+        set(GTEST_LIBRARIES gtest)
+        set(GTEST_INCLUDE_DIRS "${gtest_SOURCE_DIR}/include")
     endif()
 
     include_directories(${GTEST_INCLUDE_DIRS})
