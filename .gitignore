@@ -1,1 +1,2 @@
 nd-research/test/**/*.txt
+**/__pycache__
