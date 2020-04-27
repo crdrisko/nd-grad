@@ -18,10 +18,36 @@ notifications:
   email: false
 
 
-### Installation Procedure ###
+### Standard Installation Procedure ###
 script:
   - mkdir build && cd build
   - cmake ../. -Dnd-research_build_tests=ON
   - make && sudo make install
   - cd nd-research/test
   - ctest
+
+
+### Provide Code Coverage Reports ###
+matrix:
+  include:
+    - os: linux
+      dist: bionic
+      compiler: gcc
+      arch: amd64
+      addons:
+        apt:
+          packages:
+            - python-pip
+            - lcov
+          update: true
+      install:
+        - if [ $TRAVIS_OS_NAME = linux ]; then pip install --user cpp-coveralls; fi
+      script:
+        - mkdir build && cd build
+        - cmake ../. -Dnd-research_coverage=ON
+        - make && sudo make install
+        - cd nd-research/test
+        - ctest
+        - lcov --directory . --capture --output-file coverage.info
+        - lcov --remove coverage.info '*gtest*' '*utils-api*' '*cpp-units*' '*/test/*' '/usr/*' --output-file coverage.info
+        - coveralls -r ../../../. -l coverage.info -n

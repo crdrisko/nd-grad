@@ -1,6 +1,6 @@
 # ND-Research
 
-[![Build Status](https://travis-ci.com/crdrisko/ND-Research.svg?branch=master)](https://travis-ci.com/crdrisko/ND-Research)
+[![Build Status](https://travis-ci.com/crdrisko/ND-Research.svg?branch=master)](https://travis-ci.com/crdrisko/ND-Research) [![Coverage Status](https://coveralls.io/repos/github/crdrisko/nd-research/badge.svg?branch=master)](https://coveralls.io/github/crdrisko/nd-research?branch=master)
 
 Welcome to the ND-Research project! This repository is a merger of the formerly separate ND-Research and ND-Coursework projects. Because these repositories were so closely related, it makes sense to maintain and release them together.
 
@@ -10,9 +10,15 @@ Information for getting started using ND-Research is available in the [`docs/pri
 
 More detailed documentation for nd-research and nd-coursework can be found in the interior [`nd-research/README.md`](https://github.com/crdrisko/nd-research/tree/master/nd-research/README.md) and [`nd-coursework/README.md`](https://github.com/crdrisko/nd-research/tree/master/nd-coursework/README.md) files, respectively.
 
-<!--## Features
+## Features
 
-- ...-->
+- Post-processing analysis utilities and applications for data files generated through [OpenMD](https://github.com/OpenMD/OpenMD).
+
+- Scripts for the automation of common tasks associated with my research.
+
+- A random-sampling algorithm for the construction of Potential Energy Surfaces (PES) using [GAMESS](https://www.msg.chem.iastate.edu/gamess).
+
+- Miscellaneous code associated with coursework and assignments during my time in graduate school.
 
 ## Platforms
 

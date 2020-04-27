@@ -4,14 +4,13 @@
 // Name: testAllFluxTypes.cpp - Version 1.0.0
 // Author: cdrisko
 // Date: 03/10/2020-07:29:59
-// Description: Run all the flux type tests with googletest
+// Description: Provides ~100% unit test coverage over all remaining fluxTypes in the samples directory
 
 #include <gtest/gtest.h>
 
-#include "FluxType_Current/testCurrent_RNEMD.hpp"
-#include "FluxType_KE/testKE_RNEMD.hpp"
-#include "FluxType_Px/testPx_RNEMD.hpp"
-#include "FluxType_Single/testSingle_RNEMD.hpp"
+#include "fluxTypes/testKE_RNEMD.hpp"
+#include "fluxTypes/testPx_RNEMD.hpp"
+#include "fluxTypes/testSingle_RNEMD.hpp"
 
 int main(int argc, char** argv)
 {

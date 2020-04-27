@@ -4,22 +4,22 @@
 // Name: testAssertions.hpp - Version 1.0.0
 // Author: cdrisko
 // Date: 02/07/2020-10:01:48
-// Description: Defines an assertion class to be used when testing flux type parameters with GoogleTest
+// Description: Defines an assertion class to be used when testing parameters with GoogleTest
 
-#ifndef TESTASSERTIONS_HPP
-#define TESTASSERTIONS_HPP
+#ifndef ND_RESEARCH_TESTASSERTIONS_HPP
+#define ND_RESEARCH_TESTASSERTIONS_HPP
 
 #include <gtest/gtest.h>
 
 template<typename T>
-class FluxTypeAssert
+class ParameterAssert
 {
 private:
     T parameter;
 
 public:
-    FluxTypeAssert() = delete;
-    FluxTypeAssert(const T& Parameter = 0) : parameter{Parameter} {}
+    ParameterAssert() = delete;
+    ParameterAssert(const T& Parameter = 0) : parameter{Parameter} {}
 
     void isTrue() const { ASSERT_TRUE(parameter); }
     void isFalse() const { ASSERT_FALSE(parameter); }
@@ -28,9 +28,9 @@ public:
 };
 
 template<typename T>
-FluxTypeAssert<T> assertThat(const T& parameter)
+ParameterAssert<T> assertThat(const T& parameter)
 {
-    FluxTypeAssert<T> assert {parameter};
+    ParameterAssert<T> assert {parameter};
     return assert;
 }
 

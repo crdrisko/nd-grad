@@ -3,6 +3,17 @@ cmake_minimum_required(VERSION 3.10.0)
 project(ND-Research VERSION 1.0.0)
 
 
+### Options ###
+option(nd-research_build_tests "Build all unit tests in the test directory." OFF)
+option(nd-research_coverage "Turn on coverage options for use with lcov, gcov, and/or coveralls." OFF)
+
+if (nd-research_coverage)
+    set(nd-research_build_tests ON)
+    set(CMAKE_BUILD_TYPE "Debug")
+    set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} --coverage)
+endif()
+
+
 ### Compilation Options ###
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
@@ -19,38 +30,7 @@ endif()
 
 
 ### Functions ###
-function(externalDownload)
-    set(options)
-    set(one_value_keywords PROJECT
-                           REPOSITORY)
-    set(multi_value_keywords)
-
-    cmake_parse_arguments(EXTERN_ARGS "${options}" "${one_value_keywords}" "${multi_value_keywords}" ${ARGN})
-
-    ## Download and unpack project at configure time ##
-    configure_file(${ND-Research_SOURCE_DIR}/cmake/CMakeLists.txt.in ${EXTERN_ARGS_PROJECT}-download/CMakeLists.txt)
-
-    ## Configuration step ##
-    execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
-                    RESULT_VARIABLE result
-                    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${EXTERN_ARGS_PROJECT}-download)
-    if (result)
-        message(FATAL_ERROR "CMake step for ${EXTERN_ARGS_PROJECT} failed: ${result}")
-    endif()
-
-    ## Build Step ##
-    execute_process(COMMAND ${CMAKE_COMMAND} --build .
-                    RESULT_VARIABLE result
-                    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${EXTERN_ARGS_PROJECT}-download)
-    if (result)
-        message(FATAL_ERROR "Build step for ${EXTERN_ARGS_PROJECT} failed: ${result}")
-    endif()
-
-    ## Add project directly to our build ##
-    add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/${EXTERN_ARGS_PROJECT}-download/${EXTERN_ARGS_PROJECT}-src
-                     ${CMAKE_CURRENT_BINARY_DIR}/${EXTERN_ARGS_PROJECT}-download/${EXTERL_ARGS_PROJECT}-build
-                     EXCLUDE_FROM_ALL)
-endfunction()
+include(cmake/utility-functions.cmake)
 
 
 ### External Modules ###
@@ -83,5 +63,5 @@ endif()
 include_directories(${CPP_UNITS_INCLUDE_DIR})
 
 
-### ND-Research Subprojects ###
+### ND-Research SubProjects ###
 add_subdirectory(nd-research)
