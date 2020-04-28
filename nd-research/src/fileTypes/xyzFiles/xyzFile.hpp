@@ -18,7 +18,7 @@
 #include <utils-api/files.hpp>
 
 #include "xyzParameters.hpp"
-#include "../../types/molecularEntity.hpp"
+// #include "../../types/molecularEntity.hpp"
 
 namespace ND_Research
 {
