@@ -9,11 +9,11 @@ foreach (FILE ${FILETYPE_SOURCES})
     list(APPEND NEW_SOURCES ../${FILE})
 endforeach()
 
-newTest(TESTNAME FileTypeParsing
-        INTERIOR_DIRECTORY TestFileTypes)
+nd-research_NewTest(TESTNAME FileTypeParsing
+                    INTERIOR_DIRECTORY TestFileTypes)
 
-newTest(TESTNAME AllFluxTypes
-        INTERIOR_DIRECTORY TestFluxTypes)
+nd-research_NewTest(TESTNAME AllFluxTypes
+                    INTERIOR_DIRECTORY TestFluxTypes)
 
 # newTest(TESTNAME RegionSplitting
 #     INTERIOR_DIRECTORY TestRNEMDRegions)

@@ -30,7 +30,7 @@ endif()
 
 
 ### Functions ###
-include(cmake/utility-functions.cmake)
+include(cmake/nd-research_utilities.cmake)
 
 
 ### External Modules ###
@@ -40,8 +40,8 @@ find_package(Utilities_API REQUIRED)
 
 if (NOT ${UTILITIES_API_FOUND})
     ## If utilities-api isn't installed or can't be found, download it from github ##
-    externalDownload(PROJECT utilities-api
-                     REPOSITORY "https://github.com/crdrisko/utilities-api.git")
+    nd-research_ExternalDownload(PROJECT utilities-api
+                                 REPOSITORY "https://github.com/crdrisko/utilities-api.git")
 
     set(UTILITIES_API_INCLUDE_DIR "${Utilities-API_SOURCE_DIR}/include")
     set(UTILITIES_API_FOUND TRUE)
@@ -53,8 +53,8 @@ find_package(CPP_Units REQUIRED)
 
 if (NOT ${CPP_UNITS_FOUND})
     ## If cpp-units isn't installed or can't be found, download it from github ##
-    externalDownload(PROJECT cpp-units
-                     REPOSITORY "https://github.com/crdrisko/cpp-units.git")
+    nd-research_ExternalDownload(PROJECT cpp-units
+                                 REPOSITORY "https://github.com/crdrisko/cpp-units.git")
 
     set(CPP_UNITS_INCLUDE_DIR "${CPP-Units_SOURCE_DIR}/include")
     set(CPP_UNITS_FOUND TRUE)
