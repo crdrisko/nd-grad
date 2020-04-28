@@ -2,7 +2,7 @@
 # Copyright (c) 2020 Cody R. Drisko. All rights reserved.
 # Licensed under the MIT License. See the LICENSE file in the project root for license information.
 #
-# Name: groupSubmit.sh - Version 1.1.0
+# Name: groupSubmit.sh - Version 1.1.1
 # Author: cdrisko
 # Date: 01/20/2020-10:22:05
 # Description: Gezelter group submission script creator and resource monitor
@@ -31,8 +31,10 @@ printHelpMessage()      #@ DESCRIPTION: Print the groupSubmit program's help mes
 
 printCheckQuotaScript()     #@ DESCRIPTION: Print script used to notify user of potential memory overflow
 {                           #@ USAGE: printCheckQuotaScript [User|Group]
+    checkQuotaName=check${1}Quota
+
     printf "#!/bin/bash\n"
-    printf "#$ -N check%sQuota\n" $1
+    printf "#$ -N %s\n" $checkQuotaName
     printf "#$ -M %s@nd.edu\n" $username
     printf "#$ -m abe\n"
     printf "#$ -pe smp 1\n\n"
@@ -61,7 +63,7 @@ printCheckQuotaScript()     #@ DESCRIPTION: Print script used to notify user of 
     printf "  sleep \${sleepTime:=3h}\n\n"
     printf "  qstatArray=( \$( /opt/sge/bin/lx-amd64/qstat -u %s | tail -n +3 ) )\n" $USER
     printf "  qstatArrayLength=\$( printf \"%%s\\\n\" \${qstatArray[@]} | wc -l )\n\n"
-    printf "  if [ \${qstatArray[2]} == \"check%sQuota\" ] && [ \$qstatArrayLength -eq 9 ]\n" $1
+    printf "  if [ \${qstatArray[2]} == \"%s\" ] && [ \$qstatArrayLength -eq 9 ]\n" ${checkQuotaName:0:10}
     printf "  then\n"
     printf "    exit 0\n"
     printf "  fi\n"
@@ -104,7 +106,7 @@ while getopts i:s:u:c:dvh opt
 do
     case $opt in
         i) fileName="${OPTARG##*/}"
-           if [ "$fileName" != "${OPTARG%/*}" ]
+           if [[ "$fileName" != "${OPTARG%/*}" ]]
            then
                directory="${OPTARG%/*}"
            fi ;;
@@ -122,25 +124,26 @@ done
 [ -d "$directory" ] && cd "$directory" || printFatalErrorMessage 1 "Invalid directory."
 [ "${USER:?Issue finding your CRC username. Set the \$USER variable and try again.}" ]
 
-if [ -z "${scriptName:-""}" ]
+if [[ -z "${scriptName:-""}" && -f "${fileName:?A filename is required}" ]]
 then
     ## User didn't specify a submission script so we'll just make them one ##
-    [ "${fileName:?A filename is required}" ]
-
     printOpenmdSubmissionScript > openmd_multiple.sh
 
     ## Comment out RNEMD line we aren't running RNEMD ##
-    if ! grep useRNEMD "$fileName" &>/dev/null
+    if grep useRNEMD "$fileName" &>/dev/null
     then
         IFS=$' =;'
         useRNEMDArray=( $( grep useRNEMD "$fileName" ) )
         IFS=$' \t\n'
 
-        if [ ${useRNEMDArray[1]} == 'false' ]
+        if [[ ${useRNEMDArray[1]} == 'false' ]]
         then
             rnemdLine="fsync \${WORK_DIR}\/\${SIM_NAME}.rnemd \&"
             sed "s/$rnemdLine/#$rnemdLine/g" openmd_multiple.sh > tempFile && mv tempFile openmd_multiple.sh
         fi
+    else
+        rnemdLine="fsync \${WORK_DIR}\/\${SIM_NAME}.rnemd \&"
+        sed "s/$rnemdLine/#$rnemdLine/g" openmd_multiple.sh > tempFile && mv tempFile openmd_multiple.sh
     fi
 
     scriptName=openmd_multiple.sh
@@ -158,20 +161,20 @@ then
     do
         lineArray=( $line )
 
-        if [ "${lineArray[2]}" == "checkUserQuota" ]
+        if [[ "${lineArray[2]}" == "checkUserQ" ]]
         then
             checkUserQuota=1
-        elif [ "${lineArray[2]}" == "checkGroupQuota" ]
+        elif [[ "${lineArray[2]}" == "checkGroup" ]]
         then
             checkGroupQuota=1
         fi
     done
 
-    if [ ${checkUserQuota:-0} -eq 0 ]
+    if [[ ${checkUserQuota:-0} -eq 0 && "$PWD" == /afs/crc.nd.edu/user/* ]]
     then
         printCheckQuotaScript User > checkUserQuota.sh
         qsub checkUserQuota.sh
-    elif [ ${checkGroupQuota:-0} -eq 0 ]
+    elif [[ ${checkGroupQuota:-0} -eq 0 && "$PWD" == /afs/crc.nd.edu/group/gezelter/* ]]
     then
         printCheckQuotaScript Group > checkGroupQuota.sh
         qsub checkGroupQuota.sh
@@ -180,5 +183,5 @@ then
     qsub "$scriptName"
 
 else
-    printFatalErrorMessage 2 "The scriptname provided does not exist."
+    printFatalErrorMessage 3 "The scriptname provided does not exist."
 fi
