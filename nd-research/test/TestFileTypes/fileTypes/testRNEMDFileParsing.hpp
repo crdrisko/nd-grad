@@ -126,13 +126,13 @@ namespace ND_Research
         assertThat(rnemdParameters->inferred.percentageOfKicksFailed).hasAValueOf(31.33862);
     }
 
-    // GTEST_TEST(testRNEMDFileParsing, incorrectInternalFileDataThrowsExceptions)
-    // {
-    //     ASSERT_DEATH(
-    //     {
-    //         RNEMDFile rnemdFile {"../../samples/"};
-    //     }, "ND-Research Fatal Error:\n\tCould not convert a string value from the file into parameter type using: \n");
-    // }
+    GTEST_TEST(testRNEMDFileParsing, incorrectInternalFileDataThrowsExceptions)
+    {
+        ASSERT_DEATH(
+        {
+            RNEMDFile rnemdFile {"../../scripts/equilibrator.sh"};
+        }, "ND-Research Fatal Error:\n\tCould not convert a string value from the file into parameter type using:");
+    }
 
     GTEST_TEST(testRNEMDFileParsing, componentsOfTheRNEMDFileNameAreCorrect)
     {

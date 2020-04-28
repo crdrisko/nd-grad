@@ -46,13 +46,13 @@ namespace ND_Research
         assertThat(xyzParameters->inferred.timeStep.getMagnitude()).hasAValueNear(0.0);
     }
 
-    // GTEST_TEST(testXYZFileParsing, incorrectInternalFileDataThrowsExceptions)
-    // {
-    //     ASSERT_DEATH(
-    //     {
-    //         XYZFile xyzFile {"testFileTypeParsing.cpp"};
-    //     }, "ND-Research Fatal Error:\n\tCould not convert a string value from the file into parameter type using: stoul\n");
-    // }
+    GTEST_TEST(testXYZFileParsing, incorrectInternalFileDataThrowsExceptions)
+    {
+        ASSERT_DEATH(
+        {
+            XYZFile xyzFile {"testFileTypeParsing.cpp"};
+        }, "ND-Research Fatal Error:\n\tCould not convert a string value from the file into parameter type using:");
+    }
 
     GTEST_TEST(testXYZFileParsing, componentsOfTheXYZFileNameAreCorrect)
     {
