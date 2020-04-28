@@ -2,32 +2,37 @@
 # Copyright (c) 2020 Cody R. Drisko. All rights reserved.
 # Licensed under the MIT License. See the LICENSE file in the project root for license information.
 #
-# Name: groupSubmit.sh - Version 1.0.0
+# Name: groupSubmit.sh - Version 1.1.0
 # Author: cdrisko
 # Date: 01/20/2020-10:22:05
 # Description: Gezelter group submission script creator and resource monitor
 
 
 ### Functions ###
+source errorHandling
+
 printHelpMessage()      #@ DESCRIPTION: Print the groupSubmit program's help message
 {                       #@ USAGE: printHelpMessage
-    printf "\nUSAGE: groupSubmit [-hr] [-i fileName] [-u username] [-c cores] [-q queue]\n\n"
+    printf "\nUSAGE: groupSubmit [-hvd] [-i fileName] [-s scriptName] [-u userName]\n"
+    printf "    [-c cores]\n\n"
     printf "  -h  Prints help information about the groupSubmit program.\n"
-    printf "  -r  Check for RNEMD outputs. Defaults to false/off.\n\n"
-    printf "  -i  REQUIRED: Your input .omd file to be submitted.\n"
+    printf "  -v  Verbose mode. Defaults to false/off.\n"
+    printf "  -d  Submit jobs to the debug queue. Defaults to false/off.\n\n"
+    printf "  -i  OPTIONAL: Your input '.omd' file to be submitted. Note that this is\n"
+    printf "        required if no submission script is provided via the '-s' option.\n"
+    printf "  -s  OPTIONAL: Specify an alternative submission script to be submited to\n"
+    printf "        the CRC queue. Defaults to openmd_multiple.sh.\n"
     printf "  -u  OPTIONAL: Your ND email username. Defaults to your CRC username and\n"
     printf "        should only be set if the two are different.\n"
     printf "  -c  OPTIONAL: The queuing system and number of cores required. Arguments\n"
-    printf "        should be wrapped in quotes. Default is smp 16.\n"
-    printf "  -q  OPTIONAL: Queuing system you wish to use. Default is long, the other\n"
-    printf "        option is debug.\n\n"
-    printf "EXAMPLE: groupSubmit -i testFile -c \"mpi-24 24\" -r\n\n"
+    printf "        should be wrapped in quotes. Defaults to \"smp 16\".\n\n"
+    printf "EXAMPLE: groupSubmit -i testFile.omd -c \"mpi-24 24\"\n\n"
 }
 
 printCheckQuotaScript()     #@ DESCRIPTION: Print script used to notify user of potential memory overflow
-{                           #@ USAGE: printCheckQuotaScript
+{                           #@ USAGE: printCheckQuotaScript [User|Group]
     printf "#!/bin/bash\n"
-    printf "#$ -N checkQuota\n"
+    printf "#$ -N check%sQuota\n" $1
     printf "#$ -M %s@nd.edu\n" $username
     printf "#$ -m abe\n"
     printf "#$ -pe smp 1\n\n"
@@ -40,7 +45,7 @@ printCheckQuotaScript()     #@ DESCRIPTION: Print script used to notify user of 
     printf "  then\n"
     printf "    ## Send DANGER if within 1%% of available quota\n"
     printf "    mail -s 'DANGER' %s@nd.edu <<< 'You have used 99%% of your available quota.'\n" $username
-    printf "    sleepTime=5m\n\n"
+    printf "    sleepTime=15m\n\n"
     printf "  elif [ \$quotaPercentage -ge 95 ]\n"
     printf "  then\n"
     printf "    ## Send WARNING if within 5%% of available quota\n"
@@ -56,7 +61,7 @@ printCheckQuotaScript()     #@ DESCRIPTION: Print script used to notify user of 
     printf "  sleep \${sleepTime:=3h}\n\n"
     printf "  qstatArray=( \$( /opt/sge/bin/lx-amd64/qstat -u %s | tail -n +3 ) )\n" $USER
     printf "  qstatArrayLength=\$( printf \"%%s\\\n\" \${qstatArray[@]} | wc -l )\n\n"
-    printf "  if [ \${qstatArray[2]} == \"checkQuota\" ] && [ \$qstatArrayLength -eq 9 ]\n"
+    printf "  if [ \${qstatArray[2]} == \"check%sQuota\" ] && [ \$qstatArrayLength -eq 9 ]\n" $1
     printf "  then\n"
     printf "    exit 0\n"
     printf "  fi\n"
@@ -88,56 +93,92 @@ printOpenmdSubmissionScript()   #@ DESCRIPTION: Print script used to run the Ope
 
 
 ### Initial Variables / Default Values ###
-useRNEMD=0
-username=$USER
+verbose=0
+queue=long
+username="$USER"
+directory="$PWD"
 
 
 ### Runtime Configuration ###
-while getopts i:u:c:q:rh opt
+while getopts i:s:u:c:dvh opt
 do
     case $opt in
-        i) fileName=$OPTARG ;;
-        u) username=$OPTARG ;;
+        i) fileName="${OPTARG##*/}"
+           if [ "$fileName" != "${OPTARG%/*}" ]
+           then
+               directory="${OPTARG%/*}"
+           fi ;;
+        s) scriptName="$OPTARG" ;;
+        u) username="$OPTARG" ;;
         c) cores="$OPTARG" ;;
-        q) queue=$OPTARG ;;
-        r) useRNEMD=1 ;;
-        h) printHelpMessage && exit 0 ;;
+        d) queue=debug ;;
+        v) verbose=1 ;;
+        h) printHelpMessage && printFatalErrorMessage 0 ;;
     esac
 done
 
 
 ### Main Code ###
-[ ${USER:?Issue finding your CRC username. Set the \$USER variable and try again.} ]
-[ ${fileName:?A filename is required} ]
+[ -d "$directory" ] && cd "$directory" || printFatalErrorMessage 1 "Invalid directory."
+[ "${USER:?Issue finding your CRC username. Set the \$USER variable and try again.}" ]
 
-## If checkQuota script is already running, no need to submit it again ##
-IFS=$'\n'
-array=( $( qstat -u $USER ) )
-IFS=$' \t\n'
+if [ -z "${scriptName:-""}" ]
+then
+    ## User didn't specify a submission script so we'll just make them one ##
+    [ "${fileName:?A filename is required}" ]
 
-for line in "${array[@]}"
-do
-    newArray=( $line )
+    printOpenmdSubmissionScript > openmd_multiple.sh
 
-    if [ "${newArray[2]}" = "checkQuota" ]
+    ## Comment out RNEMD line we aren't running RNEMD ##
+    if ! grep useRNEMD "$fileName" &>/dev/null
     then
-        checkQuota=1
+        IFS=$' =;'
+        useRNEMDArray=( $( grep useRNEMD "$fileName" ) )
+        IFS=$' \t\n'
+
+        if [ ${useRNEMDArray[1]} == 'false' ]
+        then
+            rnemdLine="fsync \${WORK_DIR}\/\${SIM_NAME}.rnemd \&"
+            sed "s/$rnemdLine/#$rnemdLine/g" openmd_multiple.sh > tempFile && mv tempFile openmd_multiple.sh
+        fi
     fi
-done
 
-if [ ${checkQuota:-0} -eq 0 ]
-then
-    printCheckQuotaScript > checkQuota.sh
-    qsub checkQuota.sh
+    scriptName=openmd_multiple.sh
 fi
 
-printOpenmdSubmissionScript > openmd_multiple.sh
-
-## Comment out RNEMD line if specified ##
-if [ $useRNEMD -eq 0 ]
+## Submit the jobs if the submission script exists ##
+if [ -f "$scriptName" ]
 then
-    rnemdLine="fsync \${WORK_DIR}\/\${SIM_NAME}.rnemd \&"
-    sed "s/$rnemdLine/#$rnemdLine/g" openmd_multiple.sh > tempFile && mv tempFile openmd_multiple.sh
-fi
+    ## If checkQuota script is already running, no need to submit it again ##
+    IFS=$'\n'
+    qstatArray=( $( qstat -u $USER ) )
+    IFS=$' \t\n'
 
-qsub openmd_multiple.sh
+    for line in "${qstatArray[@]}"
+    do
+        lineArray=( $line )
+
+        if [ "${lineArray[2]}" == "checkUserQuota" ]
+        then
+            checkUserQuota=1
+        elif [ "${lineArray[2]}" == "checkGroupQuota" ]
+        then
+            checkGroupQuota=1
+        fi
+    done
+
+    if [ ${checkUserQuota:-0} -eq 0 ]
+    then
+        printCheckQuotaScript User > checkUserQuota.sh
+        qsub checkUserQuota.sh
+    elif [ ${checkGroupQuota:-0} -eq 0 ]
+    then
+        printCheckQuotaScript Group > checkGroupQuota.sh
+        qsub checkGroupQuota.sh
+    fi
+
+    qsub "$scriptName"
+
+else
+    printFatalErrorMessage 2 "The scriptname provided does not exist."
+fi
