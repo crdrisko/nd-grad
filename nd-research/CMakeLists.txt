@@ -62,7 +62,7 @@ if (nd-research_build_tests)
 
     if (NOT ${GTest_FOUND})
         ## If GTest isn't installed or can't be found, download it from github ##
-        nd-research_ExternalDownload(PROJECT googletest
+        ND_RESEARCH_ExternalDownload(PROJECT googletest
                                      REPOSITORY "https://github.com/google/googletest.git")
 
         set(GTEST_LIBRARIES gtest)

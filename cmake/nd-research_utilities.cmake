@@ -1,7 +1,7 @@
 ### Functions ###
 
 ## Function to find and download external projects from Github ##
-function(nd-research_ExternalDownload)
+function(ND_RESEARCH_ExternalDownload)
     set(options)
     set(one_value_keywords PROJECT
                            REPOSITORY)
@@ -35,7 +35,7 @@ function(nd-research_ExternalDownload)
 endfunction()
 
 ## Function to create a new test from a predefined naming template ##
-function(nd-research_NewTest)
+function(ND_RESEARCH_NewTest)
     set(options)
     set(one_value_keywords TESTNAME
                            INTERIOR_DIRECTORY)
