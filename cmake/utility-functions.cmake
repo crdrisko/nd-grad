@@ -43,11 +43,11 @@ function(newTest)
 
     cmake_parse_arguments(TEST_ARGS "${options}" "${one_value_keywords}" "${multi_value_keywords}" ${ARGN})
 
-    add_executable(test${TEST_ARGS_TESTNAME}Functions
+    add_executable(test${TEST_ARGS_TESTNAME}
                    ${TEST_ARGS_INTERIOR_DIRECTORY}/test${TEST_ARGS_TESTNAME}.cpp ${NEW_SOURCES})
 
-    target_link_libraries(test${TEST_ARGS_TESTNAME}Functions ${GTEST_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
+    target_link_libraries(test${TEST_ARGS_TESTNAME} ${GTEST_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
 
-    gtest_discover_tests(test${TEST_ARGS_TESTNAME}Functions
+    gtest_discover_tests(test${TEST_ARGS_TESTNAME}
                          WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/${TEST_ARGS_INTERIOR_DIRECTORY})
 endfunction()
