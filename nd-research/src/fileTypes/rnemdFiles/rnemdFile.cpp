@@ -116,12 +116,6 @@ namespace ND_Research
             rnemdParameters->report.failTrialCount = std::stoul(superMetaDataVector[36][3]);
 
             rnemdParameters->inferred.dataFieldLabelIndex = 38;
-
-            if (rnemdParameters->block.exchangeMethod == "NIVS")
-            {
-                rnemdParameters->report.failRootCount = std::stoul(superMetaDataVector[37][5]);
-                rnemdParameters->inferred.dataFieldLabelIndex = 39;
-            }
         }
         else
         {
