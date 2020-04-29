@@ -2,7 +2,7 @@
 # Copyright (c) 2020 Cody R. Drisko. All rights reserved.
 # Licensed under the MIT License. See the LICENSE file in the project root for license information.
 #
-# Name: groupSubmit.sh - Version 1.1.2
+# Name: groupSubmit.sh - Version 1.1.3
 # Author: cdrisko
 # Date: 01/20/2020-10:22:05
 # Description: Gezelter group submission script creator and resource monitor
@@ -68,12 +68,13 @@ printCheckQuotaScript()     #@ DESCRIPTION: Print script used to notify user of 
     printf "                exit 0\n"
     printf "            fi ;;\n"
     printf "        18) ## Only one filesystem is being checked ##\n"
-    printf "            if [[ \${qstatArray[2]} == \"checkUserQ\" && \${qstatArray[2]} == \"checkGroup\" ]]\n"
+    printf "            if [[ \${qstatArray[2]} == \"checkUserQ\" && \${qstatArray[11]} == \"checkGroup\" ]]\\\\\n"
+    printf "                || [[ \${qstatArray[11]} == \"checkUserQ\" && \${qstatArray[2]} == \"checkGroup\" ]]\n"
     printf "            then\n"
     printf "                exit 0\n"
     printf "            fi ;;\n"
     printf "    esac\n"
-    printf "done\n"
+    printf "done\n\n"
 }
 
 printOpenmdSubmissionScript()   #@ DESCRIPTION: Print script used to run the OpenMD job

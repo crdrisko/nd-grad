@@ -24,7 +24,7 @@ script:
   - cmake ../. -Dnd-research_build_tests=ON
   - make && sudo make install
   - cd nd-research/test
-  - ctest
+  - ctest --output-on-failure
 
 
 ### Provide Code Coverage Reports ###
@@ -47,7 +47,7 @@ matrix:
         - cmake ../. -Dnd-research_coverage=ON
         - make && sudo make install
         - cd nd-research/test
-        - ctest
+        - ctest --output-on-failure
         - lcov --directory . --capture --output-file coverage.info
         - lcov --remove coverage.info '*gtest*' '*utils-api*' '*cpp-units*' '*/test/*' '/usr/*' --output-file coverage.info
         - coveralls -r ../../../. -l coverage.info -n
