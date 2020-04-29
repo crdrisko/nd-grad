@@ -10,64 +10,21 @@
 #include <memory>
 #include <vector>
 
-#include "../include/rnemdRegion.hpp"
+#include "rnemdRegion.hpp"
 
 using namespace PhysicalQuantities;
 using namespace PhysicalQuantities::Literals;
 
-namespace OpenMD::RNEMD
+namespace ND_Research::RNEMDRegionSplitting
 {
-    class RNEMDRegion::RNEMDRegionImpl
+    RNEMDRegion::RNEMDRegion(const RNEMDFile& RNEMDFile) : rnemdFile{RNEMDFile}
     {
-    private:
-        int lowerIndexOfRegion, upperIndexOfRegion;
-        int lowerIndexOfFirstRegion {}, upperIndexOfFirstRegion {};
-
-        std::vector<Length> regionBounds;
-
-        RNEMDParametersPtr rnemdParameters { std::make_shared<RNEMDParameters>() };
-        RNEMDDataPtr nonRegionSpecificData { std::make_shared<RNEMDData>() };
-        std::vector<RNEMDDataPtr> regionSpecificData;
-
-        void parseWrappedZSelections();
-        void setRNEMDRegionIndicies(int region);
-
-        template<typename T>
-        std::vector<T> regionSlicer(const std::vector<T>& PhysicalQuantity);
-
-        Length convertWrappedZ_to_z(const Length& wrapped_z) const
-        {
-            return (rnemdParameters->inferred->boxSize / 2.0_) + wrapped_z;
-        }
-
-        int boundFinder(const Length& regionBound) const
-        {
-            return std::upper_bound(nonRegionSpecificData->rnemdAxis.begin(), nonRegionSpecificData->rnemdAxis.end(),
-                (regionBound - nonRegionSpecificData->rnemdAxis[0])) - nonRegionSpecificData->rnemdAxis.begin();
-        }
-
-        void makeFirstRegionContinuous()
-        {
-            for (auto& z : regionSpecificData[0]->rnemdAxis)
-                if (z > regionSpecificData[0]->rnemdAxis.back())
-                    z -= rnemdParameters->inferred->boxSize;
-        }
-
-    public:
-        explicit RNEMDRegionImpl(const RNEMDRegion& rnemdRegion);
-
-        std::vector<RNEMDDataPtr> getRegionSpecificData() const { return regionSpecificData; }
-    };
-
-
-    RNEMDRegion::RNEMDRegionImpl::RNEMDRegionImpl(const RNEMDRegion& rnemdRegion)
-    {
-        rnemdParameters = rnemdRegion.rnemdFile->getRNEMDParameters();
-        nonRegionSpecificData = rnemdRegion.rnemdFile->getAllDataFromFile();
+        rnemdParameters = rnemdFile.getRNEMDParameters();
+        nonRegionSpecificData = rnemdFile.getAllDataFromFile();
 
         parseWrappedZSelections();
 
-        for (int region {1}; region <= rnemdParameters->inferred->numberOfRegions; ++region)
+        for (int region {1}; region <= rnemdParameters->inferred.numberOfRegions; ++region)
         {
             setRNEMDRegionIndicies(region);
 
@@ -96,24 +53,24 @@ namespace OpenMD::RNEMD
     }
 
 
-    void RNEMDRegion::RNEMDRegionImpl::parseWrappedZSelections()
+    void RNEMDRegion::parseWrappedZSelections()
     {
         regionBounds.push_back(0.0_Ang);
 
-        if (rnemdParameters->inferred->hasSelectionB)
-            regionBounds.push_back(convertWrappedZ_to_z(rnemdParameters->block->selectionB[1]));
+        if (rnemdParameters->inferred.hasSelectionB)
+            regionBounds.push_back(convertWrappedZ_to_z(rnemdParameters->block.selectionB[1]));
 
-        regionBounds.push_back(convertWrappedZ_to_z(rnemdParameters->block->selectionA[0]));
-        regionBounds.push_back(convertWrappedZ_to_z(rnemdParameters->block->selectionA[1]));
+        regionBounds.push_back(convertWrappedZ_to_z(rnemdParameters->block.selectionA[0]));
+        regionBounds.push_back(convertWrappedZ_to_z(rnemdParameters->block.selectionA[1]));
 
-        if (rnemdParameters->inferred->hasSelectionB)
-            regionBounds.push_back(convertWrappedZ_to_z(rnemdParameters->block->selectionB[0]));
+        if (rnemdParameters->inferred.hasSelectionB)
+            regionBounds.push_back(convertWrappedZ_to_z(rnemdParameters->block.selectionB[0]));
 
-        regionBounds.push_back(rnemdParameters->inferred->boxSize);
+        regionBounds.push_back(rnemdParameters->inferred.boxSize);
     }
 
 
-    void RNEMDRegion::RNEMDRegionImpl::setRNEMDRegionIndicies(int region)
+    void RNEMDRegion::setRNEMDRegionIndicies(int region)
     {
         lowerIndexOfRegion = boundFinder(regionBounds[region - 1]);
         upperIndexOfRegion = boundFinder(regionBounds[region]);
@@ -125,14 +82,14 @@ namespace OpenMD::RNEMD
             lowerIndexOfFirstRegion = lowerIndexOfRegion;
             upperIndexOfFirstRegion = upperIndexOfRegion;
 
-            lowerIndexOfRegion = boundFinder(regionBounds[rnemdParameters->inferred->numberOfRegions]);
-            upperIndexOfRegion = boundFinder(regionBounds[rnemdParameters->inferred->numberOfRegions + 1]);
+            lowerIndexOfRegion = boundFinder(regionBounds[rnemdParameters->inferred.numberOfRegions]);
+            upperIndexOfRegion = boundFinder(regionBounds[rnemdParameters->inferred.numberOfRegions + 1]);
         }
     }
 
 
     template<typename T>
-    std::vector<T> RNEMDRegion::RNEMDRegionImpl::regionSlicer(const std::vector<T>& PhysicalQuantity)
+    std::vector<T> RNEMDRegion::regionSlicer(const std::vector<T>& PhysicalQuantity)
     {
         if ( PhysicalQuantity.empty() )
             return PhysicalQuantity;
@@ -168,12 +125,4 @@ namespace OpenMD::RNEMD
 
         return splitPhysicalQuantity;
     }
-
-
-    RNEMDRegion::RNEMDRegion(const RNEMDFilePtr& RNEMDFile) : rnemdFile{RNEMDFile},
-        p_Impl{ std::make_unique<RNEMDRegionImpl>(*this) } {}
-
-    RNEMDRegion::~RNEMDRegion() = default;
-
-    std::vector<RNEMDDataPtr> RNEMDRegion::getRegionSpecificData() const { return p_Impl->getRegionSpecificData(); }
 }

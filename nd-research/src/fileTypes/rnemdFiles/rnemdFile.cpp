@@ -119,7 +119,7 @@ namespace ND_Research
 
             if (rnemdParameters->block.exchangeMethod == "NIVS")
             {
-                rnemdParameters->report.failRootCount = std::stoul(superMetaDataVector[37][3]);
+                rnemdParameters->report.failRootCount = std::stoul(superMetaDataVector[37][5]);
                 rnemdParameters->inferred.dataFieldLabelIndex = 39;
             }
         }
@@ -132,7 +132,7 @@ namespace ND_Research
 
             if (rnemdParameters->block.exchangeMethod == "NIVS")
             {
-                rnemdParameters->report.failRootCount = std::stoul(superMetaDataVector[34][3]);
+                rnemdParameters->report.failRootCount = std::stoul(superMetaDataVector[34][5]);
                 rnemdParameters->inferred.dataFieldLabelIndex = 36;
             }
         }

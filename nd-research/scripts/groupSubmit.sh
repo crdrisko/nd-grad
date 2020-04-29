@@ -13,8 +13,7 @@ source errorHandling
 
 printHelpMessage()      #@ DESCRIPTION: Print the groupSubmit program's help message
 {                       #@ USAGE: printHelpMessage
-    printf "\nUSAGE: groupSubmit [-hvd] [-i fileName] [-s scriptName] [-u userName]\n"
-    printf "    [-c cores]\n\n"
+    printf "\nUSAGE: groupSubmit [-hvd] [-i fileName] [-s scriptName] [-u userName] [-c cores]\n\n"
     printf "  -h  Prints help information about the groupSubmit program.\n"
     printf "  -v  Verbose mode. Defaults to false/off.\n"
     printf "  -d  Submit jobs to the debug queue. Defaults to false/off.\n\n"

@@ -17,9 +17,9 @@
 #include <utils-api/errors.hpp>
 #include <utils-api/strings.hpp>
 
-#include "../include/xyzFile.hpp"
+#include "xyzFile.hpp"
 
-using namespace OpenMD::RNEMD;
+using namespace ND_Research::ShiftXYZ;
 
 void printHelpMessageAndExit();
 
