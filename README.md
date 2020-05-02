@@ -1,6 +1,6 @@
 # Books-Practice
 
-All the examples from the various books on coding languages I have been learning. These include C++, Python, Bash, CUDA C/C++, PHP, and MySQL.
+All the examples/exercises from the various books on the programming languages I have been learning. These include C++, Python, Bash, CUDA C/C++, PHP, and MySQL.
 
 ## Bash
 
