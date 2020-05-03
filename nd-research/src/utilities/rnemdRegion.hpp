@@ -12,9 +12,11 @@
 #include <memory>
 #include <vector>
 
-#include "../../fileTypes/rnemdFiles/rnemdFile.hpp"
+#include <cpp-units/physicalQuantities.hpp>
 
-namespace ND_Research::RNEMDRegionSplitting
+#include "../fileTypes/rnemdFiles/rnemdFile.hpp"
+
+namespace ND_Research
 {
     class RNEMDRegion
     {
@@ -24,7 +26,7 @@ namespace ND_Research::RNEMDRegionSplitting
         int lowerIndexOfRegion, upperIndexOfRegion;
         int lowerIndexOfFirstRegion {}, upperIndexOfFirstRegion {};
 
-        std::vector<Length> regionBounds;
+        std::vector<PhysicalQuantities::Length> regionBounds;
 
         RNEMDDataPtr nonRegionSpecificData { std::make_shared<RNEMDData>() };
         RNEMDParametersPtr rnemdParameters { std::make_shared<RNEMDParameters>() };
@@ -37,12 +39,12 @@ namespace ND_Research::RNEMDRegionSplitting
         template<typename T>
         std::vector<T> regionSlicer(const std::vector<T>& PhysicalQuantity);
 
-        Length convertWrappedZ_to_z(const Length& wrapped_z) const
+        PhysicalQuantities::Length convertWrappedZ_to_z(const PhysicalQuantities::Length& wrapped_z) const
         {
             return (rnemdParameters->inferred.boxSize / 2.0_) + wrapped_z;
         }
 
-        int boundFinder(const Length& regionBound) const
+        int boundFinder(const PhysicalQuantities::Length& regionBound) const
         {
             return std::upper_bound(nonRegionSpecificData->rnemdAxis.begin(), nonRegionSpecificData->rnemdAxis.end(),
                 (regionBound - nonRegionSpecificData->rnemdAxis[0])) - nonRegionSpecificData->rnemdAxis.begin();

@@ -16,7 +16,7 @@ from utilityFunctions import getXYData
 ### Main Code ###
 n_silica = 1.4607                       ## Refractive index of fused silica @ 532 nm
 normalizationConstant = 10
-pathToFiles = "../Materials/Semi-Conductors/MoS2/dataFiles/"
+pathToFiles = "../samples/semi-conductors/MoS2/dataFiles/"
 
 ## Plotting ##
 fig, ax1 = plt.subplots()

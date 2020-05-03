@@ -15,7 +15,7 @@
 using namespace PhysicalQuantities;
 using namespace PhysicalQuantities::Literals;
 
-namespace ND_Research::RNEMDRegionSplitting
+namespace ND_Research
 {
     RNEMDRegion::RNEMDRegion(const RNEMDFile& RNEMDFile) : rnemdFile{RNEMDFile}
     {

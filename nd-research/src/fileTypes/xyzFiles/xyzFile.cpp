@@ -65,7 +65,10 @@ namespace ND_Research
 
     void XYZFile::parseInputXYZFile(std::size_t currentFrame)
     {
-        std::size_t frameStartIndex { (2 * currentFrame) + xyzParameters->frame[currentFrame].numberOfAtoms };
+        std::size_t frameStartIndex {};
+
+        if (currentFrame != 0)
+            frameStartIndex = currentFrame * (2 + xyzParameters->frame[currentFrame - 1].numberOfAtoms);
 
         xyzParameters->frame[currentFrame].numberOfAtoms = std::stoul(superDataVector[frameStartIndex][0]);
         xyzParameters->frame[currentFrame].runTime = Time(superDataVector[frameStartIndex + 1][0]);
