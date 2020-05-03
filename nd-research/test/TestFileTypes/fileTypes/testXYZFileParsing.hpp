@@ -50,7 +50,7 @@ namespace ND_Research
     {
         ASSERT_DEATH(
         {
-            XYZFile xyzFile {"testFileTypeParsing.cpp"};
+            XYZFile xyzFile {"exceptionSamples/incorrectXYZFile.xyz"};
         }, "ND-Research Fatal Error:\n\tCould not convert a string value from the file into parameter type using:");
     }
 

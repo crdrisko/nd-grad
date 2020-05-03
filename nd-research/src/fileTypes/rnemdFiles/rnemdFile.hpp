@@ -28,9 +28,9 @@ namespace ND_Research
         std::vector< std::vector<std::string> > superDataVector { getSuperDataVector() };
         std::vector< std::vector<std::string> > superMetaDataVector { getSuperMetaDataVector(" \t\n\";") };
 
+        void setRNEMDBlockParameters(std::size_t& row);
+        void setRNEMDReportParameters(std::size_t& row);
         void setRNEMDData();
-        void setRNEMDBlockParameters();
-        void setRNEMDReportParameters();
         void setRNEMDInferredParameters();
 
         int findDataFieldStartLocation(std::string_view dataFieldLabel);

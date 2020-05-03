@@ -130,7 +130,7 @@ namespace ND_Research
     {
         ASSERT_DEATH(
         {
-            RNEMDFile rnemdFile {"../../samples/angularMomentum.rnemd"};
+            RNEMDFile rnemdFile {"exceptionSamples/incorrectRNEMDFile.rnemd"};
         }, "ND-Research Fatal Error:\n\tCould not convert a string value from the file into parameter type using:");
     }
 
@@ -154,17 +154,17 @@ namespace ND_Research
 
         for (std::size_t i {}; i < actualData[0].size(); ++i)
         {
-            ASSERT_DOUBLE_EQ( rnemdData->rnemdAxis[i].getMagnitude(), std::stold(actualData[i][0]) );
-            ASSERT_DOUBLE_EQ( rnemdData->temperature[i].getMagnitude(), std::stold(actualData[i][1]) );
-            ASSERT_DOUBLE_EQ( rnemdData->density[i].getMagnitude(), std::stold(actualData[i][5]) );
-            ASSERT_DOUBLE_EQ( rnemdData->activity[0][i].getMagnitude(), std::stold(actualData[i][6]) );
-            ASSERT_DOUBLE_EQ( rnemdData->activity[1][i].getMagnitude(), std::stold(actualData[i][7]) );
-            ASSERT_DOUBLE_EQ( rnemdData->electricPotential[i].getMagnitude(), std::stold(actualData[i][11]) );
+            assertThat(rnemdData->rnemdAxis[i].getMagnitude()).hasAValueNear( std::stold(actualData[i][0]) );
+            assertThat(rnemdData->temperature[i].getMagnitude()).hasAValueNear( std::stold(actualData[i][1]) );
+            assertThat(rnemdData->density[i].getMagnitude()).hasAValueNear( std::stold(actualData[i][5]) );
+            assertThat(rnemdData->activity[0][i].getMagnitude()).hasAValueNear( std::stold(actualData[i][6]) );
+            assertThat(rnemdData->activity[1][i].getMagnitude()).hasAValueNear( std::stold(actualData[i][7]) );
+            assertThat(rnemdData->electricPotential[i].getMagnitude()).hasAValueNear( std::stold(actualData[i][11]) );
 
             for (std::size_t j {}; j < 3; ++j)
             {
-                ASSERT_DOUBLE_EQ( rnemdData->velocity[j][i].getMagnitude(), std::stold(actualData[i][2 + j]) );
-                ASSERT_DOUBLE_EQ( rnemdData->electricField[j][i].getMagnitude(), std::stold(actualData[i][8 + j]) );
+                assertThat(rnemdData->velocity[j][i].getMagnitude()).hasAValueNear( std::stold(actualData[i][2 + j]) );
+                assertThat(rnemdData->electricField[j][i].getMagnitude()).hasAValueNear( std::stold(actualData[i][8 + j]) );
             }
         }
     }

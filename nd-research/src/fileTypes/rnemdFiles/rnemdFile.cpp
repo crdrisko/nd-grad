@@ -32,8 +32,11 @@ namespace ND_Research
         {
             try
             {
-                setRNEMDBlockParameters();
-                setRNEMDReportParameters();
+                // Serves as the current row we are parsing in the rnemd file
+                std::size_t row {2};
+
+                setRNEMDBlockParameters(row);
+                setRNEMDReportParameters(row);
                 setRNEMDData();
                 setRNEMDInferredParameters();
             }
@@ -52,28 +55,49 @@ namespace ND_Research
     }
 
 
-    void RNEMDFile::setRNEMDBlockParameters()
+    void RNEMDFile::setRNEMDBlockParameters(std::size_t& row)
     {
-        rnemdParameters->block.exchangeMethod = superMetaDataVector[2][3];
-        rnemdParameters->block.fluxType = superMetaDataVector[3][3];
-        rnemdParameters->block.privilegedAxis = superMetaDataVector[4][3];
-        rnemdParameters->block.exchangeTime = Time(std::stold(superMetaDataVector[5][3]));
+        rnemdParameters->block.exchangeMethod = superMetaDataVector[row++][3];
+        rnemdParameters->block.fluxType = superMetaDataVector[row++][3];
 
-        for (std::size_t i {4}; i < superMetaDataVector[6].size(); i +=2)
-            rnemdParameters->block.objectSelection.push_back(superMetaDataVector[6][i]);
+        // With non-periodic simulations, no privilegeAxis is printed; "r" will serve as a good placeholder
+        if (superMetaDataVector[row][1] == "privilegedAxis")
+            rnemdParameters->block.privilegedAxis = superMetaDataVector[row++][3];
+        else
+            rnemdParameters->block.privilegedAxis = "r";
 
-        rnemdParameters->block.selectionA[0] = Length(std::stold(superMetaDataVector[7][6]));
-        rnemdParameters->block.selectionA[1] = Length(std::stold(superMetaDataVector[7][10]));
+        rnemdParameters->block.exchangeTime = Time(std::stold(superMetaDataVector[row++][3]));
 
-        if (superMetaDataVector[8][4] != "none")
+        std::size_t selectionSize { superMetaDataVector[row].size() };
+
+        for (std::size_t i {4}; i < selectionSize; i +=2)
+            rnemdParameters->block.objectSelection.push_back(superMetaDataVector[row][i]);
+
+        ++row;
+
+        if (rnemdParameters->block.privilegedAxis != "r")
         {
-            rnemdParameters->inferred.hasSelectionB = true;
-            rnemdParameters->block.selectionB[0] = Length(std::stold(superMetaDataVector[8][6]));
-            rnemdParameters->block.selectionB[1] = Length(std::stold(superMetaDataVector[8][10]));
+            rnemdParameters->block.selectionA[0] = Length(std::stold(superMetaDataVector[row][6]));
+            rnemdParameters->block.selectionA[1] = Length(std::stold(superMetaDataVector[row][10]));
+
+            ++row;
+
+            if (superMetaDataVector[row][4] != "none")
+            {
+                rnemdParameters->inferred.hasSelectionB = true;
+                rnemdParameters->block.selectionB[0] = Length(std::stold(superMetaDataVector[row][6]));
+                rnemdParameters->block.selectionB[1] = Length(std::stold(superMetaDataVector[row][10]));
+            }
+        }
+        else
+        {
+            rnemdParameters->block.selectionA[0] = Length(std::stold(superMetaDataVector[row++][6]));
         }
 
-        for (std::size_t i {4}; i < superMetaDataVector[6].size(); i +=2)
-            rnemdParameters->block.outputSelection.push_back(superMetaDataVector[9][i]);
+        ++row;
+
+        for (std::size_t i {4}; i < selectionSize; i +=2)
+            rnemdParameters->block.outputSelection.push_back(superMetaDataVector[row][i]);
 
         // The order of outputSelection is reversed before the RNEMD procedure
         std::reverse(rnemdParameters->block.outputSelection.begin(),
@@ -81,53 +105,61 @@ namespace ND_Research
     }
 
 
-    void RNEMDFile::setRNEMDReportParameters()
+    void RNEMDFile::setRNEMDReportParameters(std::size_t& row)
     {
-        rnemdParameters->report.runningTime = Time(superMetaDataVector[13][4]);
+        // Account for the lines between block and report sections
+        row += 4;
 
-        rnemdParameters->report.kineticFlux = MolarEnergyFlux(superMetaDataVector[15][3]);
-        rnemdParameters->report.kineticTarget = MolarEnergy(superMetaDataVector[20][3]);
-        rnemdParameters->report.kineticExchange = MolarEnergy(superMetaDataVector[24][3]);
-        rnemdParameters->report.Jz = MolarEnergyFlux(superMetaDataVector[28][3]);
+        /* Since the first sections of the rnemd report parameters are consistent between flux types,
+            we will use indicies relative to the row set by the block parameters without updating its value */
+        rnemdParameters->report.runningTime = Time(superMetaDataVector[row][4]);
 
-        for (int i {}; i <=2; ++i)
+        rnemdParameters->report.kineticFlux = MolarEnergyFlux(superMetaDataVector[row + 2][3]);
+        rnemdParameters->report.kineticTarget = MolarEnergy(superMetaDataVector[row + 7][3]);
+        rnemdParameters->report.kineticExchange = MolarEnergy(superMetaDataVector[row + 11][3]);
+        rnemdParameters->report.Jz = MolarEnergyFlux(superMetaDataVector[row + 15][3]);
+
+        for (int i {}; i < 3; ++i)
         {
-            rnemdParameters->report.momentumFlux[i] = MomentumFlux(superMetaDataVector[16][i + 4]);
-            rnemdParameters->report.momentumTarget[i] = Momentum(superMetaDataVector[21][i + 4]);
-            rnemdParameters->report.momentumExchange[i] = Momentum(superMetaDataVector[25][i + 4]);
-            rnemdParameters->report.JzP[i] = MomentumFlux(superMetaDataVector[29][i + 4]);
+            rnemdParameters->report.momentumFlux[i] = MomentumFlux(superMetaDataVector[row + 3][i + 4]);
+            rnemdParameters->report.momentumTarget[i] = Momentum(superMetaDataVector[row + 8][i + 4]);
+            rnemdParameters->report.momentumExchange[i] = Momentum(superMetaDataVector[row + 12][i + 4]);
+            rnemdParameters->report.JzP[i] = MomentumFlux(superMetaDataVector[row + 16][i + 4]);
 
-            rnemdParameters->report.angularMomentumFlux[i] = MomentumFlux(superMetaDataVector[17][i + 5]);
-            rnemdParameters->report.angularMomentumTarget[i] = Momentum(superMetaDataVector[22][i + 5]);
-            rnemdParameters->report.angularMomentumExchange[i] = Momentum(superMetaDataVector[26][i + 5]);
-            rnemdParameters->report.JzL[i] = MomentumFlux(superMetaDataVector[30][i + 5]);
+            rnemdParameters->report.angularMomentumFlux[i] = MomentumFlux(superMetaDataVector[row + 4][i + 5]);
+            rnemdParameters->report.angularMomentumTarget[i] = Momentum(superMetaDataVector[row + 9][i + 5]);
+            rnemdParameters->report.angularMomentumExchange[i] = Momentum(superMetaDataVector[row + 13][i + 5]);
+            rnemdParameters->report.JzL[i] = MomentumFlux(superMetaDataVector[row + 17][i + 5]);
         }
 
-        rnemdParameters->report.currentDensity = CurrentDensity(superMetaDataVector[18][4]);
+        rnemdParameters->report.currentDensity = CurrentDensity(superMetaDataVector[row + 5][4]);
+
+        // Now we can update the value of row and repeat the process
+        row += 17;
 
         if ( (rnemdParameters->block.fluxType == "Single") || (rnemdParameters->block.fluxType == "Current")
                 || (rnemdParameters->block.fluxType == "KE+Current") )
         {
-            rnemdParameters->report.Jc_total = CurrentDensity(superMetaDataVector[31][5]);
-            rnemdParameters->report.Jc_cation = CurrentDensity(superMetaDataVector[32][5]);
-            rnemdParameters->report.Jc_anion = CurrentDensity(superMetaDataVector[33][5]);
+            rnemdParameters->report.Jc_total = CurrentDensity(superMetaDataVector[row + 1][5]);
+            rnemdParameters->report.Jc_cation = CurrentDensity(superMetaDataVector[row + 2][5]);
+            rnemdParameters->report.Jc_anion = CurrentDensity(superMetaDataVector[row + 3][5]);
 
-            rnemdParameters->report.trialCount = std::stoul(superMetaDataVector[35][3]);
-            rnemdParameters->report.failTrialCount = std::stoul(superMetaDataVector[36][3]);
+            rnemdParameters->report.trialCount = std::stoul(superMetaDataVector[row + 5][3]);
+            rnemdParameters->report.failTrialCount = std::stoul(superMetaDataVector[row + 6][3]);
 
-            rnemdParameters->inferred.dataFieldLabelIndex = 38;
+            rnemdParameters->inferred.dataFieldLabelIndex = row + 8;
         }
         else
         {
-            rnemdParameters->report.trialCount = std::stoul(superMetaDataVector[32][3]);
-            rnemdParameters->report.failTrialCount = std::stoul(superMetaDataVector[33][3]);
+            rnemdParameters->report.trialCount = std::stoul(superMetaDataVector[row + 2][3]);
+            rnemdParameters->report.failTrialCount = std::stoul(superMetaDataVector[row + 3][3]);
 
-            rnemdParameters->inferred.dataFieldLabelIndex = 35;
+            rnemdParameters->inferred.dataFieldLabelIndex = row + 5;
 
             if (rnemdParameters->block.exchangeMethod == "NIVS")
             {
-                rnemdParameters->report.failRootCount = std::stoul(superMetaDataVector[34][5]);
-                rnemdParameters->inferred.dataFieldLabelIndex = 36;
+                rnemdParameters->report.failRootCount = std::stoul(superMetaDataVector[row + 4][5]);
+                rnemdParameters->inferred.dataFieldLabelIndex = row + 6;
             }
         }
     }
@@ -135,13 +167,26 @@ namespace ND_Research
 
     void RNEMDFile::setRNEMDInferredParameters()
     {
-        rnemdParameters->inferred.slabWidth
-            = rnemdParameters->block.selectionA[1] - rnemdParameters->block.selectionA[0];
+        if (rnemdParameters->block.privilegedAxis != "r")
+        {
+            rnemdParameters->inferred.slabWidth
+                = rnemdParameters->block.selectionA[1] - rnemdParameters->block.selectionA[0];
 
-        rnemdParameters->inferred.numberOfRegions = (rnemdParameters->block.fluxType == "Single") ? 2 : 4;
+            rnemdParameters->inferred.numberOfRegions
+                = (rnemdParameters->block.fluxType == "Single") ? 2 : 4;
 
-        rnemdParameters->inferred.boxSize = allDataFromFile->rnemdAxis[allDataFromFile->rnemdAxis.size() - 1]
-            + allDataFromFile->rnemdAxis[0];
+            rnemdParameters->inferred.boxSize
+                = allDataFromFile->rnemdAxis.back() + allDataFromFile->rnemdAxis.front();
+        }
+        else
+        {
+            rnemdParameters->inferred.slabWidth = rnemdParameters->block.selectionA[0];
+            rnemdParameters->inferred.numberOfRegions = 2;
+            rnemdParameters->inferred.hasSelectionB = false;
+
+            rnemdParameters->inferred.boxSize
+                = allDataFromFile->radius.back() + allDataFromFile->radius.front();
+        }
 
         rnemdParameters->inferred.percentageOfKicksFailed
             = static_cast<double>(rnemdParameters->report.failTrialCount)
@@ -202,11 +247,11 @@ namespace ND_Research
                     allDataFromFile->temperature = parseDataFromFile<Temperature>(index);
 
                 else if (pair.first == allDataFromFile->dataLabels[3])
-                    for (int i {}; i <= 2 ; ++i)
+                    for (int i {}; i < 3 ; ++i)
                         allDataFromFile->velocity[i] = (parseDataFromFile<Velocity>(index + i));
 
                 else if (pair.first == allDataFromFile->dataLabels[4])
-                    for (int i {}; i <= 2 ; ++i)
+                    for (int i {}; i < 3 ; ++i)
                         allDataFromFile->angularVelocity[i] = (parseDataFromFile<Velocity>(index + i));
 
                 else if (pair.first == allDataFromFile->dataLabels[5])
@@ -227,7 +272,7 @@ namespace ND_Research
                 }
 
                 else if (pair.first == allDataFromFile->dataLabels[7])
-                    for (int i {}; i <= 2 ; ++i)
+                    for (int i {}; i < 3 ; ++i)
                         allDataFromFile->electricField[i] = (parseDataFromFile<ElectricField>(index + i));
 
                 else if (pair.first == allDataFromFile->dataLabels[8])

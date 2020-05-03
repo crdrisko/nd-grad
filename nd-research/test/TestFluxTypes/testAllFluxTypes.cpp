@@ -9,6 +9,7 @@
 #include <gtest/gtest.h>
 
 #include "fluxTypes/testKE_RNEMD.hpp"
+#include "fluxTypes/testLx_RNEMD.hpp"
 #include "fluxTypes/testNIVS_RNEMD.hpp"
 #include "fluxTypes/testPx_RNEMD.hpp"
 #include "fluxTypes/testSingle_RNEMD.hpp"

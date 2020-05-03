@@ -128,12 +128,12 @@ namespace ND_Research
 
         for (std::size_t i {}; i < actualData[0].size(); ++i)
         {
-            ASSERT_DOUBLE_EQ( rnemdData->rnemdAxis[i].getMagnitude(), std::stold(actualData[i][0]) );
-            ASSERT_DOUBLE_EQ( rnemdData->temperature[i].getMagnitude(), std::stold(actualData[i][1]) );
-            ASSERT_DOUBLE_EQ( rnemdData->density[i].getMagnitude(), std::stold(actualData[i][5]) );
+            assertThat(rnemdData->rnemdAxis[i].getMagnitude()).hasAValueNear( std::stold(actualData[i][0]) );
+            assertThat(rnemdData->temperature[i].getMagnitude()).hasAValueNear( std::stold(actualData[i][1]) );
+            assertThat(rnemdData->density[i].getMagnitude()).hasAValueNear( std::stold(actualData[i][5]) );
 
             for (std::size_t j {}; j < 3; ++j)
-                ASSERT_DOUBLE_EQ( rnemdData->velocity[j][i].getMagnitude(), std::stold(actualData[i][2 + j]) );
+                assertThat(rnemdData->velocity[j][i].getMagnitude()).hasAValueNear( std::stold(actualData[i][2 + j]) );
         }
     }
 }

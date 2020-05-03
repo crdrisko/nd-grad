@@ -1,13 +1,13 @@
 // Copyright (c) 2020 Cody R. Drisko. All rights reserved.
 // Licensed under the MIT License. See the LICENSE file in the project root for license information.
 //
-// Name: testNIVS_RNEMD.hpp - Version 1.0.0
+// Name: testLx_RNEMD.hpp - Version 1.0.0
 // Author: crdrisko
-// Date: 04/29/2020-08:34:24
-// Description: Provides ~100% unit test coverage over all parameter parsing functions for the NIVS method
+// Date: 04/29/2020-08:36:59
+// Description: Provides ~100% unit test coverage over all parameter parsing functions for FluxType = Lx
 
-#ifndef ND_RESEARCH_TESTNIVS_RNEMD_HPP
-#define ND_RESEARCH_TESTNIVS_RNEMD_HPP
+#ifndef ND_RESEARCH_TESTLX_RNEMD_HPP
+#define ND_RESEARCH_TESTLX_RNEMD_HPP
 
 #include <cstddef>
 #include <string>
@@ -21,47 +21,43 @@
 
 namespace ND_Research
 {
-    GTEST_TEST(testNIVS_RNEMD, correctBlockParameters)
+    GTEST_TEST(testLx_RNEMD, correctBlockParameters)
     {
-        RNEMDFile rnemdFile {"../../samples/nivs.rnemd"};
+        RNEMDFile rnemdFile {"../../samples/angularMomentum.rnemd"};
         RNEMDParametersPtr rnemdParameters {rnemdFile.getRNEMDParameters()};
 
-        assertThat(rnemdParameters->block.exchangeMethod).hasAValueOf("NIVS");
-        assertThat(rnemdParameters->block.fluxType).hasAValueOf("KE");
-        assertThat(rnemdParameters->block.privilegedAxis).hasAValueOf("x");
+        assertThat(rnemdParameters->block.exchangeMethod).hasAValueOf("VSS");
+        assertThat(rnemdParameters->block.fluxType).hasAValueOf("Lx");
+        assertThat(rnemdParameters->block.privilegedAxis).hasAValueOf("r");
         assertThat(rnemdParameters->block.exchangeTime.getMagnitude()).hasAValueNear(2.0);
 
         assertThat(rnemdParameters->block.objectSelection[0]).hasAValueOf("SPCE_RB_0");
         assertThat(rnemdParameters->block.objectSelection[1]).hasAValueOf("Na+");
         assertThat(rnemdParameters->block.objectSelection[2]).hasAValueOf("Cl-");
 
-        assertThat(rnemdParameters->block.selectionA[0].getMagnitude()).hasAValueNear(-8.0);
-        assertThat(rnemdParameters->block.selectionA[1].getMagnitude()).hasAValueNear(8.0);
-
-        assertThat(rnemdParameters->block.selectionB[0].getMagnitude()).hasAValueNear(4.24611);
-        assertThat(rnemdParameters->block.selectionB[1].getMagnitude()).hasAValueNear(-4.24611);
+        assertThat(rnemdParameters->block.selectionA[0].getMagnitude()).hasAValueNear(11.9867);
 
         assertThat(rnemdParameters->block.outputSelection[0]).hasAValueOf("Cl-");
         assertThat(rnemdParameters->block.outputSelection[1]).hasAValueOf("Na+");
         assertThat(rnemdParameters->block.outputSelection[2]).hasAValueOf("SPCE_RB_0");
     }
 
-    GTEST_TEST(testNIVS_RNEMD, correctReportParameters)
+    GTEST_TEST(testLx_RNEMD, correctReportParameters)
     {
-        RNEMDFile rnemdFile {"../../samples/nivs.rnemd"};
+        RNEMDFile rnemdFile {"../../samples/angularMomentum.rnemd"};
         RNEMDParametersPtr rnemdParameters {rnemdFile.getRNEMDParameters()};
 
-        assertThat(rnemdParameters->report.runningTime.getMagnitude()).hasAValueNear(12090.0);
+        assertThat(rnemdParameters->report.runningTime.getMagnitude()).hasAValueNear(36960.0);
 
 
         // Target Fluxes
-        assertThat(rnemdParameters->report.kineticFlux.getMagnitude()).hasAValueNear(100);
+        assertThat(rnemdParameters->report.kineticFlux.getMagnitude()).hasAValueNear(0.0);
 
         assertThat(rnemdParameters->report.momentumFlux[0].getMagnitude()).hasAValueNear(0.0);
         assertThat(rnemdParameters->report.momentumFlux[1].getMagnitude()).hasAValueNear(0.0);
         assertThat(rnemdParameters->report.momentumFlux[2].getMagnitude()).hasAValueNear(0.0);
 
-        assertThat(rnemdParameters->report.angularMomentumFlux[0].getMagnitude()).hasAValueNear(0.0);
+        assertThat(rnemdParameters->report.angularMomentumFlux[0].getMagnitude()).hasAValueNear(100.0);
         assertThat(rnemdParameters->report.angularMomentumFlux[1].getMagnitude()).hasAValueNear(0.0);
         assertThat(rnemdParameters->report.angularMomentumFlux[2].getMagnitude()).hasAValueNear(0.0);
 
@@ -69,13 +65,13 @@ namespace ND_Research
 
 
         // Target One-Time Exchanges
-        assertThat(rnemdParameters->report.kineticTarget.getMagnitude()).hasAValueNear(767832.3);
+        assertThat(rnemdParameters->report.kineticTarget.getMagnitude()).hasAValueNear(0.0);
 
         assertThat(rnemdParameters->report.momentumTarget[0].getMagnitude()).hasAValueNear(0.0);
         assertThat(rnemdParameters->report.momentumTarget[1].getMagnitude()).hasAValueNear(0.0);
         assertThat(rnemdParameters->report.momentumTarget[2].getMagnitude()).hasAValueNear(0.0);
 
-        assertThat(rnemdParameters->report.angularMomentumTarget[0].getMagnitude()).hasAValueNear(0.0);
+        assertThat(rnemdParameters->report.angularMomentumTarget[0].getMagnitude()).hasAValueNear(361108.16);
         assertThat(rnemdParameters->report.angularMomentumTarget[1].getMagnitude()).hasAValueNear(0.0);
         assertThat(rnemdParameters->report.angularMomentumTarget[2].getMagnitude()).hasAValueNear(0.0);
 
@@ -105,38 +101,37 @@ namespace ND_Research
 
 
         // Exchange Statistics
-        assertThat(rnemdParameters->report.trialCount).hasAValueOf(6045);
-        assertThat(rnemdParameters->report.failTrialCount).hasAValueOf(6045);
-
-        // NIVS Root Checking Statistics
-        assertThat(rnemdParameters->report.failRootCount).hasAValueOf(0);
+        assertThat(rnemdParameters->report.trialCount).hasAValueOf(18480);
+        assertThat(rnemdParameters->report.failTrialCount).hasAValueOf(18480);
     }
 
-    GTEST_TEST(testNIVS_RNEMD, correctInferredParameters)
+    GTEST_TEST(testLx_RNEMD, correctInferredParameters)
     {
-        RNEMDFile rnemdFile {"../../samples/nivs.rnemd"};
+        RNEMDFile rnemdFile {"../../samples/angularMomentum.rnemd"};
         RNEMDParametersPtr rnemdParameters {rnemdFile.getRNEMDParameters()};
 
-        assertThat(rnemdParameters->inferred.numberOfRegions).hasAValueOf(4);
-        assertThat(rnemdParameters->inferred.slabWidth.getMagnitude()).hasAValueNear(16.0);
-        assertThat(rnemdParameters->inferred.dataFieldLabelIndex).hasAValueOf(36);
-        assertThat(rnemdParameters->inferred.boxSize.getMagnitude()).hasAValueNear(24.49222339);
-        assertThat(rnemdParameters->inferred.hasSelectionB).isTrue();
+        assertThat(rnemdParameters->inferred.numberOfRegions).hasAValueOf(2);
+        assertThat(rnemdParameters->inferred.slabWidth.getMagnitude()).hasAValueNear(11.9867);
+        assertThat(rnemdParameters->inferred.dataFieldLabelIndex).hasAValueOf(34);
+        assertThat(rnemdParameters->inferred.boxSize.getMagnitude()).hasAValueNear(160.0);
+        assertThat(rnemdParameters->inferred.hasSelectionB).isFalse();
         assertThat(rnemdParameters->inferred.percentageOfKicksFailed).hasAValueOf(100.0);
     }
 
-    GTEST_TEST(testNIVS_RNEMD, allDataFieldsAreParsedCorrectly)
+    GTEST_TEST(testLx_RNEMD, allDataFieldsAreParsedCorrectly)
     {
-        Utilities_API::Files::TextFile actualFile {"../../samples/nivs.rnemd"};
+        Utilities_API::Files::TextFile actualFile {"../../samples/angularMomentum.rnemd"};
         std::vector< std::vector<std::string> > actualData {actualFile.getSuperDataVector()};
 
-        RNEMDFile rnemdFile {"../../samples/nivs.rnemd"};
+        RNEMDFile rnemdFile {"../../samples/angularMomentum.rnemd"};
         RNEMDDataPtr rnemdData {rnemdFile.getAllDataFromFile()};
 
         for (std::size_t i {}; i < actualData[0].size(); ++i)
         {
-            assertThat(rnemdData->rnemdAxis[i].getMagnitude()).hasAValueNear( std::stold(actualData[i][0]) );
-            assertThat(rnemdData->temperature[i].getMagnitude()).hasAValueNear( std::stold(actualData[i][1]) );
+            assertThat(rnemdData->radius[i].getMagnitude()).hasAValueNear( std::stold(actualData[i][0]) );
+
+            for (std::size_t j {}; j < 3; ++j)
+                assertThat(rnemdData->angularVelocity[j][i].getMagnitude()).hasAValueNear( std::stold(actualData[i][1 + j]) );
         }
     }
 }
