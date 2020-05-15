@@ -18,7 +18,7 @@ namespace ND_Research
 {
     GTEST_TEST(testXYZFileParsing, correctFrameParameters)
     {
-        XYZFile xyzFile {"../../samples/singleFrame.xyz"};
+        XYZFile xyzFile {"../../samples/xyz/singleFrame.xyz"};
         XYZParametersPtr xyzParameters { xyzFile.getXYZParameters() };
 
         assertThat(xyzParameters->frame[0].numberOfAtoms).hasAValueOf(4680);
@@ -39,7 +39,7 @@ namespace ND_Research
 
     GTEST_TEST(testXYZFileParsing, correctInferredParameters)
     {
-        XYZFile xyzFile {"../../samples/singleFrame.xyz"};
+        XYZFile xyzFile {"../../samples/xyz/singleFrame.xyz"};
         XYZParametersPtr xyzParameters { xyzFile.getXYZParameters() };
 
         assertThat(xyzParameters->inferred.numberOfFrames).hasAValueOf(1);
@@ -56,17 +56,17 @@ namespace ND_Research
 
     GTEST_TEST(testXYZFileParsing, componentsOfTheXYZFileNameAreCorrect)
     {
-        XYZFile xyzFile {"../../samples/singleFrame.xyz"};
+        XYZFile xyzFile {"../../samples/xyz/singleFrame.xyz"};
 
         assertThat(xyzFile.getFileName().getFileExtension()).hasAValueOf("xyz");
         assertThat(xyzFile.getFileName().getBaseFileName()).hasAValueOf("singleFrame.xyz");
-        assertThat(xyzFile.getFileName().getRelativePathToFile()).hasAValueOf("../../samples");
-        assertThat(xyzFile.getFileName().getFullFileName()).hasAValueOf("../../samples/singleFrame.xyz");
+        assertThat(xyzFile.getFileName().getRelativePathToFile()).hasAValueOf("../../samples/xyz");
+        assertThat(xyzFile.getFileName().getFullFileName()).hasAValueOf("../../samples/xyz/singleFrame.xyz");
     }
 
     GTEST_TEST(testXYZFileParsing, multipleFramesAreParsedCorrectly)
     {
-        XYZFile xyzFile {"../../samples/multipleFrames.xyz"};
+        XYZFile xyzFile {"../../samples/xyz/multipleFrames.xyz"};
         XYZParametersPtr xyzParameters { xyzFile.getXYZParameters() };
 
         assertThat(xyzParameters->inferred.numberOfFrames).hasAValueOf(11);

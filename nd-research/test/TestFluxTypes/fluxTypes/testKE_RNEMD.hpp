@@ -23,12 +23,12 @@ namespace ND_Research
 {
     GTEST_TEST(testKE_RNEMD, correctBlockParameters)
     {
-        RNEMDFile rnemdFile {"../../samples/thermal.rnemd"};
+        RNEMDFile rnemdFile {"../../samples/rnemd/thermal.rnemd"};
         RNEMDParametersPtr rnemdParameters {rnemdFile.getRNEMDParameters()};
 
         assertThat(rnemdParameters->block.exchangeMethod).hasAValueOf("VSS");
         assertThat(rnemdParameters->block.fluxType).hasAValueOf("KE");
-        assertThat(rnemdParameters->block.privilegedAxis).hasAValueOf("z");
+        assertThat(rnemdParameters->block.privilegedAxis).hasAValueOf('z');
         assertThat(rnemdParameters->block.exchangeTime.getMagnitude()).hasAValueNear(1.0);
 
         assertThat(rnemdParameters->block.objectSelection[0]).hasAValueOf("SPCE_RB_0");
@@ -44,7 +44,7 @@ namespace ND_Research
 
     GTEST_TEST(testKE_RNEMD, correctReportParameters)
     {
-        RNEMDFile rnemdFile {"../../samples/thermal.rnemd"};
+        RNEMDFile rnemdFile {"../../samples/rnemd/thermal.rnemd"};
         RNEMDParametersPtr rnemdParameters {rnemdFile.getRNEMDParameters()};
 
         assertThat(rnemdParameters->report.runningTime.getMagnitude()).hasAValueNear(10000002.0);
@@ -107,7 +107,7 @@ namespace ND_Research
 
     GTEST_TEST(testKE_RNEMD, correctInferredParameters)
     {
-        RNEMDFile rnemdFile {"../../samples/thermal.rnemd"};
+        RNEMDFile rnemdFile {"../../samples/rnemd/thermal.rnemd"};
         RNEMDParametersPtr rnemdParameters {rnemdFile.getRNEMDParameters()};
 
         assertThat(rnemdParameters->inferred.numberOfRegions).hasAValueOf(4);
@@ -120,11 +120,11 @@ namespace ND_Research
 
     GTEST_TEST(testKE_RNEMD, allDataFieldsAreParsedCorrectly)
     {
-        Utilities_API::Files::TextFile actualFile {"../../samples/thermal.rnemd"};
+        Utilities_API::Files::TextFile actualFile {"../../samples/rnemd/thermal.rnemd"};
         std::vector< std::vector<std::string> > actualData {actualFile.getSuperDataVector()};
 
-        RNEMDFile rnemdFile {"../../samples/thermal.rnemd"};
-        RNEMDDataPtr rnemdData {rnemdFile.getAllDataFromFile()};
+        RNEMDFile rnemdFile {"../../samples/rnemd/thermal.rnemd"};
+        RNEMDDataPtr rnemdData {rnemdFile.getRNEMDData()};
 
         for (std::size_t i {}; i < actualData[0].size(); ++i)
         {

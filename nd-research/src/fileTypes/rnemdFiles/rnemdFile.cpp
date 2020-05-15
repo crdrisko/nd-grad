@@ -9,18 +9,17 @@
 #include <algorithm>
 #include <cstddef>
 #include <exception>
-#include <limits>
+#include <memory>
 #include <string>
 #include <string_view>
-#include <utility>
-#include <vector>
 
 #include <cpp-units/physicalQuantities.hpp>
 #include <utils-api/errors.hpp>
 #include <utils-api/files.hpp>
-#include <utils-api/strings.hpp>
 
 #include "rnemdFile.hpp"
+#include "../../utilities/dataFields.hpp"
+#include "../../utilities/dataFieldParser.hpp"
 
 using namespace PhysicalQuantities;
 
@@ -60,11 +59,11 @@ namespace ND_Research
         rnemdParameters->block.exchangeMethod = superMetaDataVector[row++][3];
         rnemdParameters->block.fluxType = superMetaDataVector[row++][3];
 
-        // With non-periodic simulations, no privilegeAxis is printed; "r" will serve as a good placeholder
+        // With non-periodic simulations, no privilegeAxis is printed; 'R' will serve as a good placeholder
         if (superMetaDataVector[row][1] == "privilegedAxis")
-            rnemdParameters->block.privilegedAxis = superMetaDataVector[row++][3];
+            rnemdParameters->block.privilegedAxis = superMetaDataVector[row++][3][0];
         else
-            rnemdParameters->block.privilegedAxis = "r";
+            rnemdParameters->block.privilegedAxis = 'R';
 
         rnemdParameters->block.exchangeTime = Time(std::stold(superMetaDataVector[row++][3]));
 
@@ -75,7 +74,7 @@ namespace ND_Research
 
         ++row;
 
-        if (rnemdParameters->block.privilegedAxis != "r")
+        if (rnemdParameters->block.privilegedAxis != 'R')
         {
             rnemdParameters->block.selectionA[0] = Length(std::stold(superMetaDataVector[row][6]));
             rnemdParameters->block.selectionA[1] = Length(std::stold(superMetaDataVector[row][10]));
@@ -119,7 +118,7 @@ namespace ND_Research
         rnemdParameters->report.kineticExchange = MolarEnergy(superMetaDataVector[row + 11][3]);
         rnemdParameters->report.Jz = MolarEnergyFlux(superMetaDataVector[row + 15][3]);
 
-        for (int i {}; i < 3; ++i)
+        for (std::size_t i {}; i < 3; ++i)
         {
             rnemdParameters->report.momentumFlux[i] = MomentumFlux(superMetaDataVector[row + 3][i + 4]);
             rnemdParameters->report.momentumTarget[i] = Momentum(superMetaDataVector[row + 8][i + 4]);
@@ -165,121 +164,60 @@ namespace ND_Research
     }
 
 
+    void RNEMDFile::setRNEMDData()
+    {
+        DataFieldPtr rnemdAxis         { std::make_shared<DataField>(std::string{rnemdParameters->block.privilegedAxis} + "(Angstroms)") };
+        DataFieldPtr temperature       { std::make_shared<DataField>("Temperature(K)") };
+        DataFieldPtr velocity          { std::make_shared<DataFieldArray>("Velocity(angstroms/fs)") };
+        DataFieldPtr angularVelocity   { std::make_shared<DataFieldArray>("AngularVelocity(angstroms^2/fs)") };
+        DataFieldPtr density           { std::make_shared<DataField>("Density(g cm^-3)") };
+        DataFieldPtr activity          { std::make_shared<DataFieldVector>("Activity(unitless)", rnemdParameters->block.outputSelection) };
+        DataFieldPtr electricField     { std::make_shared<DataFieldArray>("Electric Field(kcal/mol/angstroms/e)") };
+        DataFieldPtr electricPotential { std::make_shared<DataField>("Electrostatic Potential(kcal/mol/e)") };
+
+        DataFieldParser dataFieldParser { this, rnemdAxis,
+                                                temperature,
+                                                velocity,
+                                                angularVelocity,
+                                                density,
+                                                activity,
+                                                electricField,
+                                                electricPotential };
+
+        dataFieldParser.parseDataFromFile(metaDataVector[rnemdParameters->inferred.dataFieldLabelIndex]);
+
+        rnemdAxis->convertToPhysicalQuantity(rnemdData->rnemdAxis);
+        temperature->convertToPhysicalQuantity(rnemdData->temperature);
+        dynamic_cast<DataFieldArray*>( velocity.get() )->convertToPhysicalQuantity(rnemdData->velocity);
+        dynamic_cast<DataFieldArray*>( angularVelocity.get() )->convertToPhysicalQuantity(rnemdData->angularVelocity);
+        density->convertToPhysicalQuantity(rnemdData->density);
+        dynamic_cast<DataFieldVector*>( activity.get() )->convertToPhysicalQuantity(rnemdData->activity);
+        dynamic_cast<DataFieldArray*>( electricField.get() )->convertToPhysicalQuantity(rnemdData->electricField);
+        electricPotential->convertToPhysicalQuantity(rnemdData->electricPotential);
+    }
+
+
     void RNEMDFile::setRNEMDInferredParameters()
     {
-        if (rnemdParameters->block.privilegedAxis != "r")
+        if (rnemdParameters->block.privilegedAxis != 'R')
         {
             rnemdParameters->inferred.slabWidth
                 = rnemdParameters->block.selectionA[1] - rnemdParameters->block.selectionA[0];
 
             rnemdParameters->inferred.numberOfRegions
                 = (rnemdParameters->block.fluxType == "Single") ? 2 : 4;
-
-            rnemdParameters->inferred.boxSize
-                = allDataFromFile->rnemdAxis.back() + allDataFromFile->rnemdAxis.front();
         }
         else
         {
             rnemdParameters->inferred.slabWidth = rnemdParameters->block.selectionA[0];
             rnemdParameters->inferred.numberOfRegions = 2;
             rnemdParameters->inferred.hasSelectionB = false;
-
-            rnemdParameters->inferred.boxSize
-                = allDataFromFile->radius.back() + allDataFromFile->radius.front();
         }
+
+        rnemdParameters->inferred.boxSize = rnemdData->rnemdAxis.back() + rnemdData->rnemdAxis.front();
 
         rnemdParameters->inferred.percentageOfKicksFailed
             = static_cast<double>(rnemdParameters->report.failTrialCount)
                 / static_cast<double>(rnemdParameters->report.trialCount) * 100;
-    }
-
-
-    int RNEMDFile::findDataFieldStartLocation(std::string_view dataFieldLabel)
-    {
-        if ( Utilities_API::Strings::stringFinder(dataFieldLabel,
-             metaDataVector[rnemdParameters->inferred.dataFieldLabelIndex]) )
-            return metaDataVector[rnemdParameters->inferred.dataFieldLabelIndex].find(dataFieldLabel);
-
-        return std::numeric_limits<int>::max();
-    }
-
-
-    template<typename T>
-    std::vector<T> RNEMDFile::parseDataFromFile(int startIndex)
-    {
-        std::vector<T> PhysicalQuantity;
-
-        for (const auto& vec : superDataVector)
-            PhysicalQuantity.push_back( T(vec[startIndex]) );
-
-        return PhysicalQuantity;
-    }
-
-
-    void RNEMDFile::setRNEMDData()
-    {
-        std::vector< std::pair<std::string, int> > locations;
-
-        if (rnemdParameters->block.privilegedAxis != "z")
-            allDataFromFile->dataLabels[0] = rnemdParameters->block.privilegedAxis + "(Angstroms)";
-
-        for (const auto& dataLabel : allDataFromFile->dataLabels)
-            locations.push_back( std::make_pair(dataLabel, findDataFieldStartLocation(dataLabel)) );
-
-        std::sort( locations.begin(), locations.end(), [](std::pair<std::string, int>& a,
-            std::pair<std::string, int>& b) -> bool { return a.second < b.second; } );
-
-        int startIndex {};
-
-        for (const auto& pair : locations)
-        {
-            if (pair.second != std::numeric_limits<int>::max())
-            {
-                int index {pair.second - startIndex - 2};
-
-                if (pair.first == allDataFromFile->dataLabels[0])
-                    allDataFromFile->rnemdAxis = parseDataFromFile<Length>(index);
-
-                else if (pair.first == allDataFromFile->dataLabels[1])
-                    allDataFromFile->radius = parseDataFromFile<Length>(index);
-
-                else if (pair.first == allDataFromFile->dataLabels[2])
-                    allDataFromFile->temperature = parseDataFromFile<Temperature>(index);
-
-                else if (pair.first == allDataFromFile->dataLabels[3])
-                    for (int i {}; i < 3 ; ++i)
-                        allDataFromFile->velocity[i] = (parseDataFromFile<Velocity>(index + i));
-
-                else if (pair.first == allDataFromFile->dataLabels[4])
-                    for (int i {}; i < 3 ; ++i)
-                        allDataFromFile->angularVelocity[i] = (parseDataFromFile<Velocity>(index + i));
-
-                else if (pair.first == allDataFromFile->dataLabels[5])
-                    allDataFromFile->density = parseDataFromFile<MassDensity>(index);
-
-                else if (pair.first == allDataFromFile->dataLabels[6])
-                {
-                    // Only include concentrations for atom types that are actually printed out
-                    for (std::size_t i {}; i < rnemdParameters->block.outputSelection.size(); ++i)
-                        if ( Utilities_API::Strings::stringFinder(rnemdParameters->block.outputSelection[i],
-                            metaDataVector[rnemdParameters->inferred.dataFieldLabelIndex]) )
-                        {
-                            startIndex += (1 + rnemdParameters->block.outputSelection[i].length());
-                            allDataFromFile->activity.push_back(parseDataFromFile<Concentration>(index + i));
-                        }
-
-                    startIndex += 2;
-                }
-
-                else if (pair.first == allDataFromFile->dataLabels[7])
-                    for (int i {}; i < 3 ; ++i)
-                        allDataFromFile->electricField[i] = (parseDataFromFile<ElectricField>(index + i));
-
-                else if (pair.first == allDataFromFile->dataLabels[8])
-                    allDataFromFile->electricPotential = parseDataFromFile<ElectricPotential>(index);
-
-                startIndex += pair.first.length();
-            }
-        }
     }
 }

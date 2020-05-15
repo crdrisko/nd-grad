@@ -23,12 +23,12 @@ namespace ND_Research
 {
     GTEST_TEST(testRNEMDFileParsing, correctBlockParameters)
     {
-        RNEMDFile rnemdFile {"../../samples/double.rnemd"};
+        RNEMDFile rnemdFile {"../../samples/rnemd/double.rnemd"};
         RNEMDParametersPtr rnemdParameters {rnemdFile.getRNEMDParameters()};
 
         assertThat(rnemdParameters->block.exchangeMethod).hasAValueOf("VSS");
         assertThat(rnemdParameters->block.fluxType).hasAValueOf("Current");
-        assertThat(rnemdParameters->block.privilegedAxis).hasAValueOf("z");
+        assertThat(rnemdParameters->block.privilegedAxis).hasAValueOf('z');
         assertThat(rnemdParameters->block.exchangeTime.getMagnitude()).hasAValueNear(2.0);
 
         assertThat(rnemdParameters->block.objectSelection[0]).hasAValueOf("SPCE_RB_0");
@@ -48,7 +48,7 @@ namespace ND_Research
 
     GTEST_TEST(testRNEMDFileParsing, correctReportParameters)
     {
-        RNEMDFile rnemdFile {"../../samples/double.rnemd"};
+        RNEMDFile rnemdFile {"../../samples/rnemd/double.rnemd"};
         RNEMDParametersPtr rnemdParameters {rnemdFile.getRNEMDParameters()};
 
         assertThat(rnemdParameters->report.runningTime.getMagnitude()).hasAValueNear(10000002.0);
@@ -115,7 +115,7 @@ namespace ND_Research
 
     GTEST_TEST(testRNEMDFileParsing, correctInferredParameters)
     {
-        RNEMDFile rnemdFile {"../../samples/double.rnemd"};
+        RNEMDFile rnemdFile {"../../samples/rnemd/double.rnemd"};
         RNEMDParametersPtr rnemdParameters {rnemdFile.getRNEMDParameters()};
 
         assertThat(rnemdParameters->inferred.numberOfRegions).hasAValueOf(4);
@@ -136,21 +136,21 @@ namespace ND_Research
 
     GTEST_TEST(testRNEMDFileParsing, componentsOfTheRNEMDFileNameAreCorrect)
     {
-        RNEMDFile rnemdFile {"../../samples/double.rnemd"};
+        RNEMDFile rnemdFile {"../../samples/rnemd/double.rnemd"};
 
         assertThat(rnemdFile.getFileName().getFileExtension()).hasAValueOf("rnemd");
         assertThat(rnemdFile.getFileName().getBaseFileName()).hasAValueOf("double.rnemd");
-        assertThat(rnemdFile.getFileName().getRelativePathToFile()).hasAValueOf("../../samples");
-        assertThat(rnemdFile.getFileName().getFullFileName()).hasAValueOf("../../samples/double.rnemd");
+        assertThat(rnemdFile.getFileName().getRelativePathToFile()).hasAValueOf("../../samples/rnemd");
+        assertThat(rnemdFile.getFileName().getFullFileName()).hasAValueOf("../../samples/rnemd/double.rnemd");
     }
 
     GTEST_TEST(testRNEMDFileParsing, allDataFieldsAreParsedCorrectly)
     {
-        Utilities_API::Files::TextFile actualFile {"../../samples/double.rnemd"};
+        Utilities_API::Files::TextFile actualFile {"../../samples/rnemd/double.rnemd"};
         std::vector< std::vector<std::string> > actualData {actualFile.getSuperDataVector()};
 
-        RNEMDFile rnemdFile {"../../samples/double.rnemd"};
-        RNEMDDataPtr rnemdData {rnemdFile.getAllDataFromFile()};
+        RNEMDFile rnemdFile {"../../samples/rnemd/double.rnemd"};
+        RNEMDDataPtr rnemdData {rnemdFile.getRNEMDData()};
 
         for (std::size_t i {}; i < actualData[0].size(); ++i)
         {

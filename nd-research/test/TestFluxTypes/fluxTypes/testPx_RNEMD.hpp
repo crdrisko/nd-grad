@@ -23,12 +23,12 @@ namespace ND_Research
 {
     GTEST_TEST(testPx_RNEMD, correctBlockParameters)
     {
-        RNEMDFile rnemdFile {"../../samples/momentum.rnemd"};
+        RNEMDFile rnemdFile {"../../samples/rnemd/momentum.rnemd"};
         RNEMDParametersPtr rnemdParameters {rnemdFile.getRNEMDParameters()};
 
         assertThat(rnemdParameters->block.exchangeMethod).hasAValueOf("VSS");
         assertThat(rnemdParameters->block.fluxType).hasAValueOf("Px");
-        assertThat(rnemdParameters->block.privilegedAxis).hasAValueOf("z");
+        assertThat(rnemdParameters->block.privilegedAxis).hasAValueOf('z');
         assertThat(rnemdParameters->block.exchangeTime.getMagnitude()).hasAValueNear(2.0);
 
         assertThat(rnemdParameters->block.objectSelection[0]).hasAValueOf("Ar");
@@ -44,7 +44,7 @@ namespace ND_Research
 
     GTEST_TEST(testPx_RNEMD, correctReportParameters)
     {
-        RNEMDFile rnemdFile {"../../samples/momentum.rnemd"};
+        RNEMDFile rnemdFile {"../../samples/rnemd/momentum.rnemd"};
         RNEMDParametersPtr rnemdParameters {rnemdFile.getRNEMDParameters()};
 
         assertThat(rnemdParameters->report.runningTime.getMagnitude()).hasAValueNear(10000001.0);
@@ -107,7 +107,7 @@ namespace ND_Research
 
     GTEST_TEST(testPx_RNEMD, correctInferredParameters)
     {
-        RNEMDFile rnemdFile {"../../samples/momentum.rnemd"};
+        RNEMDFile rnemdFile {"../../samples/rnemd/momentum.rnemd"};
         RNEMDParametersPtr rnemdParameters {rnemdFile.getRNEMDParameters()};
 
         assertThat(rnemdParameters->inferred.numberOfRegions).hasAValueOf(4);
@@ -120,11 +120,11 @@ namespace ND_Research
 
     GTEST_TEST(testPx_RNEMD, allDataFieldsAreParsedCorrectly)
     {
-        Utilities_API::Files::TextFile actualFile {"../../samples/momentum.rnemd"};
+        Utilities_API::Files::TextFile actualFile {"../../samples/rnemd/momentum.rnemd"};
         std::vector< std::vector<std::string> > actualData {actualFile.getSuperDataVector()};
 
-        RNEMDFile rnemdFile {"../../samples/momentum.rnemd"};
-        RNEMDDataPtr rnemdData {rnemdFile.getAllDataFromFile()};
+        RNEMDFile rnemdFile {"../../samples/rnemd/momentum.rnemd"};
+        RNEMDDataPtr rnemdData {rnemdFile.getRNEMDData()};
 
         for (std::size_t i {}; i < actualData[0].size(); ++i)
         {

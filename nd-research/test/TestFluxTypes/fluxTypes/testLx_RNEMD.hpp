@@ -23,12 +23,12 @@ namespace ND_Research
 {
     GTEST_TEST(testLx_RNEMD, correctBlockParameters)
     {
-        RNEMDFile rnemdFile {"../../samples/angularMomentum.rnemd"};
+        RNEMDFile rnemdFile {"../../samples/rnemd/angularMomentum.rnemd"};
         RNEMDParametersPtr rnemdParameters {rnemdFile.getRNEMDParameters()};
 
         assertThat(rnemdParameters->block.exchangeMethod).hasAValueOf("VSS");
         assertThat(rnemdParameters->block.fluxType).hasAValueOf("Lx");
-        assertThat(rnemdParameters->block.privilegedAxis).hasAValueOf("r");
+        assertThat(rnemdParameters->block.privilegedAxis).hasAValueOf('R');
         assertThat(rnemdParameters->block.exchangeTime.getMagnitude()).hasAValueNear(2.0);
 
         assertThat(rnemdParameters->block.objectSelection[0]).hasAValueOf("SPCE_RB_0");
@@ -44,7 +44,7 @@ namespace ND_Research
 
     GTEST_TEST(testLx_RNEMD, correctReportParameters)
     {
-        RNEMDFile rnemdFile {"../../samples/angularMomentum.rnemd"};
+        RNEMDFile rnemdFile {"../../samples/rnemd/angularMomentum.rnemd"};
         RNEMDParametersPtr rnemdParameters {rnemdFile.getRNEMDParameters()};
 
         assertThat(rnemdParameters->report.runningTime.getMagnitude()).hasAValueNear(36960.0);
@@ -107,7 +107,7 @@ namespace ND_Research
 
     GTEST_TEST(testLx_RNEMD, correctInferredParameters)
     {
-        RNEMDFile rnemdFile {"../../samples/angularMomentum.rnemd"};
+        RNEMDFile rnemdFile {"../../samples/rnemd/angularMomentum.rnemd"};
         RNEMDParametersPtr rnemdParameters {rnemdFile.getRNEMDParameters()};
 
         assertThat(rnemdParameters->inferred.numberOfRegions).hasAValueOf(2);
@@ -120,15 +120,15 @@ namespace ND_Research
 
     GTEST_TEST(testLx_RNEMD, allDataFieldsAreParsedCorrectly)
     {
-        Utilities_API::Files::TextFile actualFile {"../../samples/angularMomentum.rnemd"};
+        Utilities_API::Files::TextFile actualFile {"../../samples/rnemd/angularMomentum.rnemd"};
         std::vector< std::vector<std::string> > actualData {actualFile.getSuperDataVector()};
 
-        RNEMDFile rnemdFile {"../../samples/angularMomentum.rnemd"};
-        RNEMDDataPtr rnemdData {rnemdFile.getAllDataFromFile()};
+        RNEMDFile rnemdFile {"../../samples/rnemd/angularMomentum.rnemd"};
+        RNEMDDataPtr rnemdData {rnemdFile.getRNEMDData()};
 
         for (std::size_t i {}; i < actualData[0].size(); ++i)
         {
-            assertThat(rnemdData->radius[i].getMagnitude()).hasAValueNear( std::stold(actualData[i][0]) );
+            assertThat(rnemdData->rnemdAxis[i].getMagnitude()).hasAValueNear( std::stold(actualData[i][0]) );
 
             for (std::size_t j {}; j < 3; ++j)
                 assertThat(rnemdData->angularVelocity[j][i].getMagnitude()).hasAValueNear( std::stold(actualData[i][1 + j]) );

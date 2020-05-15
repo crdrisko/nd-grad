@@ -22,23 +22,21 @@ namespace ND_Research
     using Matrix3D = Utilities_API::Containers::Vector3D< Utilities_API::Containers::Vector3D<T> >;
 
 
-    struct XYZFrameParameters
-    {
-        std::size_t numberOfAtoms {};
-        PhysicalQuantities::Time runTime;
-        Matrix3D<PhysicalQuantities::Length> Hmat;
-    };
-
-
-    struct XYZInferredParameters
-    {
-        std::size_t numberOfFrames {};
-        PhysicalQuantities::Time timeStep;
-    };
-
-
     struct XYZParameters
     {
+        struct XYZFrameParameters
+        {
+            std::size_t numberOfAtoms {};
+            PhysicalQuantities::Time runTime;
+            Matrix3D<PhysicalQuantities::Length> Hmat;
+        };
+
+        struct XYZInferredParameters
+        {
+            std::size_t numberOfFrames {};
+            PhysicalQuantities::Time timeStep;
+        };
+
         std::vector<XYZFrameParameters> frame;
         XYZInferredParameters inferred;
     };

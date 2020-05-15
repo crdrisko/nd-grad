@@ -9,6 +9,9 @@
 #     ChargedRNEMD/src/regionFitting.cpp
 #     ChargedRNEMD/src/regionDifference.cpp)
 
+set(UTILITY_SOURCES
+    src/utilities/dataFields.cpp)
+
 set(FILETYPE_SOURCES
     src/fileTypes/rnemdFiles/rnemdFile.cpp
     src/fileTypes/xyzFiles/xyzFile.cpp)

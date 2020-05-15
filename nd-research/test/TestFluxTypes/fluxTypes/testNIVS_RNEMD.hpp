@@ -23,12 +23,12 @@ namespace ND_Research
 {
     GTEST_TEST(testNIVS_RNEMD, correctBlockParameters)
     {
-        RNEMDFile rnemdFile {"../../samples/nivs.rnemd"};
+        RNEMDFile rnemdFile {"../../samples/rnemd/nivs.rnemd"};
         RNEMDParametersPtr rnemdParameters {rnemdFile.getRNEMDParameters()};
 
         assertThat(rnemdParameters->block.exchangeMethod).hasAValueOf("NIVS");
         assertThat(rnemdParameters->block.fluxType).hasAValueOf("KE");
-        assertThat(rnemdParameters->block.privilegedAxis).hasAValueOf("x");
+        assertThat(rnemdParameters->block.privilegedAxis).hasAValueOf('x');
         assertThat(rnemdParameters->block.exchangeTime.getMagnitude()).hasAValueNear(2.0);
 
         assertThat(rnemdParameters->block.objectSelection[0]).hasAValueOf("SPCE_RB_0");
@@ -48,7 +48,7 @@ namespace ND_Research
 
     GTEST_TEST(testNIVS_RNEMD, correctReportParameters)
     {
-        RNEMDFile rnemdFile {"../../samples/nivs.rnemd"};
+        RNEMDFile rnemdFile {"../../samples/rnemd/nivs.rnemd"};
         RNEMDParametersPtr rnemdParameters {rnemdFile.getRNEMDParameters()};
 
         assertThat(rnemdParameters->report.runningTime.getMagnitude()).hasAValueNear(12090.0);
@@ -114,7 +114,7 @@ namespace ND_Research
 
     GTEST_TEST(testNIVS_RNEMD, correctInferredParameters)
     {
-        RNEMDFile rnemdFile {"../../samples/nivs.rnemd"};
+        RNEMDFile rnemdFile {"../../samples/rnemd/nivs.rnemd"};
         RNEMDParametersPtr rnemdParameters {rnemdFile.getRNEMDParameters()};
 
         assertThat(rnemdParameters->inferred.numberOfRegions).hasAValueOf(4);
@@ -127,11 +127,11 @@ namespace ND_Research
 
     GTEST_TEST(testNIVS_RNEMD, allDataFieldsAreParsedCorrectly)
     {
-        Utilities_API::Files::TextFile actualFile {"../../samples/nivs.rnemd"};
+        Utilities_API::Files::TextFile actualFile {"../../samples/rnemd/nivs.rnemd"};
         std::vector< std::vector<std::string> > actualData {actualFile.getSuperDataVector()};
 
-        RNEMDFile rnemdFile {"../../samples/nivs.rnemd"};
-        RNEMDDataPtr rnemdData {rnemdFile.getAllDataFromFile()};
+        RNEMDFile rnemdFile {"../../samples/rnemd/nivs.rnemd"};
+        RNEMDDataPtr rnemdData {rnemdFile.getRNEMDData()};
 
         for (std::size_t i {}; i < actualData[0].size(); ++i)
         {

@@ -9,9 +9,11 @@
 #ifndef ND_RESEARCH_RNEMDFILE_HPP
 #define ND_RESEARCH_RNEMDFILE_HPP
 
+#include <cstddef>
 #include <memory>
 #include <string>
 #include <string_view>
+#include <vector>
 
 #include <utils-api/files.hpp>
 
@@ -22,10 +24,9 @@ namespace ND_Research
     class RNEMDFile : public Utilities_API::Files::TextFile
     {
     private:
-        RNEMDDataPtr allDataFromFile { std::make_shared<RNEMDData>() };
+        RNEMDDataPtr rnemdData { std::make_shared<RNEMDData>() };
         RNEMDParametersPtr rnemdParameters { std::make_shared<RNEMDParameters>() };
 
-        std::vector< std::vector<std::string> > superDataVector { getSuperDataVector() };
         std::vector< std::vector<std::string> > superMetaDataVector { getSuperMetaDataVector(" \t\n\";") };
 
         void setRNEMDBlockParameters(std::size_t& row);
@@ -33,17 +34,12 @@ namespace ND_Research
         void setRNEMDData();
         void setRNEMDInferredParameters();
 
-        int findDataFieldStartLocation(std::string_view dataFieldLabel);
-
-        template <typename T>
-        std::vector<T> parseDataFromFile(int startIndex = 0);
-
     public:
         explicit RNEMDFile(std::string_view FullFileName);
 
-        RNEMDDataPtr getAllDataFromFile() const { return allDataFromFile; }
-        RNEMDParametersPtr getRNEMDParameters() const { return rnemdParameters; }
-        Utilities_API::Files::FileName getFileName() const { return Utilities_API::Files::TextFile::getFileName(); }
+        auto getRNEMDData() const { return rnemdData; }
+        auto getRNEMDParameters() const { return rnemdParameters; }
+        auto getFileName() const { return Utilities_API::Files::TextFile::getFileName(); }
     };
 }
 

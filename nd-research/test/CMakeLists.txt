@@ -4,7 +4,15 @@ include(GoogleTest)
 
 enable_testing()
 
+## Data Field Parsing ##
+foreach (FILE ${UTILITY_SOURCES})
+    list(APPEND NEW_SOURCES ../${FILE})
+endforeach()
 
+ND_RESEARCH_NewTest(TESTNAME DataFieldParsing
+                    INTERIOR_DIRECTORY TestDataFields)
+
+## File Type Parsing ##
 foreach (FILE ${FILETYPE_SOURCES})
     list(APPEND NEW_SOURCES ../${FILE})
 endforeach()
