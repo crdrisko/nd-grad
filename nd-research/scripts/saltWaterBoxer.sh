@@ -2,7 +2,7 @@
 # Copyright (c) 2020 Cody R. Drisko. All rights reserved.
 # Licensed under the MIT License. See the LICENSE file in the project root for license information.
 #
-# Name: saltWaterBoxer.sh - Version 1.0.0
+# Name: saltWaterBoxer.sh - Version 1.1.0
 # Author: cdrisko
 # Date: 05/22/2020-11:15:28
 # Description: Take an input packmol file and return a valid openmd file for a solution of salt water
@@ -90,3 +90,22 @@ sed '/<StuntDoubles>/,$!d' ${xyzFileName%%.*}2.omd >> tempFile
 
 rm ${xyzFileName%%.*}2.omd
 mv tempFile ${outputFile:=${inputFile%%.*}.omd}
+
+## Account for periodic boundary conditions unaccounted for by packmol ##
+toleranceArray=( $( grep tolerance $inputFile ) )
+tolerance=${toleranceArray[1]}
+
+hmatArray=( $( grep Hmat $outputFile ) )
+Hxx=${hmatArray[2]}
+Hyy=${hmatArray[8]}
+Hzz=${hmatArray[14]}
+
+oldHmat="Hmat: {{ $Hxx, 0, 0 }, { 0, $Hyy, 0 }, { 0, 0, $Hzz }}"
+
+Hxx=$( echo "${Hxx%,*} + $tolerance" | bc )
+Hyy=$( echo "${Hyy%,*} + $tolerance" | bc )
+Hzz=$( echo "${Hzz%,*} + $tolerance" | bc )
+
+newHmat="Hmat: {{ $Hxx, 0, 0 }, { 0, $Hyy, 0 }, { 0, 0, $Hzz }}"
+
+modifyFiles -i $outputFile -o "$oldHmat" -n "$newHmat" -f
