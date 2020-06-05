@@ -23,10 +23,10 @@ namespace ND_Research
         scalar quantities */
     void DataField::push(const std::vector<std::string>& currentRow, unsigned int index)
     {
-        data.push_back( std::stold(currentRow[index]) );
+        data.push_back(currentRow[index]);
     }
 
-    void DataField::findLabelStartLocation(std::string_view DataLabels)
+    void DataField::findLabelStartIndex(std::string_view DataLabels)
     {
         dataLabels = DataLabels;
 
@@ -40,7 +40,7 @@ namespace ND_Research
         {
             appendLabels();
 
-            unsigned int index {labelStartIndex - dataStartIndex - 2};
+            unsigned int index {labelStartIndex - dataStartIndex};
             dataStartIndex += label.length();
 
             push(currentRow, index);
@@ -53,7 +53,7 @@ namespace ND_Research
     void DataFieldArray::push(const std::vector<std::string>& currentRow, unsigned int index)
     {
         for (std::size_t i {}; i < 3; ++i)
-            data[i].push_back( std::stold(currentRow[index + i]) );
+            data[i].push_back(currentRow[index + i]);
     }
 
 
@@ -62,7 +62,7 @@ namespace ND_Research
     void DataFieldVector::push(const std::vector<std::string>& currentRow, unsigned int index)
     {
         for (std::size_t i {}; i < additionalLabels.size(); ++i)
-            data[i].push_back( std::stold(currentRow[index + i]) );
+            data[i].push_back(currentRow[index + i]);
     }
 
     void DataFieldVector::removeEraseExtraneousLabels()

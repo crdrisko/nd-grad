@@ -21,8 +21,9 @@ set(FILETYPE_SOURCES
 #     src/applications/shiftXYZ/xyzFile.cpp)
 
 set(SCRIPTS
-    scripts/groupSubmit.sh
     scripts/equilibrator.sh
+    scripts/groupSubmit.sh
+    scripts/saltWaterBoxer.sh
     src/applications/chargedRNEMD/scripts/plotOptimizationAnalysis.py
     src/applications/chargedRNEMD/scripts/findConcentration.py)
 

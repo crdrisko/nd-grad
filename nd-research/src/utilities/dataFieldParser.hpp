@@ -29,7 +29,7 @@ namespace ND_Research
         void sortDataFields(std::string_view dataLabels)
         {
             for (auto& dataField : dataFields)
-                dataField->findLabelStartLocation(dataLabels);
+                dataField->findLabelStartIndex(dataLabels);
 
             std::sort(dataFields.begin(), dataFields.end(), [](DataFieldPtr& dataField1,
                 DataFieldPtr& dataField2) { return dataField1->getLabelStartIndex() < dataField2->getLabelStartIndex(); } );
@@ -39,15 +39,15 @@ namespace ND_Research
         explicit DataFieldParser(Utilities_API::Files::TextFile* InputFile, TArgs& ... AllPossibleDataFields)
             : inputFile{InputFile}, dataFields{AllPossibleDataFields...} {}
 
-        void parseDataFromFile(std::string_view dataLabels)
+        void parseDataFromFile(std::string_view dataLabels, const std::string& sepatators = " \t\n")
         {
             sortDataFields(dataLabels);
 
-            for (const auto& row : inputFile->getSuperDataVector())
+            for (const auto& row : inputFile->getSuperDataVector(sepatators))
             {
                 /* Index checking now occurs for each row in the data file, but it's an improvement
                     over iterating through each row for every data field */
-                unsigned int dataStartIndex {};
+                unsigned int dataStartIndex {dataFields[0]->getLabelStartIndex()};
 
                 for (auto& dataField : dataFields)
                     dataField->processData(row, dataStartIndex);

@@ -186,14 +186,14 @@ namespace ND_Research
 
         dataFieldParser.parseDataFromFile(metaDataVector[rnemdParameters->inferred.dataFieldLabelIndex]);
 
-        rnemdAxis->convertToPhysicalQuantity(rnemdData->rnemdAxis);
-        temperature->convertToPhysicalQuantity(rnemdData->temperature);
-        dynamic_cast<DataFieldArray*>( velocity.get() )->convertToPhysicalQuantity(rnemdData->velocity);
-        dynamic_cast<DataFieldArray*>( angularVelocity.get() )->convertToPhysicalQuantity(rnemdData->angularVelocity);
-        density->convertToPhysicalQuantity(rnemdData->density);
-        dynamic_cast<DataFieldVector*>( activity.get() )->convertToPhysicalQuantity(rnemdData->activity);
-        dynamic_cast<DataFieldArray*>( electricField.get() )->convertToPhysicalQuantity(rnemdData->electricField);
-        electricPotential->convertToPhysicalQuantity(rnemdData->electricPotential);
+        rnemdData->rnemdAxis         = rnemdAxis->convertToPhysicalQuantity<Length>();
+        rnemdData->temperature       = temperature->convertToPhysicalQuantity<Temperature>();
+        rnemdData->velocity          = dynamic_cast<DataFieldArray*>( velocity.get() )->convertToPhysicalQuantity<Velocity>();
+        rnemdData->angularVelocity   = dynamic_cast<DataFieldArray*>( angularVelocity.get() )->convertToPhysicalQuantity<AngularVelocity>();
+        rnemdData->density           = density->convertToPhysicalQuantity<MassDensity>();
+        rnemdData->activity          = dynamic_cast<DataFieldVector*>( activity.get() )->convertToPhysicalQuantity<Concentration>();
+        rnemdData->electricField     = dynamic_cast<DataFieldArray*>( electricField.get() )->convertToPhysicalQuantity<ElectricField>();
+        rnemdData->electricPotential = electricPotential->convertToPhysicalQuantity<ElectricPotential>();
     }
 
 

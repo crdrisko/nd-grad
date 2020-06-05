@@ -23,8 +23,7 @@ namespace ND_Research
     class DataField
     {
     private:
-        unsigned int labelStartIndex {};
-        std::vector<long double> data;
+        std::vector<std::string> data;
 
         virtual void appendLabels() {}
         virtual void push(const std::vector<std::string>& currentRow, unsigned int index);
@@ -32,26 +31,32 @@ namespace ND_Research
     protected:
         std::string label;
         std::string_view dataLabels;
+        unsigned int labelStartIndex {};
 
     public:
         explicit DataField(std::string_view Label) : label{Label} {}
         virtual ~DataField() = default;
 
-        void findLabelStartLocation(std::string_view DataLabels);
+        void findLabelStartIndex(std::string_view DataLabels);
         void processData(const std::vector<std::string>& currentRow, unsigned int& dataStartIndex);
 
         template <typename PhysicalQuantity>
-        void convertToPhysicalQuantity(std::vector<PhysicalQuantity>& Data) const
+        std::vector<PhysicalQuantity> convertToPhysicalQuantity() const
         {
+            std::vector<PhysicalQuantity> Data;
+
             if ( labelStartIndex != std::numeric_limits<unsigned int>::max() )
             {
                 Data.resize(data.size());
 
                 std::transform( data.begin(), data.end(), Data.begin(),
-                    [](long double value) { return PhysicalQuantity{value}; } );
+                    [](const std::string& value) { return PhysicalQuantity{value}; } );
             }
+
+            return Data;
         }
 
+        std::vector<std::string> getData() const { return data; }
         unsigned int getLabelStartIndex() const { return labelStartIndex; }
     };
 
@@ -61,7 +66,7 @@ namespace ND_Research
     class DataFieldArray : public DataField
     {
     private:
-        Utilities_API::Containers::Vector3D< std::vector<long double> > data;
+        Utilities_API::Containers::Vector3D< std::vector<std::string> > data;
 
         virtual void push(const std::vector<std::string>& currentRow, unsigned int index) override;
 
@@ -69,19 +74,25 @@ namespace ND_Research
         explicit DataFieldArray(std::string_view Label) : DataField{Label} {}
 
         template <typename PhysicalQuantity>
-        void convertToPhysicalQuantity(Utilities_API::Containers::Vector3D< std::vector<PhysicalQuantity> >& Data) const
+        Utilities_API::Containers::Vector3D< std::vector<PhysicalQuantity> > convertToPhysicalQuantity() const
         {
-            for (std::size_t i {}; i < 3; ++i)
+            Utilities_API::Containers::Vector3D< std::vector<PhysicalQuantity> > Data;
+
+            if ( labelStartIndex != std::numeric_limits<unsigned int>::max() )
             {
-                if ( getLabelStartIndex() != std::numeric_limits<unsigned int>::max() )
+                for (std::size_t i {}; i < 3; ++i)
                 {
                     Data[i].resize(data[i].size());
 
                     std::transform( data[i].begin(), data[i].end(), Data[i].begin(),
-                        [](long double value) { return PhysicalQuantity{value}; } );
+                        [](const std::string& value) { return PhysicalQuantity{value}; } );
                 }
             }
+
+            return Data;
         }
+
+        Utilities_API::Containers::Vector3D< std::vector<std::string> > getData() const { return data; }
     };
 
 
@@ -89,7 +100,7 @@ namespace ND_Research
     {
     private:
         std::vector<std::string> additionalLabels;
-        std::vector< std::vector<long double> > data;
+        std::vector< std::vector<std::string> > data;
 
         virtual void appendLabels() override;
         virtual void push(const std::vector<std::string>& currentRow, unsigned int index) override;
@@ -100,9 +111,11 @@ namespace ND_Research
             : DataField{Label}, additionalLabels{AdditionalLabels} {}
 
         template <typename PhysicalQuantity>
-        void convertToPhysicalQuantity(std::vector< std::vector<PhysicalQuantity> >& Data) const
+        std::vector< std::vector<PhysicalQuantity> > convertToPhysicalQuantity() const
         {
-            if ( getLabelStartIndex() != std::numeric_limits<unsigned int>::max() )
+            std::vector< std::vector<PhysicalQuantity> > Data;
+
+            if ( labelStartIndex != std::numeric_limits<unsigned int>::max() )
             {
                 Data.resize(data.size());
 
@@ -111,10 +124,14 @@ namespace ND_Research
                     Data[i].resize(data[i].size());
 
                     std::transform( data[i].begin(), data[i].end(), Data[i].begin(),
-                        [](long double value) { return PhysicalQuantity{value}; } );
+                        [](const std::string& value) { return PhysicalQuantity{value}; } );
                 }
             }
+
+            return Data;
         }
+
+        std::vector< std::vector<std::string> > getData() const { return data; }
     };
 }
 
