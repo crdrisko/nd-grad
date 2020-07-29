@@ -10,7 +10,7 @@
 
 #include "stack1.hpp"
 
-template <typename T>
+template<typename T>
 class Stack<T*>
 {
 private:
@@ -23,13 +23,13 @@ public:
     bool empty() const { return elems.empty(); }            // return whether the stack is empty
 };
 
-template <typename T>
+template<typename T>
 void Stack<T*>::push(T* elem)
 {
     elems.push_back(elem);                                  // append copy of passed elem
 }
 
-template <typename T>
+template<typename T>
 T* Stack<T*>::pop()
 {
     assert(!elems.empty());
@@ -38,7 +38,7 @@ T* Stack<T*>::pop()
     return p;                                               // and return it (unlike in the general case)
 }
 
-template <typename T>
+template<typename T>
 T* Stack<T*>::top() const
 {
     assert(!elems.empty());

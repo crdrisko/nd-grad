@@ -33,7 +33,7 @@ struct CustomerHash
 };
 
 // define class that combines operator() for variadic base classes:
-template <typename... Bases>
+template<typename... Bases>
 struct Overloader : Bases...
 {
     using Bases::operator()...;                             // OK since C++17

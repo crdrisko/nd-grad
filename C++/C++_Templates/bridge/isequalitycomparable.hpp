@@ -9,13 +9,13 @@
 #include <type_traits>                                      // for true_type and false_type
 #include <utility>                                          // for declval()
 
-template <typename T>
+template<typename T>
 class IsEqualityComparable
 {
 private:
     // test convertibility of == and ! == to bool:
     static void* conv(bool);                                // to check convertibility to bool
-    template <typename U>
+    template<typename U>
     static std::true_type test(decltype(conv(std::declval<U const&>() ==
                                              std::declval<U const&>())),
                                decltype(conv(!(std::declval<U const&>() ==
@@ -23,7 +23,7 @@ private:
                               );
 
     // fallback:
-    template <typename U>
+    template<typename U>
     static std::false_type test(...);
 
 public:

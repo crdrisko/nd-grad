@@ -8,7 +8,7 @@
 
 #include <iostream>
 
-template <typename T>
+template<typename T>
 class AddSpace
 {
 private:
@@ -22,7 +22,7 @@ public:
     }
 };
 
-template <typename... Args>
+template<typename... Args>
 void print(Args... args)
 {
     ( std::cout << ... << AddSpace(args) ) << '\n';

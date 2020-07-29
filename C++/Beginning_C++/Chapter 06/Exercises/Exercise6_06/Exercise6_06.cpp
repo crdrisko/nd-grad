@@ -15,7 +15,7 @@ int main()
     std::cout << "Enter an array size: ";
     std::cin  >> size;
 
-    auto values { std::make_unique< std::vector<double> >() };
+    auto values { std::make_unique<std::vector<double>>() };
     double sum {};
 
     for (size_t i {}; i < size; ++i)

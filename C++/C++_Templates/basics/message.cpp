@@ -5,7 +5,7 @@
 
 #include <iostream>
 
-template <auto T>                                           // take value of any possible nontype parameter (since C++17)
+template<auto T>                                           // take value of any possible nontype parameter (since C++17)
 class Message
 {
 public:

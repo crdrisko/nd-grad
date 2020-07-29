@@ -12,7 +12,7 @@
 
 #include "stack1.hpp"
 
-template <>
+template<>
 class Stack<std::string>
 {
 private:

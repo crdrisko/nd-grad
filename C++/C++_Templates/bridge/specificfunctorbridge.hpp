@@ -10,14 +10,14 @@
 
 #include "functorbridge.hpp"
 
-template <typename Functor, typename R, typename... Args>
+template<typename Functor, typename R, typename... Args>
 class SpecificFunctorBridge : public FunctorBridge<R, Args...>
 {
 private:
     Functor functor;
 
 public:
-    template <typename FunctorFwd>
+    template<typename FunctorFwd>
     SpecificFunctorBridge(FunctorFwd&& functor) : functor(std::forward<FunctorFwd>(functor)) {}
 
     virtual SpecificFunctorBridge* clone() const override { return new SpecificFunctorBridge(functor); }

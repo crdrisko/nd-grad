@@ -6,7 +6,7 @@
 #include <iostream>
 #include <vector>
 
-template <typename F>
+template<typename F>
 void forUpTo(int n, F f)
 {
     for (int i = 0; i != n; ++i)

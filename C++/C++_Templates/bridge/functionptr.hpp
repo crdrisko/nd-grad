@@ -11,11 +11,11 @@
 #include "functorbridge.hpp"
 
 // primary template:
-template <typename Signature>
+template<typename Signature>
 class FunctionPtr;
 
 // partial specialization
-template <typename R, typename... Args>
+template<typename R, typename... Args>
 class FunctionPtr<R(Args...)>
 {
 private:
@@ -29,7 +29,7 @@ public:
     FunctionPtr(FunctionPtr&& other) : bridge(other.bridge) { other.bridge = nullptr; }
 
     // construction from arbitrary function objects:
-    template <typename F>
+    template<typename F>
     FunctionPtr(F&& f);                                     // see functionptr-init.hpp
 
     // assignment operators:
@@ -48,7 +48,7 @@ public:
     }
 
     // construction and assignment from arbitrary function objects:
-    template <typename F>
+    template<typename F>
     FunctionPtr& operator=(F&& f)
     {
         FunctionPtr tmp(std::forward<F>(f));
@@ -60,7 +60,7 @@ public:
     ~FunctionPtr() { delete bridge; }
 
     friend void swap(FunctionPtr& fp1, FunctionPtr& fp2) { std::swap(fp1.bridge, fp2.bridge); }
-    explicit operator bool() const { return bridge == nullptr; }
+    explicit operator bool() const { return bridge != nullptr; }
 
     // invocation:
     R operator()(Args... args) const;                       // see functionptr-cpinv.hpp

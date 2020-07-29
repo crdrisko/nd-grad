@@ -6,7 +6,7 @@
 #include <cstring>
 
 // maximum of two values of any type (call-by-reference)
-template <typename T>
+template<typename T>
 T const& max(T const& a, T const& b)
 {
     return b < a ? a : b;
@@ -19,7 +19,7 @@ char const* max(char const* a, char const* b)
 }
 
 // maximum of three values of any type (call-by-reference)
-template <typename T>
+template<typename T>
 T const& max(T const& a, T const& b, T const& c)
 {
     return max( max(a, b), c );                     // error if max(a, b) uses call-by-value

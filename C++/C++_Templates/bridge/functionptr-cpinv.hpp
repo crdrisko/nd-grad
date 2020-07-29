@@ -10,14 +10,14 @@
 
 #include "functionptr.hpp"
 
-template <typename R, typename... Args>
+template<typename R, typename... Args>
 FunctionPtr<R(Args...)>::FunctionPtr(FunctionPtr const& other) : bridge(nullptr)
 {
     if (other.bridge)
         bridge = other.bridge->clone();
 }
 
-template <typename R, typename... Args>
+template<typename R, typename... Args>
 R FunctionPtr<R(Args...)>::operator()(Args... args) const
 {
     return bridge->invoke(std::forward<Args>(args)...);

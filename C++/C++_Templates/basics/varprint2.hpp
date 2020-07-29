@@ -8,13 +8,13 @@
 
 #include <iostream>
 
-template <typename T>
+template<typename T>
 void print(T arg)
 {
     std::cout << arg << '\n';                               // print passed argument
 }
 
-template <typename T, typename... Types>
+template<typename T, typename... Types>
 void print(T firstArg, Types... args)
 {
     print(firstArg);                                        // print first argument

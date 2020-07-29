@@ -7,14 +7,14 @@
 #include <string>
 
 // maximum of two values of any type:
-template <typename T>
+template<typename T>
 T max(T a, T b)
 {
     return b < a ? a : b;
 }
 
 // maximum of two pointers:
-template <typename T>
+template<typename T>
 T* max(T* a, T* b)
 {
     return *b < *a ? a : b;

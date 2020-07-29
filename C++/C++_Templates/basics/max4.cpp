@@ -6,7 +6,7 @@
 #include <iostream>
 
 // maximum of two values of any type:
-template <typename T>
+template<typename T>
 T max(T a, T b)
 {
     std::cout << "max<T>() \n";
@@ -14,7 +14,7 @@ T max(T a, T b)
 }
 
 // maximum of three values of any type:
-template <typename T>
+template<typename T>
 T max(T a, T b, T c)
 {
     return max( max(a, b), c );             // uses the template version even for ints because

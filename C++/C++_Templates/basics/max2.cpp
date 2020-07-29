@@ -10,7 +10,7 @@ int max(int a, int b)
 }
 
 // maximum of two values of any type:
-template <typename T>
+template<typename T>
 T max(T a, T b)
 {
     return b < a ? a : b;

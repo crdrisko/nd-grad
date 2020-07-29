@@ -9,7 +9,7 @@
 #include <array>
 #include <cassert>
 
-template <typename T, std::size_t Maxsize>
+template<typename T, std::size_t Maxsize>
 class Stack
 {
 private:
@@ -25,14 +25,14 @@ public:
     std::size_t size() const { return numElems; }           // return current number of elements
 };
 
-template <typename T, std::size_t Maxsize>
+template<typename T, std::size_t Maxsize>
 Stack<T, Maxsize>::Stack()
     : numElems(0)                                           // start with no elements
 {
     // nothing else to do
 }
 
-template <typename T, std::size_t Maxsize>
+template<typename T, std::size_t Maxsize>
 void Stack<T, Maxsize>::push(T const& elem)
 {
     assert(numElems < Maxsize);
@@ -40,14 +40,14 @@ void Stack<T, Maxsize>::push(T const& elem)
     ++numElems;                                             // increment number of elements
 }
 
-template <typename T, std::size_t Maxsize>
+template<typename T, std::size_t Maxsize>
 void Stack<T, Maxsize>::pop()
 {
     assert(!empty());
     --numElems;                                             // decrement number of elements
 }
 
-template <typename T, std::size_t Maxsize>
+template<typename T, std::size_t Maxsize>
 T const& Stack<T, Maxsize>::top() const{
     assert(!empty());
     return elems[numElems - 1];                             // return last element
