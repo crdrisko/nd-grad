@@ -13,7 +13,7 @@
 #include "specificfunctorbridge.hpp"
 
 template<typename R, typename... Args>
-template<typename F>
+    template<typename F>
 FunctionPtr<R(Args...)>::FunctionPtr(F&& f) : bridge(nullptr)
 {
     using Functor = std::decay_t<F>;
