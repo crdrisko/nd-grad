@@ -11,7 +11,7 @@ int main()
     unsigned height[size] {26, 37, 47, 55, 62, 75};     // An array of heights
 
     unsigned total {};                                  // Sum of heights
-    for (size_t i {}; i < size; ++i)
+    for (std::size_t i {}; i < size; ++i)
     {
         total += height[i];
     }
@@ -20,7 +20,7 @@ int main()
     std::cout << "The average height is " << average << std::endl;
 
     unsigned count {};
-    for (size_t i {}; i < size; ++i)
+    for (std::size_t i {}; i < size; ++i)
     {
         if (height[i] < average) ++count;
     }

@@ -9,8 +9,8 @@
 int main()
 {
     const double pi { 3.14159265358979323846 };     // The famous pi
-    const size_t perline {3};                       // Outputs per line
-    size_t linecount {};                            // Count of output lines
+    const std::size_t perline {3};                       // Outputs per line
+    std::size_t linecount {};                            // Count of output lines
     for (double radius {0.2}; radius < 3.0 + 0.001; radius += 0.2)
     {
         std::cout << std::fixed << std::setprecision(2)

@@ -9,9 +9,9 @@
 
 int main()
 {
-    const size_t highestSquarable_size_t = std::sqrt(std::numeric_limits<size_t>::max()) - 1;
+    const std::size_t highestSquarable_size_t = std::sqrt(std::numeric_limits<std::size_t>::max()) - 1;
 
-    size_t limit {};
+    std::size_t limit {};
     std::cout << "Please enter an upper limit for the odd integers up to "
                   << highestSquarable_size_t << ": ";
         std::cin  >> limit;
@@ -22,6 +22,6 @@ int main()
         std::cin  >> limit;
     }
 
-    for (size_t i {1}; i <= limit; i += 2)
+    for (std::size_t i {1}; i <= limit; i += 2)
         std::cout << i * i << std::endl;
 }

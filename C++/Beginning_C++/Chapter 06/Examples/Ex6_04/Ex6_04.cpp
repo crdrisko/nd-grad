@@ -17,7 +17,7 @@ int main()
 
     std::cout << "Pick a lucky star! Enter a number between 1 and "
               << std::size(pstars) << ": ";
-    size_t choice {};
+    std::size_t choice {};
     std::cin >> choice;
 
     if (choice >= 1 && choice <= std::size(pstars))

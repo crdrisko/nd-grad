@@ -8,13 +8,13 @@
 
 int main()
 {
-    size_t count {};
+    std::size_t count {};
     std::cout << "How many heights will you enter? ";
     std::cin  >> count;
     int height[count];                  // Create the array of count elements
 
     // Read the heights
-    size_t entered {};
+    std::size_t entered {};
     while (entered < count)
     {
         std::cout << "Enter a height: ";
@@ -31,7 +31,7 @@ int main()
 
     // Calculate the sum of the heights
     unsigned int total {};
-    for (size_t i {}; i < count; ++i)
+    for (std::size_t i {}; i < count; ++i)
     {
         total += height[i];
     }

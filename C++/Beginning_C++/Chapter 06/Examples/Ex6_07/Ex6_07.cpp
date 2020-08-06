@@ -12,7 +12,7 @@
 int main()
 {
     std::vector<std::shared_ptr<std::vector<double>>> records;          // Temperature records by days
-    size_t day {1};                                                     // Day number
+    std::size_t day {1};                                                     // Day number
 
     while (true)                                                        // Collect temperatures by day
     {
@@ -44,7 +44,7 @@ int main()
     for (auto record : records)
     {
         double total {};
-        size_t count {};
+        std::size_t count {};
 
         std::cout << "\nTemperatures for day " << day++ << ":\n";
         for (auto temp : *record)

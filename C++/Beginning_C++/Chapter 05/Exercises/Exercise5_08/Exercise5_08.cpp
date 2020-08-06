@@ -8,9 +8,9 @@
 
 int main()
 {
-    std::array<size_t, 93> fibonacciNumbers {};
+    std::array<std::size_t, 93> fibonacciNumbers {};
 
-    for (size_t i {}; i < fibonacciNumbers.size(); ++i)
+    for (std::size_t i {}; i < fibonacciNumbers.size(); ++i)
     {
         if (i == 0 || i == 1)
             fibonacciNumbers[i] = 1;

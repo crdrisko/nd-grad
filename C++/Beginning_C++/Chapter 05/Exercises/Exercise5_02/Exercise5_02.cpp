@@ -9,7 +9,7 @@
 
 int main()
 {
-    size_t input {}, total {}, count {};
+    std::size_t input {}, total {}, count {};
     char userResponse {'y'};
 
     while (userResponse == 'y')

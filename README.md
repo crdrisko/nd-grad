@@ -13,6 +13,7 @@ All the examples/exercises from the various books on the programming languages I
 - [C++ Templates](http://www.tmplbook.com) by David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor
 - [C++20 Recipes](https://github.com/Apress/cpp-20-recipes) by J. Burton Browning and Bruce Sutherland
 - [Clean C++](https://github.com/Apress/clean-cplusplus) by Stephan Roth
+- [Introduction to Algorithms](https://mitpress.mit.edu/books/introduction-algorithms-third-edition) by Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, and Clifford Stein
 - [Modern X86 Assembly Language Programming](https://github.com/Apress/modern-x86-assembly-language-programming-2e) by Daniel Kusswurm
 - [Practical C++ Design](https://github.com/Apress/practical-cplusplus-design) by Adam Singer
 

@@ -7,7 +7,7 @@
 
 int main()
 {
-    size_t count {};
+    std::size_t count {};
     char character {};
     std::cout << "Enter a sequence of characters terminated by '#': " << std::endl;
 

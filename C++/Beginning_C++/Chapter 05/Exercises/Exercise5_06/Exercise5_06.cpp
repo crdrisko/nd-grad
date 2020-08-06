@@ -9,13 +9,13 @@
 
 int main()
 {
-    size_t limit {}, count {}, perline {10};
+    std::size_t limit {}, count {}, perline {10};
     std::cout << "Please enter an upper limit for the integers: ";
     std::cin  >> limit;
 
-    std::vector<size_t> data;
+    std::vector<std::size_t> data;
 
-    for (size_t i {}; i < limit; ++i)
+    for (std::size_t i {}; i < limit; ++i)
     {
         data.push_back(i + 1);
 

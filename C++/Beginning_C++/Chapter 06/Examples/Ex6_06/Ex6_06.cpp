@@ -9,7 +9,7 @@
 
 int main()
 {
-    size_t max {};                                          // Number of primes required
+    std::size_t max {};                                          // Number of primes required
 
     std::cout << "How many primes would you like? ";
     std::cin  >> max;                                       // Read number required
@@ -18,7 +18,7 @@ int main()
 
     auto* primes {new unsigned[max]};                       // Allocate memory for max primes
 
-    size_t count {1};                                       // Count of primes found
+    std::size_t count {1};                                       // Count of primes found
     primes[0] = 2;                                          // Insert first seed prime
 
     unsigned trial {3};                                     // Initial candidate prime
@@ -28,7 +28,7 @@ int main()
         bool isprime {true};                                // Indicates when a prime is found
 
         const auto limit = static_cast<unsigned>(std::sqrt(trial));
-        for (size_t i {}; primes[i] <= limit && isprime; ++i)
+        for (std::size_t i {}; primes[i] <= limit && isprime; ++i)
         {
             isprime = trial % primes[i] > 0;                // False for exact division
         }
@@ -40,7 +40,7 @@ int main()
     }
 
     // Output primes 10 to a line
-    for (size_t i {}; i < max; ++i)
+    for (std::size_t i {}; i < max; ++i)
     {
         std::cout << std::setw(10) << primes[i];
         if ((i + 1) % 10 == 0)                              // After every 10th prime ...

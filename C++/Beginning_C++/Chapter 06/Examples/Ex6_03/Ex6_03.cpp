@@ -18,7 +18,7 @@ int main()
     const char* pstr {"Your lucky star is "};
 
     std::cout << "Pick a lucky star! Enter a number between 1 and 8: ";
-    size_t choice {};
+    std::size_t choice {};
     std::cin >> choice;
 
     switch (choice)

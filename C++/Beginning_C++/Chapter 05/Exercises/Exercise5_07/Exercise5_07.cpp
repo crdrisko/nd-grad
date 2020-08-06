@@ -10,15 +10,15 @@
 
 int main()
 {
-    std::vector<size_t> productNumber;
-    std::vector<size_t> quantity;
+    std::vector<std::size_t> productNumber;
+    std::vector<std::size_t> quantity;
     std::vector<double> unitPrice;
 
     char userResponse {'y'};
 
     do
     {
-        size_t id {}, quant {};
+        std::size_t id {}, quant {};
         double price {};
         std::cout << "Enter a Product ID, Quantity, and Unit Price for a given product separated by spaces: ";
         std::cin  >> id >> quant >> price;
@@ -42,7 +42,7 @@ int main()
 
     double cost {}, totalCost {};
 
-    for (size_t i {}; i < productNumber.size(); ++i)
+    for (std::size_t i {}; i < productNumber.size(); ++i)
     {
         cost = unitPrice[i] * quantity[i];
         totalCost += cost;

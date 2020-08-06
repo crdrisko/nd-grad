@@ -7,7 +7,7 @@
 
 int main()
 {
-    const size_t maxLength {1000};
+    const std::size_t maxLength {1000};
 
     char cStyleString[maxLength] {};
     std::cout << "Enter a string of up to 1000 characters: ";

@@ -9,9 +9,9 @@
 
 int main()
 {
-    size_t table {};                                                // Table size
-    const size_t table_min {2};                                     // Minimum table size - at least up to the 2-times
-    const size_t table_max {12};                                    // Maximum table size
+    std::size_t table {};                                                // Table size
+    const std::size_t table_min {2};                                     // Minimum table size - at least up to the 2-times
+    const std::size_t table_max {12};                                    // Maximum table size
     char reply {};                                                  // Response to prompt
 
     do
@@ -30,25 +30,25 @@ int main()
 
         // Create the top line of the table
         std::cout << std::setw(6) << " |";
-        for (size_t i {1}; i <= table; ++i)
+        for (std::size_t i {1}; i <= table; ++i)
         {
             std::cout << " " << std::setw(3) << i << " |";
         }
         std::cout << std::endl;
 
         // Create the separator row
-        for (size_t i {}; i <= table; ++i)
+        for (std::size_t i {}; i <= table; ++i)
         {
             std::cout << "------";
         }
         std::cout << std::endl;
 
-        for (size_t i {1}; i <= table; ++i)
+        for (std::size_t i {1}; i <= table; ++i)
         {   // Iterate over rows
             std::cout << " " << std::setw(3) << i << " |";          // Start the row
 
             // Output the values in a row
-            for (size_t j {1}; j <= table; ++j)
+            for (std::size_t j {1}; j <= table; ++j)
             {
                 std::cout << " " << std::setw(3) << i * j << " |";  // For each col.
             }

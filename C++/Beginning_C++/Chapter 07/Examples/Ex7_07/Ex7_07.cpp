@@ -28,7 +28,7 @@ int main()
         return 1;
     }
 
-    size_t start {text.find(word)};                                 // Index of 1st occurrence of word
+    std::size_t start {text.find(word)};                                 // Index of 1st occurrence of word
     while (start != std::string::npos)                              // Find and replace all occurrences
     {
         text.replace(start, word.length(), replacement);            // Replace word

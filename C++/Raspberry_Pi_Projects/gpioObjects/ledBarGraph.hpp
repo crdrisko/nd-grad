@@ -19,7 +19,7 @@ namespace RaspberryPi::GPIO
     public:
         explicit LEDBarGraph(std::array<int, 10> GPIO_PinNumbers)
         { 
-            for (size_t i {}; i < 10; ++i)
+            for (std::size_t i {}; i < 10; ++i)
                 ledLights[i] = std::make_shared<LEDLight>(GPIO_PinNumbers[i]); 
         }
 

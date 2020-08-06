@@ -14,7 +14,7 @@ int main()
               << " elements in the array." << std::endl;
 
     int sum {};
-    for (size_t i {}; i < std::size(values); ++i)
+    for (std::size_t i {}; i < std::size(values); ++i)
     {
         sum += values[i];
     }

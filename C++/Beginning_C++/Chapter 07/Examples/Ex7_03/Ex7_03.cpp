@@ -30,7 +30,7 @@ int main()
     do
     {
         sorted = true;                                              // Remains true when names are sorted
-        for (size_t i {1}; i < names.size(); ++i)
+        for (std::size_t i {1}; i < names.size(); ++i)
         {
             if (names[i - 1] > names[i])
             {   // Out of order - so swap names
@@ -41,14 +41,14 @@ int main()
     } while (!sorted);
 
     // Find the length of the longest name
-    size_t max_length {};
+    std::size_t max_length {};
     for (const auto& name : names)
         if (max_length < name.length())
             max_length = name.length();
 
     // Output the sorted names 5 to a line
-    const size_t field_width = max_length + 2;
-    size_t count {};
+    const std::size_t field_width = max_length + 2;
+    std::size_t count {};
 
     std::cout << "In ascending sequence the names you entered are:\n";
     for (const auto& name : names)

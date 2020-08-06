@@ -34,7 +34,7 @@ int main()
     while (true)
     {
         bool swapped {false};                               // Becomes true when not all values are in order
-        for (size_t i {}; i < x.size() - 1; ++i)
+        for (std::size_t i {}; i < x.size() - 1; ++i)
         {
             if (x[i] > x[i + 1])                            // Out of order so swap them
             {
@@ -51,9 +51,9 @@ int main()
 
     std::cout << "Your data in ascending sequence:\n"
               << std::fixed << std::setprecision(1);
-    const size_t perline {10};                              // Number output per line
-    size_t n {};                                            // Number on current line
-    for (size_t i {}; i < x.size(); ++i)
+    const std::size_t perline {10};                              // Number output per line
+    std::size_t n {};                                            // Number on current line
+    for (std::size_t i {}; i < x.size(); ++i)
     {
         std::cout << std::setw(8) << x[i];
         if (++n == perline)                                 // When perline have been written ...

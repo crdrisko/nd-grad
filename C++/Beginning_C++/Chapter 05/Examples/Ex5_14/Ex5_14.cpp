@@ -12,12 +12,12 @@ int main()
     const unsigned min_wt {100};                        // Minimum weight in table (in pounds)
     const unsigned max_wt {250};                        // Maximum weight in table
     const unsigned wt_step {10};
-    const size_t wt_count { 1 + (max_wt - min_wt) / wt_step };
+    const std::size_t wt_count { 1 + (max_wt - min_wt) / wt_step };
 
     const unsigned min_ht {48};                         // Minimum height in table (in inches)
     const unsigned max_ht {84};                         // Maximum height in table
     const unsigned ht_step {2};
-    const size_t ht_count { 1 + (max_ht - min_ht) / ht_step };
+    const std::size_t ht_count { 1 + (max_ht - min_ht) / ht_step };
 
     const double lbs_per_kg {2.2};                      // Pounds per kilogram
     const double ins_per_m {39.37};                     // Inches per meter
@@ -25,13 +25,13 @@ int main()
     std::array<unsigned, ht_count> height_ins {};
 
     // Create weights from 100 lbs in steps of 10 lbs
-    for (size_t i {}, w {min_wt}; i < wt_count; w += wt_step, ++i)
+    for (std::size_t i {}, w {min_wt}; i < wt_count; w += wt_step, ++i)
     {
         weight_lbs[i] = w;
     }
 
     // Create heights from 48 inches in steps of 2 inches
-    for (size_t i {}, h {min_ht}; h <= max_ht; h += ht_step)
+    for (std::size_t i {}, h {min_ht}; h <= max_ht; h += ht_step)
     {
         height_ins.at(i++) = h;
     }
@@ -43,7 +43,7 @@ int main()
     std::cout << std::endl;
 
     // Output line below headings
-    for (size_t i {1}; i < wt_count; ++i)
+    for (std::size_t i {1}; i < wt_count; ++i)
         std::cout << "---------";
     std::cout << std::endl;
 
@@ -67,7 +67,7 @@ int main()
     }
 
     // Output line below table
-    for (size_t i {1}; i < wt_count; ++i)
+    for (std::size_t i {1}; i < wt_count; ++i)
         std::cout << "---------";
     std::cout << "\nBMI from 18.5 to 24.9 is normal" << std::endl;
 }

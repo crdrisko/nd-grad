@@ -17,8 +17,8 @@ int main()
     std::cin.getline(text, max_length);
     std::cout << "You entered:\n" << text << std::endl;
 
-    size_t vowels {};                               // Count of vowels
-    size_t consonants {};                           // Count of consonants
+    std::size_t vowels {};                               // Count of vowels
+    std::size_t consonants {};                           // Count of consonants
     for (int i {}; text[i] != '\0'; i++)
     {
         if (std::isalpha(text[i]))                  // If it is a letter ...
