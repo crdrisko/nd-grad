@@ -1,4 +1,7 @@
 #!/bin/bash
+# Copyright (c) 2010 Chris Johnson. Some rights reserved.
+# Licensed under the Freeware License. See the LICENSE file in the project root for license information.
+#
 # Name: fifteen.sh - (Listing 11-15)
 # Author: Cody R. Drisko (crdrisko)
 # Date: 07/19/2019-07:17:08

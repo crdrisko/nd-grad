@@ -1,3 +1,5 @@
+// Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
+//
 // Name: maxdefault3.hpp - Version 1.0.0
 // Author: cdrisko
 // Date: 07/26/2020-08:10:38

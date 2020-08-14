@@ -1,3 +1,6 @@
+// Copyright (c) 2018 Ivor Horton and Peter Van Weert. Some rights reserved.
+// Licensed under the Freeware License. See the LICENSE file in the project root for license information.
+//
 // Name: Ex7_01A.cpp - Version 1.0.0
 // Author: cdrisko
 // Date: 05/03/2020-15:07:05

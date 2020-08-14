@@ -1,4 +1,7 @@
 #!/bin/bash
+# Copyright (c) 2010 Chris Johnson. Some rights reserved.
+# Licensed under the Freeware License. See the LICENSE file in the project root for license information.
+#
 # Name: checkarg.sh - (Listing 5-2)
 # Author: Cody R. Drisko (crdrisko)
 # Date: 06/30/2019-09:52:43

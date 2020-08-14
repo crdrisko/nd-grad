@@ -1,4 +1,7 @@
 #!/bin/bash
+# Copyright (c) 2010 Chris Johnson. Some rights reserved.
+# Licensed under the Freeware License. See the LICENSE file in the project root for license information.
+#
 # Name: isort.sh - (Listing 13-2)
 # Author: Cody R. Drisko (crdrisko)
 # Date: 07/27/2019-09:49:08

@@ -1,4 +1,7 @@
 #!/bin/bash
+# Copyright (c) 2010 Chris Johnson. Some rights reserved.
+# Licensed under the Freeware License. See the LICENSE file in the project root for license information.
+#
 # Name: alert.sh - (Listing 7-2)
 # Author: Cody R. Drisko (crdrisko)
 # Date: 07/03/2019-09:09:36

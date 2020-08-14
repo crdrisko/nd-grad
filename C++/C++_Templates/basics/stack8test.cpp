@@ -1,3 +1,5 @@
+// Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
+//
 // Name: stack8test.cpp - Version 1.0.0
 // Author: cdrisko
 // Date: 07/31/2020-07:42:09

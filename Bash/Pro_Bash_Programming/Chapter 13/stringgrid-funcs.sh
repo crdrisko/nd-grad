@@ -1,4 +1,7 @@
 #!/bin/bash
+# Copyright (c) 2010 Chris Johnson. Some rights reserved.
+# Licensed under the Freeware License. See the LICENSE file in the project root for license information.
+#
 # Name: stringgrid-funcs.sh - (Listing 13-5)
 # Author: Cody R. Drisko (crdrisko)
 # Date: 07/28/2019-06:59:19

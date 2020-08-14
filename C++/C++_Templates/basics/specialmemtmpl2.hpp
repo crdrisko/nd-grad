@@ -1,3 +1,5 @@
+// Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
+//
 // Name: specialmemtmpl2.hpp - Version 1.0.0
 // Author: cdrisko
 // Date: 08/01/2020-08:45:53

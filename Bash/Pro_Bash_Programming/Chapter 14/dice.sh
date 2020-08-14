@@ -1,4 +1,7 @@
 #!/bin/bash
+# Copyright (c) 2010 Chris Johnson. Some rights reserved.
+# Licensed under the Freeware License. See the LICENSE file in the project root for license information.
+#
 # Name: dice.sh - (Listing 14-8)
 # Author: Cody R. Drisko (crdrisko)
 # Date: 08/09/2019-08:21:28

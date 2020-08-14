@@ -1,3 +1,5 @@
+// Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
+//
 // Name: maxdecltype.hpp - Version 1.0.0
 // Author: cdrisko
 // Date: 07/25/2020-21:06:12

@@ -1,3 +1,5 @@
+// Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
+//
 // Name: person.hpp - Version 1.0.0
 // Author: cdrisko
 // Date: 07/29/2020-09:45:40

@@ -1,4 +1,7 @@
 #!/bin/bash
+# Copyright (c) 2010 Chris Johnson. Some rights reserved.
+# Licensed under the Freeware License. See the LICENSE file in the project root for license information.
+#
 # Name: keycapture.sh - (Listing 15-3)
 # Author: Cody R. Drisko (crdrisko)
 # Date: 08/10/2019-09:31:02

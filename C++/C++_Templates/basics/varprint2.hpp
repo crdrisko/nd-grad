@@ -1,3 +1,5 @@
+// Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
+//
 // Name: varprint2.hpp - Version 1.0.0
 // Author: cdrisko
 // Date: 07/27/2020-10:39:28

@@ -1,4 +1,7 @@
 #!/bin/bash
+# Copyright (c) 2010 Chris Johnson. Some rights reserved.
+# Licensed under the Freeware License. See the LICENSE file in the project root for license information.
+#
 # Name: kjvfirsts.sh - (Listing 8-1)
 # Author: Cody R. Drisko (crdrisko)
 # Date: 07/07/2019-16:38:21

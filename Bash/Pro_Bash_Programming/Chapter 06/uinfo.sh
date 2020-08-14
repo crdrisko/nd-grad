@@ -1,4 +1,7 @@
 #!/bin/bash
+# Copyright (c) 2010 Chris Johnson. Some rights reserved.
+# Licensed under the Freeware License. See the LICENSE file in the project root for license information.
+#
 # Name: uinfo.sh - (Listing 6-4)
 # Author: Cody R. Drisko (crdrisko)
 # Date: 07/01/2019-12:49:37

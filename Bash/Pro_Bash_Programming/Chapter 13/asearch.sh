@@ -1,4 +1,7 @@
 #!/bin/bash
+# Copyright (c) 2010 Chris Johnson. Some rights reserved.
+# Licensed under the Freeware License. See the LICENSE file in the project root for license information.
+#
 # Name: asearch.sh - (Listing 13-3)
 # Author: Cody R. Drisko (crdrisko)
 # Date: 07/27/2019-10:09:31

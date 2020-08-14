@@ -1,4 +1,7 @@
 #!/bin/bash
+# Copyright (c) 2010 Chris Johnson. Some rights reserved.
+# Licensed under the Freeware License. See the LICENSE file in the project root for license information.
+#
 # Name: bpl_pd.sh - (Listing 11-2)
 # Author: Cody R. Drisko (crdrisko)
 # Date: 07/14/2019-13:49:06

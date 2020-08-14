@@ -1,4 +1,7 @@
 #!/bin/bash
+# Copyright (c) 2010 Chris Johnson. Some rights reserved.
+# Licensed under the Freeware License. See the LICENSE file in the project root for license information.
+#
 # Name: index.sh - (Listing 7-10)
 # Author: Cody R. Drisko (crdrisko)
 # Date: 07/04/2019-16:05:27

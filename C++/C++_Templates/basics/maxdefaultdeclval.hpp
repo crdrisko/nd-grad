@@ -1,3 +1,5 @@
+// Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
+//
 // Name: maxdefaultdeclval.hpp - Version 1.0.0
 // Author: crdrisko
 // Date: 08/13/2020-13:26:36

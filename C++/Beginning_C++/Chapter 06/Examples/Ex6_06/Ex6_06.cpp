@@ -1,3 +1,6 @@
+// Copyright (c) 2018 Ivor Horton and Peter Van Weert. Some rights reserved.
+// Licensed under the Freeware License. See the LICENSE file in the project root for license information.
+//
 // Name: Ex6_06.cpp - Version 1.0.0
 // Author: cdrisko
 // Date: 05/01/2020-14:17:51

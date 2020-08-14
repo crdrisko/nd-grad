@@ -1,4 +1,7 @@
 #!/bin/bash
+# Copyright (c) 2010 Chris Johnson. Some rights reserved.
+# Licensed under the Freeware License. See the LICENSE file in the project root for license information.
+#
 # Name: varfuncs.sh - (Listing 9-2)
 # Author: Cody R. Drisko (crdrisko)
 # Date: 07/13/2019-12:10:22

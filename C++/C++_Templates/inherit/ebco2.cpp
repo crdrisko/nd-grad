@@ -1,3 +1,5 @@
+// Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
+//
 // Name: ebco2.cpp - Version 1.0.0
 // Author: cdrisko
 // Date: 07/28/2020-20:08:41
