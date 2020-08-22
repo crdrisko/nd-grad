@@ -1,4 +1,5 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
+// See the LICENSE file in the project root for more information.
 //
 // Name: ebco2.cpp - Version 1.0.0
 // Author: cdrisko
@@ -12,13 +13,9 @@ class Empty
     using Int = int;                                        // type alias members don't make a class nonempty
 };
 
-class EmptyToo : public Empty
-{
-};
+class EmptyToo : public Empty {};
 
-class NonEmpty : public Empty, public EmptyToo
-{
-};
+class NonEmpty : public Empty, public EmptyToo {};
 
 int main()
 {
