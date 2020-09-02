@@ -11,7 +11,7 @@
 int main()
 {
     long number {};                             // Stores input
-    std::cout << "Enter an integet less than 2 billion: ";
+    std::cout << "Enter an integer less than 2 billion: ";
     std::cin  >> number;
 
     if (number % 2)                             // Test remainder after division by 2
