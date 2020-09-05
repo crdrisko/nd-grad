@@ -1,3 +1,6 @@
+// Copyright (c) 2020 Cody R. Drisko. All rights reserved.
+// Licensed under the MIT License. See the LICENSE file in the project root for more information.
+//
 // Name: Exercise7_05.cpp - Version 1.0.0
 // Author: cdrisko
 // Date: 08/05/2020-07:37:31

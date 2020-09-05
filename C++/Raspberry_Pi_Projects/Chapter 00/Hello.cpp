@@ -1,5 +1,5 @@
 // Name: Hello.cpp - Version 1.0.0
-// Author: Cody R. Drisko (crdrisko) 
+// Author: crdrisko 
 // Date: 01/02/2020-22:06:55
 // Description:
 
