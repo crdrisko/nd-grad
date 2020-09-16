@@ -1,5 +1,5 @@
 // Copyright (c) 2020 Cody R. Drisko. All rights reserved.
-// Licensed under the MIT License. See the LICENSE file in the project root for license information.
+// Licensed under the MIT License. See the LICENSE file in the project root for more information.
 //
 // Name: testSingle_RNEMD.hpp - Version 1.0.0
 // Author: cdrisko
@@ -129,7 +129,7 @@ namespace ND_Research
     GTEST_TEST(testSingle_RNEMD, allDataFieldsAreParsedCorrectly)
     {
         Utilities_API::Files::TextFile actualFile {"../../samples/rnemd/single.rnemd"};
-        std::vector< std::vector<std::string> > actualData {actualFile.getSuperDataVector()};
+        std::vector<std::vector<std::string>> actualData {actualFile.getSuperDataVector()};
 
         RNEMDFile rnemdFile {"../../samples/rnemd/single.rnemd"};
         RNEMDDataPtr rnemdData {rnemdFile.getRNEMDData()};

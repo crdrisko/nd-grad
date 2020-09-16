@@ -1,5 +1,5 @@
 // Copyright (c) 2020 Cody R. Drisko. All rights reserved.
-// Licensed under the MIT License. See the LICENSE file in the project root for license information.
+// Licensed under the MIT License. See the LICENSE file in the project root for more information.
 //
 // Name: xyzParameters.hpp - Version 1.0.0
 // Author: crdrisko
@@ -18,8 +18,8 @@
 
 namespace ND_Research
 {
-    template <typename T>
-    using Matrix3D = Utilities_API::Containers::Vector3D< Utilities_API::Containers::Vector3D<T> >;
+    template<typename T>
+    using Matrix3D = Utilities_API::Containers::Vector3D<Utilities_API::Containers::Vector3D<T>>;
 
 
     struct XYZParameters

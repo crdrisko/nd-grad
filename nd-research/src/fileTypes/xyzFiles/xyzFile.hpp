@@ -1,5 +1,5 @@
 // Copyright (c) 2020 Cody R. Drisko. All rights reserved.
-// Licensed under the MIT License. See the LICENSE file in the project root for license information.
+// Licensed under the MIT License. See the LICENSE file in the project root for more information.
 //
 // Name: xyzFile.hpp - Version 1.0.0
 // Author: cdrisko
@@ -28,7 +28,7 @@ namespace ND_Research
         // std::vector<MolecularEntityPtr> molecularEntities;
         XYZParametersPtr xyzParameters { std::make_shared<XYZParameters>() };
 
-        std::vector< std::vector<std::string> > superDataVector { getSuperDataVector(" \t\n\";") };
+        std::vector<std::vector<std::string>> superDataVector { getSuperDataVector(" \t\n\";") };
 
         void setNumberOfFrames();
         void parseInputXYZFile(std::size_t currentFrame);

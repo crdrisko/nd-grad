@@ -1,5 +1,5 @@
 // Copyright (c) 2020 Cody R. Drisko. All rights reserved.
-// Licensed under the MIT License.See the LICENSE file in the project root for license information.
+// Licensed under the MIT License.See the LICENSE file in the project root for more information.
 //
 // Name: rnemdFile.cpp - Version 1.0.0
 // Author: cdrisko
@@ -175,14 +175,14 @@ namespace ND_Research
         DataFieldPtr electricField     { std::make_shared<DataFieldArray>("Electric Field(kcal/mol/angstroms/e)") };
         DataFieldPtr electricPotential { std::make_shared<DataField>("Electrostatic Potential(kcal/mol/e)") };
 
-        DataFieldParser dataFieldParser { this, rnemdAxis,
-                                                temperature,
-                                                velocity,
-                                                angularVelocity,
-                                                density,
-                                                activity,
-                                                electricField,
-                                                electricPotential };
+        DataFieldParser dataFieldParser { *this, rnemdAxis,
+                                                 temperature,
+                                                 velocity,
+                                                 angularVelocity,
+                                                 density,
+                                                 activity,
+                                                 electricField,
+                                                 electricPotential };
 
         dataFieldParser.parseDataFromFile(metaDataVector[rnemdParameters->inferred.dataFieldLabelIndex]);
 

@@ -1,5 +1,5 @@
 // Copyright (c) 2020 Cody R. Drisko. All rights reserved.
-// Licensed under the MIT License. See the LICENSE file in the project root for license information.
+// Licensed under the MIT License. See the LICENSE file in the project root for more information.
 //
 // Name: chargedRNEMDAnalysisMethod.hpp - Version 1.0.0
 // Author: cdrisko
@@ -39,13 +39,13 @@ namespace OpenMD::RNEMD::ChargedRNEMD
         ChargedRNEMDParametersPtr rnemdParameters;
         std::vector<RNEMDDataPtr> individualRegionData;
 
-        std::vector< std::vector< std::vector<PhysicalQuantities::Energy> > > electrochemicalPotential;
+        std::vector<std::vector<std::vector<PhysicalQuantities::Energy>>> electrochemicalPotential;
 
         // Use arrays of physical quantities to propagate error through our transport property calculations
-        std::vector< std::vector< std::array<PhysicalQuantities::Force, 2> > > gradientOfElectrochemicalPotential;
-        std::vector< std::vector< std::array<PhysicalQuantities::ElectricConductivity, 2> > > sigma;
-        std::vector< std::vector< std::array<PhysicalQuantities::MolarConductivity, 2> > > lambda;
-        std::vector< std::vector< std::array<PhysicalQuantities::Mobility, 2> > > mobility;
+        std::vector<std::vector<std::array<PhysicalQuantities::Force, 2>>> gradientOfElectrochemicalPotential;
+        std::vector<std::vector<std::array<PhysicalQuantities::ElectricConductivity, 2>>> sigma;
+        std::vector<std::vector<std::array<PhysicalQuantities::MolarConductivity, 2>>> lambda;
+        std::vector<std::vector<std::array<PhysicalQuantities::Mobility, 2>>> mobility;
 
         void calculateElectricPotential();
 

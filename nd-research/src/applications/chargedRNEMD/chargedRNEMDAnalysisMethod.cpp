@@ -1,5 +1,5 @@
 // Copyright (c) 2020 Cody R. Drisko. All rights reserved.
-// Licensed under the MIT License. See the LICENSE file in the project root for license information.
+// Licensed under the MIT License. See the LICENSE file in the project root for more information.
 //
 // Name: chargedRNEMDAnalysisMethod.cpp - Version 1.0.0
 // Author: cdrisko
@@ -146,7 +146,7 @@ namespace OpenMD::RNEMD::ChargedRNEMD
     {
         for (const auto& ion : rnemdParameters->ionicSpecies)
         {
-            std::vector< std::vector<Energy> > externalTemporaryStorageVector;
+            std::vector<std::vector<Energy>> externalTemporaryStorageVector;
 
             for (int region {1}; region <= rnemdParameters->inferred->numberOfRegions; ++region)
             {
@@ -174,9 +174,9 @@ namespace OpenMD::RNEMD::ChargedRNEMD
     {
         for (const auto& ion : rnemdParameters->ionicSpecies)
         {
-            std::vector< std::array<ElectricConductivity, 2> > sigmaTemporaryStorageVector;
-            std::vector< std::array<MolarConductivity, 2> > lambdaTemporaryStorageVector;
-            std::vector< std::array<Mobility, 2> > mobilityTemporaryStorageVector;
+            std::vector<std::array<ElectricConductivity, 2>> sigmaTemporaryStorageVector;
+            std::vector<std::array<MolarConductivity, 2>> lambdaTemporaryStorageVector;
+            std::vector<std::array<Mobility, 2>> mobilityTemporaryStorageVector;
 
             for (int region {1}; region <= rnemdParameters->inferred->numberOfRegions; ++region)
             {

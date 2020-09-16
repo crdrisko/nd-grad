@@ -1,5 +1,5 @@
 // Copyright (c) 2020 Cody R. Drisko. All rights reserved.
-// Licensed under the MIT License. See the LICENSE file in the project root for license information.
+// Licensed under the MIT License. See the LICENSE file in the project root for more information.
 //
 // Name: regionDifference.hpp - Version 1.0.0
 // Author: cdrisko
@@ -21,7 +21,7 @@ namespace OpenMD::RNEMD::ChargedRNEMD
     class RegionDifference : public ChargedRNEMDAnalysisMethod
     {
     private:
-        std::vector< std::vector< std::vector<PhysicalQuantities::Force> > > fittingParameters;
+        std::vector<std::vector<std::vector<PhysicalQuantities::Force>>> fittingParameters;
 
         virtual void calculateGradientOfElectrochemicalPotential() override;
         virtual void printAdditionalRegionHeader(std::ofstream& outputFileStream, int region) override;

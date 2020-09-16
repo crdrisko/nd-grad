@@ -1,5 +1,5 @@
 // Copyright (c) 2020 Cody R. Drisko. All rights reserved.
-// Licensed under the MIT License.See the LICENSE file in the project root for license information.
+// Licensed under the MIT License.See the LICENSE file in the project root for more information.
 //
 // Name: rnemdFile.hpp - Version 1.0.0
 // Author: cdrisko
@@ -27,7 +27,7 @@ namespace ND_Research
         RNEMDDataPtr rnemdData { std::make_shared<RNEMDData>() };
         RNEMDParametersPtr rnemdParameters { std::make_shared<RNEMDParameters>() };
 
-        std::vector< std::vector<std::string> > superMetaDataVector { getSuperMetaDataVector(" \t\n\";") };
+        std::vector<std::vector<std::string>> superMetaDataVector { getSuperMetaDataVector(" \t\n\";") };
 
         void setRNEMDBlockParameters(std::size_t& row);
         void setRNEMDReportParameters(std::size_t& row);

@@ -1,5 +1,5 @@
 // Copyright (c) 2020 Cody R. Drisko. All rights reserved.
-// Licensed under the MIT License. See the LICENSE file in the project root for license information.
+// Licensed under the MIT License. See the LICENSE file in the project root for more information.
 //
 // Name: regionFitting.cpp - Version 1.0.0
 // Author: cdrisko
@@ -23,8 +23,8 @@ namespace OpenMD::RNEMD::ChargedRNEMD
     {
         for (const auto& ion : rnemdParameters->ionicSpecies)
         {
-            std::vector< std::array<Force, 2> > temporaryStorageVector;
-            std::vector< std::vector<Force> > temporaryFittingParameters;
+            std::vector<std::array<Force, 2>> temporaryStorageVector;
+            std::vector<std::vector<Force>> temporaryFittingParameters;
 
             for (int region {1}; region <= rnemdParameters->inferred->numberOfRegions; ++region)
             {

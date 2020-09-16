@@ -1,5 +1,5 @@
 // Copyright (c) 2020 Cody R. Drisko. All rights reserved.
-// Licensed under the MIT License. See the LICENSE file in the project root for license information.
+// Licensed under the MIT License. See the LICENSE file in the project root for more information.
 //
 // Name: testRNEMDFileParsing.hpp - Version 1.0.0
 // Author: crdrisko
@@ -147,7 +147,7 @@ namespace ND_Research
     GTEST_TEST(testRNEMDFileParsing, allDataFieldsAreParsedCorrectly)
     {
         Utilities_API::Files::TextFile actualFile {"../../samples/rnemd/double.rnemd"};
-        std::vector< std::vector<std::string> > actualData {actualFile.getSuperDataVector()};
+        std::vector<std::vector<std::string>> actualData {actualFile.getSuperDataVector()};
 
         RNEMDFile rnemdFile {"../../samples/rnemd/double.rnemd"};
         RNEMDDataPtr rnemdData {rnemdFile.getRNEMDData()};
