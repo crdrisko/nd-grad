@@ -1,8 +1,8 @@
 #!/bin/bash
 # Copyright (c) 2020 Cody R. Drisko. All rights reserved.
-# Licensed under the MIT License. See the LICENSE file in the project root for license information.
+# Licensed under the MIT License. See the LICENSE file in the project root for more information.
 #
-# Name: groupSubmit.sh - Version 1.1.3
+# Name: groupSubmit.sh - Version 1.2.0
 # Author: cdrisko
 # Date: 01/20/2020-10:22:05
 # Description: Gezelter group submission script creator and resource monitor
@@ -11,8 +11,8 @@
 ### Functions ###
 source errorHandling
 
-printHelpMessage()      #@ DESCRIPTION: Print the groupSubmit program's help message
-{                       #@ USAGE: printHelpMessage
+printHelpMessage()              #@ DESCRIPTION: Print the groupSubmit program's help message
+{                               #@ USAGE: printHelpMessage
     printf "\nUSAGE: groupSubmit [-hvd] [-i fileName] [-s scriptName] [-u userName] [-c cores]\n\n"
     printf "  -h  Prints help information about the groupSubmit program.\n"
     printf "  -v  Verbose mode. Defaults to false/off.\n"
@@ -28,11 +28,11 @@ printHelpMessage()      #@ DESCRIPTION: Print the groupSubmit program's help mes
     printf "EXAMPLE: groupSubmit -i testFile.omd -c \"mpi-24 24\"\n\n"
 }
 
-printCheckQuotaScript()     #@ DESCRIPTION: Print script used to notify user of potential memory overflow
-{                           #@ USAGE: printCheckQuotaScript [User|Group]
+printCheckQuotaScript()         #@ DESCRIPTION: Print script used to notify user of potential memory overflow
+{                               #@ USAGE: printCheckQuotaScript [User|Group]
     printf "#!/bin/bash\n"
-    printf "#$ -N check%sQuota\n" $1
-    printf "#$ -M %s@nd.edu\n" $username
+    printf "#$ -N check%sQuota\n" "$1"
+    printf "#$ -M %s@nd.edu\n" "$username"
     printf "#$ -m abe\n"
     printf "#$ -pe smp 1\n\n"
     printf "while true\n"
@@ -43,22 +43,22 @@ printCheckQuotaScript()     #@ DESCRIPTION: Print script used to notify user of 
     printf "    if [ \$quotaPercentage -ge 99 ]\n"
     printf "    then\n"
     printf "        ## Send DANGER if within 1%% of available quota ##\n"
-    printf "        mail -s 'DANGER' %s@nd.edu <<< 'You have used 99%% of your available quota.'\n" $username
+    printf "        mail -s 'DANGER' %s@nd.edu <<< 'You have used 99%% of your available quota.'\n" "$username"
     printf "        sleepTime=15m\n\n"
     printf "    elif [ \$quotaPercentage -ge 95 ]\n"
     printf "    then\n"
     printf "        ## Send WARNING if within 5%% of available quota ##\n"
-    printf "        mail -s 'WARNING' %s@nd.edu <<< 'You have used 95%% of your available quota.'\n" $username
+    printf "        mail -s 'WARNING' %s@nd.edu <<< 'You have used 95%% of your available quota.'\n" "$username"
     printf "        sleepTime=30m\n\n"
     printf "    elif [ \$quotaPercentage -ge 90 ]\n"
     printf "    then\n"
     printf "        ## Send CAUTION if within 10%% of available quota ##\n"
-    printf "        mail -s 'CAUTION' %s@nd.edu <<< 'You have used 90%% of your available quota.'\n" $username
+    printf "        mail -s 'CAUTION' %s@nd.edu <<< 'You have used 90%% of your available quota.'\n" "$username"
     printf "        sleepTime=1h\n"
     printf "    fi\n\n"
     printf "    ## Put machine to sleep before next check ##\n"
     printf "    sleep \${sleepTime:=2h}\n\n"
-    printf "    qstatArray=( \$( /opt/sge/bin/lx-amd64/qstat -u %s | tail -n +3 ) )\n" $USER
+    printf "    qstatArray=( \$( /opt/sge/bin/lx-amd64/qstat -u %s | tail -n +3 ) )\n" "$USER"
     printf "    qstatArrayLength=\$( printf \"%%s\\\n\" \${qstatArray[@]} | wc -l )\n\n"
     printf "    case \$qstatArrayLength in\n"
     printf "         9) ## Only one filesystem is being checked ##\n"
@@ -79,12 +79,12 @@ printCheckQuotaScript()     #@ DESCRIPTION: Print script used to notify user of 
 printOpenmdSubmissionScript()   #@ DESCRIPTION: Print script used to run the OpenMD job
 {                               #@ USAGE: printOpenmdSubmissionScript
     printf "#!/bin/bash\n"
-    printf "#$ -N %s\n" ${fileName%%.*}
-    printf "#$ -M %s@nd.edu\n" $username
+    printf "#$ -N %s\n" "${fileName%%.*}"
+    printf "#$ -M %s@nd.edu\n" "$username"
     printf "#$ -m abe\n"
-    printf "#$ -q %s\n" ${queue:-long}
+    printf "#$ -q %s\n" "${queue:-long}"
     printf "#$ -pe %s\n\n" "${cores:="smp 16"}"
-    printf "SIM_NAME=\"%s\"\n" ${fileName%%.*}
+    printf "SIM_NAME=\"%s\"\n" "${fileName%%.*}"
     printf "WORK_DIR=\`pwd\`\n\n"
     printf "module purge\n"
     printf "module load openmd\n"
@@ -120,74 +120,85 @@ do
         u) username="$OPTARG" ;;
         c) cores="$OPTARG" ;;
         d) queue=debug ;;
-        v) verbose=1 ;;
+        v) export verbose=1 ;;
         h) printHelpMessage && printFatalErrorMessage 0 ;;
+        *) printFatalErrorMessage 1 "Invalid option flag passed to program." ;;
     esac
 done
 
 
 ### Main Code ###
-[ -d "$directory" ] && cd "$directory" || printFatalErrorMessage 1 "Invalid directory."
-[ "${USER:?Issue finding your CRC username. Set the \$USER variable and try again.}" ]
-
-if [[ -z "${scriptName:-""}" && -f "${fileName:?A filename is required}" ]]
+if [[ -d "$directory" ]]
 then
-    ## User didn't specify a submission script so we'll just make them one ##
-    printOpenmdSubmissionScript > openmd_multiple.sh
+    cd "$directory" || printFatalErrorMessage 2 "Could not change into required directory."
 
-    ## Comment out RNEMD line we aren't running RNEMD ##
-    if grep useRNEMD "$fileName" &>/dev/null
+    [ "${USER:?Issue finding your CRC username. Set the \$USER variable and try again.}" ]
+
+    if [[ -z "${scriptName:-""}" ]]
     then
-        IFS=$' =;'
-        useRNEMDArray=( $( grep useRNEMD "$fileName" ) )
+        if [[ -f ${fileName:?A filename is required} ]]
+        then
+            ## User didn't specify a submission script so we'll just make them one ##
+            printOpenmdSubmissionScript > openmd_multiple.sh
+
+            ## Comment out RNEMD line we aren't running RNEMD ##
+            if grep useRNEMD "$fileName" &>/dev/null
+            then
+                IFS=$' =;'
+                useRNEMDArray=( $( grep useRNEMD "$fileName" ) )
+                IFS=$' \t\n'
+
+                if [[ ${useRNEMDArray[1]} == 'false' ]]
+                then
+                    rnemdLine="fsync \${WORK_DIR}\/\${SIM_NAME}.rnemd \&"
+                    sed "s/$rnemdLine/#$rnemdLine/g" openmd_multiple.sh > tempFile && mv tempFile openmd_multiple.sh
+                fi
+            else
+                rnemdLine="fsync \${WORK_DIR}\/\${SIM_NAME}.rnemd \&"
+                sed "s/$rnemdLine/#$rnemdLine/g" openmd_multiple.sh > tempFile && mv tempFile openmd_multiple.sh
+            fi
+
+            scriptName=openmd_multiple.sh
+        else
+            printFatalErrorMessage 3 "The filename provided does not exist."
+        fi
+    fi
+
+    ## Submit the jobs if the submission script exists ##
+    if [[ -f $scriptName ]]
+    then
+        ## If checkQuota script is already running, no need to submit it again ##
+        IFS=$'\n'
+        qstatArray=( $( qstat -u "$USER" ) )
         IFS=$' \t\n'
 
-        if [[ ${useRNEMDArray[1]} == 'false' ]]
+        for line in "${qstatArray[@]}"
+        do
+            lineArray=( $line )
+
+            if [[ "${lineArray[2]}" == "checkUserQ" ]]
+            then
+                checkUserQuota=1
+            elif [[ "${lineArray[2]}" == "checkGroup" ]]
+            then
+                checkGroupQuota=1
+            fi
+        done
+
+        if [[ ${checkUserQuota:-0} -eq 0 && "$PWD" == /afs/crc.nd.edu/user/* ]]
         then
-            rnemdLine="fsync \${WORK_DIR}\/\${SIM_NAME}.rnemd \&"
-            sed "s/$rnemdLine/#$rnemdLine/g" openmd_multiple.sh > tempFile && mv tempFile openmd_multiple.sh
+            printCheckQuotaScript User > checkUserQuota.sh
+            qsub checkUserQuota.sh
+        elif [[ ${checkGroupQuota:-0} -eq 0 && "$PWD" == /afs/crc.nd.edu/group/gezelter/* ]]
+        then
+            printCheckQuotaScript Group > checkGroupQuota.sh
+            qsub checkGroupQuota.sh
         fi
+
+        qsub "$scriptName"
     else
-        rnemdLine="fsync \${WORK_DIR}\/\${SIM_NAME}.rnemd \&"
-        sed "s/$rnemdLine/#$rnemdLine/g" openmd_multiple.sh > tempFile && mv tempFile openmd_multiple.sh
+        printFatalErrorMessage 4 "The scriptname provided does not exist."
     fi
-
-    scriptName=openmd_multiple.sh
-fi
-
-## Submit the jobs if the submission script exists ##
-if [ -f "$scriptName" ]
-then
-    ## If checkQuota script is already running, no need to submit it again ##
-    IFS=$'\n'
-    qstatArray=( $( qstat -u $USER ) )
-    IFS=$' \t\n'
-
-    for line in "${qstatArray[@]}"
-    do
-        lineArray=( $line )
-
-        if [[ "${lineArray[2]}" == "checkUserQ" ]]
-        then
-            checkUserQuota=1
-        elif [[ "${lineArray[2]}" == "checkGroup" ]]
-        then
-            checkGroupQuota=1
-        fi
-    done
-
-    if [[ ${checkUserQuota:-0} -eq 0 && "$PWD" == /afs/crc.nd.edu/user/* ]]
-    then
-        printCheckQuotaScript User > checkUserQuota.sh
-        qsub checkUserQuota.sh
-    elif [[ ${checkGroupQuota:-0} -eq 0 && "$PWD" == /afs/crc.nd.edu/group/gezelter/* ]]
-    then
-        printCheckQuotaScript Group > checkGroupQuota.sh
-        qsub checkGroupQuota.sh
-    fi
-
-    qsub "$scriptName"
-
 else
-    printFatalErrorMessage 3 "The scriptname provided does not exist."
+    printFatalErrorMessage 5 "Invalid directory."
 fi

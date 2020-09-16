@@ -1,8 +1,8 @@
 #!/bin/bash
 # Copyright (c) 2020 Cody R. Drisko. All rights reserved.
-# Licensed under the MIT License. See the LICENSE file in the project root for license information.
+# Licensed under the MIT License. See the LICENSE file in the project root for more information.
 #
-# Name: equilibrator.sh - Version 1.0.0
+# Name: equilibrator.sh - Version 1.0.1
 # Author: cdrisko
 # Date: 02/07/2020-08:37:21
 # Description: Standard equilibration procedure for an OpenMD simulation
@@ -30,8 +30,8 @@ printHelpMessage()      #@ DESCRIPTION: Print the equilibrator program's help me
     printf "EXAMPLE: equilibrator -i NaClwarm.omd -s local -c \"mpi-24 24\"\n\n"
 }
 
-sciNotCalc()		#@ DESCRIPTION: Converts between scientific notation for simple calculations
-{					#@ USAGE: sciNotCalc INT1 INT2 VAR
+sciNotCalc()            #@ DESCRIPTION: Converts between scientific notation for simple calculations
+{                       #@ USAGE: sciNotCalc INT1 INT2 VAR
     product="$(( $1 * $2 ))"
     count=0
 
@@ -44,11 +44,11 @@ sciNotCalc()		#@ DESCRIPTION: Converts between scientific notation for simple ca
         esac
     done
 
-    printf -v $3 "${product}e${count}"
+    printf -v "$3" "%de%d" ${product} ${count}
 }
 
-spin()	    #@ DESCRIPTION: Print spinner until file exists
-{		    #@ USAGE: spin FILENAME
+spin()                  #@ DESCRIPTION: Print spinner until file exists
+{                       #@ USAGE: spin FILENAME
     spinner="-\\|/-\\|/"
 
     while true
@@ -58,16 +58,16 @@ spin()	    #@ DESCRIPTION: Print spinner until file exists
             echo -n "${spinner:$i:1}"
             echo -ne "\010"
             sleep 0.5
-            [ -e ${1?} ] && echo && break 2
+            [ -e "${1?}" ] && echo && break 2
         done
     done
 }
 
 performRunType()        #@ DESCRIPTION: Run the calculations for a given part of the equilibration procedure
 {                       #@ USAGE: performRunType RUNTYPE
-    [ ${inputFileName:=$inputFile} ]
-    currentEnsemble="$(grep ensemble $inputFileName)"
-    currentTime="$(grep runTime $inputFileName)"
+    [ "${inputFileName:=$inputFile}" ]
+    currentEnsemble=$( grep ensemble "$inputFileName" )
+    currentTime=$( grep runTime "$inputFileName" )
 
     case $1 in
         StructuralRelaxation) ## Structural Relaxation Parameters ##
@@ -93,13 +93,13 @@ performRunType()        #@ DESCRIPTION: Run the calculations for a given part of
                            *) printFatalErrorMessage 1 "$1 is not a valid runtype."
     esac
 
-    cp $inputFileName $desiredFile.omd
-    modifyFiles -i $desiredFile.omd -o "$currentEnsemble" -n "$desiredEnsemble"
-    modifyFiles -i $desiredFile.omd -o "$currentTime" -n "$desiredTime"
+    cp "$inputFileName" "$desiredFile.omd"
+    modifyFiles -i "$desiredFile.omd" -o "$currentEnsemble" -n "$desiredEnsemble"
+    modifyFiles -i "$desiredFile.omd" -o "$currentTime" -n "$desiredTime"
 
     case $submission in
-        queue) groupSubmit -i $desiredFile.omd -c "$cores"
-               printf "Waiting for $1 to finish running ... " && spin $desiredFile.report ;;
+        queue) groupSubmit -i "$desiredFile.omd" -c "$cores"
+               printf "Waiting for %s to finish running ... " "$1" && spin $desiredFile.report ;;
 
         local) mpirun -np "${cores#*\ }" openmd_MPI $desiredFile.omd ;;
 
@@ -115,29 +115,30 @@ performRunType()        #@ DESCRIPTION: Run the calculations for a given part of
 
 
 ### Initial Variables / Default Values ###
-submission=queue
-cores=smp\ 16
-timing=1
 verbose=0
+timing=1
+cores=smp\ 16
+submission=queue
 
 
 ### Runtime Configuration ###
 while getopts i:o:s:c:t:vh opt
 do
     case $opt in
-        i) inputFile=$OPTARG ;;
-        o) outputFile=$OPTARG ;;
-        s) submission=$OPTARG ;;
+        i) inputFile="$OPTARG" ;;
+        o) outputFile="$OPTARG" ;;
+        s) submission="$OPTARG" ;;
         c) cores="$OPTARG" ;;
-        t) timing=$OPTARG ;;
-        v) verbose=1 ;;
+        t) timing="$OPTARG" ;;
+        v) export verbose=1 ;;
         h) printHelpMessage && printFatalErrorMessage 0 ;;
+        *) printFatalErrorMessage 1 "Invalid option flag passed to program." ;;
     esac
 done
 
 
 ### Main Code ###
-if ! [ -e ${inputFile:?An input file is required.} ]       	## Check existence of file
+if [[ ! -f ${inputFile:?An input file is required.} ]]      ## Check existence of file
 then
     printf -v fileErrorMessage "Sorry, we couldn't find %s here." "$inputFile"
     printFatalErrorMessage 3 "$fileErrorMessage"
@@ -153,10 +154,10 @@ equilibrate=
 
 case $timing in
     *[!0-9]*) printFatalErrorMessage 4 "Timing option must be an integer." ;;
-           *) sciNotCalc 10000 $timing strRelax                 ## 1e4 fs = 10 ps
-              sciNotCalc 200000 $timing presCorr                ## 2e5 fs = 200 ps
-              sciNotCalc 100000 $timing thermRelax              ## 1e5 fs = 100 ps
-              sciNotCalc 1000000 $timing equilibrate ;;         ## 1e6 fs = 1000 ps = 1 ns
+           *) sciNotCalc 10000 "$timing" strRelax           ## 1e4 fs = 10 ps
+              sciNotCalc 200000 "$timing" presCorr          ## 2e5 fs = 200 ps
+              sciNotCalc 100000 "$timing" thermRelax        ## 1e5 fs = 100 ps
+              sciNotCalc 1000000 "$timing" equilibrate ;;   ## 1e6 fs = 1000 ps = 1 ns
 esac
 
 ## Structural Relaxation - NVT Ensemble ##
@@ -168,7 +169,7 @@ performRunType PressureRelaxation
 ## AffineScale ##
 volumeArray=( $(grep Volume pres.report) )
 volume=${volumeArray[2]}
-[ $testing -ne 1 ] && affineScale -m pres.eor -o temp.omd -v $volume
+[ $testing -ne 1 ] && affineScale -m pres.eor -o temp.omd -v "$volume"
 printf "Volume Used = %s\n" "$volume"
 
 ## Thermal Relaxation - NVT Ensemble ##
@@ -177,12 +178,12 @@ performRunType ThermalRelaxation
 ## Thermalize ##
 energyArray=( $(grep Total\ Energy: temp.report) )
 energy=${energyArray[3]}
-[ $testing -ne 1 ] && thermalizer -i temp.omd -o equil.omd -e $energy
+[ $testing -ne 1 ] && thermalizer -i temp.omd -o equil.omd -e "$energy"
 printf "Total Energy Used = %s\n" "$energy"
 
 ## Equilibration - NVE Ensemble ##
 performRunType Equilibration
 
-[ $outputFile ] && cp equil.eor $outputFile
+[[ $outputFile ]] && cp equil.eor "$outputFile"
 
 printf "Equilibration process is now complete.\n"

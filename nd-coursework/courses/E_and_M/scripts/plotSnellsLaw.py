@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # Copyright (c) 2019 Cody R. Drisko. All rights reserved.
-# Licensed under the MIT License. See the LICENSE file in the project root for license information.
+# Licensed under the MIT License. See the LICENSE file in the project root for more information.
 #
 # Name: plotSnellsLaw.py - Version 1.0.0
 # Author: cdrisko
