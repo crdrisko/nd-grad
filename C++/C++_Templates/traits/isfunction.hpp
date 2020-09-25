@@ -19,7 +19,7 @@ struct IsFunctionT : std::false_type {};
 
 // functions:
 template<typename R, typename... Params>
-struct IsFunctionT<R(Params...) : std::true_type
+struct IsFunctionT<R(Params...)> : std::true_type
 {
     using Type = R;
     using ParamsT = Typelist<Params...>;
@@ -28,7 +28,7 @@ struct IsFunctionT<R(Params...) : std::true_type
 
 // variadic functions:
 template<typename R, typename... Params>
-struct IsFunctionT<R(Params..., ...) : std::true_type
+struct IsFunctionT<R(Params..., ...)> : std::true_type
 {
     using Type = R;
     using ParamsT = Typelist<Params...>;
