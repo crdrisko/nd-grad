@@ -1,7 +1,7 @@
 // Copyright (c) 2018 Ivor Horton and Peter Van Weert. Some rights reserved.
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
-// Name: Ex6_06.cpp - Version 1.0.0
+// Name: Ex6_06.cpp
 // Author: cdrisko
 // Date: 05/01/2020-14:17:51
 // Description: Calculate primes using dynamic memory allocation

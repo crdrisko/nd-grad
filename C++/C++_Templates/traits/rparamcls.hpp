@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: rparamcls.hpp - Version 1.0.0
+// Name: rparamcls.hpp
 // Author: crdrisko
 // Date: 09/01/2020-10:05:17
 // Description: Two classes which specify how they should be called as read-only arguments

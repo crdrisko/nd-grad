@@ -1,7 +1,7 @@
 // Copyright (c) 2020 Cody R. Drisko. All rights reserved.
 // Licensed under the MIT License. See the LICENSE file in the project root for more information.
 //
-// Name: Exercise5_03.cpp - Version 1.0.0
+// Name: Exercise5_03.cpp
 // Author: cdrisko
 // Date: 04/30/2020-13:37:08
 // Description: Count the number of non-whitespace characters entered by a user

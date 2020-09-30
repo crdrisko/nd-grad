@@ -2,7 +2,7 @@
 # Copyright (c) 2010 Chris Johnson. Some rights reserved.
 # Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 #
-# Name: Listing2_02.sh - Version 1.0.0
+# Name: Listing2_02.sh
 # Author: crdrisko
 # Date: 06/29/2019-09:22:49
 # Description: Print formatted sales report

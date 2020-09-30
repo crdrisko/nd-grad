@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: projectioniteratorskel.hpp - Version 1.0.0
+// Name: projectioniteratorskel.hpp
 // Author: cdrisko
 // Date: 07/29/2020-09:48:21
 // Description: An iterator defined in terms of the base iterator and the type of value that will be exposed by the iterator

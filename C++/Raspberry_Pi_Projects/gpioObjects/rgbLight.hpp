@@ -1,4 +1,4 @@
-// Name: rgbLight.hpp - Version 1.0.0
+// Name: rgbLight.hpp
 // Author: crdrisko
 // Date: 01/27/2020-21:55:30
 // Description: A wrapper for an adjustable RGB-LED light using the WiringPi API

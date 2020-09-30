@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: isfundatest.cpp - Version 1.0.0
+// Name: isfundatest.cpp
 // Author: crdrisko
 // Date: 09/01/2020-07:31:22
 // Description: Testing if different types are fundamental types or not using our IsFundaT trait

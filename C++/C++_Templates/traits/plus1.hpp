@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: plus1.hpp - Version 1.0.0
+// Name: plus1.hpp
 // Author: crdrisko
 // Date: 08/28/2020-22:01:29
 // Description: Determining the type produced by adding values of two (possibly different) types with the + operator

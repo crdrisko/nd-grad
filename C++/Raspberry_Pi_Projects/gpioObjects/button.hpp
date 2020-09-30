@@ -1,4 +1,4 @@
-// Name: button.hpp - Version 1.0.0
+// Name: button.hpp
 // Author: crdrisko
 // Date: 01/25/2020-20:12:41
 // Description: A wrapper for a button using the WiringPi API

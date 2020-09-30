@@ -2,7 +2,7 @@
 # Copyright (c) 2010 Chris Johnson. Some rights reserved.
 # Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 #
-# Name: Listing14_07.sh - Version 1.0.0
+# Name: Listing14_07.sh
 # Author: crdrisko
 # Date: 08/09/2019-08:02:00
 # Description: Scrolls a block of text up and then down

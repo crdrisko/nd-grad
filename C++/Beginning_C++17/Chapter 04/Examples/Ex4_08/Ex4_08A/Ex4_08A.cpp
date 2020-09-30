@@ -1,7 +1,7 @@
 // Copyright (c) 2018 Ivor Horton and Peter Van Weert. Some rights reserved.
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
-// Name: Ex4_08A.cpp - Version 1.0.0
+// Name: Ex4_08A.cpp
 // Author: cdrisko
 // Date: 04/25/2020-12:36:50
 // Description: Using return to exit a stitch statement (and the program)

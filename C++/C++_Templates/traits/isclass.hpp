@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: isclass.hpp - Version 1.0.0
+// Name: isclass.hpp
 // Author: crdrisko
 // Date: 09/01/2020-09:37:17
 // Description: Determining if a type is a class, based on std::is_class<>

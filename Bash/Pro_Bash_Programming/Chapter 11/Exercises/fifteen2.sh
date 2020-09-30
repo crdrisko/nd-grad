@@ -2,7 +2,7 @@
 # Copyright (c) 2019 Cody R. Drisko. All rights reserved.
 # Licensed under the MIT License. See the LICENSE file in the project root for more information.
 #
-# Name: Exercise11_03.sh - Version 1.0.0
+# Name: Exercise11_03.sh
 # Author: crdrisko
 # Date: 07/19/2019-08:51:48
 # Description: Place tiles in ascending order

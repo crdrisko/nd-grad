@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: projectioniterator.cpp - Version 1.0.0
+// Name: projectioniterator.cpp
 // Author: cdrisko
 // Date: 07/29/2020-09:49:12
 // Description: Printing out the first names of a vector containing Person values

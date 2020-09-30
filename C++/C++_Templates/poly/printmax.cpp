@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: printmax.cpp - Version 1.0.0
+// Name: printmax.cpp
 // Author: crdrisko
 // Date: 08/14/2020-13:12:03
 // Description: Handling generic containers with iterators

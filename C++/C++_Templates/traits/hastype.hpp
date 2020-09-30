@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: hastype.hpp - Version 1.0.0
+// Name: hastype.hpp
 // Author: crdrisko
 // Date: 08/30/2020-18:20:59
 // Description: A macro we can use to create traits that detect arbitrary member types

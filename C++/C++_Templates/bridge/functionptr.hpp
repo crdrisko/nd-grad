@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: functionptr.hpp - Version 1.0.0
+// Name: functionptr.hpp
 // Author: cdrisko
 // Date: 07/27/2020-14:13:01
 // Description: The interface of the FunctionPtr<> template class

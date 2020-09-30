@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: accum1.hpp - Version 1.0.0
+// Name: accum1.hpp
 // Author: crdrisko
 // Date: 08/17/2020-10:16:37
 // Description: First attempt at a function template to accumulate values

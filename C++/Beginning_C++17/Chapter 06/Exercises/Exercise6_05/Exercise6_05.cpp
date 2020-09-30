@@ -1,7 +1,7 @@
 // Copyright (c) 2020 Cody R. Drisko. All rights reserved.
 // Licensed under the MIT License. See the LICENSE file in the project root for more information.
 //
-// Name: Exercise6_05.cpp - Version 1.0.0
+// Name: Exercise6_05.cpp
 // Author: cdrisko
 // Date: 05/02/2020-11:27:26
 // Description: Dynamically allocating an array using smart pointers to approximate pi

@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: ifthenelse.hpp - Version 1.0.0
+// Name: ifthenelse.hpp
 // Author: crdrisko
 // Date: 08/31/2020-20:09:37
 // Description: Selecting between two type parameters based on the value of a Boolean value, based on std::conditional<>

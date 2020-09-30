@@ -1,4 +1,4 @@
-// Name: Blink.cpp - Version 1.0.0
+// Name: Blink.cpp
 // Author: crdrisko
 // Date: 01/25/2020-17:15:11
 // Description: Repeatedly turn a LED light in position GPIO 17 on and off

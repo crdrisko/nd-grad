@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: maxcommon.hpp - Version 1.0.0
+// Name: maxcommon.hpp
 // Author: cdrisko
 // Date: 07/25/2020-21:15:42
 // Description: How to choose the more general type to return for our max() function (C++14 and on)

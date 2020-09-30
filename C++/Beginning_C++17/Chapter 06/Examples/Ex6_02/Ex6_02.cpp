@@ -1,7 +1,7 @@
 // Copyright (c) 2018 Ivor Horton and Peter Van Weert. Some rights reserved.
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
-// Name: Ex6_02.cpp - Version 1.0.0
+// Name: Ex6_02.cpp
 // Author: cdrisko
 // Date: 04/30/2020-21:43:41
 // Description: Dereferencing pointers; calculates the purchase price for a given quantity of items

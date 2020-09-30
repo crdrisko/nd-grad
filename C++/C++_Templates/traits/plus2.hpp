@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: plus2.hpp - Version 1.0.0
+// Name: plus2.hpp
 // Author: crdrisko
 // Date: 08/28/2020-22:16:54
 // Description: Determining the type produced by adding values of two (possibly different) types using std::declval<>

@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: stacknontype.hpp - Version 1.0.0
+// Name: stacknontype.hpp
 // Author: cdrisko
 // Date: 07/26/2020-17:24:46
 // Description: Definition of a basic stack where the user specifies the maximum size of the stack

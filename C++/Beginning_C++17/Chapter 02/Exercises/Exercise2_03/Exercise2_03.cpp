@@ -1,7 +1,7 @@
 // Copyright (c) 2020 Cody R. Drisko. All rights reserved.
 // Licensed under the MIT License. See the LICENSE file in the project root for more information.
 //
-// Name: Exercise2_03.cpp - Version 1.0.0
+// Name: Exercise2_03.cpp
 // Author: cdrisko
 // Date: 04/23/2020-10:42:30
 // Description: Convert a length in inches to feet and inches

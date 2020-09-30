@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: iscontextualbool.hpp - Version 1.0.0
+// Name: iscontextualbool.hpp
 // Author: crdrisko
 // Date: 09/04/2020-07:55:07
 // Description: A trait to determine whether a type T is contextually convertible bool (implicitly or explicitly)

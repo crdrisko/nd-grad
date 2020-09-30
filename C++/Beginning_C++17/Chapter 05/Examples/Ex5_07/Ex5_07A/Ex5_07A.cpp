@@ -1,7 +1,7 @@
 // Copyright (c) 2018 Ivor Horton and Peter Van Weert. Some rights reserved.
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
-// Name: Ex5_07A.cpp - Version 1.0.0
+// Name: Ex5_07A.cpp
 // Author: cdrisko
 // Date: 04/27/2020-13:55:14
 // Description: Generating multiplication tables using an indefinite for loop and break statements

@@ -2,7 +2,7 @@
 # Copyright (c) 2010 Chris Johnson. Some rights reserved.
 # Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 #
-# Name: Listing11_04.sh - Version 1.0.0
+# Name: Listing11_04.sh
 # Author: crdrisko
 # Date: 07/15/2019-10:45:58
 # Description: Print menu and execute associated command

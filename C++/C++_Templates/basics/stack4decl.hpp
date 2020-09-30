@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: stack4decl.hpp - Version 1.0.0
+// Name: stack4decl.hpp
 // Author: cdrisko
 // Date: 07/30/2020-21:15:58
 // Description: Declaration of a templated Stack which has a separately templated assignment operator

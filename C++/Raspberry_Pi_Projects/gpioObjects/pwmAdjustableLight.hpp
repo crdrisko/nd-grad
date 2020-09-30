@@ -1,4 +1,4 @@
-// Name: pwmAdjustableLight.hpp - Version 1.0.0
+// Name: pwmAdjustableLight.hpp
 // Author: crdrisko
 // Date: 01/27/2020-22:06:43
 // Description: A wrapper for an adjustable LED light using the WiringPi API

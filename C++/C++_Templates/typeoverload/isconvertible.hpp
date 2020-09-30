@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: isconvertible.hpp - Version 1.0.0
+// Name: isconvertible.hpp
 // Author: crdrisko
 // Date: 09/04/2020-07:36:06
 // Description: A trait to determine if a type is convertible to another

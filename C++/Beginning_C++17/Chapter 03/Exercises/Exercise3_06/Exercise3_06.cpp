@@ -1,7 +1,7 @@
 // Copyright (c) 2020 Cody R. Drisko. All rights reserved.
 // Licensed under the MIT License. See the LICENSE file in the project root for more information.
 //
-// Name: Exercise3_06.cpp - Version 1.0.0
+// Name: Exercise3_06.cpp
 // Author: cdrisko
 // Date: 04/23/2020-14:55:57
 // Description: Swap two values without defining a third placeholder value

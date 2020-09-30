@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: listnodeiterator0.hpp - Version 1.0.0
+// Name: listnodeiterator0.hpp
 // Author: cdrisko
 // Date: 07/29/2020-09:27:53
 // Description: Using the IteratorFacade to easily define a list iterator

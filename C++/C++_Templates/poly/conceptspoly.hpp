@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: conceptspoly.hpp - Version 1.0.0
+// Name: conceptspoly.hpp
 // Author: crdrisko
 // Date: 08/14/2020-12:30:21
 // Description: How concepts would be used with our static polymorphism example

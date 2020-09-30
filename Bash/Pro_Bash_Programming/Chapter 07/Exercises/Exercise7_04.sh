@@ -2,7 +2,7 @@
 # Copyright (c) 2019 Cody R. Drisko. All rights reserved.
 # Licensed under the MIT License. See the LICENSE file in the project root for more information.
 #
-# Name: Exercise7_04.sh - Version 1.0.0
+# Name: Exercise7_04.sh
 # Author: crdrisko
 # Date: 07/07/2019-11:14:57
 # Description: Trims characters from a particular side based on the function used

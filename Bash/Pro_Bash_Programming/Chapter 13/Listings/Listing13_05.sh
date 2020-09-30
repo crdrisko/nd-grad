@@ -2,7 +2,7 @@
 # Copyright (c) 2010 Chris Johnson. Some rights reserved.
 # Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 #
-# Name: Listing13_05.sh - Version 1.0.0
+# Name: Listing13_05.sh
 # Author: crdrisko
 # Date: 07/28/2019-06:59:19
 # Description: Working with single string grids

@@ -1,7 +1,7 @@
 // Copyright (c) 2018 Ivor Horton and Peter Van Weert. Some rights reserved.
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
-// Name: Ex2_01.cpp - Version 1.0.0
+// Name: Ex2_01.cpp
 // Author: cdrisko
 // Date: 04/16/2020-11:42:19
 // Description: Writing values of variables to cout

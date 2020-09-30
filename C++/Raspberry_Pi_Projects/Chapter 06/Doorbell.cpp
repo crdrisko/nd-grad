@@ -1,4 +1,4 @@
-// Name: Doorbell.cpp - Version 1.0.0
+// Name: Doorbell.cpp
 // Author: crdrisko
 // Date: 01/27/2020-23:25:37
 // Description: Use a button to alter the state of an active buzzer

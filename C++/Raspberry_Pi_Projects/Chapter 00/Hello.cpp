@@ -1,4 +1,4 @@
-// Name: Hello.cpp - Version 1.0.0
+// Name: Hello.cpp
 // Author: crdrisko 
 // Date: 01/02/2020-22:06:55
 // Description:

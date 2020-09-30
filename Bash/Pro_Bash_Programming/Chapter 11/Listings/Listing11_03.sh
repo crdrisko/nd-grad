@@ -2,7 +2,7 @@
 # Copyright (c) 2010 Chris Johnson. Some rights reserved.
 # Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 #
-# Name: Listing11_03.sh - Version 1.0.0
+# Name: Listing11_03.sh
 # Author: crdrisko
 # Date: 07/14/2019-13:53:09
 # Description: Select new directory from a menu of those already visited

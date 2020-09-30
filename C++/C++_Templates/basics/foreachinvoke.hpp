@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: foreachinvoke.hpp - Version 1.0.0
+// Name: foreachinvoke.hpp
 // Author: crdrisko
 // Date: 08/13/2020-11:09:32
 // Description: Using std::invoke() to generalize our foreach<> function template

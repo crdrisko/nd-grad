@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: accum5.cpp - Version 1.0.0
+// Name: accum5.cpp
 // Author: crdrisko
 // Date: 08/18/2020-10:27:50
 // Description: Using the accumulator with a new multiplication policy

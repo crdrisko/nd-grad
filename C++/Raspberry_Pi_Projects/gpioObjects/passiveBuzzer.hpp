@@ -1,4 +1,4 @@
-// Name: passiveBuzzer.hpp - Version 1.0.0
+// Name: passiveBuzzer.hpp
 // Author: crdrisko
 // Date: 01/28/2020-08:16:56
 // Description: 

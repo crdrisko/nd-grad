@@ -1,4 +1,4 @@
-// Name: wiringPiObject.hpp - Version 1.0.0
+// Name: wiringPiObject.hpp
 // Author: crdrisko
 // Date: 01/25/2020-20:14:57
 // Description: A wrapper for an object that uses the WiringPi API

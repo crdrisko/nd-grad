@@ -2,7 +2,7 @@
 # Copyright (c) 2010 Chris Johnson. Some rights reserved.
 # Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 #
-# Name: Listing10_01.sh - Version 1.0.0
+# Name: Listing10_01.sh
 # Author: crdrisko
 # Date: 07/13/2019-20:28:41
 # Description: A sample script with all necessary components

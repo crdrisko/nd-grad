@@ -2,7 +2,7 @@
 # Copyright (c) 2010 Chris Johnson. Some rights reserved.
 # Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 #
-# Name: Listing11_07a.sh - Version 1.0.0
+# Name: Listing11_07a.sh
 # Author: crdrisko
 # Date: 07/18/2019-07:50:04
 # Description: Using the current directory if no destination is given

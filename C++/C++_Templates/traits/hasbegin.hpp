@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: hasbegin.hpp - Version 1.0.0
+// Name: hasbegin.hpp
 // Author: crdrisko
 // Date: 08/31/2020-08:02:41
 // Description: Determining if a type has the begin() member function

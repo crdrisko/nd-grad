@@ -1,7 +1,7 @@
 // Copyright (c) 2018 Ivor Horton and Peter Van Weert. Some rights reserved.
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
-// Name: Ex5_04A.cpp - Version 1.0.0
+// Name: Ex5_04A.cpp
 // Author: cdrisko
 // Date: 04/26/2020-15:10:16
 // Description: Multiple calculations in a loop expression's third control expression by using the comma operator

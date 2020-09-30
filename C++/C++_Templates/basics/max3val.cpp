@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: max3val.cpp - Version 1.0.0
+// Name: max3val.cpp
 // Author: cdrisko
 // Date: 07/26/2020-08:10:46
 // Description: Overloading the max() function template for pointers and ordinary C-strings

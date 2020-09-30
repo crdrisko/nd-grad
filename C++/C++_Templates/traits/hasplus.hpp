@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: hasplus.hpp - Version 1.0.0
+// Name: hasplus.hpp
 // Author: crdrisko
 // Date: 08/29/2020-11:21:21
 // Description: A SFINAE-fiendly way to determine if the result of the + operator is valid for two types

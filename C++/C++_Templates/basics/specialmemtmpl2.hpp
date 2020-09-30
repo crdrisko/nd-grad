@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: specialmemtmpl2.hpp - Version 1.0.0
+// Name: specialmemtmpl2.hpp
 // Author: cdrisko
 // Date: 08/01/2020-08:45:53
 // Description: Replacing the overloading constructors by using a generic constructor with perfect forwarding

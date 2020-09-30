@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: advance2.hpp - Version 1.0.0
+// Name: advance2.hpp
 // Author: crdrisko
 // Date: 09/04/2020-07:33:09
 // Description: Advancing iterators using C++17's constexpr if instead of multiple specializations

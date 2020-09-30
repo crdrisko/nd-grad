@@ -2,7 +2,7 @@
 # Copyright (c) 2010 Chris Johnson. Some rights reserved.
 # Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 #
-# Name: Listing13_03.sh - Version 1.0.0
+# Name: Listing13_03.sh
 # Author: crdrisko
 # Date: 07/27/2019-10:09:31
 # Description: Search elements of an array for a string

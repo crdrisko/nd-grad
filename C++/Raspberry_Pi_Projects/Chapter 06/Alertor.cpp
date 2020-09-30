@@ -1,4 +1,4 @@
-// Name: Alertor.cpp - Version 1.0.0
+// Name: Alertor.cpp
 // Author: crdrisko
 // Date: 01/28/2020-08:09:38
 // Description: Use a button to alter the state of a passive buzzer

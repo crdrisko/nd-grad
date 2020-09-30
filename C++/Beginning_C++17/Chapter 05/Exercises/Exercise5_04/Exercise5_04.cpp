@@ -1,7 +1,7 @@
 // Copyright (c) 2020 Cody R. Drisko. All rights reserved.
 // Licensed under the MIT License. See the LICENSE file in the project root for more information.
 //
-// Name: Exercise5_04.cpp - Version 1.0.0
+// Name: Exercise5_04.cpp
 // Author: cdrisko
 // Date: 04/30/2020-13:50:55
 // Description: Reversing a C-style string using a for loop

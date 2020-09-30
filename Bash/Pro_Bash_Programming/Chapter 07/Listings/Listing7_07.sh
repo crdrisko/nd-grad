@@ -2,7 +2,7 @@
 # Copyright (c) 2010 Chris Johnson. Some rights reserved.
 # Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 #
-# Name: Listing7_07.sh - Version 1.0.0
+# Name: Listing7_07.sh
 # Author: crdrisko
 # Date: 07/04/2019-11:46:11
 # Description: Insert one string into another at a specified location

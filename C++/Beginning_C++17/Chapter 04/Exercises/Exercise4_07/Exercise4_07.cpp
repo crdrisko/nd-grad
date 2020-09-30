@@ -1,7 +1,7 @@
 // Copyright (c) 2020 Cody R. Drisko. All rights reserved.
 // Licensed under the MIT License. See the LICENSE file in the project root for more information.
 //
-// Name: Exercise4_07.cpp - Version 1.0.0
+// Name: Exercise4_07.cpp
 // Author: cdrisko
 // Date: 04/26/2020-10:12:06
 // Description: Using the cctype library to classify properties of a letter

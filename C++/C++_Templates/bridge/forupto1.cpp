@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: forupto1.cpp - Version 1.0.0
+// Name: forupto1.cpp
 // Author: cdrisko
 // Date: 07/27/2020-12:59:34
 // Description: Enumerating integer values from 0 up to some value and providing each value to the given function object

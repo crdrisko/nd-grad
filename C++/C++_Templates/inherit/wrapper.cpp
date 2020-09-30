@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: wrapper.cpp - Version 1.0.0
+// Name: wrapper.cpp
 // Author: cdrisko
 // Date: 07/29/2020-08:30:40
 // Description: Differing cases of visiblity for a friend function in a wrapper class

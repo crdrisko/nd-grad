@@ -1,4 +1,4 @@
-// Name: buzzer.hpp - Version 1.0.0
+// Name: buzzer.hpp
 // Author: crdrisko
 // Date: 01/28/2020-07:59:08
 // Description: A wrapper for a buzzer using the WiringPi API

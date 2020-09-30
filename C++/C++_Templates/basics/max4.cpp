@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: max4.cpp - Version 1.0.0
+// Name: max4.cpp
 // Author: cdrisko
 // Date: 07/26/2020-08:33:50
 // Description: Demonstration of why to always ensure all overloaded versions of a function are declared before the function is called

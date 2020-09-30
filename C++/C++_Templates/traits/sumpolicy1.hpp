@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: sumpolicy1.hpp - Version 1.0.0
+// Name: sumpolicy1.hpp
 // Author: crdrisko
 // Date: 08/18/2020-10:05:00
 // Description: A policy to be used with the accumulator template to add a sequence of numbers

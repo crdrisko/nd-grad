@@ -2,7 +2,7 @@
 # Copyright (c) 2010 Chris Johnson. Some rights reserved.
 # Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 #
-# Name: sampleScript.sh - Version 1.0.0
+# Name: sampleScript.sh
 # Author: crdrisko
 # Date: 07/01/2019-13:12:14
 # Description: Creates a basic webpage

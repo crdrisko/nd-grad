@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: equalitycomparable.cpp - Version 1.0.0
+// Name: equalitycomparable.cpp
 // Author: cdrisko
 // Date: 07/29/2020-08:49:21
 // Description: Combining CRTP with the Barton-Nackman trick when implementing operators in terms of other operators

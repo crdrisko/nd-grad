@@ -1,7 +1,7 @@
 // Copyright (c) 2018 Ivor Horton and Peter Van Weert. Some rights reserved.
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
-// Name: Ex6_07.cpp - Version 1.0.0
+// Name: Ex6_07.cpp
 // Author: cdrisko
 // Date: 05/01/2020-16:20:48
 // Description: Using smart pointers

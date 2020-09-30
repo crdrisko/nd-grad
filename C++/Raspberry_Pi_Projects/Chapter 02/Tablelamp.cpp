@@ -1,4 +1,4 @@
-// Name: Tablelamp.cpp - Version 1.0.0
+// Name: Tablelamp.cpp
 // Author: crdrisko
 // Date: 01/26/2020-11:08:15
 // Description: Use a button to alter the state of a LED

@@ -2,7 +2,7 @@
 # Copyright (c) 2010 Chris Johnson. Some rights reserved.
 # Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 #
-# Name: Listing13_07.sh - Version 1.0.0
+# Name: Listing13_07.sh
 # Author: crdrisko
 # Date: 07/29/2019-07:10:09
 # Description: Split a passwd record into fields and assign fields to variables

@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: sqrt2.hpp - Version 1.0.0
+// Name: sqrt2.hpp
 // Author: crdrisko
 // Date: 09/02/2020-08:11:24
 // Description: Reducing the explosion in the number of template instantiations using our IfThenElse trait

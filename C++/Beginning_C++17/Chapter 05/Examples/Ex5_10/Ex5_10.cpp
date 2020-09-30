@@ -1,7 +1,7 @@
 // Copyright (c) 2018 Ivor Horton and Peter Van Weert. Some rights reserved.
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
-// Name: Ex5_10.cpp - Version 1.0.0
+// Name: Ex5_10.cpp
 // Author: cdrisko
 // Date: 04/29/2020-12:40:44
 // Description: Classifying the letters in a C-style string

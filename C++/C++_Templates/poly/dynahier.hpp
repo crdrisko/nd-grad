@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: dynahier.hpp - Version 1.0.0
+// Name: dynahier.hpp
 // Author: crdrisko
 // Date: 08/14/2020-11:34:54
 // Description: Polymorphism implemented via inheritance

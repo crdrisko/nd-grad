@@ -1,4 +1,4 @@
-// Name: Ex3.cpp - Version 1.0.0
+// Name: Ex3.cpp
 // Author: cdrisko
 // Date: 05/06/2020-09:55:58
 // Description: Forcing an order to printing using a barrier

@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: min2.hpp - Version 1.0.0
+// Name: min2.hpp
 // Author: crdrisko
 // Date: 09/04/2020-07:55:07
 // Description: Computing the minimum of two values, instantiation-safe with the correct set of requirements

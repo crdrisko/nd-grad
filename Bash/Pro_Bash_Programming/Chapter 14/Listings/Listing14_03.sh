@@ -2,7 +2,7 @@
 # Copyright (c) 2010 Chris Johnson. Some rights reserved.
 # Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 #
-# Name: Listing14_03.sh - Version 1.0.0
+# Name: Listing14_03.sh
 # Author: crdrisko
 # Date: 07/29/2019-13:59:38
 # Description: First demo manipulating the screen

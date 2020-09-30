@@ -2,7 +2,7 @@
 # Copyright (c) 2019 Cody R. Drisko. All rights reserved.
 # Licensed under the MIT License. See the LICENSE file in the project root for more information.
 #
-# Name: Exercise7_02.sh - Version 1.0.0
+# Name: Exercise7_02.sh
 # Author: crdrisko
 # Date: 07/06/2019-09:18:46
 # Description: Convert first character of $1 to lowercase

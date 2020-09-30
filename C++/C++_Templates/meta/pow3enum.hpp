@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: pow3enum.hpp - Version 1.0.0
+// Name: pow3enum.hpp
 // Author: crdrisko
 // Date: 09/02/2020-08:24:19
 // Description: Computing the powers of 3 using an enumeration

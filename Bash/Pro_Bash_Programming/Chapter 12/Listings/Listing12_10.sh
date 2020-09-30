@@ -2,7 +2,7 @@
 # Copyright (c) 2010 Chris Johnson. Some rights reserved.
 # Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 #
-# Name: Listing12_10.sh - Version 1.0.0
+# Name: Listing12_10.sh
 # Author: crdrisko
 # Date: 07/22/2019-08:42:16
 # Description: Archive and upload files to remote computer

@@ -1,4 +1,4 @@
-// Name: BreathingLED.cpp - Version 1.0.0
+// Name: BreathingLED.cpp
 // Author: crdrisko
 // Date: 01/26/2020-16:26:57
 // Description: Use PWM to create a breathing LED

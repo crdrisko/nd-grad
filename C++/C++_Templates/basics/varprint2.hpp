@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: varprint2.hpp - Version 1.0.0
+// Name: varprint2.hpp
 // Author: cdrisko
 // Date: 07/27/2020-10:39:28
 // Description: Printing a variable number of arguments where the templates differ only by a training parameter pack

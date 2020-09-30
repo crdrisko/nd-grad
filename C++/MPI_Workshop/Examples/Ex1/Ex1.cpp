@@ -1,4 +1,4 @@
-// Name: Ex1.cpp - Version 1.0.0
+// Name: Ex1.cpp
 // Author: cdrisko
 // Date: 05/06/2020-09:30:05
 // Description: Print hello from each processing element using MPI

@@ -2,7 +2,7 @@
 # Copyright (c) 2019 Cody R. Drisko. All rights reserved.
 # Licensed under the MIT License. See the LICENSE file in the project root for more information.
 #
-# Name: Exercise6_01.sh - Version 1.0.0
+# Name: Exercise6_01.sh
 # Author: crdrisko
 # Date: 07/01/2019-13:45:25
 # Description: isvalidip script rewritten with parameter expansion

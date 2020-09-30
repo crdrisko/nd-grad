@@ -1,4 +1,4 @@
-// Name: ButtonLED.cpp - Version 1.0.0
+// Name: ButtonLED.cpp
 // Author: crdrisko
 // Date: 01/25/2020-18:11:50
 // Description: Use a button to alter the state of a LED

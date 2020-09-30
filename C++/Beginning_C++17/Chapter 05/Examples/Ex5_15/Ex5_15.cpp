@@ -1,7 +1,7 @@
 // Copyright (c) 2018 Ivor Horton and Peter Van Weert. Some rights reserved.
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
-// Name: Ex5_15.cpp - Version 1.0.0
+// Name: Ex5_15.cpp
 // Author: cdrisko
 // Date: 04/29/2020-16:37:44
 // Description: Sorting an array in ascending sequence -using a vector<T> container

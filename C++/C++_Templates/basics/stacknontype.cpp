@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: stacknontype.cpp - Version 1.0.0
+// Name: stacknontype.cpp
 // Author: cdrisko
 // Date: 07/26/2020-17:40:39
 // Description: Demonstrating the use of the Stack<> template with the non-type parameter

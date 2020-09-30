@@ -2,7 +2,7 @@
 # Copyright (c) 2010 Chris Johnson. Some rights reserved.
 # Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 #
-# Name: Listing15_05.sh - Version 1.0.0
+# Name: Listing15_05.sh
 # Author: crdrisko
 # Date: 08/11/2019-09:50:21
 # Description: A simple record-editing script

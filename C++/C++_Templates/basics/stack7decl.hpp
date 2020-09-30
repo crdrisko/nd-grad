@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: stack7decl.hpp - Version 1.0.0
+// Name: stack7decl.hpp
 // Author: cdrisko
 // Date: 07/31/2020-07:36:50
 // Description: A class template with template template parameters for a simple stack

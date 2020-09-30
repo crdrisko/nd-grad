@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: issame.cpp - Version 1.0.0
+// Name: issame.cpp
 // Author: crdrisko
 // Date: 08/28/2020-21:38:42
 // Description: Using IsSameT to choose implementations based of template parameter type

@@ -1,7 +1,7 @@
 // Copyright (c) 2018 Ivor Horton and Peter Van Weert. Some rights reserved.
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
-// Name: Ex7_07.cpp - Version 1.0.0
+// Name: Ex7_07.cpp
 // Author: cdrisko
 // Date: 05/03/2020-17:56:43
 // Description: Replacing words in a string

@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: arrays.cpp - Version 1.0.0
+// Name: arrays.cpp
 // Author: cdrisko
 // Date: 07/29/2020-20:57:41
 // Description: Using the specializations for array types of the MyClass<> class template

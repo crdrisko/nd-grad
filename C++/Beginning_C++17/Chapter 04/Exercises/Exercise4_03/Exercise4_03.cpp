@@ -1,7 +1,7 @@
 // Copyright (c) 2020 Cody R. Drisko. All rights reserved.
 // Licensed under the MIT License. See the LICENSE file in the project root for more information.
 //
-// Name: Exercise4_03.cpp - Version 1.0.0
+// Name: Exercise4_03.cpp
 // Author: cdrisko
 // Date: 04/25/2020-13:19:58
 // Description: Check how a number between 1 and 100 compares to 50

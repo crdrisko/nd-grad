@@ -2,7 +2,7 @@
 # Copyright (c) 2010 Chris Johnson. Some rights reserved.
 # Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 #
-# Name: Listing15_04.sh - Version 1.0.0
+# Name: Listing15_04.sh
 # Author: crdrisko
 # Date: 08/10/2019-09:35:18
 # Description: Capture function and cursor keys to change colors and move a

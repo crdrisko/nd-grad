@@ -1,7 +1,7 @@
 // Copyright (c) 2018 Ivor Horton and Peter Van Weert. Some rights reserved.
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
-// Name: Ex5_03A.cpp - Version 1.0.0
+// Name: Ex5_03A.cpp
 // Author: cdrisko
 // Date: 04/26/2020-15:00:10
 // Description: Floating-point control in a for loop (corrected)

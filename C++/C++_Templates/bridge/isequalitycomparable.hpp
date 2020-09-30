@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: isequalitycomparable.hpp - Version 1.0.0
+// Name: isequalitycomparable.hpp
 // Author: cdrisko
 // Date: 07/27/2020-16:17:39
 // Description: Querying whether the operator== is available before calling it

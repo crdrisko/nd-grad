@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: varprint1.hpp - Version 1.0.0
+// Name: varprint1.hpp
 // Author: cdrisko
 // Date: 07/27/2020-10:21:12
 // Description: Printing a variable number of arguments

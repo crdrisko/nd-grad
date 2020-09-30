@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: maxdefault1.hpp - Version 1.0.0
+// Name: maxdefault1.hpp
 // Author: cdrisko
 // Date: 07/26/2020-07:55:15
 // Description: Using the operator?: to set a default return type (C++14 and on)

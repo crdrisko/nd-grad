@@ -1,4 +1,4 @@
-// Name: LightWater.cpp - Version 1.0.0
+// Name: LightWater.cpp
 // Author: crdrisko
 // Date: 01/26/2020-12:04:21
 // Description: Simulate flowing water using a LED bar graph

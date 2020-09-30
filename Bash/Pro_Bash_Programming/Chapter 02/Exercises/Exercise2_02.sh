@@ -2,7 +2,7 @@
 # Copyright (c) 2019 Cody R. Drisko. All rights reserved.
 # Licensed under the MIT License. See the LICENSE file in the project root for more information.
 #
-# Name: Exercise2_02.sh - Version 1.0.0
+# Name: Exercise2_02.sh
 # Author: crdrisko
 # Date: 06/29/2019-09:40:44
 # Description: Prints 8 random numbers to both a file and a variable

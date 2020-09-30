@@ -1,4 +1,4 @@
-// Name: ColorfulLED.cpp - Version 1.0.0
+// Name: ColorfulLED.cpp
 // Author: crdrisko
 // Date: 01/27/2020-22:32:45
 // Description: Use PWM to create a random set of RGB colors

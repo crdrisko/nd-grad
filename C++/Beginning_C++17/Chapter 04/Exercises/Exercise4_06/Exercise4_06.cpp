@@ -1,7 +1,7 @@
 // Copyright (c) 2020 Cody R. Drisko. All rights reserved.
 // Licensed under the MIT License. See the LICENSE file in the project root for more information.
 //
-// Name: Exercise4_06.cpp - Version 1.0.0
+// Name: Exercise4_06.cpp
 // Author: cdrisko
 // Date: 04/26/2020-09:56:04
 // Description: Determining where a number fits in a range using only the conditional operator

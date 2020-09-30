@@ -2,7 +2,7 @@
 # Copyright (c) 2019 Cody R. Drisko. All rights reserved.
 # Licensed under the MIT License. See the LICENSE file in the project root for more information.
 #
-# Name: Exercise10_02.sh - Version 1.0.0
+# Name: Exercise10_02.sh
 # Author: crdrisko
 # Date: 07/14/2019-13:19:22
 # Description: Returns successfully if $1 is a valid SAN square

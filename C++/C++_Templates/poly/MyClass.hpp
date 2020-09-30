@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: MyClass.hpp - Version 1.0.0
+// Name: MyClass.hpp
 // Author: crdrisko
 // Date: 08/14/2020-13:00:07
 // Description: Missing file from book

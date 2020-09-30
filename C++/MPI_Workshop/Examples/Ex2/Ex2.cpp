@@ -1,4 +1,4 @@
-// Name: Ex2.cpp - Version 1.0.0
+// Name: Ex2.cpp
 // Author: cdrisko
 // Date: 05/06/2020-09:46:38
 // Description: Send and recieve a number between two different processing elements

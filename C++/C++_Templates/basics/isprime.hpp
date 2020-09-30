@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: isprime.hpp - Version 1.0.0
+// Name: isprime.hpp
 // Author: crdrisko
 // Date: 08/12/2020-13:23:55
 // Description: Using templated recursion to determine whether or not a number is prime at compile time

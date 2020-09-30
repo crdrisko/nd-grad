@@ -1,4 +1,4 @@
-// Name: ledLight.hpp - Version 1.0.0
+// Name: ledLight.hpp
 // Author: crdrisko
 // Date: 01/25/2020-20:12:32
 // Description: A wrapper for a LED light using the WiringPi API

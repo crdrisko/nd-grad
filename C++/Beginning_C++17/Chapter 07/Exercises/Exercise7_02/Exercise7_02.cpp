@@ -1,7 +1,7 @@
 // Copyright (c) 2020 Cody R. Drisko. All rights reserved.
 // Licensed under the MIT License. See the LICENSE file in the project root for more information.
 //
-// Name: Exercise7_02.cpp - Version 1.0.0
+// Name: Exercise7_02.cpp
 // Author: cdrisko
 // Date: 08/02/2020-13:27:53
 // Description: Determining all unique words from a user's input over an arbitrary number of lines

@@ -1,7 +1,7 @@
 // Copyright (c) 2020 Cody R. Drisko. All rights reserved.
 // Licensed under the MIT License. See the LICENSE file in the project root for more information.
 //
-// Name: Exercise5_07.cpp - Version 1.0.0
+// Name: Exercise5_07.cpp
 // Author: cdrisko
 // Date: 04/30/2020-15:02:34
 // Description: Printing a table of product records

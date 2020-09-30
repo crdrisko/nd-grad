@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: forupto4.cpp - Version 1.0.0
+// Name: forupto4.cpp
 // Author: cdrisko
 // Date: 07/27/2020-14:12:48
 // Description: Demonstrating the use of our generalized function pointer class template in place of std::function<>

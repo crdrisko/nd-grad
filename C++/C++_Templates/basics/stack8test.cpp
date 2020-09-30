@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: stack8test.cpp - Version 1.0.0
+// Name: stack8test.cpp
 // Author: cdrisko
 // Date: 07/31/2020-07:42:09
 // Description: Using all features of the final implementation of the Stack class template

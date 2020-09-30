@@ -1,7 +1,7 @@
 // Copyright (c) 2018 Ivor Horton and Peter Van Weert. Some rights reserved.
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
-// Name: Ex4_02.cpp - Version 1.0.0
+// Name: Ex4_02.cpp
 // Author: cdrisko
 // Date: 04/24/2020-13:53:13
 // Description: Using an if statement

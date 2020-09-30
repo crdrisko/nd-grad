@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: iteratorfacadeaccessskel.hpp - Version 1.0.0
+// Name: iteratorfacadeaccessskel.hpp
 // Author: cdrisko
 // Date: 07/29/2020-09:34:33
 // Description: A class that hides access to our iterator operations except by friend classes

@@ -2,7 +2,7 @@
 # Copyright (c) 2010 Chris Johnson. Some rights reserved.
 # Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 #
-# Name: Listing7_04.sh - Version 1.0.0
+# Name: Listing7_04.sh
 # Author: crdrisko
 # Date: 07/03/2019-10:40:46
 # Description: Convert first character of $1 to uppercase

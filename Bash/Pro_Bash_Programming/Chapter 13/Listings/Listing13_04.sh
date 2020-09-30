@@ -2,7 +2,7 @@
 # Copyright (c) 2010 Chris Johnson. Some rights reserved.
 # Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 #
-# Name: Listing13_04.sh - Version 1.0.0
+# Name: Listing13_04.sh
 # Author: crdrisko
 # Date: 07/27/2019-11:58:05
 # Description: Store a range of lines from a file in an array

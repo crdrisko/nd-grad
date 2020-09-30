@@ -2,7 +2,7 @@
 # Copyright (c) 2010 Chris Johnson. Some rights reserved.
 # Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 #
-# Name: Listing6_01.sh - Version 1.0.0
+# Name: Listing6_01.sh
 # Author: crdrisko
 # Date: 07/01/2019-08:07:39
 # Description: Check argument for valid dotted-quad IP address

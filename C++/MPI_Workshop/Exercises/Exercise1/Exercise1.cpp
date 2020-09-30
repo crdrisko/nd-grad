@@ -1,4 +1,4 @@
-// Name: Exercise1.cpp - Version 1.0.0
+// Name: Exercise1.cpp
 // Author: cdrisko
 // Date: 05/06/2020-10:44:27
 // Description: Send data to nearest neighbor in a circular shift (i.e. 0 and 7 are neighbors)

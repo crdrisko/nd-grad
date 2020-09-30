@@ -1,7 +1,7 @@
 // Copyright (c) 2017 by Addison-Wesley, David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor. All rights reserved.
 // See the LICENSE file in the project root for more information.
 //
-// Name: enableif.hpp - Version 1.0.0
+// Name: enableif.hpp
 // Author: crdrisko
 // Date: 09/03/2020-08:06:20
 // Description: A simple implementation of the EnableIfT trait, based on std::enable_if<>

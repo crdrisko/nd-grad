@@ -1,5 +1,5 @@
 #!/bin/bash
-# Name: installPi.sh - Version 1.0.0
+# Name: installPi.sh
 # Author: cdrisko
 # Date: 03/14/2020-10:07:33
 # Description: Installation instructions for a new raspberry pi (command line only)

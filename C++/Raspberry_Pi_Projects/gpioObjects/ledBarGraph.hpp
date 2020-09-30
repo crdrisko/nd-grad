@@ -1,4 +1,4 @@
-// Name: ledBarGraph.hpp - Version 1.0.0
+// Name: ledBarGraph.hpp
 // Author: crdrisko
 // Date: 01/26/2020-12:24:52
 // Description: A wrapper for a LED light bar using the WiringPi API
