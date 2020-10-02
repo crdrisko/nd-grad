@@ -4,7 +4,7 @@
 // Name: Exercise1_03.cpp
 // Author: cdrisko
 // Date: 04/15/2020-08:41:12
-// Description:
+// Description: Fixing issues with the supplied problem code
 
 /* Problem Code:
 include <iostream>                          <- Missing the hash symbol (#) before include
