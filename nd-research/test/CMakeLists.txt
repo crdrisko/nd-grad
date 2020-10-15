@@ -1,27 +1,27 @@
 ### Unit Testing ###
-include(CTest)
-include(GoogleTest)
+# include(CTest)
+# include(GoogleTest)
 
-enable_testing()
+# enable_testing()
 
 ## Data Field Parsing ##
 foreach (FILE ${UTILITY_SOURCES})
     list(APPEND NEW_SOURCES ../${FILE})
 endforeach()
 
-ND_RESEARCH_NewTest(TESTNAME DataFieldParsing
-                    INTERIOR_DIRECTORY TestDataFields)
+NDGradNewTest(TESTNAME DataFieldParsing
+              INTERIOR_DIRECTORY TestDataFields)
 
 ## File Type Parsing ##
 foreach (FILE ${FILETYPE_SOURCES})
     list(APPEND NEW_SOURCES ../${FILE})
 endforeach()
 
-ND_RESEARCH_NewTest(TESTNAME FileTypeParsing
-                    INTERIOR_DIRECTORY TestFileTypes)
+NDGradNewTest(TESTNAME FileTypeParsing
+              INTERIOR_DIRECTORY TestFileTypes)
 
-ND_RESEARCH_NewTest(TESTNAME AllFluxTypes
-                    INTERIOR_DIRECTORY TestFluxTypes)
+NDGradNewTest(TESTNAME AllFluxTypes
+              INTERIOR_DIRECTORY TestFluxTypes)
 
 # newTest(TESTNAME RegionSplitting
 #     INTERIOR_DIRECTORY TestRNEMDRegions)

@@ -1,7 +1,5 @@
-### Functions ###
-
-## Function to find and download external projects from Github ##
-function(ND_RESEARCH_ExternalDownload)
+### Function to find and download external projects from Github ###
+function(NDGradExternalDownload)
     set(options)
     set(one_value_keywords PROJECT
                            REPOSITORY)
@@ -10,7 +8,7 @@ function(ND_RESEARCH_ExternalDownload)
     cmake_parse_arguments(EXTERN_ARGS "${options}" "${one_value_keywords}" "${multi_value_keywords}" ${ARGN})
 
     ## Download and unpack project at configure time ##
-    configure_file(${ND-Research_SOURCE_DIR}/cmake/CMakeLists.txt.in ${EXTERN_ARGS_PROJECT}-download/CMakeLists.txt)
+    configure_file(${NDGrad_SOURCE_DIR}/cmake/CMakeLists.txt.in ${EXTERN_ARGS_PROJECT}-download/CMakeLists.txt)
 
     ## Configuration step ##
     execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
@@ -34,8 +32,9 @@ function(ND_RESEARCH_ExternalDownload)
                      EXCLUDE_FROM_ALL)
 endfunction()
 
-## Function to create a new test from a predefined naming template ##
-function(ND_RESEARCH_NewTest)
+
+### Function to create a new test from a predefined naming template ###
+function(NDGradNewTest)
     set(options)
     set(one_value_keywords TESTNAME
                            INTERIOR_DIRECTORY)
@@ -51,3 +50,21 @@ function(ND_RESEARCH_NewTest)
     gtest_discover_tests(test${TEST_ARGS_TESTNAME}Functions
                          WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/${TEST_ARGS_INTERIOR_DIRECTORY})
 endfunction()
+
+# function(NDGradNewTest)
+#     set(options)
+#     set(one_value_keywords TESTNAME
+#                            LIBRARY
+#                            INTERIOR_DIRECTORY)
+#     set(multi_value_keywords)
+
+#     cmake_parse_arguments(TEST_ARGS "${options}" "${one_value_keywords}" "${multi_value_keywords}" ${ARGN})
+
+#     set(TESTPATH ${NDGrad_SOURCE_DIR}/${TEST_ARGS_LIBRARY}/libs/${TEST_ARGS_INTERIOR_DIRECTORY}/tests)
+
+#     add_executable(test${TEST_ARGS_TESTNAME} ${TESTPATH}/test${TEST_ARGS_TESTNAME}.cpp)
+
+#     target_link_libraries(test${TEST_ARGS_TESTNAME} ${GTEST_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
+
+#     gtest_discover_tests(test${TEST_ARGS_TESTNAME} WORKING_DIRECTORY ${TESTPATH})
+# endfunction()

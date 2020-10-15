@@ -1,8 +1,8 @@
 #!/bin/bash
-# Copyright (c) 2020 Cody R. Drisko. All rights reserved.
+# Copyright (c) 2019-2020 Cody R. Drisko. All rights reserved.
 # Licensed under the MIT License. See the LICENSE file in the project root for more information.
 #
-# Name: saltWaterBoxer.sh - Version 1.1.3
+# Name: saltWaterBoxer.sh - Version 1.2.0
 # Author: cdrisko
 # Date: 05/22/2020-11:15:28
 # Description: Take an input packmol file and return a valid openmd file for a solution of salt water
@@ -10,10 +10,11 @@
 
 ### Functions ###
 source errorHandling
+source typeParsing
 
 printHelpMessage()          #@ DESCRIPTION: Print the saltWaterBoxer program's help message
 {                           #@ USAGE: printHelpMessage
-    printf "\nUSAGE: saltWaterBoxer [-hv] [-i inputFile] [-o outputFile]\n\n"
+    printf "\nUSAGE: saltWaterBoxer [-hv] [-i FILE] [-o FILE]\n\n"
     printf "  -h  Prints help information about the saltWaterBoxer program.\n"
     printf "  -v  Verbose mode. Defaults to false/off.\n\n"
     printf "  -i  REQUIRED: The input packmol file which must create an xyz file.\n"
@@ -44,20 +45,18 @@ printMetaDataSection()      #@ DESCRIPTION: Print a sample OpenMD metaData secti
 
 
 ### Initial Variables / Default Values ###
+declare inputDir inputFile outputDir outputFile tempDir verbose
+
+tempDir=$PWD
 verbose=0
-directory="$PWD"
 
 
 ### Runtime Configuration ###
 while getopts i:o:vh opt
 do
     case $opt in
-        i) inputFile="${OPTARG##*/}"
-           if [[ "$inputFile" != "${OPTARG%/*}" ]]
-           then
-               directory="${OPTARG%/*}"
-           fi ;;
-        o) outputFile="$OPTARG" ;;
+        i) FILE input  = "$OPTARG" ;;                       ## Returns inputFile and inputDir variables
+        o) FILE output = "$OPTARG" ;;                       ## Returns outputFile and outputDir variables
         v) export verbose=1 ;;
         h) printHelpMessage && printFatalErrorMessage 0 ;;
         *) printFatalErrorMessage 1 "Invalid option flag passed to program." ;;
@@ -66,9 +65,9 @@ done
 
 
 ### Main Code ###
-if [[ -d "$directory" ]]
+if [[ -d "$inputDir" ]]
 then
-    cd "$directory" || printFatalErrorMessage 2 "Could not change into required directory."
+    cd "$inputDir" || printFatalErrorMessage 2 "Could not change into required directory."
 
     xyzFileArray=( $( grep output "$inputFile" ) )
     xyzFileName=${xyzFileArray[1]}
@@ -112,6 +111,17 @@ then
     newHmat="Hmat: {{ $Hxx, 0, 0 }, { 0, $Hyy, 0 }, { 0, 0, $Hzz }}"
 
     modifyFiles -i "$outputFile" -o "$oldHmat" -n "$newHmat" -f
+
+    cd "$tempDir" || printFatalErrorMessage 3 "Could not change into required directory."
+
+    if [[ -d "$outputDir" ]]
+    then
+        cd "$outputDir" || printFatalErrorMessage 4 "Could not change into required directory."
+
+        mv "$inputDir/$outputFile" "$outputDir/$outputFile"
+    else
+        printFatalErrorMessage 5 "Invalid directory."
+    fi
 else
-    printFatalErrorMessage 3 "Invalid directory."
+    printFatalErrorMessage 6 "Invalid directory."
 fi

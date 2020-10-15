@@ -1,8 +1,8 @@
 #!/bin/bash
-# Copyright (c) 2020 Cody R. Drisko. All rights reserved.
+# Copyright (c) 2019-2020 Cody R. Drisko. All rights reserved.
 # Licensed under the MIT License. See the LICENSE file in the project root for more information.
 #
-# Name: groupSubmit.sh - Version 1.2.0
+# Name: groupSubmit.sh - Version 1.3.0
 # Author: cdrisko
 # Date: 01/20/2020-10:22:05
 # Description: Gezelter group submission script creator and resource monitor
@@ -10,10 +10,11 @@
 
 ### Functions ###
 source errorHandling
+source typeParsing
 
 printHelpMessage()              #@ DESCRIPTION: Print the groupSubmit program's help message
 {                               #@ USAGE: printHelpMessage
-    printf "\nUSAGE: groupSubmit [-hvd] [-i fileName] [-s scriptName] [-u userName] [-c cores]\n\n"
+    printf "\nUSAGE: groupSubmit [-hvd] [-i FILE] [-s FILE] [-u STRING] [-c STRING]\n\n"
     printf "  -h  Prints help information about the groupSubmit program.\n"
     printf "  -v  Verbose mode. Defaults to false/off.\n"
     printf "  -d  Submit jobs to the debug queue. Defaults to false/off.\n\n"
@@ -79,12 +80,12 @@ printCheckQuotaScript()         #@ DESCRIPTION: Print script used to notify user
 printOpenmdSubmissionScript()   #@ DESCRIPTION: Print script used to run the OpenMD job
 {                               #@ USAGE: printOpenmdSubmissionScript
     printf "#!/bin/bash\n"
-    printf "#$ -N %s\n" "${fileName%%.*}"
+    printf "#$ -N %s\n" "${inputFile%%.*}"
     printf "#$ -M %s@nd.edu\n" "$username"
     printf "#$ -m abe\n"
     printf "#$ -q %s\n" "${queue:-long}"
     printf "#$ -pe %s\n\n" "${cores:="smp 16"}"
-    printf "SIM_NAME=\"%s\"\n" "${fileName%%.*}"
+    printf "SIM_NAME=\"%s\"\n" "${inputFile%%.*}"
     printf "WORK_DIR=\`pwd\`\n\n"
     printf "module purge\n"
     printf "module load openmd\n"
@@ -101,24 +102,21 @@ printOpenmdSubmissionScript()   #@ DESCRIPTION: Print script used to run the Ope
 
 
 ### Initial Variables / Default Values ###
-verbose=0
+declare inputDir inputFile queue scriptDir scriptFile username verbose
+
 queue=long
 username="$USER"
-directory="$PWD"
+verbose=0
 
 
 ### Runtime Configuration ###
 while getopts i:s:u:c:dvh opt
 do
     case $opt in
-        i) fileName="${OPTARG##*/}"
-           if [[ "$fileName" != "${OPTARG%/*}" ]]
-           then
-               directory="${OPTARG%/*}"
-           fi ;;
-        s) scriptName="$OPTARG" ;;
-        u) username="$OPTARG" ;;
-        c) cores="$OPTARG" ;;
+        i) FILE   input    = "$OPTARG" ;;                   ## Returns inputFile and inputDir variables
+        s) FILE   script   = "$OPTARG" ;;                   ## Returns scriptFile and scriptDir variables
+        u) STRING username = "$OPTARG" ;;
+        c) STRING cores    = "$OPTARG" ;;
         d) queue=debug ;;
         v) export verbose=1 ;;
         h) printHelpMessage && printFatalErrorMessage 0 ;;
@@ -128,24 +126,24 @@ done
 
 
 ### Main Code ###
-if [[ -d "$directory" ]]
+[[ ${USER:?Issue finding your CRC username. Set the \$USER variable and try again.} ]]
+
+if [[ -z "${scriptFile:-""}" ]]
 then
-    cd "$directory" || printFatalErrorMessage 2 "Could not change into required directory."
-
-    [ "${USER:?Issue finding your CRC username. Set the \$USER variable and try again.}" ]
-
-    if [[ -z "${scriptName:-""}" ]]
+    if [[ -d "$inputDir" ]]
     then
-        if [[ -f ${fileName:?A filename is required} ]]
+        cd "$inputDir" || printFatalErrorMessage 2 "Could not change into required directory."
+
+        if [[ -f ${inputFile:?A inputFile is required} ]]
         then
             ## User didn't specify a submission script so we'll just make them one ##
             printOpenmdSubmissionScript > openmd_multiple.sh
 
             ## Comment out RNEMD line we aren't running RNEMD ##
-            if grep useRNEMD "$fileName" &>/dev/null
+            if grep useRNEMD "$inputFile" &>/dev/null
             then
                 IFS=$' =;'
-                useRNEMDArray=( $( grep useRNEMD "$fileName" ) )
+                useRNEMDArray=( $( grep useRNEMD "$inputFile" ) )
                 IFS=$' \t\n'
 
                 if [[ ${useRNEMDArray[1]} == 'false' ]]
@@ -158,14 +156,20 @@ then
                 sed "s/$rnemdLine/#$rnemdLine/g" openmd_multiple.sh > tempFile && mv tempFile openmd_multiple.sh
             fi
 
-            scriptName=openmd_multiple.sh
+            scriptFile=openmd_multiple.sh
         else
-            printFatalErrorMessage 3 "The filename provided does not exist."
+            printFatalErrorMessage 3 "The input file provided does not exist."
         fi
+    else
+        printFatalErrorMessage 4 "Invalid directory."
     fi
 
+elif [[ -d "$scriptDir" ]]
+then
+    cd "$scriptDir" || printFatalErrorMessage 5 "Could not change into required directory."
+
     ## Submit the jobs if the submission script exists ##
-    if [[ -f $scriptName ]]
+    if [[ -f ${scriptFile:?A script is required} ]]
     then
         ## If checkQuota script is already running, no need to submit it again ##
         IFS=$'\n'
@@ -195,10 +199,10 @@ then
             qsub checkGroupQuota.sh
         fi
 
-        qsub "$scriptName"
+        qsub "$scriptFile"
     else
-        printFatalErrorMessage 4 "The scriptname provided does not exist."
+        printFatalErrorMessage 6 "The script provided does not exist."
     fi
 else
-    printFatalErrorMessage 5 "Invalid directory."
+    printFatalErrorMessage 7 "Invalid directory."
 fi

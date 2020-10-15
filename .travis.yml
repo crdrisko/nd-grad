@@ -1,4 +1,4 @@
-### ND-Research Build Matrix ###
+### ND-Grad Build Matrix ###
 language: cpp
 os:
   - linux
@@ -7,9 +7,9 @@ compiler:
   - clang
   - gcc
 osx_image:
-  - xcode11.2
-  - xcode10.1
-dist: bionic
+  - xcode12
+  - xcode10
+dist: focal
 arch:
   - arm64
   - amd64
@@ -21,33 +21,34 @@ notifications:
 ### Standard Installation Procedure ###
 script:
   - mkdir build && cd build
-  - cmake ../. -Dnd-research_build_tests=ON
+  - cmake ../. -Dgrad_build_all=ON
   - make && sudo make install
-  - cd nd-research/test
-  - ctest --output-on-failure
+  # - ctest --output-on-failure
+  # - cd bin/samples
+  # - for file in *; do ./$file || echo -n; done
 
 
 ### Provide Code Coverage Reports ###
-matrix:
-  include:
-    - os: linux
-      dist: bionic
-      compiler: gcc
-      arch: amd64
-      addons:
-        apt:
-          packages:
-            - python-pip
-            - lcov
-          update: true
-      install:
-        - if [ $TRAVIS_OS_NAME = linux ]; then pip install --user cpp-coveralls; fi
-      script:
-        - mkdir build && cd build
-        - cmake ../. -Dnd-research_coverage=ON
-        - make && sudo make install
-        - cd nd-research/test
-        - ctest --output-on-failure
-        - lcov --directory . --capture --output-file coverage.info
-        - lcov --remove coverage.info '*gtest*' '*utils-api*' '*cpp-units*' '*/test/*' '/usr/*' --output-file coverage.info
-        - coveralls -r ../../../. -l coverage.info -n
+# matrix:
+#   include:
+#     - os: linux
+#       dist: bionic
+#       compiler: gcc
+#       arch: amd64
+#       addons:
+#         apt:
+#           packages:
+#             - python-pip
+#             - lcov
+#           update: true
+#       install:
+#         - if [ $TRAVIS_OS_NAME = linux ]; then pip install --user cpp-coveralls; fi
+#       script:
+#         - mkdir build && cd build
+#         - cmake ../. -Dgrad_enable_coverage=ON
+#         - make && sudo make install
+#         - ctest --output-on-failure
+#         - lcov --directory . --capture --output-file coverage.info
+#         - lcov --remove coverage.info '*gtest*' '*common-utils*' '*cpp-units*' '*/test/*' '*/tests/*' '/usr/*' --output-file coverage.info
+#         - coveralls -r ../../. -l coverage.info -n
+#         - bash <(curl -s https://codecov.io/bash)

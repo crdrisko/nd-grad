@@ -1,8 +1,8 @@
 #!/bin/bash
-# Copyright (c) 2020 Cody R. Drisko. All rights reserved.
+# Copyright (c) 2019-2020 Cody R. Drisko. All rights reserved.
 # Licensed under the MIT License. See the LICENSE file in the project root for more information.
 #
-# Name: equilibrator.sh - Version 1.0.1
+# Name: equilibrator.sh - Version 1.1.0
 # Author: cdrisko
 # Date: 02/07/2020-08:37:21
 # Description: Standard equilibration procedure for an OpenMD simulation
@@ -10,20 +10,20 @@
 
 ### Functions ###
 source errorHandling
+source typeParsing
 
 printHelpMessage()      #@ DESCRIPTION: Print the equilibrator program's help message
 {                       #@ USAGE: printHelpMessage
-    printf "\nUSAGE: equilibrator [-hv] [-i fileName] [-o fileName] [-s submission] [-c cores]\n"
-    printf "    [-t timing]\n\n"
+    printf "\nUSAGE: equilibrator [-hv] [-i FILE] [-o FILE] [-c STRING] [-s STRING] [-t INT]\n\n"
     printf "  -h  Prints help information about the equilibrator program.\n"
     printf "  -v  Verbose mode. Defaults to false/off.\n\n"
     printf "  -i  REQUIRED: Pre-thermalized '.omd' input file.\n"
     printf "  -o  OPTIONAL: Output file for the end of the equilibration process.\n"
     printf "        Default is 'equil.eor'.\n"
-    printf "  -s  OPTIONAL: Desired submission method, either queue or local. Default is\n"
-    printf "        queue.\n"
     printf "  -c  OPTIONAL: The queuing system and number of cores required. Arguments\n"
     printf "        should be wrapped in quotes. Default is smp 16.\n"
+    printf "  -s  OPTIONAL: Desired submission method, either queue or local. Default is\n"
+    printf "        queue.\n"
     printf "  -t  OPTIONAL: Desired runTime selections, options are a positive integer.\n"
     printf "        When selected, the integer indicated corresponds to either the default\n"
     printf "        runTimes, or an integer multiple of the default runtimes. Default is 1.\n\n"
@@ -115,21 +115,24 @@ performRunType()        #@ DESCRIPTION: Run the calculations for a given part of
 
 
 ### Initial Variables / Default Values ###
-verbose=0
-timing=1
+declare inputFile inputDir outputFile outputDir cores submission timing tempDir verbose
+
 cores=smp\ 16
 submission=queue
+timing=1
+tempDir=$PWD
+verbose=0
 
 
 ### Runtime Configuration ###
 while getopts i:o:s:c:t:vh opt
 do
     case $opt in
-        i) inputFile="$OPTARG" ;;
-        o) outputFile="$OPTARG" ;;
-        s) submission="$OPTARG" ;;
-        c) cores="$OPTARG" ;;
-        t) timing="$OPTARG" ;;
+        i) FILE   input      = "$OPTARG" ;;                 ## Returns inputFile and inputDir variables
+        o) FILE   output     = "$OPTARG" ;;                 ## Returns outputFile and outputDir variables
+        c) STRING cores      = "$OPTARG" ;;
+        s) STRING submission = "$OPTARG" ;;
+        t) INT    timing     = "$OPTARG" ;;
         v) export verbose=1 ;;
         h) printHelpMessage && printFatalErrorMessage 0 ;;
         *) printFatalErrorMessage 1 "Invalid option flag passed to program." ;;
@@ -138,52 +141,62 @@ done
 
 
 ### Main Code ###
-if [[ ! -f ${inputFile:?An input file is required.} ]]      ## Check existence of file
+if [[ -d "$inputDir" ]]
 then
-    printf -v fileErrorMessage "Sorry, we couldn't find %s here." "$inputFile"
-    printFatalErrorMessage 3 "$fileErrorMessage"
+    cd "$inputDir" || printFatalErrorMessage 2 "Could not change into required directory."
+
+    if [[ ! -f ${inputFile:?An input file is required.} ]]      ## Check existence of file
+    then
+        printf -v fileErrorMessage "Sorry, we couldn't find %s here." "$inputFile"
+        printFatalErrorMessage 3 "$fileErrorMessage"
+    fi
+
+    module load openmd &>/dev/null
+
+    ## Calculation of desired runtimes ##
+    declare strRelax presCorr thermRelax equilibrate
+
+    sciNotCalc 10000 "$timing" strRelax                         ## 1e4 fs = 10 ps
+    sciNotCalc 200000 "$timing" presCorr                        ## 2e5 fs = 200 ps
+    sciNotCalc 100000 "$timing" thermRelax                      ## 1e5 fs = 100 ps
+    sciNotCalc 1000000 "$timing" equilibrate                    ## 1e6 fs = 1000 ps = 1 ns
+
+    ## Structural Relaxation - NVT Ensemble ##
+    performRunType StructuralRelaxation
+
+    ## Pressure Relaxation - NPTi Ensemble ##
+    performRunType PressureRelaxation
+
+    ## AffineScale to average volume ##
+    volumeArray=( $(grep Volume pres.report) )
+    volume=${volumeArray[2]}
+    [ $testing -ne 1 ] && affineScale -m pres.eor -o temp.omd -v "$volume"
+    printf "Volume Used = %s\n" "$volume"
+
+    ## Thermal Relaxation - NVT Ensemble ##
+    performRunType ThermalRelaxation
+
+    ## Thermalize to average total energy ##
+    energyArray=( $(grep Total\ Energy: temp.report) )
+    energy=${energyArray[3]}
+    [ $testing -ne 1 ] && thermalizer -i temp.omd -o equil.omd -e "$energy"
+    printf "Total Energy Used = %s\n" "$energy"
+
+    ## Equilibration - NVE Ensemble ##
+    performRunType Equilibration
+
+    printf "Equilibration process is now complete.\n"
+
+    cd "$tempDir" || printFatalErrorMessage 4 "Could not change into required directory."
+
+    if [[ -d "$outputDir" ]]
+    then
+        cd "$outputDir" || printFatalErrorMessage 5 "Could not change into required directory."
+
+        [[ $outputFile ]] && cp equil.eor "$outputFile"
+    else
+        printFatalErrorMessage 6 "Invalid directory."
+    fi
+else
+    printFatalErrorMessage 7 "Invalid directory."
 fi
-
-module load openmd &>/dev/null
-
-## Calculation of desired runtimes ##
-strRelax=
-presCorr=
-thermRelax=
-equilibrate=
-
-case $timing in
-    *[!0-9]*) printFatalErrorMessage 4 "Timing option must be an integer." ;;
-           *) sciNotCalc 10000 "$timing" strRelax           ## 1e4 fs = 10 ps
-              sciNotCalc 200000 "$timing" presCorr          ## 2e5 fs = 200 ps
-              sciNotCalc 100000 "$timing" thermRelax        ## 1e5 fs = 100 ps
-              sciNotCalc 1000000 "$timing" equilibrate ;;   ## 1e6 fs = 1000 ps = 1 ns
-esac
-
-## Structural Relaxation - NVT Ensemble ##
-performRunType StructuralRelaxation
-
-## Pressure Relaxation - NPTi Ensemble ##
-performRunType PressureRelaxation
-
-## AffineScale ##
-volumeArray=( $(grep Volume pres.report) )
-volume=${volumeArray[2]}
-[ $testing -ne 1 ] && affineScale -m pres.eor -o temp.omd -v "$volume"
-printf "Volume Used = %s\n" "$volume"
-
-## Thermal Relaxation - NVT Ensemble ##
-performRunType ThermalRelaxation
-
-## Thermalize ##
-energyArray=( $(grep Total\ Energy: temp.report) )
-energy=${energyArray[3]}
-[ $testing -ne 1 ] && thermalizer -i temp.omd -o equil.omd -e "$energy"
-printf "Total Energy Used = %s\n" "$energy"
-
-## Equilibration - NVE Ensemble ##
-performRunType Equilibration
-
-[[ $outputFile ]] && cp equil.eor "$outputFile"
-
-printf "Equilibration process is now complete.\n"

@@ -1,8 +1,8 @@
 #!/bin/bash
-# Copyright (c) 2020 Cody R. Drisko. All rights reserved.
+# Copyright (c) 2019-2020 Cody R. Drisko. All rights reserved.
 # Licensed under the MIT License. See the LICENSE file in the project root for more information.
 #
-# Name: afsInit.sh - Version 1.0.0
+# Name: afsInit.sh - Version 1.1.0
 # Author: cdrisko
 # Date: 07/20/2020-08:00:43
 # Description: Initialize the connection to the afs servers for the supplied username
@@ -10,10 +10,11 @@
 
 ### Functions ###
 source errorHandling
+source typeParsing
 
 printHelpMessage()      #@ DESCRIPTION: Print the afsInit program's help message
 {                       #@ USAGE: printHelpMessage
-    printf "\nUSAGE: afsInit [-hv] [-u USERNAME] [-t TIME]\n\n"
+    printf "\nUSAGE: afsInit [-hv] [-u STRING] [-t INT]\n\n"
     printf "  -h  Prints help information about the afsInit program.\n"
     printf "  -v  Verbose mode. Defaults to false/off.\n\n"
     printf "  -u  REQUIRED: CRC username for access to the afs servers.\n"
@@ -41,8 +42,19 @@ spin()                  #@ DESCRIPTION: Print spinner until time is exceeded
     echo
 }
 
+connectToCampusVPN()    #@ DESCRIPTION: Make the connection to campus VPN via Cisco
+{                       #@ USAGE: connectToVPN TIME
+    if [[ $OSTYPE == darwin* && ! $( pgrep Cisco | wc -l ) -ge 1 ]]
+    then
+        ## We'll go ahead and make the connection to Cisco for you, careful not to take too long though ##
+        open -a "Cisco AnyConnect Secure Mobility Client" && spin "$1"
+    fi
+}
+
 
 ### Initial Variables / Default Values ###
+declare verbose userName timing
+
 verbose=0
 timing=15
 
@@ -51,8 +63,8 @@ timing=15
 while getopts u:t:vh opt
 do
     case $opt in
-        u) userName=$OPTARG ;;
-        t) timing=$OPTARG ;;
+        u) STRING userName = "$OPTARG" ;;
+        t) INT    timing   = "$OPTARG" ;;
         v) export verbose=1 ;;
         h) printHelpMessage && printFatalErrorMessage 0 ;;
         *) printFatalErrorMessage 1 "Invalid option flag passed to program." ;;
@@ -63,12 +75,13 @@ done
 ### Main Code ###
 set -e
 
-if [[ $OSTYPE == darwin* ]]
-then
-    ## We'll go ahead and make the connection to Cisco for you, careful not to take too long though ##
-    open -a "Cisco AnyConnect Secure Mobility Client" && spin "$timing"
-fi
+[[ ${userName:?A username is required} ]]
 
-kinit -l 30d "${userName:?A username is required}"@CRC.ND.EDU       ## Initialize the tokens for the CRC's cell on afs
-aklog                                                               ## Obtain token for authentication with afs servers
-tokens                                                              ## List the tokens to verify success of the authentication
+connectToCampusVPN "$timing"
+
+if [[ $( tokens | wc -l ) -le 4 ]]
+then
+    kinit -l 30d "$userName"@CRC.ND.EDU                     ## Initialize the tokens for the CRC's cell on afs
+    aklog                                                   ## Obtain token for authentication with afs servers
+    tokens                                                  ## List the tokens to verify success of the authentication
+fi

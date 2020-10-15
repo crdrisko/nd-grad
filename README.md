@@ -1,14 +1,14 @@
-# ND-Research
+# ND-Grad
 
-[![Build Status](https://travis-ci.com/crdrisko/ND-Research.svg?branch=master)](https://travis-ci.com/crdrisko/ND-Research) [![Coverage Status](https://coveralls.io/repos/github/crdrisko/nd-research/badge.svg?branch=master)](https://coveralls.io/github/crdrisko/nd-research?branch=master)
+[![Build Status](https://travis-ci.com/crdrisko/nd-grad.svg?branch=master)](https://travis-ci.com/crdrisko/nd-grad) [![Coverage Status](https://coveralls.io/repos/github/crdrisko/nd-grad/badge.svg?branch=master)](https://coveralls.io/github/crdrisko/nd-grad?branch=master)
 
-Welcome to the ND-Research project! This repository is a merger of the formerly separate ND-Research and ND-Coursework projects. Because these repositories were so closely related, it makes sense to maintain and release them together.
+Welcome to the ND-Grad project! This repository is a merger of the formerly separate ND-Research and ND-Coursework projects. Because these repositories were so closely related, it makes sense to maintain and release them together.
 
 ## Getting started
 
-Information for getting started using ND-Research is available in the [`docs/primer.md`](https://github.com/crdrisko/nd-research/tree/master/docs/primer.md) documentation.
+Information for getting started using ND-Grad is available in the [`docs/primer.md`](docs/primer.md) documentation.
 
-More detailed documentation for nd-research and nd-coursework can be found in the interior [`nd-research/README.md`](https://github.com/crdrisko/nd-research/tree/master/nd-research/README.md) and [`nd-coursework/README.md`](https://github.com/crdrisko/nd-research/tree/master/nd-coursework/README.md) files, respectively.
+More detailed documentation for nd-research and nd-coursework can be found in the interior [`nd-research/README.md`](nd-research/README.md) and [`nd-coursework/README.md`](nd-coursework/README.md) files, respectively.
 
 ## Features
 
