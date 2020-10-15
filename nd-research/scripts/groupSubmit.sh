@@ -2,7 +2,7 @@
 # Copyright (c) 2019-2020 Cody R. Drisko. All rights reserved.
 # Licensed under the MIT License. See the LICENSE file in the project root for more information.
 #
-# Name: groupSubmit.sh - Version 1.3.0
+# Name: groupSubmit.sh - Version 1.3.1
 # Author: cdrisko
 # Date: 01/20/2020-10:22:05
 # Description: Gezelter group submission script creator and resource monitor
@@ -163,46 +163,45 @@ then
     else
         printFatalErrorMessage 4 "Invalid directory."
     fi
-
 elif [[ -d "$scriptDir" ]]
 then
     cd "$scriptDir" || printFatalErrorMessage 5 "Could not change into required directory."
-
-    ## Submit the jobs if the submission script exists ##
-    if [[ -f ${scriptFile:?A script is required} ]]
-    then
-        ## If checkQuota script is already running, no need to submit it again ##
-        IFS=$'\n'
-        qstatArray=( $( qstat -u "$USER" ) )
-        IFS=$' \t\n'
-
-        for line in "${qstatArray[@]}"
-        do
-            lineArray=( $line )
-
-            if [[ "${lineArray[2]}" == "checkUserQ" ]]
-            then
-                checkUserQuota=1
-            elif [[ "${lineArray[2]}" == "checkGroup" ]]
-            then
-                checkGroupQuota=1
-            fi
-        done
-
-        if [[ ${checkUserQuota:-0} -eq 0 && "$PWD" == /afs/crc.nd.edu/user/* ]]
-        then
-            printCheckQuotaScript User > checkUserQuota.sh
-            qsub checkUserQuota.sh
-        elif [[ ${checkGroupQuota:-0} -eq 0 && "$PWD" == /afs/crc.nd.edu/group/gezelter/* ]]
-        then
-            printCheckQuotaScript Group > checkGroupQuota.sh
-            qsub checkGroupQuota.sh
-        fi
-
-        qsub "$scriptFile"
-    else
-        printFatalErrorMessage 6 "The script provided does not exist."
-    fi
 else
-    printFatalErrorMessage 7 "Invalid directory."
+    printFatalErrorMessage 6 "Invalid directory."
+fi
+
+## Submit the jobs if the submission script exists ##
+if [[ -f ${scriptFile:?A script is required} ]]
+then
+    ## If checkQuota script is already running, no need to submit it again ##
+    IFS=$'\n'
+    qstatArray=( $( qstat -u "$USER" ) )
+    IFS=$' \t\n'
+
+    for line in "${qstatArray[@]}"
+    do
+        lineArray=( $line )
+
+        if [[ "${lineArray[2]}" == "checkUserQ" ]]
+        then
+            checkUserQuota=1
+        elif [[ "${lineArray[2]}" == "checkGroup" ]]
+        then
+            checkGroupQuota=1
+        fi
+    done
+
+    if [[ ${checkUserQuota:-0} -eq 0 && "$PWD" == /afs/crc.nd.edu/user/* ]]
+    then
+        printCheckQuotaScript User > checkUserQuota.sh
+        qsub checkUserQuota.sh
+    elif [[ ${checkGroupQuota:-0} -eq 0 && "$PWD" == /afs/crc.nd.edu/group/gezelter/* ]]
+    then
+        printCheckQuotaScript Group > checkGroupQuota.sh
+        qsub checkGroupQuota.sh
+    fi
+
+    qsub "$scriptFile"
+else
+    printFatalErrorMessage 7 "The script provided does not exist."
 fi
