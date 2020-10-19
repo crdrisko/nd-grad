@@ -2,6 +2,17 @@
 
 All the examples/exercises from the various books on the programming languages I have been learning. These include Bash, C++, and Python, along with a few books that are more about computer science or programming in general. A list of the books in each category are listed below:
 
+## General CS Topics
+
+### Algorithms and Data Structures
+
+- [Cracking the Coding Interview](http://www.crackingthecodinginterview.com) by Gayle Laakmann McDowell
+- [Introduction to Algorithms](https://mitpress.mit.edu/books/introduction-algorithms-third-edition) by Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, and Clifford Stein
+
+### Cybersecurity
+
+- [Personal Cybersecurity](https://www.apress.com/gp/book/9781484224298) by Marvin Waschke
+
 ## Programming Languages
 
 ### Bash
@@ -22,20 +33,9 @@ All the examples/exercises from the various books on the programming languages I
 
 ## PHP and MySQL
 
-- [Beginning PHP and MySQL](https://github.com/Apress/beginning-php-and-mysql-5e) by Frank M. Kromann -->
+- [Beginning PHP and MySQL](https://github.com/Apress/beginning-php-and-mysql-5e) by Frank M. Kromann-->
 
 ### Python
 
 - [A Student's Guide to Python for Physical Modeling](http://physicalmodelingwithpython.blogspot.com/p/code-samples.html) by Jesse M. Kinder and Philip Nelson
 - [Numerical Python](https://github.com/Apress/numerical-python-second-ed) by Robert Johansson
-
-## General CS Topics
-
-### Algorithms and Data Structures
-
-- [Cracking the Coding Interview](http://www.crackingthecodinginterview.com) by Gayle Laakmann McDowell
-- [Introduction to Algorithms](https://mitpress.mit.edu/books/introduction-algorithms-third-edition) by Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, and Clifford Stein
-
-### Cybersecurity
-
-- [Personal Cybersecurity](https://www.apress.com/gp/book/9781484224298) by Marvin Waschke
