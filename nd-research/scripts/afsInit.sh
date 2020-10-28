@@ -2,7 +2,7 @@
 # Copyright (c) 2019-2020 Cody R. Drisko. All rights reserved.
 # Licensed under the MIT License. See the LICENSE file in the project root for more information.
 #
-# Name: afsInit.sh - Version 1.1.0
+# Name: afsInit.sh - Version 1.1.1
 # Author: cdrisko
 # Date: 07/20/2020-08:00:43
 # Description: Initialize the connection to the afs servers for the supplied username
@@ -47,7 +47,10 @@ connectToCampusVPN()    #@ DESCRIPTION: Make the connection to campus VPN via Ci
     if [[ $OSTYPE == darwin* && ! $( pgrep Cisco | wc -l ) -ge 1 ]]
     then
         ## We'll go ahead and make the connection to Cisco for you, careful not to take too long though ##
-        open -a "Cisco AnyConnect Secure Mobility Client" && spin "$1"
+        if open -a "Cisco AnyConnect Secure Mobility Client" 2>/dev/null
+        then
+            spin "$1"
+        fi
     fi
 }
 

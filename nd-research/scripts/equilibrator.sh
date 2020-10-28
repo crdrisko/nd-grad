@@ -2,7 +2,7 @@
 # Copyright (c) 2019-2020 Cody R. Drisko. All rights reserved.
 # Licensed under the MIT License. See the LICENSE file in the project root for more information.
 #
-# Name: equilibrator.sh - Version 1.1.0
+# Name: equilibrator.sh - Version 1.1.1
 # Author: cdrisko
 # Date: 02/07/2020-08:37:21
 # Description: Standard equilibration procedure for an OpenMD simulation
@@ -81,7 +81,7 @@ performRunType()        #@ DESCRIPTION: Run the calculations for a given part of
                               desiredFile=pres ;;
 
            ThermalRelaxation) ## Thermal Relaxation Parameters ##
-                              desiredEnsemble="ensemble = NVT"
+                              desiredEnsemble="ensemble = NVT;"
                               desiredTime="runTime = ${thermRelax};"
                               desiredFile=temp ;;
 

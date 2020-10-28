@@ -10,10 +10,10 @@ option(courses_build_samples    "Builds nd-coursework applications and correspon
 option(courses_exclude_scripts  "Builds nd-coursework applications while ignoring the scripts directory." OFF)
 
 option(grad_build_all           "Builds all applications, unit tests, and code samples." OFF)
-option(grad_build_tests         "Builds all libraries and unit tests." OFF)
-option(grad_build_samples       "Builds all libraries and code samples." OFF)
-option(grad_enable_coverage     "Builds all libraries, unit tests, and enables coverage options." OFF)
-option(grad_format_codebase     "Builds appropriate libraries while also formatting the code." OFF)
+option(grad_build_tests         "Builds all applications and unit tests." OFF)
+option(grad_build_samples       "Builds all applications and code samples." OFF)
+option(grad_enable_coverage     "Builds all applications, unit tests, and enables coverage options." OFF)
+option(grad_format_codebase     "Builds appropriate applications while also formatting the code." OFF)
 
 option(research_build_all       "Builds nd-research applications, corresponding unit tests, and corresponding code samples." OFF)
 option(research_build_tests     "Builds nd-research applications and corresponding unit tests." OFF)
