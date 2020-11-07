@@ -4,7 +4,7 @@
 // Name: conslisttest.hpp
 // Author: crdrisko
 // Date: 10/02/2020-08:35:46
-// Description:
+// Description: An example usage of the ConsList structure
 
 #ifndef CONSLISTTEST_HPP
 #define CONSLISTTEST_HPP

@@ -4,7 +4,7 @@
 // Name: addconst.hpp
 // Author: crdrisko
 // Date: 09/30/2020-07:20:26
-// Description: A metafunction turning a type into its const-qualified variant
+// Description: A metafunction for turning a type into its const-qualified variant
 
 #ifndef ADDCONST_HPP
 #define ADDCONST_HPP

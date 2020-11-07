@@ -4,7 +4,7 @@
 // Name: typelistpushfront.hpp
 // Author: crdrisko
 // Date: 09/10/2020-11:58:11
-// Description: A metafunction inserting a new element at the front of a typelist
+// Description: A metafunction for inserting a new element at the front of a typelist
 
 #ifndef TYPELISTPUSHFRONT_HPP
 #define TYPELISTPUSHFRONT_HPP

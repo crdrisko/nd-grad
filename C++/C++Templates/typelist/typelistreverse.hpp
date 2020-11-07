@@ -4,7 +4,7 @@
 // Name: typelistreverse.hpp
 // Author: crdrisko
 // Date: 09/30/2020-06:49:57
-// Description: A metafunction to reverse a typelist
+// Description: A metafunction for reversing a typelist
 
 #ifndef TYPELISTREVERSE_HPP
 #define TYPELISTREVERSE_HPP

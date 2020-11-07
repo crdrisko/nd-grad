@@ -4,7 +4,7 @@
 // Name: nthelement.hpp
 // Author: crdrisko
 // Date: 09/10/2020-12:16:40
-// Description: A metafunction finding the element at a given index of a typelist
+// Description: A metafunction for finding the element at a given index of a typelist
 
 #ifndef NTHELEMENT_HPP
 #define NTHELEMENT_HPP

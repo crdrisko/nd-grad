@@ -4,7 +4,7 @@
 // Name: typelistpushback.hpp
 // Author: crdrisko
 // Date: 09/13/2020-10:01:41
-// Description: A metafunction inserting a new element at the back of a typelist
+// Description: A metafunction for inserting a new element at the back of a typelist
 
 #ifndef TYPELISTPUSHBACK_HPP
 #define TYPELISTPUSHBACK_HPP

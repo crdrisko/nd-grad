@@ -4,7 +4,7 @@
 // Name: conspushfront.hpp
 // Author: crdrisko
 // Date: 10/02/2020-08:35:46
-// Description: A metafunction inserting a new element at the front of a cons-style typelist
+// Description: A metafunction for inserting a new element at the front of a cons-style typelist
 
 #ifndef CONSPUSHFRONT_HPP
 #define CONSPUSHFRONT_HPP

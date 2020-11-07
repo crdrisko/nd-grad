@@ -4,7 +4,7 @@
 // Name: typelistpopfront.hpp
 // Author: crdrisko
 // Date: 09/10/2020-11:53:38
-// Description: A metafunction removing the first element from a typelist
+// Description: A metafunction for removing the first element from a typelist
 
 #ifndef TYPELISTPOPFRONT_HPP
 #define TYPELISTPOPFRONT_HPP

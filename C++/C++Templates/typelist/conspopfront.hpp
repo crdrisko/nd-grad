@@ -4,7 +4,7 @@
 // Name: conspopfront.hpp
 // Author: crdrisko
 // Date: 10/02/2020-08:35:46
-// Description: A metafunction removing the first element from a cons-style typelist
+// Description: A metafunction for removing the first element from a cons-style typelist
 
 #ifndef CONSPOPFRONT_HPP
 #define CONSPOPFRONT_HPP

@@ -4,7 +4,7 @@
 // Name: largesttype.hpp
 // Author: crdrisko
 // Date: 09/12/2020-17:33:06
-// Description: A metafunction finding the largest type within a typelist
+// Description: A metafunction for finding the largest type within a typelist
 
 #ifndef LARGESTTYPE_HPP
 #define LARGESTTYPE_HPP

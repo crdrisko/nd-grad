@@ -4,7 +4,7 @@
 // Name: typelistpopback.hpp
 // Author: crdrisko
 // Date: 09/30/2020-07:16:29
-// Description: A metafunction removing the last element from a typelist
+// Description: A metafunction for removing the last element from a typelist
 
 #ifndef TYPELISTPOPBACK_HPP
 #define TYPELISTPOPBACK_HPP

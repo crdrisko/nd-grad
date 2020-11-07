@@ -4,7 +4,7 @@
 // Name: consisempty.hpp
 // Author: crdrisko
 // Date: 10/02/2020-08:35:46
-// Description: A metafunction to determine whether a cons-style typelist is empty
+// Description: A metafunction for to determine whether a cons-style typelist is empty
 
 #ifndef CONSISEMPTY_HPP
 #define CONSISEMPTY_HPP

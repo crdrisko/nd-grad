@@ -4,7 +4,7 @@
 // Name: typelistfront.hpp
 // Author: crdrisko
 // Date: 09/10/2020-11:48:09
-// Description: A metafunction extracting the first element from a typelist
+// Description: A metafunction for extracting the first element from a typelist
 
 #ifndef TYPELISTFRONT_HPP
 #define TYPELISTFRONT_HPP

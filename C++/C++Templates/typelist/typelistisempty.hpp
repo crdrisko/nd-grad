@@ -4,7 +4,7 @@
 // Name: typelistisempty.hpp
 // Author: crdrisko
 // Date: 09/12/2020-17:46:14
-// Description: A metafunction to determine whether a typelist is empty
+// Description: A metafunction for determining whether a typelist is empty
 
 #ifndef TYPELISTISEMPTY_HPP
 #define TYPELISTISEMPTY_HPP

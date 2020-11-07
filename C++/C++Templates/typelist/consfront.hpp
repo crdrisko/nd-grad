@@ -4,7 +4,7 @@
 // Name: consfront.hpp
 // Author: crdrisko
 // Date: 10/02/2020-08:35:46
-// Description: A metafunction extracting the first element from a cons-style typelist
+// Description: A metafunction for extracting the first element from a cons-style typelist
 
 #ifndef CONSFRONT_HPP
 #define CONSFRONT_HPP
