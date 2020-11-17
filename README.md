@@ -27,6 +27,7 @@ All the examples/exercises from the various books on the programming languages I
 - [C++ Templates](http://www.tmplbook.com) by David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor
 - [C++17](http://www.cppstd17.com) by Nicolai M. Josuttis
 - [C++20 Recipes](https://github.com/Apress/cpp-20-recipes) by J. Burton Browning and Bruce Sutherland
+- [Functional Programming in C++](https://gitlab.com/manning-fpcpp-book) by Ivan Cukic
 - [Practical C++ Design](https://github.com/Apress/practical-cplusplus-design) by Adam Singer
 
 <!-- - [Modern X86 Assembly Language Programming](https://github.com/Apress/modern-x86-assembly-language-programming-2e) by Daniel Kusswurm
