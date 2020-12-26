@@ -1,6 +1,6 @@
 # Books-Practice
 
-All the examples/exercises from the various books on the programming languages I have been learning. These include Bash, C++, and Python, along with a few books that are more about computer science or programming in general. A list of the books in each category are listed below:
+All the examples/exercises from the various books on the programming languages I have been learning. These include Bash, C++, and Python, along with a few books that are more about computer science or programming in general. A list of the books in each category are listed below.
 
 ## General CS Topics
 
@@ -24,6 +24,7 @@ All the examples/exercises from the various books on the programming languages I
 
 - [Beginning C++17](https://github.com/Apress/beg-cplusplus17) by Ivor Horton and Peter Van Weert
 - [Clean C++](https://github.com/Apress/clean-cplusplus) by Stephan Roth
+- [C++ Concurrency In Action](https://github.com/anthonywilliams/ccia_code_samples) by Anthony Williams
 - [C++ Templates](http://www.tmplbook.com) by David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor
 - [C++17](http://www.cppstd17.com) by Nicolai M. Josuttis
 - [C++20 Recipes](https://github.com/Apress/cpp-20-recipes) by J. Burton Browning and Bruce Sutherland
