@@ -12,72 +12,15 @@
 *.a
 *.lib
 
-## Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+# Executables
+*.exe
+*.out
+*.app
 
-## Debug files
+# Debug files
 *.dSYM/
 *.su
 *.idb
 *.pdb
 
-## Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
-
-## Fortran module files
-*.mod
-*.smod
-
-## Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
-
-## Linker output
-*.ilk
-*.map
-*.exp
-
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
-
-## Precompiled Headers
-*.gch
-*.pch
-
-## Prerequisites
-*.d
-
-
-# Python files to ignore
-
-## Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*$py.class
-
-## IPython
-profile_default/
-ipython_config.py
-
-## Jupyter Notebook
-.ipynb_checkpoints
-
-
-# Other files to ignore
-nd-research/test/**/*.txt
+Algorithms/**/*
