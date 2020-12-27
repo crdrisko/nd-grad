@@ -23,4 +23,6 @@
 *.idb
 *.pdb
 
-Algorithms/**/*
+nd-coursework/books/algorithms
+nd-coursework/books/cpp/FunctionalC++
+nd-coursework/courses/mpiWorkshop
