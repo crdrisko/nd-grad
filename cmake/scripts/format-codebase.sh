@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (c) 2019-2020 Cody R. Drisko. All rights reserved.
+# Copyright (c) 2019-2021 Cody R. Drisko. All rights reserved.
 # Licensed under the MIT License. See the LICENSE file in the project root for more information.
 #
 # Name: format-codebase.sh - Version 1.0.0
