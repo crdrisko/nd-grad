@@ -23,6 +23,10 @@
 *.idb
 *.pdb
 
+.DS_Store
+
 nd-coursework/books/algorithms
+nd-coursework/books/cpp/C++17/filesystem/tmp
+nd-coursework/books/cpp/FoundationsOfQtDev/build
 nd-coursework/books/cpp/FunctionalC++
 nd-coursework/courses/mpiWorkshop

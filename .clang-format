@@ -23,6 +23,10 @@ IncludeCategories:
   - Regex:           '^<.*/.*[\.h\.hpp]>'
     Priority:        3
     SortPriority:    0
+  ## Qt libraries
+  - Regex:           '^<Q.*>'
+    Priority:        3
+    SortPriority:    0
   ## C system headers
   - Regex:           '^<.*\.h>'
     Priority:        1
@@ -33,7 +37,7 @@ IncludeCategories:
     SortPriority:    0
   ## Other project files
   - Regex:           '.*'
-    Priority:        4
+    Priority:        5
     SortPriority:    0
 IndentPPDirectives: BeforeHash
 KeepEmptyLinesAtTheStartOfBlocks: false

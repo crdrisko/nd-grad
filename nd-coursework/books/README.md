@@ -28,6 +28,8 @@ All the examples/exercises from the various books on the programming languages I
 - [C++ Templates](http://www.tmplbook.com) by David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor
 - [C++17](http://www.cppstd17.com) by Nicolai M. Josuttis
 - [C++20 Recipes](https://github.com/Apress/cpp-20-recipes) by J. Burton Browning and Bruce Sutherland
+- [Design Patterns](http://st-www.cs.uiuc.edu/users/patterns/DPBook/DPBook.html) by Erich Gamma, Richard Helm, Ralph Johnson, and John Vlissides
+- [Foundations of Qt Development](https://github.com/Apress/foundations-of-qt-dev) by Johan Thelin
 - [Functional Programming in C++](https://gitlab.com/manning-fpcpp-book) by Ivan Cukic
 - [Practical C++ Design](https://github.com/Apress/practical-cplusplus-design) by Adam Singer
 
