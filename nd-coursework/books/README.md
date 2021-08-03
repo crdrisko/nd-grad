@@ -25,6 +25,7 @@ All the examples/exercises from the various books on the programming languages I
 - [Beginning C++17](https://github.com/Apress/beg-cplusplus17) by Ivor Horton and Peter Van Weert
 - [Clean C++](https://github.com/Apress/clean-cplusplus) by Stephan Roth
 - [C++ Concurrency In Action](https://github.com/anthonywilliams/ccia_code_samples) by Anthony Williams
+- [C++ Move Semantics](http://www.cppmove.com) by Nicolai M. Josuttis
 - [C++ Templates](http://www.tmplbook.com) by David Vandevoorde, Nicolai M. Josuttis, and Douglas Gregor
 - [C++17](http://www.cppstd17.com) by Nicolai M. Josuttis
 - [C++20 Recipes](https://github.com/Apress/cpp-20-recipes) by J. Burton Browning and Bruce Sutherland
