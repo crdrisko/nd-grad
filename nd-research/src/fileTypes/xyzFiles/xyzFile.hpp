@@ -10,36 +10,28 @@
 #define ND_RESEARCH_XYZFILE_HPP
 
 #include <cstddef>
-#include <memory>
-#include <string>
-#include <string_view>
+#include <filesystem>
 #include <vector>
 
-#include <utils-api/files.hpp>
-
 #include "xyzParameters.hpp"
-// #include "../../types/molecularEntity.hpp"
 
 namespace ND_Research
 {
-    class XYZFile : protected Utilities_API::Files::TextFile
+    class XYZFile
     {
     private:
-        // std::vector<MolecularEntityPtr> molecularEntities;
-        XYZParametersPtr xyzParameters { std::make_shared<XYZParameters>() };
+        XYZParameters params;
+        std::vector<std::vector<XYZData>> data;
+        std::filesystem::path fileName;
 
-        std::vector<std::vector<std::string>> superDataVector { getSuperDataVector(" \t\n\";") };
-
-        void setNumberOfFrames();
-        void parseInputXYZFile(std::size_t currentFrame);
+        bool hasNextFrame(const std::vector<std::string>& rows_);
+        void parseInputXYZFile(const std::vector<std::string>& rows_, std::size_t currentFrame_);
 
     public:
-        explicit XYZFile(std::string_view FullFileName);
+        explicit XYZFile(const std::filesystem::path& fileName_);
 
-        XYZParametersPtr getXYZParameters() const { return xyzParameters; }
-        // std::vector<MolecularEntityPtr> getMolecularEntities() const { return molecularEntities; }
-        Utilities_API::Files::FileName getFileName() const { return Utilities_API::Files::TextFile::getFileName(); }
+        void printOutputFile() const;
     };
-}
+}   // namespace ND_Research
 
 #endif

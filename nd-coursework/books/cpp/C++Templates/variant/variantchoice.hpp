@@ -11,13 +11,14 @@
 
 #include "../typelist/typelist.hpp"
 #include "findindexof.hpp"
+#include "variant.hpp"
 
 template<typename T, typename... Types>
 class VariantChoice
 {
     using Derived = Variant<Types...>;
     Derived& getDerived() { return *static_cast<Derived*>(this); }
-    Derived const& getDerived() { return *static_cast<Derived const*>(this); }
+    Derived const& getDerived() const { return *static_cast<Derived const*>(this); }
 
 protected:
     // compute the discriminator to be used for this type

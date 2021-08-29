@@ -15,8 +15,8 @@
 #include <string>
 #include <vector>
 
+#include <common-utils/math.hpp>
 #include <cpp-units/physicalQuantities.hpp>
-#include <utils-api/containers.hpp>
 
 namespace ND_Research
 {
@@ -28,41 +28,41 @@ namespace ND_Research
             std::string fluxType;
 
             char privilegedAxis;
-            PhysicalQuantities::Time exchangeTime;
+            CppUnits::Time exchangeTime;
             std::vector<std::string> objectSelection;
-            std::array<PhysicalQuantities::Length, 2> selectionA;
-            std::array<PhysicalQuantities::Length, 2> selectionB;
+            std::array<CppUnits::Length, 2> selectionA;
+            std::array<CppUnits::Length, 2> selectionB;
             std::vector<std::string> outputSelection;
         };
 
         struct RNEMDReportParameters
         {
-            PhysicalQuantities::Time runningTime;
+            CppUnits::Time runningTime;
 
             // Target fluxes
-            PhysicalQuantities::MolarEnergyFlux kineticFlux;
-            Utilities_API::Containers::Vector3D<PhysicalQuantities::MomentumFlux> momentumFlux;
-            Utilities_API::Containers::Vector3D<PhysicalQuantities::MomentumFlux> angularMomentumFlux;
-            PhysicalQuantities::CurrentDensity currentDensity;
+            CppUnits::MolarEnergyFlux kineticFlux;
+            DryChem::Vector3D<CppUnits::MomentumFlux> momentumFlux;
+            DryChem::Vector3D<CppUnits::MomentumFlux> angularMomentumFlux;
+            CppUnits::CurrentDensity currentDensity;
 
             // Target one-time exchanges
-            PhysicalQuantities::MolarEnergy kineticTarget;
-            Utilities_API::Containers::Vector3D<PhysicalQuantities::Momentum> momentumTarget;
-            Utilities_API::Containers::Vector3D<PhysicalQuantities::Momentum> angularMomentumTarget;
+            CppUnits::MolarEnergy kineticTarget;
+            DryChem::Vector3D<CppUnits::Momentum> momentumTarget;
+            DryChem::Vector3D<CppUnits::Momentum> angularMomentumTarget;
 
             // Actual exchange totals
-            PhysicalQuantities::MolarEnergy kineticExchange;
+            CppUnits::MolarEnergy kineticExchange;
 
-            Utilities_API::Containers::Vector3D<PhysicalQuantities::Momentum> momentumExchange;
-            Utilities_API::Containers::Vector3D<PhysicalQuantities::Momentum> angularMomentumExchange;
+            DryChem::Vector3D<CppUnits::Momentum> momentumExchange;
+            DryChem::Vector3D<CppUnits::Momentum> angularMomentumExchange;
 
             // Actual fluxes
-            PhysicalQuantities::MolarEnergyFlux Jz;
-            Utilities_API::Containers::Vector3D<PhysicalQuantities::MomentumFlux> JzP;
-            Utilities_API::Containers::Vector3D<PhysicalQuantities::MomentumFlux> JzL;
-            PhysicalQuantities::CurrentDensity Jc_total;
-            PhysicalQuantities::CurrentDensity Jc_cation;
-            PhysicalQuantities::CurrentDensity Jc_anion;
+            CppUnits::MolarEnergyFlux Jz;
+            DryChem::Vector3D<CppUnits::MomentumFlux> JzP;
+            DryChem::Vector3D<CppUnits::MomentumFlux> JzL;
+            CppUnits::CurrentDensity Jc_total;
+            CppUnits::CurrentDensity Jc_cation;
+            CppUnits::CurrentDensity Jc_anion;
 
             // Exchange statistics
             std::size_t trialCount {};
@@ -77,8 +77,8 @@ namespace ND_Research
             int dataFieldLabelIndex {};
             int numberOfRegions {};
 
-            PhysicalQuantities::Length slabWidth;
-            PhysicalQuantities::Length boxSize;
+            CppUnits::Length slabWidth;
+            CppUnits::Length boxSize;
 
             double percentageOfKicksFailed {};
         };
@@ -93,17 +93,17 @@ namespace ND_Research
 
     struct RNEMDData
     {
-        std::vector<PhysicalQuantities::Length> rnemdAxis;
-        std::vector<PhysicalQuantities::Temperature> temperature;
-        Utilities_API::Containers::Vector3D<std::vector<PhysicalQuantities::Velocity>> velocity;
-        Utilities_API::Containers::Vector3D<std::vector<PhysicalQuantities::AngularVelocity>> angularVelocity;
-        std::vector<PhysicalQuantities::MassDensity> density;
-        std::vector<std::vector<PhysicalQuantities::Concentration>> activity;
-        Utilities_API::Containers::Vector3D<std::vector<PhysicalQuantities::ElectricField>> electricField;
-        std::vector<PhysicalQuantities::ElectricPotential> electricPotential;
+        std::vector<CppUnits::Length> rnemdAxis;
+        std::vector<CppUnits::Temperature> temperature;
+        DryChem::Vector3D<std::vector<CppUnits::Velocity>> velocity;
+        DryChem::Vector3D<std::vector<CppUnits::AngularVelocity>> angularVelocity;
+        std::vector<CppUnits::MassDensity> density;
+        std::vector<std::vector<CppUnits::Concentration>> activity;
+        DryChem::Vector3D<std::vector<CppUnits::ElectricField>> electricField;
+        std::vector<CppUnits::ElectricPotential> electricPotential;
     };
 
     using RNEMDDataPtr = std::shared_ptr<RNEMDData>;
-}
+}   // namespace ND_Research
 
 #endif

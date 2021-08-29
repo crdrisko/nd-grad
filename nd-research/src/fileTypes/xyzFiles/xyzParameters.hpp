@@ -13,35 +13,39 @@
 #include <memory>
 #include <vector>
 
+#include <common-utils/math.hpp>
 #include <cpp-units/physicalQuantities.hpp>
-#include <utils-api/containers.hpp>
 
 namespace ND_Research
 {
     template<typename T>
-    using Matrix3D = Utilities_API::Containers::Vector3D<Utilities_API::Containers::Vector3D<T>>;
-
+    using Matrix3D = DryChem::Vector3D<DryChem::Vector3D<T>>;
 
     struct XYZParameters
     {
         struct XYZFrameParameters
         {
             std::size_t numberOfAtoms {};
-            PhysicalQuantities::Time runTime;
-            Matrix3D<PhysicalQuantities::Length> Hmat;
+            CppUnits::Time runTime {};
+            Matrix3D<CppUnits::Length> Hmat {};
         };
 
         struct XYZInferredParameters
         {
-            std::size_t numberOfFrames {};
-            PhysicalQuantities::Time timeStep;
+            std::size_t numberOfFrames {1};
+            CppUnits::Time timeStep {};
         };
 
         std::vector<XYZFrameParameters> frame;
         XYZInferredParameters inferred;
     };
 
-    using XYZParametersPtr = std::shared_ptr<XYZParameters>;
-}
+    struct XYZData
+    {
+        std::string atomName;
+        DryChem::Vector3D<CppUnits::Length> positions;
+        DryChem::Vector3D<CppUnits::Velocity> velocities;
+    };
+}   // namespace ND_Research
 
 #endif
