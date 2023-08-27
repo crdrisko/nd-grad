@@ -17,12 +17,17 @@
 *.out
 *.app
 *.o
-
+xs
 # Debug files
 *.dSYM/
 *.su
 *.idb
 *.pdb
+
+# Byte-compiled / optimized / DLL files
+__pycache__
+*.py[cod]
+*$py.class
 
 .DS_Store
 *.tmp

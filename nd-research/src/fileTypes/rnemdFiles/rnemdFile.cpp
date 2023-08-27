@@ -1,223 +1,568 @@
-// Copyright (c) 2019-2021 Cody R. Drisko. All rights reserved.
-// Licensed under the MIT License.See the LICENSE file in the project root for more information.
+// Copyright (c) 2020-2021 Cody R. Drisko. All rights reserved.
+// Licensed under the MIT License. See the LICENSE file in the project root for more information.
 //
-// Name: rnemdFile.cpp - Version 1.0.0
-// Author: cdrisko
-// Date: 01/21/2020-14:16:00
-// Description: Funtion definitions for the RNEMDFile class
-
-#include <algorithm>
-#include <cstddef>
-#include <exception>
-#include <memory>
-#include <string>
-#include <string_view>
-
-#include <cpp-units/physicalQuantities.hpp>
-#include <utils-api/errors.hpp>
-#include <utils-api/files.hpp>
+// Name: rnemdFile.cpp
+// Author: crdrisko
+// Date: 11/22/2022-08:32:58
+// Description:
 
 #include "rnemdFile.hpp"
-#include "../../utilities/dataFields.hpp"
-#include "../../utilities/dataFieldParser.hpp"
 
-using namespace PhysicalQuantities;
+#include <iostream>
+#include <string>
+#include <vector>
+
+#include <common-utils/files.hpp>
+#include <common-utils/strings.hpp>
+#include <cpp-units/physicalQuantities.hpp>
+
+using namespace CppUnits;
 
 namespace ND_Research
 {
-    RNEMDFile::RNEMDFile(std::string_view FullFileName) : Utilities_API::Files::TextFile{FullFileName}
+    void RNEMDFile::operator()(const std::string& fileContents_)
     {
-        try
+        DryChem::AsRows rowParser {};
+        std::vector<std::string> rows {rowParser(fileContents_)};
+
+        std::string dataContents {}, errorContents {};
+        std::string punctuation {",:; \t\n"};
+
+        bool targetFluxes {false}, targetExchanges {false}, actualExchange {false}, actualFluxes {false};
+
+        for (const auto& row : rows)
         {
-            try
+            if (row[0] == '#')
             {
-                // Serves as the current row we are parsing in the rnemd file
-                std::size_t row {2};
+                if (DryChem::foundSubstr("Target", row))
+                {
+                    if (DryChem::foundSubstr("flux", row))
+                    {
+                        targetFluxes    = true;
+                        targetExchanges = false;
+                        actualExchange  = false;
+                        actualFluxes    = false;
+                    }
+                    else if (DryChem::foundSubstr("one-time", row))
+                    {
+                        targetFluxes    = false;
+                        targetExchanges = true;
+                        actualExchange  = false;
+                        actualFluxes    = false;
+                    }
+                }
+                else if (DryChem::foundSubstr("Actual", row))
+                {
+                    if (DryChem::foundSubstr("exchange", row))
+                    {
+                        targetFluxes    = false;
+                        targetExchanges = false;
+                        actualExchange  = true;
+                        actualFluxes    = false;
+                    }
+                    else if (DryChem::foundSubstr("flux", row))
+                    {
+                        targetFluxes    = false;
+                        targetExchanges = false;
+                        actualExchange  = false;
+                        actualFluxes    = true;
+                    }
+                }
+                else if (DryChem::foundSubstr('=', row))
+                {
+                    DryChem::Tokenizer tok {row, punctuation};
+                    std::vector<std::string> splitRow = tok.split();
 
-                setRNEMDBlockParameters(row);
-                setRNEMDReportParameters(row);
-                setRNEMDData();
-                setRNEMDInferredParameters();
+                    if (!params_.block.hasExchangeMethodSet && splitRow[1] == "exchangeMethod")
+                    {
+                        params_.block.exchangeMethod       = removeQuotes(splitRow[3]);
+                        params_.block.hasExchangeMethodSet = true;
+                    }
+                    else if (!params_.block.hasFluxTypeSet && splitRow[1] == "fluxType")
+                    {
+                        params_.block.fluxType       = removeQuotes(splitRow[3]);
+                        params_.block.hasFluxTypeSet = true;
+                    }
+                    else if (!params_.block.hasPrivilegedAxisSet && splitRow[1] == "privilegedAxis")
+                    {
+                        params_.block.privilegedAxis       = splitRow[3][0];
+                        params_.block.hasPrivilegedAxisSet = true;
+                    }
+                    else if (!params_.block.hasExchangeTimeSet && splitRow[1] == "exchangeTime")
+                    {
+                        params_.block.exchangeTime       = Time {splitRow[3]};
+                        params_.block.hasExchangeTimeSet = true;
+                    }
+                    else if (!params_.block.hasObjectSelectionSet && splitRow[1] == "objectSelection")
+                    {
+                        // Loop from quotation to quotation
+                        for (std::size_t i {3}; i < splitRow.size(); ++i)
+                        {
+                            params_.block.objectSelection.push_back(removeQuotes(splitRow[i]));
+                        }
+
+                        params_.block.hasObjectSelectionSet = true;
+                    }
+                    else if (!params_.block.hasSelectionASet && splitRow[1] == "selectionA")
+                    {
+                        params_.block.selectionA[0] = Length {splitRow[6]};
+                        params_.block.selectionA[1] = Length {splitRow[10]};
+
+                        params_.block.hasSelectionASet = true;
+                    }
+                    else if (!params_.block.hasSelectionBSet && splitRow[1] == "selectionB")
+                    {
+                        if (splitRow[4] == "none")
+                        {
+                            params_.inferred.hasSelectionB = false;
+                        }
+                        else
+                        {
+                            params_.inferred.hasSelectionB = true;
+
+                            params_.block.selectionB[0] = Length {splitRow[6]};
+                            params_.block.selectionB[1] = Length {splitRow[10]};
+                        }
+
+                        params_.block.hasSelectionBSet = true;
+                    }
+                    else if (!params_.block.hasOutputSelectionSet && splitRow[1] == "outputSelection")
+                    {
+                        // Loop from quotation to quotation
+                        for (std::size_t i {3}; i < splitRow.size(); ++i)
+                        {
+                            params_.block.outputSelection.push_back(removeQuotes(splitRow[i]));
+                        }
+
+                        params_.block.hasOutputSelectionSet = true;
+                    }
+                    else if (splitRow[1] == "running")
+                    {
+                        params_.report.runningTime = Time {splitRow[4]};
+                    }
+                    else if (splitRow[1] == "kinetic")
+                    {
+                        if (targetFluxes)
+                            params_.report.kineticFlux = MolarEnergyFlux {splitRow[3]};
+                        else if (targetExchanges)
+                            params_.report.kineticTarget = MolarEnergy {splitRow[3]};
+                        else if (actualExchange)
+                            params_.report.kineticExchange = MolarEnergy {splitRow[3]};
+                        else if (actualFluxes)
+                            params_.report.Jz = MolarEnergyFlux {splitRow[3]};
+                    }
+                    else if (splitRow[1] == "momentum")
+                    {
+                        if (targetFluxes)
+                            params_.report.momentumFlux = DryChem::Vector3D<MomentumFlux> {MomentumFlux {splitRow[4]},
+                                MomentumFlux {splitRow[5]},
+                                MomentumFlux {splitRow[6]}};
+                        else if (targetExchanges)
+                            params_.report.momentumTarget = DryChem::Vector3D<Momentum> {Momentum {splitRow[4]},
+                                Momentum {splitRow[5]},
+                                Momentum {splitRow[6]}};
+                        else if (actualExchange)
+                            params_.report.momentumExchange = DryChem::Vector3D<Momentum> {Momentum {splitRow[4]},
+                                Momentum {splitRow[5]},
+                                Momentum {splitRow[6]}};
+                        else if (actualFluxes)
+                            params_.report.JzP = DryChem::Vector3D<MomentumFlux> {MomentumFlux {splitRow[4]},
+                                MomentumFlux {splitRow[5]},
+                                MomentumFlux {splitRow[6]}};
+                    }
+                    else if (splitRow[1] == "angular")
+                    {
+                        if (targetFluxes)
+                            params_.report.angularMomentumFlux = DryChem::Vector3D<MomentumFlux> {MomentumFlux {splitRow[5]},
+                                MomentumFlux {splitRow[6]},
+                                MomentumFlux {splitRow[7]}};
+                        else if (targetExchanges)
+                            params_.report.angularMomentumTarget = DryChem::Vector3D<Momentum> {Momentum {splitRow[5]},
+                                Momentum {splitRow[6]},
+                                Momentum {splitRow[7]}};
+                        else if (actualExchange)
+                            params_.report.angularMomentumExchange = DryChem::Vector3D<Momentum> {Momentum {splitRow[5]},
+                                Momentum {splitRow[6]},
+                                Momentum {splitRow[7]}};
+                        else if (actualFluxes)
+                            params_.report.JzL = DryChem::Vector3D<MomentumFlux> {MomentumFlux {splitRow[5]},
+                                MomentumFlux {splitRow[6]},
+                                MomentumFlux {splitRow[7]}};
+                    }
+                    else if (splitRow[1] == "particle" || splitRow[1] == "particles")
+                    {
+                        if (targetFluxes)
+                            params_.report.particleFlux = ParticleFlux {splitRow[3]};
+                        else if (targetExchanges)
+                            params_.report.particleTarget = DimensionlessQuantity {splitRow[3]};
+                        else if (actualExchange)
+                            params_.report.particleExchange = DimensionlessQuantity {splitRow[3]};
+                        else if (actualFluxes)
+                            params_.report.Jp = ParticleFlux {splitRow[3]};
+                    }
+                    else if (splitRow[1] == "attempted")
+                    {
+                        params_.report.trialCount = std::stoul(splitRow[3]);
+                    }
+                    else if (splitRow[1] == "failed")
+                    {
+                        params_.report.failTrialCount = std::stoul(splitRow[3]);
+                    }
+                    else if (splitRow[1] == "NIVS")
+                    {
+                        params_.report.failRootCount = std::stoul(splitRow[5]);
+                    }
+                }
+                else if (DryChem::foundSubstr("(Angstroms)", row))
+                {
+                    std::string punctuation2 {")\t\n"};
+                    DryChem::Tokenizer tok {row, punctuation2};
+                    std::vector<std::string> splitRow = tok.split();
+
+                    params_.inferred.dataLabels = row;
+
+                    int index {};
+
+                    for (const auto& elem : splitRow)
+                    {
+                        if (elem == "x(Angstroms" || elem == "y(Angstroms" || elem == "z(Angstroms")
+                        {
+                            params_.inferred.names2index["Z"] = index;
+                            ++index;
+                        }
+                        else if (elem == "R(Angstroms")
+                        {
+                            params_.inferred.names2index["R"] = index;
+                            ++index;
+                        }
+                        else if (elem == "Temperature(K")
+                        {
+                            params_.inferred.names2index["Temp"] = index;
+                            ++index;
+                        }
+                        else if (elem == "Velocity(angstroms/fs")
+                        {
+                            params_.inferred.names2index["Vel"] = index;
+                            index += 3;
+                        }
+                        else if (elem == "AngularVelocity(angstroms^2/fs")
+                        {
+                            params_.inferred.names2index["AngVel"] = index;
+                            index += 3;
+                        }
+                        else if (elem == "Density(g cm^-3")
+                        {
+                            params_.inferred.names2index["Den"] = index;
+                            ++index;
+                        }
+                        else if (DryChem::foundSubstr("Activity(unitless", elem))
+                        {
+                            determineActivity(row);
+
+                            params_.inferred.names2index["Conc"] = index;
+                            index += params_.inferred.numberOfSelected;
+                        }
+                    }
+                }
+                else if (!DryChem::foundSubstr("##", row) && !DryChem::foundSubstr(":", row)
+                         && !DryChem::foundSubstr("{", row) && !DryChem::foundSubstr("}", row))
+                {
+                    errorContents += row.substr(1, row.length() - 1) + '\n';
+                }
             }
-            catch (const std::exception& except)
+            else
             {
-                // Toss the exception back up for program termination and a more verbose message
-                throw Utilities_API::Errors::InvalidInputException { "ND-Research",
-                    "Could not convert a string value from the file into parameter type using: "
-                        + std::string{except.what()} };
+                dataContents += row + '\n';
             }
         }
-        catch (const Utilities_API::Errors::Exception& except)
-        {
-            except.handleErrorWithMessage();
-        }
+
+        data_   = parseDataFields(dataContents);
+        errors_ = parseDataFields(errorContents);
     }
 
-
-    void RNEMDFile::setRNEMDBlockParameters(std::size_t& row)
+    void RNEMDFile::determineActivity(const std::string& row)
     {
-        rnemdParameters->block.exchangeMethod = superMetaDataVector[row++][3];
-        rnemdParameters->block.fluxType = superMetaDataVector[row++][3];
+        const std::string activityLabel {"Activity(unitless)("};
 
-        // With non-periodic simulations, no privilegeAxis is printed; 'R' will serve as a good placeholder
-        if (superMetaDataVector[row][1] == "privilegedAxis")
-            rnemdParameters->block.privilegedAxis = superMetaDataVector[row++][3][0];
-        else
-            rnemdParameters->block.privilegedAxis = 'R';
+        std::size_t start {row.find(activityLabel) + activityLabel.length()};
+        std::size_t end {row.find_first_of(')', start)};
 
-        rnemdParameters->block.exchangeTime = Time(std::stold(superMetaDataVector[row++][3]));
+        DryChem::Tokenizer tok {row.substr(start, end - start), ")\t\n"};
+        auto tokens = tok.split();
 
-        std::size_t selectionSize { superMetaDataVector[row].size() };
+        params_.inferred.numberOfSelected = tokens.size();
+    }
 
-        for (std::size_t i {4}; i < selectionSize; i +=2)
-            rnemdParameters->block.objectSelection.push_back(superMetaDataVector[row][i]);
+    RNEMDData RNEMDFile::parseDataFields(const std::string& dataContents)
+    {
+        RNEMDData results;
+        DryChem::AsColumns columnParser {};
+        std::vector<std::string> columns {columnParser(dataContents)};
 
-        ++row;
-
-        if (rnemdParameters->block.privilegedAxis != 'R')
+        if (params_.inferred.names2index.find("Z") != params_.inferred.names2index.end())
         {
-            rnemdParameters->block.selectionA[0] = Length(std::stold(superMetaDataVector[row][6]));
-            rnemdParameters->block.selectionA[1] = Length(std::stold(superMetaDataVector[row][10]));
+            DryChem::Tokenizer tok {columns[params_.inferred.names2index["Z"]]};
+            std::vector<std::string> splitColumns = tok.split();
 
-            ++row;
+            for (const auto& elem : splitColumns)
+                results.rnemdAxis.emplace_back(elem);
+        }
 
-            if (superMetaDataVector[row][4] != "none")
+        if (params_.inferred.names2index.find("R") != params_.inferred.names2index.end())
+        {
+            DryChem::Tokenizer tok {columns[params_.inferred.names2index["R"]]};
+            std::vector<std::string> splitColumns = tok.split();
+
+            for (const auto& elem : splitColumns)
+                results.rnemdAxis.emplace_back(elem);
+        }
+
+        if (params_.inferred.names2index.find("Temp") != params_.inferred.names2index.end())
+        {
+            DryChem::Tokenizer tok {columns[params_.inferred.names2index["Temp"]]};
+            std::vector<std::string> splitColumns = tok.split();
+
+            for (const auto& elem : splitColumns)
+                results.temperature.emplace_back(elem);
+        }
+
+        if (params_.inferred.names2index.find("Vel") != params_.inferred.names2index.end())
+        {
+            bool firstPass {true};
+
+            for (std::size_t i {}; i < 3; ++i)
             {
-                rnemdParameters->inferred.hasSelectionB = true;
-                rnemdParameters->block.selectionB[0] = Length(std::stold(superMetaDataVector[row][6]));
-                rnemdParameters->block.selectionB[1] = Length(std::stold(superMetaDataVector[row][10]));
+                DryChem::Tokenizer tok {columns[params_.inferred.names2index["Vel"] + i]};
+                std::vector<std::string> splitColumns = tok.split();
+
+                if (firstPass)
+                {
+                    results.velocity.resize(splitColumns.size());
+                    firstPass = false;
+                }
+
+                for (std::size_t j {}; j < splitColumns.size(); ++j)
+                    results.velocity[j][i] = Velocity {splitColumns[j]};
             }
         }
-        else
+
+        if (params_.inferred.names2index.find("AngVel") != params_.inferred.names2index.end())
         {
-            rnemdParameters->block.selectionA[0] = Length(std::stold(superMetaDataVector[row++][6]));
-        }
+            bool firstPass {true};
 
-        ++row;
-
-        for (std::size_t i {4}; i < selectionSize; i +=2)
-            rnemdParameters->block.outputSelection.push_back(superMetaDataVector[row][i]);
-
-        // The order of outputSelection is reversed before the RNEMD procedure
-        std::reverse(rnemdParameters->block.outputSelection.begin(),
-            rnemdParameters->block.outputSelection.end());
-    }
-
-
-    void RNEMDFile::setRNEMDReportParameters(std::size_t& row)
-    {
-        // Account for the lines between block and report sections
-        row += 4;
-
-        /* Since the first sections of the rnemd report parameters are consistent between flux types,
-            we will use indicies relative to the row set by the block parameters without updating its value */
-        rnemdParameters->report.runningTime = Time(superMetaDataVector[row][4]);
-
-        rnemdParameters->report.kineticFlux = MolarEnergyFlux(superMetaDataVector[row + 2][3]);
-        rnemdParameters->report.kineticTarget = MolarEnergy(superMetaDataVector[row + 7][3]);
-        rnemdParameters->report.kineticExchange = MolarEnergy(superMetaDataVector[row + 11][3]);
-        rnemdParameters->report.Jz = MolarEnergyFlux(superMetaDataVector[row + 15][3]);
-
-        for (std::size_t i {}; i < 3; ++i)
-        {
-            rnemdParameters->report.momentumFlux[i] = MomentumFlux(superMetaDataVector[row + 3][i + 4]);
-            rnemdParameters->report.momentumTarget[i] = Momentum(superMetaDataVector[row + 8][i + 4]);
-            rnemdParameters->report.momentumExchange[i] = Momentum(superMetaDataVector[row + 12][i + 4]);
-            rnemdParameters->report.JzP[i] = MomentumFlux(superMetaDataVector[row + 16][i + 4]);
-
-            rnemdParameters->report.angularMomentumFlux[i] = MomentumFlux(superMetaDataVector[row + 4][i + 5]);
-            rnemdParameters->report.angularMomentumTarget[i] = Momentum(superMetaDataVector[row + 9][i + 5]);
-            rnemdParameters->report.angularMomentumExchange[i] = Momentum(superMetaDataVector[row + 13][i + 5]);
-            rnemdParameters->report.JzL[i] = MomentumFlux(superMetaDataVector[row + 17][i + 5]);
-        }
-
-        rnemdParameters->report.currentDensity = CurrentDensity(superMetaDataVector[row + 5][4]);
-
-        // Now we can update the value of row and repeat the process
-        row += 17;
-
-        if ( (rnemdParameters->block.fluxType == "Single") || (rnemdParameters->block.fluxType == "Current")
-                || (rnemdParameters->block.fluxType == "KE+Current") )
-        {
-            rnemdParameters->report.Jc_total = CurrentDensity(superMetaDataVector[row + 1][5]);
-            rnemdParameters->report.Jc_cation = CurrentDensity(superMetaDataVector[row + 2][5]);
-            rnemdParameters->report.Jc_anion = CurrentDensity(superMetaDataVector[row + 3][5]);
-
-            rnemdParameters->report.trialCount = std::stoul(superMetaDataVector[row + 5][3]);
-            rnemdParameters->report.failTrialCount = std::stoul(superMetaDataVector[row + 6][3]);
-
-            rnemdParameters->inferred.dataFieldLabelIndex = row + 8;
-        }
-        else
-        {
-            rnemdParameters->report.trialCount = std::stoul(superMetaDataVector[row + 2][3]);
-            rnemdParameters->report.failTrialCount = std::stoul(superMetaDataVector[row + 3][3]);
-
-            rnemdParameters->inferred.dataFieldLabelIndex = row + 5;
-
-            if (rnemdParameters->block.exchangeMethod == "NIVS")
+            for (std::size_t i {}; i < 3; ++i)
             {
-                rnemdParameters->report.failRootCount = std::stoul(superMetaDataVector[row + 4][5]);
-                rnemdParameters->inferred.dataFieldLabelIndex = row + 6;
+                DryChem::Tokenizer tok {columns[params_.inferred.names2index["AngVel"] + i]};
+                std::vector<std::string> splitColumns = tok.split();
+
+                if (firstPass)
+                {
+                    results.angularVelocity.resize(splitColumns.size());
+                    firstPass = false;
+                }
+
+                for (std::size_t j {}; j < splitColumns.size(); ++j)
+                    results.angularVelocity[j][i] = AngularVelocity {splitColumns[j]};
             }
         }
-    }
 
-
-    void RNEMDFile::setRNEMDData()
-    {
-        DataFieldPtr rnemdAxis         { std::make_shared<DataField>(std::string{rnemdParameters->block.privilegedAxis} + "(Angstroms)") };
-        DataFieldPtr temperature       { std::make_shared<DataField>("Temperature(K)") };
-        DataFieldPtr velocity          { std::make_shared<DataFieldArray>("Velocity(angstroms/fs)") };
-        DataFieldPtr angularVelocity   { std::make_shared<DataFieldArray>("AngularVelocity(angstroms^2/fs)") };
-        DataFieldPtr density           { std::make_shared<DataField>("Density(g cm^-3)") };
-        DataFieldPtr activity          { std::make_shared<DataFieldVector>("Activity(unitless)", rnemdParameters->block.outputSelection) };
-        DataFieldPtr electricField     { std::make_shared<DataFieldArray>("Electric Field(kcal/mol/angstroms/e)") };
-        DataFieldPtr electricPotential { std::make_shared<DataField>("Electrostatic Potential(kcal/mol/e)") };
-
-        DataFieldParser dataFieldParser { *this, rnemdAxis,
-                                                 temperature,
-                                                 velocity,
-                                                 angularVelocity,
-                                                 density,
-                                                 activity,
-                                                 electricField,
-                                                 electricPotential };
-
-        dataFieldParser.parseDataFromFile(metaDataVector[rnemdParameters->inferred.dataFieldLabelIndex]);
-
-        rnemdData->rnemdAxis         = rnemdAxis->convertToPhysicalQuantity<Length>();
-        rnemdData->temperature       = temperature->convertToPhysicalQuantity<Temperature>();
-        rnemdData->velocity          = dynamic_cast<DataFieldArray*>( velocity.get() )->convertToPhysicalQuantity<Velocity>();
-        rnemdData->angularVelocity   = dynamic_cast<DataFieldArray*>( angularVelocity.get() )->convertToPhysicalQuantity<AngularVelocity>();
-        rnemdData->density           = density->convertToPhysicalQuantity<MassDensity>();
-        rnemdData->activity          = dynamic_cast<DataFieldVector*>( activity.get() )->convertToPhysicalQuantity<Concentration>();
-        rnemdData->electricField     = dynamic_cast<DataFieldArray*>( electricField.get() )->convertToPhysicalQuantity<ElectricField>();
-        rnemdData->electricPotential = electricPotential->convertToPhysicalQuantity<ElectricPotential>();
-    }
-
-
-    void RNEMDFile::setRNEMDInferredParameters()
-    {
-        if (rnemdParameters->block.privilegedAxis != 'R')
+        if (params_.inferred.names2index.find("Den") != params_.inferred.names2index.end())
         {
-            rnemdParameters->inferred.slabWidth
-                = rnemdParameters->block.selectionA[1] - rnemdParameters->block.selectionA[0];
+            DryChem::Tokenizer tok {columns[params_.inferred.names2index["Den"]]};
+            std::vector<std::string> splitColumns = tok.split();
 
-            rnemdParameters->inferred.numberOfRegions
-                = (rnemdParameters->block.fluxType == "Single") ? 2 : 4;
-        }
-        else
-        {
-            rnemdParameters->inferred.slabWidth = rnemdParameters->block.selectionA[0];
-            rnemdParameters->inferred.numberOfRegions = 2;
-            rnemdParameters->inferred.hasSelectionB = false;
+            for (const auto& elem : splitColumns)
+                results.density.emplace_back(elem);
         }
 
-        rnemdParameters->inferred.boxSize = rnemdData->rnemdAxis.back() + rnemdData->rnemdAxis.front();
+        if (params_.inferred.names2index.find("Conc") != params_.inferred.names2index.end())
+        {
+            bool firstPass {true};
 
-        rnemdParameters->inferred.percentageOfKicksFailed
-            = static_cast<double>(rnemdParameters->report.failTrialCount)
-                / static_cast<double>(rnemdParameters->report.trialCount) * 100;
+            for (std::size_t i {}; i < params_.inferred.numberOfSelected; ++i)
+            {
+                DryChem::Tokenizer tok {columns[params_.inferred.names2index["Conc"] + i]};
+                std::vector<std::string> splitColumns = tok.split();
+
+                if (firstPass)
+                {
+                    results.activity.resize(params_.inferred.numberOfSelected);
+                    firstPass = false;
+                }
+
+                results.activity[i].resize(splitColumns.size());
+
+                for (std::size_t j {}; j < splitColumns.size(); ++j)
+                    results.activity[i][j] = Concentration {splitColumns[j]};
+            }
+        }
+
+        return results;
     }
-}
+
+    std::string RNEMDFile::removeQuotes(const std::string& str) const
+    {
+        std::string copyStr {str};
+        copyStr.erase(std::remove(copyStr.begin(), copyStr.end(), '\"'), copyStr.end());
+
+        return copyStr;
+    }
+
+    int RNEMDFile::determineRegionBounds(const CppUnits::Length& wrappedZCoords) const
+    {
+        CppUnits::Length region = ((data_.rnemdAxis.back() - data_.rnemdAxis.front()) / 2) + wrappedZCoords;
+
+        return std::upper_bound(data_.rnemdAxis.begin(), data_.rnemdAxis.end(), (region - data_.rnemdAxis[0]))
+               - data_.rnemdAxis.begin();
+    }
+
+    std::string RNEMDFile::generateSelectionScript(const std::vector<std::string>& selectionScript) const
+    {
+        std::string printableSelectionScript {"\""};
+        for (const auto& str : selectionScript)
+            printableSelectionScript += (str + ' ');
+        printableSelectionScript.replace(printableSelectionScript.length() - 1, 1, "\"");
+
+        return printableSelectionScript;
+    }
+
+    template<typename T>
+    std::string RNEMDFile::generateVector3Ds(const DryChem::Vector3D<T>& vector2Print) const
+    {
+        std::string printableVector3D {"[ "};
+
+        for (const auto& elem : vector2Print)
+        {
+            if (std::fabs(elem.getMagnitude()) < std::numeric_limits<long double>::epsilon())
+                printableVector3D += "0, ";
+            else
+                printableVector3D += (std::to_string(elem.getMagnitude()) + ", ");
+        }
+
+        printableVector3D.replace(printableVector3D.length() - 2, 2, " ]");
+
+        return printableVector3D;
+    }
+
+    void RNEMDFile::writeRNEMDFile(const std::string& fileName) const
+    {
+        std::ofstream outputFile;
+        outputFile.open(fileName);
+
+        outputFile.precision(8);
+
+        outputFile << "#######################################################\n"
+                   << "# RNEMD {\n"
+                   << "#    exchangeMethod  = \"" << params_.block.exchangeMethod << "\";\n"
+                   << "#    fluxType  = \"" << params_.block.fluxType << "\";\n"
+                   << "#    privilegedAxis = " << params_.block.privilegedAxis << ";\n"
+                   << "#    exchangeTime = " << params_.block.exchangeTime << ";\n"
+                   << "#    objectSelection = " << generateSelectionScript(params_.block.objectSelection) << ";\n"
+                   << "#    selectionA = \"select wrappedz >= " << params_.block.selectionA[0] << " && wrappedz < "
+                   << params_.block.selectionA[1] << "\";\n"
+                   << "#    selectionB = \"select wrappedz >= " << params_.block.selectionB[0] << " || wrappedz < "
+                   << params_.block.selectionB[1] << "\";\n"
+                   << "#    outputSelection = " << generateSelectionScript(params_.block.outputSelection) << ";\n"
+                   << "# }\n"
+                   << "#######################################################\n"
+                   << "# RNEMD report:\n"
+                   << "#      running time = " << static_cast<std::size_t>(params_.report.runningTime.getMagnitude())
+                   << " fs\n"
+                   << "# Target flux:\n"
+                   << "#           kinetic = " << params_.report.kineticFlux << " (kcal/mol/A^2/fs)\n"
+                   << "#          momentum = " << generateVector3Ds(params_.report.momentumFlux) << " (amu/A/fs^2)\n"
+                   << "#  angular momentum = " << generateVector3Ds(params_.report.angularMomentumFlux)
+                   << " (amu/A^2/fs^2)\n"
+                   << "#          particle = " << params_.report.particleFlux << " (particles/A^2/fs)\n"
+                   << "# Target one-time exchanges:\n"
+                   << "#          kinetic = " << params_.report.kineticTarget << " (kcal/mol)\n"
+                   << "#          momentum = " << generateVector3Ds(params_.report.momentumTarget) << " (amu*A/fs)\n"
+                   << "#  angular momentum = " << generateVector3Ds(params_.report.angularMomentumTarget)
+                   << " (amu*A^2/fs)\n"
+                   << "#          particle = " << params_.report.particleTarget << " (particles)\n"
+                   << "# Actual exchange totals:\n"
+                   << "#          kinetic = " << params_.report.kineticExchange << " (kcal/mol)\n"
+                   << "#          momentum = " << generateVector3Ds(params_.report.momentumExchange) << " (amu*A/fs)\n"
+                   << "#  angular momentum = " << generateVector3Ds(params_.report.angularMomentumExchange)
+                   << " (amu*A^2/fs)\n"
+                   << "#         particles = " << params_.report.particleExchange << " (particles)\n"
+                   << "# Actual flux:\n"
+                   << "#          kinetic = " << params_.report.Jz << " (kcal/mol/A^2/fs)\n"
+                   << "#          momentum = " << generateVector3Ds(params_.report.JzP) << " (amu/A/fs^2)\n"
+                   << "#  angular momentum = " << generateVector3Ds(params_.report.JzL) << " (amu/A^2/fs^2)\n"
+                   << "#          particle = " << params_.report.Jp << " (particles/A^2/fs)\n"
+                   << "# Exchange statistics:\n"
+                   << "#               attempted = " << params_.report.trialCount << "\n"
+                   << "#                  failed = " << params_.report.failTrialCount << "\n";
+        if (params_.block.exchangeMethod == "NIVS")
+            outputFile << "#  NIVS root-check errors = " << params_.report.failRootCount << "\n";
+        outputFile << "#######################################################\n";
+        outputFile << params_.inferred.dataLabels << '\n';
+
+        for (std::size_t bin {}; bin < data_.rnemdAxis.size(); ++bin)
+        {
+            // These need to be sorted in the correct order before this is useful...
+            if (auto search = params_.inferred.names2index.find("Z"); search != params_.inferred.names2index.end())
+                outputFile << '\t' << data_.rnemdAxis[bin];
+
+            if (auto search = params_.inferred.names2index.find("R"); search != params_.inferred.names2index.end())
+                outputFile << '\t' << data_.rnemdAxis[bin];
+
+            if (auto search = params_.inferred.names2index.find("Temp"); search != params_.inferred.names2index.end())
+                outputFile << '\t' << data_.temperature[bin];
+
+            if (auto search = params_.inferred.names2index.find("Vel"); search != params_.inferred.names2index.end())
+                for (const auto& elem : data_.velocity[bin])
+                    outputFile << '\t' << elem;
+
+            if (auto search = params_.inferred.names2index.find("AngVel"); search != params_.inferred.names2index.end())
+                for (const auto& elem : data_.angularVelocity[bin])
+                    outputFile << '\t' << elem;
+
+            if (auto search = params_.inferred.names2index.find("Den"); search != params_.inferred.names2index.end())
+                outputFile << '\t' << data_.density[bin];
+
+            if (auto search = params_.inferred.names2index.find("Conc"); search != params_.inferred.names2index.end())
+                for (const auto& selection : data_.activity)
+                    outputFile << '\t' << selection[bin];
+
+            outputFile << '\n';
+        }
+
+        outputFile << "#######################################################\n"
+                   << "# 95% confidence intervals in those quantities follow:\n"
+                   << "#######################################################\n";
+
+        for (std::size_t bin {}; bin < errors_.rnemdAxis.size(); ++bin)
+        {
+            outputFile << "#";
+
+            // These need to be sorted in the correct order before this is useful...
+            if (auto search = params_.inferred.names2index.find("Z"); search != params_.inferred.names2index.end())
+                outputFile << '\t' << errors_.rnemdAxis[bin];
+
+            if (auto search = params_.inferred.names2index.find("R"); search != params_.inferred.names2index.end())
+                outputFile << '\t' << errors_.rnemdAxis[bin];
+
+            if (auto search = params_.inferred.names2index.find("Temp"); search != params_.inferred.names2index.end())
+                outputFile << '\t' << errors_.temperature[bin];
+
+            if (auto search = params_.inferred.names2index.find("Vel"); search != params_.inferred.names2index.end())
+                for (const auto& elem : errors_.velocity[bin])
+                    outputFile << '\t' << elem;
+
+            if (auto search = params_.inferred.names2index.find("AngVel"); search != params_.inferred.names2index.end())
+                for (const auto& elem : errors_.angularVelocity[bin])
+                    outputFile << '\t' << elem;
+
+            if (auto search = params_.inferred.names2index.find("Den"); search != params_.inferred.names2index.end())
+                outputFile << '\t' << errors_.density[bin];
+
+            if (auto search = params_.inferred.names2index.find("Conc"); search != params_.inferred.names2index.end())
+                for (const auto& selection : errors_.activity)
+                    outputFile << '\t' << selection[bin];
+
+            outputFile << '\n';
+        }
+    }
+}   // namespace ND_Research

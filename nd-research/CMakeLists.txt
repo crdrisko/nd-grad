@@ -1,33 +1,10 @@
 ### Files / Directories ###
-# set(RNEMD_FILE_PARSING_SOURCES
-#     RNEMDFileParsing/src/rnemdFile.cpp
-#     RNEMDFileParsing/src/rnemdRegion.cpp)
-
-# set(CHARGED_RNEMD_SOURCES
-#     ChargedRNEMD/src/chargedRNEMD.cpp
-#     ChargedRNEMD/src/chargedRNEMDAnalysisMethod.cpp
-#     ChargedRNEMD/src/regionFitting.cpp
-#     ChargedRNEMD/src/regionDifference.cpp)
-
-# set(UTILITY_SOURCES
-#     src/utilities/dataFields.cpp)
-
-# set(FILETYPE_SOURCES
-#     src/fileTypes/rnemdFiles/rnemdFile.cpp
-#     src/fileTypes/xyzFiles/xyzFile.cpp)
-
-# set(SHIFTXYZ_SOURCES
-#     src/applications/shiftXYZ/shiftXYZ.cpp
-#     src/applications/shiftXYZ/xyzFile.cpp)
-
 if (NOT research_exclude_scripts)
     set(SCRIPTS
         scripts/afsInit.sh
         scripts/equilibrator.sh
         scripts/groupSubmit.sh
-        scripts/saltWaterBoxer.sh
-        src/applications/chargedRNEMD/scripts/plotOptimizationAnalysis.py
-        src/applications/chargedRNEMD/scripts/findConcentration.py)
+        scripts/saltWaterBoxer.sh)
 endif()
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY
@@ -37,16 +14,16 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY
 
 
 ### Libraries / Executables ###
-# add_executable(chargedRNEMD ${CHARGED_RNEMD_SOURCES} ${RNEMD_FILE_PARSING_SOURCES})
-# add_executable(shiftXYZ ${SHIFTXYZ_SOURCES})
+add_executable(spfFitting src/applications/spfFitting.cpp src/fileTypes/rnemdFiles/rnemdFile.cpp)
+add_executable(stitchRNEMD src/applications/stitchRNEMD.cpp src/fileTypes/rnemdFiles/rnemdFile.cpp)
 
 
 ### Installation ###
-# install(TARGETS chargedRNEMD shiftXYZ
-#         DESTINATION bin
-#         PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE
-#                     GROUP_READ             GROUP_EXECUTE
-#                     WORLD_READ             WORLD_EXECUTE)
+install(TARGETS spfFitting stitchRNEMD
+        DESTINATION bin
+        PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE
+                    GROUP_READ             GROUP_EXECUTE
+                    WORLD_READ             WORLD_EXECUTE)
 
 if (NOT research_exclude_scripts)
     foreach (SCRIPT ${SCRIPTS})

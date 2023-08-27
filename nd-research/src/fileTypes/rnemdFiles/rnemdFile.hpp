@@ -1,19 +1,16 @@
-// Copyright (c) 2019-2021 Cody R. Drisko. All rights reserved.
-// Licensed under the MIT License.See the LICENSE file in the project root for more information.
+// Copyright (c) 2020-2021 Cody R. Drisko. All rights reserved.
+// Licensed under the MIT License. See the LICENSE file in the project root for more information.
 //
-// Name: rnemdFile.hpp - Version 1.0.0
-// Author: cdrisko
-// Date: 01/20/2020-15:43:58
-// Description: The RNEMDFile class used for storing the data and functions associated with an .rnemd file
+// Name: rnemdFile.hpp
+// Author: crdrisko
+// Date: 11/22/2022-08:32:55
+// Description:
 
-#ifndef ND_RESEARCH_RNEMDFILE_HPP
-#define ND_RESEARCH_RNEMDFILE_HPP
+#ifndef DRYCHEM_COMMON_UTILITIES_SRC_APPLICATIONS_RNEMD_RNEMDFILE_HPP
+#define DRYCHEM_COMMON_UTILITIES_SRC_APPLICATIONS_RNEMD_RNEMDFILE_HPP
 
-#include <cstddef>
-#include <memory>
+#include <algorithm>
 #include <string>
-#include <string_view>
-#include <vector>
 
 #include <common-utils/files.hpp>
 
@@ -21,26 +18,42 @@
 
 namespace ND_Research
 {
-    class RNEMDFile : public Utilities_API::Files::TextFile
+    class RNEMDFile
     {
     private:
-        RNEMDDataPtr rnemdData { std::make_shared<RNEMDData>() };
-        RNEMDParametersPtr rnemdParameters { std::make_shared<RNEMDParameters>() };
+        RNEMDData data_ {};
+        RNEMDData errors_ {};
+        RNEMDParameters params_ {};
+        std::string fileName_ {};
 
-        std::vector<std::vector<std::string>> superMetaDataVector { getSuperMetaDataVector(" \t\n\";") };
+        RNEMDData parseDataFields(const std::string& dataContents);
+        std::string removeQuotes(const std::string& str) const;
+        void determineActivity(const std::string& row);
+        std::string generateSelectionScript(const std::vector<std::string>& selectionScript) const;
 
-        void setRNEMDBlockParameters(std::size_t& row);
-        void setRNEMDReportParameters(std::size_t& row);
-        void setRNEMDData();
-        void setRNEMDInferredParameters();
+        template<typename T>
+        std::string generateVector3Ds(const DryChem::Vector3D<T>& vector2Print) const;
 
     public:
-        explicit RNEMDFile(std::string_view FullFileName);
+        explicit RNEMDFile(const std::string& fileName) : fileName_ {fileName}
+        {
+            DryChem::FileParser parser {fileName};
 
-        auto getRNEMDData() const { return rnemdData; }
-        auto getRNEMDParameters() const { return rnemdParameters; }
-        auto getFileName() const { return Utilities_API::Files::TextFile::getFileName(); }
+            parser.parseDataFile(*this);
+        }
+
+        RNEMDFile(const RNEMDData& data, const RNEMDData& errors, const RNEMDParameters& params) : data_ {data}, errors_ {errors}, params_ {params} {}
+
+        void operator()(const std::string& fileContents_);
+
+        int determineRegionBounds(const CppUnits::Length& wrappedZCoords) const;
+
+        RNEMDData getRNEMDData() const { return data_; }
+        RNEMDData getRNEMDErrors() const { return errors_; }
+        RNEMDParameters getRNEMDParameters() const { return params_; }
+
+        void writeRNEMDFile(const std::string& fileName) const;
     };
-}
+}   // namespace ND_Research
 
 #endif
