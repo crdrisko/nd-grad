@@ -39,9 +39,10 @@ int main(int argc, char* argv[])
     std::ofstream outputFile;
     outputFile.open(fileName + ".csv");
 
-    std::fstream testFile("/Users/crdrisko/Desktop/SPF/SPF-Results/Krypton/KryptonGrubbsTest.csv", std::ios::out | std::ios::app);
+    // std::fstream testFile("/Users/crdrisko/Desktop/SPF/SPF-Results/Krypton/KryptonGrubbsTest.csv",
+    //     std::ios::out | std::ios::app);
 
-    testFile << "# " << fileName << '\n';
+    // testFile << "# " << fileName << '\n';
 
     outputFile << std::setw(13) << "# Jp_applied," << std::setw(19) << "Jp_actual," << std::setw(13) << "dAr_dz,"
                << std::setw(13) << "dKr_dz," << std::setw(13) << "D_Ar," << std::setw(13) << "D_Kr\n";
@@ -99,7 +100,8 @@ int main(int argc, char* argv[])
         // outputFile << std::setw(4) << (2 * std::stoi(path.substr(88, 2)) - 1) << ',';
         // outputFile << std::setw(4) << (2 * std::stoi(path.substr(15, 2)) - 1) << ',';
 
-        testFile << std::setw(18) << params.report.Jp << ',' << std::setw(12) << dAr1_dz.slope << ',' << std::setw(12) << dAr2_dz.slope << '\n';
+        // testFile << std::setw(18) << params.report.Jp << ',' << std::setw(12) << dAr1_dz.slope << ',' << std::setw(12)
+        //          << dAr2_dz.slope << '\n';
 
         outputFile << std::setw(12) << params.report.particleFlux << ',' << std::setw(18) << params.report.Jp << ','
                    << std::setw(12) << dAr_dz << ',' << std::setw(12) << dKr_dz << ',' << std::setw(12) << D_Ar << ','

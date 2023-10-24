@@ -76,7 +76,7 @@ int main(int argc, char* argv[])
               << (Delta12 - 1.96 * sigma_Delta12 / std::sqrt(input.size())) << ", "
               << (Delta12 + 1.96 * sigma_Delta12 / std::sqrt(input.size())) << " ]\n";
 
-    std::cout << Gamma12 << " +/- " << sigma_Gamma12 << "; 95% CI: [ " 
+    std::cout << Gamma12 << " +/- " << sigma_Gamma12 << "; 95% CI: [ "
               << (Gamma12 - 1.96 * sigma_Gamma12 / std::sqrt(input.size())) << ", "
               << (Gamma12 + 1.96 * sigma_Gamma12 / std::sqrt(input.size())) << " ]\n";
 

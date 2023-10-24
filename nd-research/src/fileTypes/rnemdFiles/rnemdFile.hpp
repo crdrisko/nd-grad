@@ -42,7 +42,10 @@ namespace ND_Research
             parser.parseDataFile(*this);
         }
 
-        RNEMDFile(const RNEMDData& data, const RNEMDData& errors, const RNEMDParameters& params) : data_ {data}, errors_ {errors}, params_ {params} {}
+        RNEMDFile(const RNEMDData& data, const RNEMDData& errors, const RNEMDParameters& params)
+            : data_ {data}, errors_ {errors}, params_ {params}
+        {
+        }
 
         void operator()(const std::string& fileContents_);
 
