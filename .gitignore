@@ -38,3 +38,5 @@ nd-coursework/books/cpp/C++17/filesystem/tmp
 nd-coursework/books/cpp/FoundationsOfQtDev/build
 nd-coursework/books/cpp/FunctionalC++
 nd-coursework/courses/mpiWorkshop
+
+nd-research/scripts/*/.deprecated

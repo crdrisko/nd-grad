@@ -17,18 +17,12 @@
 #include "rnemdFile.hpp"
 
 using namespace CppUnits;
+using namespace Literals;
 using namespace ND_Research;
 
 namespace fs = std::filesystem;
 
-void printDataOutputFile(std::ofstream& outputFile,
-    ParticleFlux Jp_applied,
-    ParticleFlux Jp_actual,
-    double Failed_ratio,
-    ConcentrationGradient dAr_dz,
-    ConcentrationGradient dKr_dz,
-    double ci_Ar95,
-    double ci_Kr95);
+using DiffusionConstant = PhysicalQuantity<Dimensionality<2, 0, -1>>;
 
 int main(int argc, char* argv[])
 {
@@ -45,9 +39,14 @@ int main(int argc, char* argv[])
     std::ofstream outputFile;
     outputFile.open(fileName + ".csv");
 
-    outputFile << std::setw(13) << "# Jp_applied," << std::setw(19) << "Jp_actual," << std::setw(19) << "Failed_percent,"
-               << std::setw(13) << "dAr_dz," << std::setw(13) << "dKr_dz," << std::setw(19) << "95% CI Ar," << std::setw(19)
-               << "95% CI Kr\n";
+    std::fstream testFile("/Users/crdrisko/Desktop/SPF/SPF-Results/Krypton/KryptonGrubbsTest.csv", std::ios::out | std::ios::app);
+
+    testFile << "# " << fileName << '\n';
+
+    outputFile << std::setw(13) << "# Jp_applied," << std::setw(19) << "Jp_actual," << std::setw(13) << "dAr_dz,"
+               << std::setw(13) << "dKr_dz," << std::setw(13) << "D_Ar," << std::setw(13) << "D_Kr\n";
+
+    const auto ConversionFactor = (1000.0 * 1.0_mol / Constants::avogadrosNumber) / 1.0e-27;
 
     // Sort the filenames
     std::set<std::string> paths;
@@ -62,8 +61,6 @@ int main(int argc, char* argv[])
         RNEMDData data         = rnemdFile.getRNEMDData();
         RNEMDData errors       = rnemdFile.getRNEMDErrors();
         RNEMDParameters params = rnemdFile.getRNEMDParameters();
-
-        double fails {static_cast<double>(params.report.failTrialCount) / static_cast<double>(params.report.trialCount)};
 
         int boundaryA_start = rnemdFile.determineRegionBounds(params.block.selectionA[0]);
         int boundaryA_end   = rnemdFile.determineRegionBounds(params.block.selectionA[1]);
@@ -93,38 +90,19 @@ int main(int argc, char* argv[])
         ConcentrationGradient dAr_dz = Math::abs(dAr1_dz.slope - dAr2_dz.slope) / 2;
         ConcentrationGradient dKr_dz = Math::abs(dKr1_dz.slope - dKr2_dz.slope) / 2;
 
-        double ci_Ar95 = 1.96 * (0.5 * Math::sqrt(dAr1_dz.variance + dAr2_dz.variance).getMagnitude()) / std::sqrt(2);
-        double ci_Kr95 = 1.96 * (0.5 * Math::sqrt(dKr1_dz.variance + dKr2_dz.variance).getMagnitude()) / std::sqrt(2);
+        // double ci_Ar95 = 1.96 * (0.5 * Math::sqrt(dAr1_dz.variance + dAr2_dz.variance).getMagnitude()) / std::sqrt(2);
+        // double ci_Kr95 = 1.96 * (0.5 * Math::sqrt(dKr1_dz.variance + dKr2_dz.variance).getMagnitude()) / std::sqrt(2);
 
-        outputFile << std::setw(4) << (2 * std::stoi(path.substr(88, 2)) - 1) << ',';
+        DiffusionConstant D_Ar = params.report.Jp / (Math::abs(dAr1_dz.slope - dAr2_dz.slope) / 2) * ConversionFactor;
+        DiffusionConstant D_Kr = params.report.Jp / (Math::abs(dAr1_dz.slope - dAr2_dz.slope) / 2) * ConversionFactor;
 
-        printDataOutputFile(outputFile,
-            params.report.particleFlux,
-            params.report.Jp,
-            fails,
-            dAr_dz,
-            dKr_dz,
-            ci_Ar95,
-            ci_Kr95);
+        // outputFile << std::setw(4) << (2 * std::stoi(path.substr(88, 2)) - 1) << ',';
+        // outputFile << std::setw(4) << (2 * std::stoi(path.substr(15, 2)) - 1) << ',';
+
+        testFile << std::setw(18) << params.report.Jp << ',' << std::setw(12) << dAr1_dz.slope << ',' << std::setw(12) << dAr2_dz.slope << '\n';
+
+        outputFile << std::setw(12) << params.report.particleFlux << ',' << std::setw(18) << params.report.Jp << ','
+                   << std::setw(12) << dAr_dz << ',' << std::setw(12) << dKr_dz << ',' << std::setw(12) << D_Ar << ','
+                   << std::setw(12) << D_Kr << '\n';
     }
-}
-
-void printDataOutputFile(std::ofstream& outputFile,
-    ParticleFlux Jp_applied,
-    ParticleFlux Jp_actual,
-    double Failed_ratio,
-    ConcentrationGradient dAr_dz,
-    ConcentrationGradient dKr_dz,
-    double ci_Ar95,
-    double ci_Kr95)
-{
-    outputFile << std::setw(12) << Jp_applied << ',';
-    outputFile << std::setw(18) << Jp_actual << ',';
-    outputFile << std::setw(18) << Failed_ratio << ',';
-    outputFile << std::setw(12) << dAr_dz << ',';
-    outputFile << std::setw(12) << dKr_dz << ',';
-    outputFile << std::setw(18) << ci_Ar95 << ',';
-    outputFile << std::setw(18) << ci_Kr95;
-
-    outputFile << std::endl;
 }

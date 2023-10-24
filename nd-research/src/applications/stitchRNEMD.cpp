@@ -155,7 +155,6 @@ int main(int argc, char* argv[])
 
         outputErrors.density[bin] = ((1.96 * Math::sqrt(sumDen / inputData.size())) / std::sqrt(inputData.size()));
 
-
         // Activity
         for (std::size_t sele {}; sele < outputData.activity.size(); ++sele)
         {

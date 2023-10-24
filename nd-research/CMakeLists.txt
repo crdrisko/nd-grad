@@ -14,12 +14,15 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY
 
 
 ### Libraries / Executables ###
-add_executable(spfFitting src/applications/spfFitting.cpp src/fileTypes/rnemdFiles/rnemdFile.cpp)
-add_executable(stitchRNEMD src/applications/stitchRNEMD.cpp src/fileTypes/rnemdFiles/rnemdFile.cpp)
-
+add_executable(spfFitting           src/applications/spfFitting.cpp src/fileTypes/rnemdFiles/rnemdFile.cpp)
+add_executable(stitchRNEMD          src/applications/stitchRNEMD.cpp src/fileTypes/rnemdFiles/rnemdFile.cpp)
+add_executable(thermalProfile       src/applications/thermalProfile.cpp src/fileTypes/rnemdFiles/rnemdFile.cpp)
+add_executable(kirkwoodBuffAnalysis src/applications/kirkwoodBuffAnalysis.cpp)
+add_executable(onsagerAnalysis      src/applications/onsagerAnalysis.cpp)
+add_executable(rcorrAnalysis        src/applications/rcorrAnalysis.cpp)
 
 ### Installation ###
-install(TARGETS spfFitting stitchRNEMD
+install(TARGETS spfFitting stitchRNEMD thermalProfile kirkwoodBuffAnalysis onsagerAnalysis rcorrAnalysis
         DESTINATION bin
         PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE
                     GROUP_READ             GROUP_EXECUTE

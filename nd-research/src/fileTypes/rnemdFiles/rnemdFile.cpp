@@ -287,7 +287,9 @@ namespace ND_Research
         std::size_t start {row.find(activityLabel) + activityLabel.length()};
         std::size_t end {row.find_first_of(')', start)};
 
-        DryChem::Tokenizer tok {row.substr(start, end - start), ")\t\n"};
+        std::string tempStr = row.substr(start, end - start);
+
+        DryChem::Tokenizer tok {tempStr, ")\t\n"};
         auto tokens = tok.split();
 
         params_.inferred.numberOfSelected = tokens.size();

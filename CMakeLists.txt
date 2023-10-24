@@ -110,7 +110,7 @@ include_directories(${COMMON_UTILS_INCLUDE_DIR})
 include_directories(${CPP_UNITS_INCLUDE_DIR})
 
 include_directories(nd-research/src/fileTypes/rnemdFiles)
-
+include_directories(nd-research/src/fileTypes/emdFiles)
 
 ### ND-Grad Subprojects ###
 if (NOT grad_exclude_courses)

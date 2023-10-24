@@ -179,7 +179,7 @@ then
     ## Thermalize to average total energy ##
     energyArray=( $(grep Total\ Energy: temp.report) )
     energy=${energyArray[3]}
-    [ $testing -ne 1 ] && thermalizer -i temp.omd -o equil.omd -e "$energy"
+    [ $testing -ne 1 ] && thermalizer -i temp.eor -o equil.omd -e "$energy"
     printf "Total Energy Used = %s\n" "$energy"
 
     ## Equilibration - NVE Ensemble ##
