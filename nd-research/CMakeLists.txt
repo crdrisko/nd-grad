@@ -22,6 +22,12 @@ add_executable(onsagerAnalysis      src/applications/onsagerAnalysis.cpp)
 add_executable(rcorrAnalysis        src/applications/rcorrAnalysis.cpp)
 
 ### Installation ###
+install(FILES src/fileTypes/rnemdFiles/rnemdFile.hpp src/fileTypes/rnemdFiles/rnemdParameters.hpp
+        DESTINATION include/nd-grad)
+
+install(FILES src/fileTypes/emdFiles/emdFile.hpp
+        DESTINATION include/nd-grad)
+
 install(TARGETS spfFitting stitchRNEMD thermalProfile kirkwoodBuffAnalysis onsagerAnalysis rcorrAnalysis
         DESTINATION bin
         PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE
