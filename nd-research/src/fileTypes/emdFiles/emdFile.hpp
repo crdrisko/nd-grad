@@ -21,44 +21,6 @@
 
 namespace ND_Research
 {
-    /* template<typename T>
-    class EMDFile
-    {
-    private:
-        T data_ {};
-        T errors_ {};
-        std::string fileName_ {};
-
-        T parseDataFields(const std::string& dataContents);
-        std::string removeQuotes(const std::string& str) const;
-        void determineActivity(const std::string& row);
-        std::string generateSelectionScript(const std::vector<std::string>& selectionScript) const;
-
-        template<typename T>
-        std::string generateVector3Ds(const DryChem::Vector3D<T>& vector2Print) const;
-
-    public:
-        explicit EMDFile(const std::string& fileName) : fileName_ {fileName}
-        {
-            DryChem::FileParser parser {fileName};
-
-            parser.parseDataFile(*this);
-        }
-
-        EMDFile(const T& data, const T& errors) : data_ {data}, errors_ {errors} {}
-
-        void operator()(const std::string& fileContents_);
-
-        int determineRegionBounds(const CppUnits::Length& wrappedZCoords) const;
-
-        T getRNEMDData() const { return data_; }
-        T getRNEMDErrors() const { return errors_; }
-
-        void writeRNEMDFile(const std::string& fileName) const;
-    };
-
- */
-
     template<typename ReturnType>
     std::vector<ReturnType> parseInputFiles(const std::set<std::string>& paths)
     {
@@ -67,9 +29,18 @@ namespace ND_Research
         for (const auto& path : paths)
         {
             DryChem::FileParser parser {path};
-            auto columns = parser.parseDataFile(DryChem::AsColumns());
+            auto rows = parser.parseDataFile(DryChem::AsRows());
+
+            std::string dataContents {};
+
+            for (const auto& row : rows)
+                if (row[0] != '#')
+                    dataContents += row + '\n';
 
             ReturnType temp_results {};
+
+            DryChem::AsColumns columnParser {};
+            std::vector<std::string> columns {columnParser(dataContents)};
 
             const int nFields = sizeof(temp_results) / sizeof(temp_results.x);
 
@@ -87,7 +58,6 @@ namespace ND_Research
 
             input.push_back(temp_results);
         }
-
 
         return input;
     }

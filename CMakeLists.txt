@@ -99,7 +99,8 @@ find_package(CPP_Units REQUIRED)
 if (NOT ${CPP_UNITS_FOUND})
     ## If cpp-units isn't installed or can't be found, download it from github ##
     NDGradExternalDownload(PROJECT cpp-units
-                           REPOSITORY "https://github.com/crdrisko/cpp-units.git")
+                           REPOSITORY "https://github.com/crdrisko/cpp-units.git"
+                           TAG main)
 
     set(COMMON_UTILS_INCLUDE_DIR "${CppUnits_SOURCE_DIR}/common-utilities/include")
     set(CPP_UNITS_INCLUDE_DIR "${CppUnits_SOURCE_DIR}/cpp-units/include")

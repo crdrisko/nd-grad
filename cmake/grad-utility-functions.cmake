@@ -2,7 +2,8 @@
 function(NDGradExternalDownload)
     set(options)
     set(one_value_keywords PROJECT
-                           REPOSITORY)
+                           REPOSITORY
+                           TAG)
     set(multi_value_keywords)
 
     cmake_parse_arguments(EXTERN_ARGS "${options}" "${one_value_keywords}" "${multi_value_keywords}" ${ARGN})
@@ -28,7 +29,7 @@ function(NDGradExternalDownload)
 
     ## Add project directly to our build ##
     add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/${EXTERN_ARGS_PROJECT}-download/${EXTERN_ARGS_PROJECT}-src
-                     ${CMAKE_CURRENT_BINARY_DIR}/${EXTERN_ARGS_PROJECT}-download/${EXTERL_ARGS_PROJECT}-build
+                     ${CMAKE_CURRENT_BINARY_DIR}/${EXTERN_ARGS_PROJECT}-download/${EXTERN_ARGS_PROJECT}-build
                      EXCLUDE_FROM_ALL)
 endfunction()
 
