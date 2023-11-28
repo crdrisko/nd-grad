@@ -39,10 +39,10 @@ int main(int argc, char* argv[])
     std::ofstream outputFile;
     outputFile.open(fileName + ".csv");
 
-    // std::fstream testFile("/Users/crdrisko/Desktop/SPF/SPF-Results/Krypton/KryptonGrubbsTest.csv",
+    // std::fstream testFile("/Users/crdrisko/Desktop/SPF/SPF-Results/ArgonRed/ArgonGrubbsTest.csv",
     //     std::ios::out | std::ios::app);
 
-    // testFile << "# " << fileName << '\n';
+    // testFile << "# " << fs::current_path().string().substr(49, 22) + "/" + outputFileName.stem().string() << '\n';
 
     outputFile << std::setw(13) << "# Jp_applied," << std::setw(19) << "Jp_actual," << std::setw(13) << "dAr_dz,"
                << std::setw(13) << "dKr_dz," << std::setw(13) << "D_Ar," << std::setw(13) << "D_Kr\n";

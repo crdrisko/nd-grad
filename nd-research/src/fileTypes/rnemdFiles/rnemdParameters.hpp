@@ -86,15 +86,17 @@ namespace ND_Research
             std::size_t numberOfSelected {};
             std::unordered_map<std::string, int> names2index;
             std::string dataLabels {};
+
+            int boundaryA_start {};
+            int boundaryA_end {};
+            int boundaryB_start {};
+            int boundaryB_end {};
         };
 
         RNEMDBlockParameters block;
         RNEMDReportParameters report;
         RNEMDInferredParameters inferred;
     };
-
-    template<typename T>
-    using RNEMDDataType = std::vector<std::pair<T, T>>;
 
     struct RNEMDData
     {

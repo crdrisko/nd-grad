@@ -56,12 +56,18 @@ int main(int argc, char* argv[])
 
     for (std::size_t i {1}; i < inputParams.size(); ++i)
     {
+        outputParams.report.kineticExchange += inputParams[i].report.kineticExchange;
         outputParams.report.particleExchange += inputParams[i].report.particleExchange;
+
+        outputParams.report.Jz += inputParams[i].report.Jz;
         outputParams.report.Jp += inputParams[i].report.Jp;
+
         outputParams.report.failTrialCount += inputParams[i].report.failTrialCount;
     }
 
+    outputParams.report.kineticExchange /= inputParams.size();
     outputParams.report.particleExchange /= inputParams.size();
+    outputParams.report.Jp /= inputParams.size();
     outputParams.report.Jp /= inputParams.size();
     outputParams.report.failTrialCount /= inputParams.size();
 

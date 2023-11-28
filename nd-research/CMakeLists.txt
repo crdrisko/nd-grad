@@ -14,12 +14,15 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY
 
 
 ### Libraries / Executables ###
-add_executable(spfFitting           src/applications/spfFitting.cpp src/fileTypes/rnemdFiles/rnemdFile.cpp)
-add_executable(stitchRNEMD          src/applications/stitchRNEMD.cpp src/fileTypes/rnemdFiles/rnemdFile.cpp)
-add_executable(thermalProfile       src/applications/thermalProfile.cpp src/fileTypes/rnemdFiles/rnemdFile.cpp)
-add_executable(kirkwoodBuffAnalysis src/applications/kirkwoodBuffAnalysis.cpp)
-add_executable(onsagerAnalysis      src/applications/onsagerAnalysis.cpp)
-add_executable(rcorrAnalysis        src/applications/rcorrAnalysis.cpp)
+add_executable(kirkwoodBuffAnalysis src/applications/emdAnalysis/kirkwoodBuffAnalysis.cpp)
+add_executable(onsagerAnalysis      src/applications/emdAnalysis/onsagerAnalysis.cpp)
+add_executable(rcorrAnalysis        src/applications/emdAnalysis/rcorrAnalysis.cpp)
+
+# add_executable(soretEffects         src/applications/spf-rnemd/soretEffects.cpp src/fileTypes/rnemdFiles/rnemdFile.cpp)
+add_executable(spfFitting           src/applications/spf-rnemd/spfFitting.cpp src/fileTypes/rnemdFiles/rnemdFile.cpp)
+add_executable(stitchRNEMD          src/applications/spf-rnemd/stitchRNEMD.cpp src/fileTypes/rnemdFiles/rnemdFile.cpp)
+add_executable(thermalProfile       src/applications/spf-rnemd/thermalProfile.cpp src/fileTypes/rnemdFiles/rnemdFile.cpp)
+
 
 ### Installation ###
 install(FILES src/fileTypes/rnemdFiles/rnemdFile.hpp src/fileTypes/rnemdFiles/rnemdParameters.hpp

@@ -278,6 +278,16 @@ namespace ND_Research
 
         data_   = parseDataFields(dataContents);
         errors_ = parseDataFields(errorContents);
+
+        // Infer Region Bounds from Selections A and B
+        params_.inferred.boundaryA_start = determineRegionBounds(params_.block.selectionA[0]);
+        params_.inferred.boundaryA_end   = determineRegionBounds(params_.block.selectionA[1]);
+
+        if (params_.inferred.hasSelectionB)
+        {
+            params_.inferred.boundaryB_start = determineRegionBounds(params_.block.selectionB[0]);
+            params_.inferred.boundaryB_end   = determineRegionBounds(params_.block.selectionB[1]);
+        }
     }
 
     void RNEMDFile::determineActivity(const std::string& row)
