@@ -55,6 +55,6 @@ The ND-Research project was designed to have as few external dependencies as pos
 
 ## License
 
-Copyright (c) 2019-2021 Cody R. Drisko. All rights reserved.
+Copyright (c) 2019-2024 Cody R. Drisko. All rights reserved.
 
 Licensed under the [MIT License](https://github.com/crdrisko/nd-research/blob/master/LICENSE).

@@ -18,7 +18,7 @@ add_executable(kirkwoodBuffAnalysis src/applications/emdAnalysis/kirkwoodBuffAna
 add_executable(onsagerAnalysis      src/applications/emdAnalysis/onsagerAnalysis.cpp)
 add_executable(rcorrAnalysis        src/applications/emdAnalysis/rcorrAnalysis.cpp)
 
-# add_executable(soretEffects         src/applications/spf-rnemd/soretEffects.cpp src/fileTypes/rnemdFiles/rnemdFile.cpp)
+add_executable(soretEffects         src/applications/spf-rnemd/soretEffects.cpp src/fileTypes/rnemdFiles/rnemdFile.cpp)
 add_executable(spfFitting           src/applications/spf-rnemd/spfFitting.cpp src/fileTypes/rnemdFiles/rnemdFile.cpp)
 add_executable(stitchRNEMD          src/applications/spf-rnemd/stitchRNEMD.cpp src/fileTypes/rnemdFiles/rnemdFile.cpp)
 add_executable(thermalProfile       src/applications/spf-rnemd/thermalProfile.cpp src/fileTypes/rnemdFiles/rnemdFile.cpp)
@@ -31,7 +31,7 @@ install(FILES src/fileTypes/rnemdFiles/rnemdFile.hpp src/fileTypes/rnemdFiles/rn
 install(FILES src/fileTypes/emdFiles/emdFile.hpp
         DESTINATION include/nd-grad)
 
-install(TARGETS spfFitting stitchRNEMD thermalProfile kirkwoodBuffAnalysis onsagerAnalysis rcorrAnalysis
+install(TARGETS soretEffects spfFitting stitchRNEMD thermalProfile kirkwoodBuffAnalysis onsagerAnalysis rcorrAnalysis
         DESTINATION bin
         PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE
                     GROUP_READ             GROUP_EXECUTE

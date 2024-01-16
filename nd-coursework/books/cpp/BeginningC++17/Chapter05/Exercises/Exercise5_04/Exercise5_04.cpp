@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2021 Cody R. Drisko. All rights reserved.
+// Copyright (c) 2019-2024 Cody R. Drisko. All rights reserved.
 // Licensed under the MIT License. See the LICENSE file in the project root for more information.
 //
 // Name: Exercise5_04.cpp
