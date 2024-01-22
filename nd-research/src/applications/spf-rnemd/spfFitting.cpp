@@ -95,7 +95,7 @@ int main(int argc, char* argv[])
         // double ci_Kr95 = 1.96 * (0.5 * Math::sqrt(dKr1_dz.variance + dKr2_dz.variance).getMagnitude()) / std::sqrt(2);
 
         DiffusionConstant D_Ar = params.report.Jp / (Math::abs(dAr1_dz.slope - dAr2_dz.slope) / 2) * ConversionFactor;
-        DiffusionConstant D_Kr = params.report.Jp / (Math::abs(dAr1_dz.slope - dAr2_dz.slope) / 2) * ConversionFactor;
+        DiffusionConstant D_Kr = params.report.Jp / (Math::abs(dKr1_dz.slope - dKr2_dz.slope) / 2) * ConversionFactor;
 
         // outputFile << std::setw(4) << (2 * std::stoi(path.substr(88, 2)) - 1) << ',';
         // outputFile << std::setw(4) << (2 * std::stoi(path.substr(15, 2)) - 1) << ',';
