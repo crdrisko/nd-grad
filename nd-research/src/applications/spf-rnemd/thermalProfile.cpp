@@ -22,8 +22,10 @@ using namespace ND_Research;
 
 namespace fs = std::filesystem;
 
+using SoretCoefficient = PhysicalQuantity<Dimensionality<0, 0, 0, 0, -1>>;
+
 void generatePureDataFile(const std::string& fileName, const RNEMDData& data, const RNEMDData& errors);
-void printFile2(const std::string& fileName, const RNEMDData& data, const RNEMDParameters& params);
+void printFile2(const std::string& fileName, const RNEMDData& data, const RNEMDData& errors, const RNEMDParameters& params);
 void generateFitDataFiles(const std::string& fileName, const RNEMDData& data, const RNEMDParameters& params);
 
 int main(int argc, char* argv[])
@@ -186,13 +188,12 @@ int main(int argc, char* argv[])
                 sumConc += (diff * diff);
             }
 
-            outputErrors.activity[sele][bin]
-                = (1.96 * Math::sqrt(sumConc / (inputData.size() - 1))) / std::sqrt(inputData.size());
+            outputErrors.activity[sele][bin] = Math::sqrt(sumConc / (inputData.size() - 1));
         }
     }
 
     generatePureDataFile(fileName, outputData, outputErrors);
-    printFile2(fileName, outputData, outputParams);
+    printFile2(fileName, outputData, outputErrors, outputParams);
     // generateFitDataFiles(fileName, outputData, outputParams);
 }
 
@@ -201,17 +202,36 @@ void generatePureDataFile(const std::string& fileName, const RNEMDData& data, co
     auto dSele1_dz_v1 = DryChem::centeredDifferenceMethod(data.rnemdAxis, data.activity[0]);
     auto dSele2_dz_v1 = DryChem::centeredDifferenceMethod(data.rnemdAxis, data.activity[1]);
 
-    // auto dSele1_dz_v2 = DryChem::fivePointStencilMethod(data.rnemdAxis, data.activity[0]);
-    // auto dSele2_dz_v2 = DryChem::fivePointStencilMethod(data.rnemdAxis, data.activity[1]);
-
-    // auto dSele1_dz_v3 = DryChem::sevenPointStencilMethod(data.rnemdAxis, data.activity[0]);
-    // auto dSele2_dz_v3 = DryChem::sevenPointStencilMethod(data.rnemdAxis, data.activity[1]);
-
-    // auto dSele1_dz_v4 = DryChem::ninePointStencilMethod(data.rnemdAxis, data.activity[0]);
-    // auto dSele2_dz_v4 = DryChem::ninePointStencilMethod(data.rnemdAxis, data.activity[1]);
+    std::vector<ConcentrationGradient> errors_dSele1_dz(data.rnemdAxis.size());
+    std::vector<ConcentrationGradient> errors_dSele2_dz(data.rnemdAxis.size());
 
     std::ofstream outputFile;
     outputFile.open(fileName + ".csv");
+
+    auto dx          = data.rnemdAxis[1] - data.rnemdAxis[0];
+    std::size_t last = data.rnemdAxis.size() - 1;
+
+    for (std::size_t bin {1}; bin < last; ++bin)
+    {
+        errors_dSele1_dz[bin] = Math::sqrt((errors.activity[0][bin + 1] * errors.activity[0][bin + 1])
+                                           + (errors.activity[0][bin - 1] * errors.activity[0][bin - 1]))
+                                / (2 * dx);
+        errors_dSele2_dz[bin] = Math::sqrt((errors.activity[1][bin + 1] * errors.activity[1][bin + 1])
+                                           + (errors.activity[1][bin - 1] * errors.activity[1][bin - 1]))
+                                / (2 * dx);
+    }
+
+    errors_dSele1_dz[0]
+        = Math::sqrt((errors.activity[0][1] * errors.activity[0][1]) + (errors.activity[0][0] * errors.activity[0][0])) / dx;
+    errors_dSele2_dz[0]
+        = Math::sqrt((errors.activity[1][1] * errors.activity[1][1]) + (errors.activity[1][0] * errors.activity[1][0])) / dx;
+
+    errors_dSele1_dz[last] = Math::sqrt((errors.activity[0][last] * errors.activity[0][last])
+                                        + (errors.activity[0][last - 1] * errors.activity[0][last - 1]))
+                             / dx;
+    errors_dSele2_dz[last] = Math::sqrt((errors.activity[1][last] * errors.activity[1][last])
+                                        + (errors.activity[1][last - 1] * errors.activity[1][last - 1]))
+                             / dx;
 
     outputFile << "# Z," << std::setw(17) << "Temperature," << std::setw(17) << "[Sele1]," << std::setw(17) << "[Sele2],"
                << std::setw(17) << "d[Sele1]_dz," << std::setw(17) << "d[Sele2]_dz," << std::setw(17) << "95% CI Temp,"
@@ -223,20 +243,15 @@ void generatePureDataFile(const std::string& fileName, const RNEMDData& data, co
                    << data.activity[0][bin] << ',' << std::setw(14) << data.activity[1][bin] << ',' << std::setw(14)
                    << dSele1_dz_v1[bin] << ',' << std::setw(14) << dSele2_dz_v1[bin] << ',' << std::setw(14)
                    << errors.temperature[bin] << ',' << std::setw(14) << errors.activity[0][bin] << ',' << std::setw(14)
-                   << errors.activity[1][bin] << '\n';
+                   << errors.activity[1][bin] << ',' << std::setw(14) << errors_dSele1_dz[bin] << ',' << std::setw(14)
+                   << errors_dSele2_dz[bin] << '\n';
     }
 }
 
-void printFile2(const std::string& fileName, const RNEMDData& data, const RNEMDParameters& params)
+void printFile2(const std::string& fileName, const RNEMDData& data, const RNEMDData& errors, const RNEMDParameters& params)
 {
-    auto dSele1_dz = DryChem::centeredDifferenceMethod(data.rnemdAxis, data.activity[0], false);
-    auto dSele2_dz = DryChem::centeredDifferenceMethod(data.rnemdAxis, data.activity[1], false);
-
     std::vector<Length> rnemdAxis {data.rnemdAxis.begin() + params.inferred.boundaryB_end,
         data.rnemdAxis.begin() + params.inferred.boundaryA_start};
-
-    std::vector<Length> rnemdAxis_A2B {data.rnemdAxis.begin() + params.inferred.boundaryA_end,
-        data.rnemdAxis.begin() + params.inferred.boundaryB_start};
 
     std::vector<Temperature> temperature {data.temperature.begin() + params.inferred.boundaryB_end,
         data.temperature.begin() + params.inferred.boundaryA_start};
@@ -256,12 +271,6 @@ void printFile2(const std::string& fileName, const RNEMDData& data, const RNEMDP
     std::vector<Concentration> sele2_A2B {data.activity[1].begin() + params.inferred.boundaryA_end,
         data.activity[1].begin() + params.inferred.boundaryB_start};
 
-    std::vector<ConcentrationGradient> dc1_dz {dSele1_dz.begin() + params.inferred.boundaryB_end,
-        dSele1_dz.begin() + params.inferred.boundaryA_start};
-
-    std::vector<ConcentrationGradient> dc1_dz_A2B {dSele1_dz.begin() + params.inferred.boundaryA_end,
-        dSele1_dz.begin() + params.inferred.boundaryB_start};
-
     std::vector<Temperature> temp_avg;
     std::vector<Concentration> sele1_avg, sele2_avg;
 
@@ -274,22 +283,49 @@ void printFile2(const std::string& fileName, const RNEMDData& data, const RNEMDP
         rbin--;
     }
 
+    std::vector<ConcentrationGradient> errors_dSele1_dz(data.rnemdAxis.size());
+    std::vector<ConcentrationGradient> errors_dSele2_dz(data.rnemdAxis.size());
+
+    auto dx          = data.rnemdAxis[1] - data.rnemdAxis[0];
+    std::size_t last = data.rnemdAxis.size() - 1;
+
+    for (std::size_t bin {1}; bin < last; ++bin)
+    {
+        errors_dSele1_dz[bin] = Math::sqrt((errors.activity[0][bin + 1] * errors.activity[0][bin + 1])
+                                           + (errors.activity[0][bin - 1] * errors.activity[0][bin - 1]))
+                                / (2 * dx);
+        errors_dSele2_dz[bin] = Math::sqrt((errors.activity[1][bin + 1] * errors.activity[1][bin + 1])
+                                           + (errors.activity[1][bin - 1] * errors.activity[1][bin - 1]))
+                                / (2 * dx);
+    }
+
+    auto Tz = DryChem::linearLeastSquaresFitting(rnemdAxis.begin(), rnemdAxis.end(), temp_avg.begin(), temp_avg.end());
+
     auto dSele1_avg_dz = DryChem::centeredDifferenceMethod(rnemdAxis, sele1_avg, false);
 
     const auto ConversionFactor = 10 * (1000.0 * 1.0_mol / Constants::avogadrosNumber) / 1.0e-27;
 
     std::ofstream outputFile2;
-    outputFile2.open(fileName + "2.csv");
+    outputFile2.open(fileName + "3.csv");
+
+    SoretCoefficient sT {0.00364509};
 
     for (std::size_t bin {1}; bin < rnemdAxis.size() - 1; ++bin)
     {
+        Concentration c_t = sele1_avg[bin] + sele2_avg[bin];
+
+        DimensionlessQuantity x_1 = sele1_avg[bin] / c_t;
+        DimensionlessQuantity x_2 = sele2_avg[bin] / c_t;
+
+        auto D = -(x_2 * params.report.Jp) / (sele2_avg[bin] * x_1 * x_2 * sT * Tz.slope + dSele1_avg_dz[bin - 1]);
+
+
         outputFile2 << rnemdAxis[bin] << std::setw(14) << temp_avg[bin] << std::setw(14) << sele1_avg[bin] << std::setw(14)
-                    << -(sele2_avg[bin] / (sele1_avg[bin] + sele2_avg[bin])) * params.report.Jp / dSele1_avg_dz[bin - 1]
-                           * ConversionFactor
-                    << '\n';
+                    << dSele1_avg_dz[bin - 1] << std::setw(14) << D * ConversionFactor << std::setw(14)
+                    << (D * D) / (x_2 * params.report.Jp) * errors_dSele1_dz[bin] * ConversionFactor << '\n';
     }
 
-    auto Tz = DryChem::linearLeastSquaresFitting(rnemdAxis.begin(), rnemdAxis.end(), temp_avg.begin(), temp_avg.end());
+    /* auto Tz = DryChem::linearLeastSquaresFitting(rnemdAxis.begin(), rnemdAxis.end(), temp_avg.begin(), temp_avg.end());
 
     auto cz_sele1
         = DryChem::quadraticLeastSquaresFitting(rnemdAxis.begin(), rnemdAxis.end(), sele1_avg.begin(), sele1_avg.end());
@@ -306,7 +342,7 @@ void printFile2(const std::string& fileName, const RNEMDData& data, const RNEMDP
                     << -(sele2_avg[bin] / (sele1_avg[bin] + sele2_avg[bin])) * params.report.Jp
                            / ((2 * cz_sele1.a) * ((temp_avg[bin] - Tz.intercept) / Tz.slope) + cz_sele1.b) * ConversionFactor
                     << '\n';
-    }
+    } */
 }
 
 void generateFitDataFiles(const std::string& fileName, const RNEMDData& data, const RNEMDParameters& params)
@@ -387,7 +423,6 @@ void generateFitDataFiles(const std::string& fileName, const RNEMDData& data, co
                                    + cz_sele1_A2B.b)
                                * ConversionFactor * 10
                         << '\n';
-            ;
         }
     }
     else

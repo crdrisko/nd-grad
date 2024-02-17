@@ -6,12 +6,12 @@
 // Date: 11/21/2023-07:43:08
 // Description:
 
+#include <cmath>
 #include <cstdlib>
 #include <filesystem>
 #include <fstream>
 #include <set>
 #include <vector>
-#include <cmath>
 
 #include <common-utils/math.hpp>
 
@@ -23,24 +23,29 @@ using namespace ND_Research;
 
 namespace fs = std::filesystem;
 
+using SoretCoefficient = PhysicalQuantity<Dimensionality<0, 0, 0, 0, -1>>;
+
+void calculateSoretCoefficient(const std::set<std::string>& paths);
+
 int main(int argc, char* argv[])
 {
     if (argc < 2)
     {
-        std::cout << "Usage: " << argv[0] << " <path> \n";
+        std::cout << "Usage: " << argv[0] << " <kinetic_path>\n";
         return EXIT_FAILURE;
     }
 
-    std::string dirName {argv[1]};
-    fs::path outputFileName {dirName};
-    std::string fileName = outputFileName.string() + "/../" + outputFileName.stem().string();
-
-    // Sort the filenames
-    std::set<std::string> paths;
+    // Sort the kinetic filenames
+    std::set<std::string> kineticPaths;
     for (const auto& dirEntry : fs::directory_iterator(argv[1]))
         if (dirEntry.path().extension().string() == ".rnemd")
-            paths.insert(dirEntry.path().string());
+            kineticPaths.insert(dirEntry.path().string());
 
+    calculateSoretCoefficient(kineticPaths);
+}
+
+void calculateSoretCoefficient(const std::set<std::string>& paths)
+{
     std::vector<RNEMDData> inputData;
     std::vector<RNEMDParameters> inputParams;
 
@@ -192,46 +197,52 @@ int main(int argc, char* argv[])
         }
     }
 
-    auto Tz_B2A = DryChem::linearLeastSquaresFitting(outputData.rnemdAxis.begin() + outputParams.inferred.boundaryB_end,
-        outputData.rnemdAxis.begin() + outputParams.inferred.boundaryA_start,
-        outputData.temperature.begin() + outputParams.inferred.boundaryB_end,
-        outputData.temperature.begin() + outputParams.inferred.boundaryA_start);
+    std::vector<Length> rnemdAxis {outputData.rnemdAxis.begin() + outputParams.inferred.boundaryB_end,
+        outputData.rnemdAxis.begin() + outputParams.inferred.boundaryA_start};
 
-    auto Tz_A2B = DryChem::linearLeastSquaresFitting(outputData.rnemdAxis.begin() + outputParams.inferred.boundaryA_end,
-        outputData.rnemdAxis.begin() + outputParams.inferred.boundaryB_start,
-        outputData.temperature.begin() + outputParams.inferred.boundaryA_end,
-        outputData.temperature.begin() + outputParams.inferred.boundaryB_start);
+    std::vector<Temperature> temperature {outputData.temperature.begin() + outputParams.inferred.boundaryB_end,
+        outputData.temperature.begin() + outputParams.inferred.boundaryA_start};
 
-    std::cout << "T(z) = " << Math::abs(Tz_B2A.slope - Tz_A2B.slope) * 0.5 << " z + " << Tz_B2A.intercept
-              << "\n";
+    std::vector<Temperature> temperature_A2B {outputData.temperature.begin() + outputParams.inferred.boundaryA_end,
+        outputData.temperature.begin() + outputParams.inferred.boundaryB_start};
 
-    auto cz_sele1_B2A
-        = DryChem::linearLeastSquaresFitting(outputData.rnemdAxis.begin() + outputParams.inferred.boundaryB_end,
-            outputData.rnemdAxis.begin() + outputParams.inferred.boundaryA_start,
-            outputData.activity[0].begin() + outputParams.inferred.boundaryB_end,
-            outputData.activity[0].begin() + outputParams.inferred.boundaryA_start);
+    std::vector<Concentration> sele1 {outputData.activity[0].begin() + outputParams.inferred.boundaryB_end,
+        outputData.activity[0].begin() + outputParams.inferred.boundaryA_start};
 
-    auto cz_sele1_A2B
-        = DryChem::linearLeastSquaresFitting(outputData.rnemdAxis.begin() + outputParams.inferred.boundaryA_end,
-            outputData.rnemdAxis.begin() + outputParams.inferred.boundaryB_start,
-            outputData.activity[0].begin() + outputParams.inferred.boundaryA_end,
-            outputData.activity[0].begin() + outputParams.inferred.boundaryB_start);
+    std::vector<Concentration> sele1_A2B {outputData.activity[0].begin() + outputParams.inferred.boundaryA_end,
+        outputData.activity[0].begin() + outputParams.inferred.boundaryB_start};
 
-    std::cout << "Ar(z) = " << Math::abs(cz_sele1_B2A.slope - cz_sele1_A2B.slope) * 0.5 << " z + "
-              <<cz_sele1_B2A.intercept << "\n";
+    std::vector<Concentration> sele2 {outputData.activity[1].begin() + outputParams.inferred.boundaryB_end,
+        outputData.activity[1].begin() + outputParams.inferred.boundaryA_start};
 
-    auto cz_sele2_B2A
-        = DryChem::linearLeastSquaresFitting(outputData.rnemdAxis.begin() + outputParams.inferred.boundaryB_end,
-            outputData.rnemdAxis.begin() + outputParams.inferred.boundaryA_start,
-            outputData.activity[1].begin() + outputParams.inferred.boundaryB_end,
-            outputData.activity[1].begin() + outputParams.inferred.boundaryA_start);
+    std::vector<Concentration> sele2_A2B {outputData.activity[1].begin() + outputParams.inferred.boundaryA_end,
+        outputData.activity[1].begin() + outputParams.inferred.boundaryB_start};
 
-    auto cz_sele2_A2B
-        = DryChem::linearLeastSquaresFitting(outputData.rnemdAxis.begin() + outputParams.inferred.boundaryA_end,
-            outputData.rnemdAxis.begin() + outputParams.inferred.boundaryB_start,
-            outputData.activity[1].begin() + outputParams.inferred.boundaryA_end,
-            outputData.activity[1].begin() + outputParams.inferred.boundaryB_start);
+    std::vector<Temperature> temp_avg;
+    std::vector<Concentration> sele1_avg, sele2_avg;
 
-    std::cout << "Kr(z) = " << Math::abs(cz_sele2_B2A.slope - cz_sele2_A2B.slope) * 0.5 << " z + "
-              << cz_sele2_B2A.intercept << "\n";
+    for (std::size_t fbin {}, rbin {rnemdAxis.size() - 1}; fbin < rnemdAxis.size(); ++fbin)
+    {
+        temp_avg.push_back(0.5 * (temperature[fbin] + temperature_A2B[rbin]));
+        sele1_avg.push_back(0.5 * (sele1[fbin] + sele1_A2B[rbin]));
+        sele2_avg.push_back(0.5 * (sele2[fbin] + sele2_A2B[rbin]));
+
+        rbin--;
+    }
+
+    auto Tz = DryChem::linearLeastSquaresFitting(rnemdAxis.begin(), rnemdAxis.end(), temp_avg.begin(), temp_avg.end());
+
+    auto cz_sele1
+        = DryChem::linearLeastSquaresFitting(rnemdAxis.begin(), rnemdAxis.end(), sele1_avg.begin(), sele1_avg.end());
+
+    auto cz_sele2
+        = DryChem::linearLeastSquaresFitting(rnemdAxis.begin(), rnemdAxis.end(), sele2_avg.begin(), sele2_avg.end());
+
+    auto SoretCoefficient1 = -((cz_sele1.slope * 1000.0_L / 1e30)
+                               / (Tz.slope * (3000 * 1.0_mol / (348'592.791 * Constants::avogadrosNumber)) * 0.5));
+
+    auto SoretCoefficient2 = -((cz_sele2.slope * 1000.0_L / 1e30)
+                               / (Tz.slope * (3000 * 1.0_mol / (348'592.791 * Constants::avogadrosNumber)) * 0.5));
+
+    std::cout << SoretCoefficient1 << '\t' << SoretCoefficient2 << '\n';
 }

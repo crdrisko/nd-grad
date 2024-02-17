@@ -67,7 +67,7 @@ int main(int argc, char* argv[])
 
     outputParams.report.kineticExchange /= inputParams.size();
     outputParams.report.particleExchange /= inputParams.size();
-    outputParams.report.Jp /= inputParams.size();
+    outputParams.report.Jz /= inputParams.size();
     outputParams.report.Jp /= inputParams.size();
     outputParams.report.failTrialCount /= inputParams.size();
 
