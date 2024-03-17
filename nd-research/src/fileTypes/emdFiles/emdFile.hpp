@@ -6,8 +6,8 @@
 // Date: 09/18/2023-07:02:20
 // Description:
 
-#ifndef EMDFILE_HPP
-#define EMDFILE_HPP
+#ifndef ND_GRAD_ND_RESEARCH_SRC_FILETYPES_EMDFILES_EMDFILE_HPP
+#define ND_GRAD_ND_RESEARCH_SRC_FILETYPES_EMDFILES_EMDFILE_HPP
 
 #include <algorithm>
 #include <filesystem>
