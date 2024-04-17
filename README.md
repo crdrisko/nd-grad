@@ -1,7 +1,5 @@
 # ND-Grad
 
-[![Build Status](https://travis-ci.com/crdrisko/nd-grad.svg?branch=master)](https://travis-ci.com/crdrisko/nd-grad) [![Coverage Status](https://coveralls.io/repos/github/crdrisko/nd-grad/badge.svg?branch=master)](https://coveralls.io/github/crdrisko/nd-grad?branch=master)
-
 Welcome to the ND-Grad project! This repository is a merger of the formerly separate ND-Research and ND-Coursework projects. Because these repositories were so closely related, it makes sense to maintain and release them together.
 
 ## Getting started
