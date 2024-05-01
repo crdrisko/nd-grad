@@ -1,24 +1,25 @@
 ### Top Level CMake Script for ND-Grad ###
-cmake_minimum_required(VERSION 3.12.0)
+cmake_minimum_required(VERSION 3.15.0)
 project(NDGrad VERSION 1.0.0)
 
 
 ### Options ###
-option(courses_build_all        "Builds nd-coursework applications, corresponding unit tests, and corresponding code samples." OFF)
-option(courses_build_tests      "Builds nd-coursework applications and corresponding unit tests." OFF)
-option(courses_build_samples    "Builds nd-coursework applications and corresponding code samples." OFF)
-option(courses_exclude_scripts  "Builds nd-coursework applications while ignoring the scripts directory." OFF)
+option(courses_build_all            "Builds nd-coursework applications, corresponding unit tests, and corresponding code samples." OFF)
+option(courses_build_tests          "Builds nd-coursework applications and corresponding unit tests." OFF)
+option(courses_build_samples        "Builds nd-coursework applications and corresponding code samples." OFF)
+option(courses_exclude_scripts      "Builds nd-coursework applications while ignoring the scripts directory." OFF)
 
-option(grad_build_all           "Builds all applications, unit tests, and code samples." OFF)
-option(grad_build_tests         "Builds all applications and unit tests." OFF)
-option(grad_build_samples       "Builds all applications and code samples." OFF)
-option(grad_enable_coverage     "Builds all applications, unit tests, and enables coverage options." OFF)
-option(grad_format_codebase     "Builds appropriate applications while also formatting the code." OFF)
+option(grad_build_all               "Builds all applications, unit tests, and code samples." OFF)
+option(grad_build_tests             "Builds all applications and unit tests." OFF)
+option(grad_build_samples           "Builds all applications and code samples." OFF)
+option(grad_enable_coverage         "Builds all applications, unit tests, and enables coverage options." OFF)
+option(grad_format_codebase         "Builds appropriate applications while also formatting the code." OFF)
 
-option(research_build_all       "Builds nd-research applications, corresponding unit tests, and corresponding code samples." OFF)
-option(research_build_tests     "Builds nd-research applications and corresponding unit tests." OFF)
-option(research_build_samples   "Builds nd-research applications and corresponding code samples." OFF)
-option(research_exclude_scripts "Builds nd-research applications while ignoring the scripts directory." OFF)
+option(research_build_all           "Builds nd-research applications, corresponding unit tests, and corresponding code samples." OFF)
+option(research_build_tests         "Builds nd-research applications and corresponding unit tests." OFF)
+option(research_build_samples       "Builds nd-research applications and corresponding code samples." OFF)
+option(research_enable_npgBuilder   "Builds nd-research applications including NPG-Builder." OFF)
+option(research_exclude_scripts     "Builds nd-research applications while ignoring the scripts directory." OFF)
 
 ## Set appropriate option flags and continue ##
 if (grad_format_codebase)
@@ -110,8 +111,43 @@ endif()
 include_directories(${COMMON_UTILS_INCLUDE_DIR})
 include_directories(${CPP_UNITS_INCLUDE_DIR})
 
-include_directories(nd-research/src/fileTypes/rnemdFiles)
-include_directories(nd-research/src/fileTypes/emdFiles)
+if (research_enable_npgBuilder)
+    include(FetchContent)
+
+    ## ImGui
+    message(STATUS "Fetching ImGUI...")
+    FetchContent_Declare(imgui          # v1.90.5
+                         GIT_REPOSITORY "https://github.com/ocornut/imgui.git"
+                         GIT_TAG "231cbee0fc4f59dbe5b8b853a11b08dc84e57c65")
+
+    FetchContent_MakeAvailable(imgui)
+    include_directories(${imgui_SOURCE_DIR})
+
+    ## SFML
+    message(STATUS "Fetching SFML...")
+    FetchContent_Declare(sfml           # v2.6.1
+                     GIT_REPOSITORY "https://github.com/SFML/SFML.git"
+                     GIT_TAG "69ea0cd863aed1d4092b970b676924a716ff718b")
+
+    set(SFML_BUILD_AUDIO FALSE)
+    set(SFML_BUILD_NETWORK FALSE)
+
+    FetchContent_MakeAvailable(sfml)
+    include_directories(${sfml_SOURCE_DIR}/include)
+
+    ## ImGui-SFML
+    message(STATUS "Fetching ImGui-SFML...")
+    FetchContent_Declare(imgui_sfml     # v2.6
+                         GIT_REPOSITORY "https://github.com/SFML/imgui-sfml.git"
+                         GIT_TAG "de565ac8f2b795dedc0307b60830cb006afd2ecd")
+
+    set(IMGUI_DIR ${imgui_SOURCE_DIR})
+    set(IMGUI_SFML_FIND_SFML OFF)
+    set(IMGUI_SFML_IMGUI_DEMO ON)
+
+    FetchContent_MakeAvailable(imgui_sfml)
+    include_directories(${imgui_sfml_SOURCE_DIR})
+endif()
 
 
 ### ND-Grad Subprojects ###
@@ -120,5 +156,6 @@ if (NOT grad_exclude_courses)
 endif()
 
 if (NOT grad_exclude_research)
+    include_directories(nd-research/include)
     add_subdirectory(nd-research)
 endif()

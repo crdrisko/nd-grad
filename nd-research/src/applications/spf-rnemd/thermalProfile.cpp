@@ -302,13 +302,19 @@ void printFile2(const std::string& fileName, const RNEMDData& data, const RNEMDD
     auto Tz = DryChem::linearLeastSquaresFitting(rnemdAxis.begin(), rnemdAxis.end(), temp_avg.begin(), temp_avg.end());
 
     auto dSele1_avg_dz = DryChem::centeredDifferenceMethod(rnemdAxis, sele1_avg, false);
+    auto dSele2_avg_dz = DryChem::centeredDifferenceMethod(rnemdAxis, sele2_avg, false);
 
     const auto ConversionFactor = 10 * (1000.0 * 1.0_mol / Constants::avogadrosNumber) / 1.0e-27;
 
     std::ofstream outputFile2;
-    outputFile2.open(fileName + "3.csv");
+    outputFile2.open(fileName + "3_v2.csv");
 
-    SoretCoefficient sT {0.00364509};
+    outputFile2 << "# Z," << std::setw(17) << "Temperature," << std::setw(17) << "[Sele1]," << std::setw(17) << "[Sele2],"
+                << std::setw(17) << "d[Sele1]_dz," << std::setw(17) << "d[Sele2]_dz," << std::setw(17) << "D_Sele1,"
+                << std::setw(17) << "D_Sele2\n";
+
+    SoretCoefficient sT_1 {0.00364509};
+    SoretCoefficient sT_2 {0.0114415};
 
     for (std::size_t bin {1}; bin < rnemdAxis.size() - 1; ++bin)
     {
@@ -317,12 +323,12 @@ void printFile2(const std::string& fileName, const RNEMDData& data, const RNEMDD
         DimensionlessQuantity x_1 = sele1_avg[bin] / c_t;
         DimensionlessQuantity x_2 = sele2_avg[bin] / c_t;
 
-        auto D = -(x_2 * params.report.Jp) / (sele2_avg[bin] * x_1 * x_2 * sT * Tz.slope + dSele1_avg_dz[bin - 1]);
-
+        auto D_1 = -(x_2 * params.report.Jp) / (sele2_avg[bin] * x_1 * x_2 * sT_1 * Tz.slope + dSele1_avg_dz[bin - 1]);
+        auto D_2 = (x_1 * params.report.Jp) / (sele1_avg[bin] * x_1 * x_2 * sT_2 * Tz.slope + dSele2_avg_dz[bin - 1]);
 
         outputFile2 << rnemdAxis[bin] << std::setw(14) << temp_avg[bin] << std::setw(14) << sele1_avg[bin] << std::setw(14)
-                    << dSele1_avg_dz[bin - 1] << std::setw(14) << D * ConversionFactor << std::setw(14)
-                    << (D * D) / (x_2 * params.report.Jp) * errors_dSele1_dz[bin] * ConversionFactor << '\n';
+                    << sele2_avg[bin] << std::setw(14) << dSele1_avg_dz[bin - 1] << std::setw(14) << dSele2_avg_dz[bin - 1]
+                    << std::setw(14) << D_1 * ConversionFactor << std::setw(14) << D_2 * ConversionFactor << '\n';
     }
 
     /* auto Tz = DryChem::linearLeastSquaresFitting(rnemdAxis.begin(), rnemdAxis.end(), temp_avg.begin(), temp_avg.end());

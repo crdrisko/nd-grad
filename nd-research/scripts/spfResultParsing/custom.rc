@@ -1,0 +1,33 @@
+axes.labelcolor: black
+axes.labelpad: 10.0
+axes.labelsize: 16
+axes.labelweight: normal
+axes.linewidth: 1.5
+
+figure.subplot.bottom: 0.11
+figure.subplot.hspace: 0.08
+figure.subplot.left: 0.11
+figure.subplot.right: 0.89
+figure.subplot.top: 0.95
+figure.subplot.wspace: 0.08
+
+font.size: 16
+
+xtick.direction: in
+xtick.labelsize: 14
+xtick.major.size: 5
+xtick.major.width: 1.5
+xtick.minor.size: 2.5
+xtick.minor.visible: True
+xtick.minor.width: 1.5
+xtick.top: True
+
+ytick.alignment: center
+ytick.direction: in
+ytick.labelsize: 14
+ytick.major.size: 5
+ytick.major.width: 1.5
+ytick.minor.size: 2.5
+ytick.minor.visible: True
+ytick.minor.width: 1.5
+ytick.right: True

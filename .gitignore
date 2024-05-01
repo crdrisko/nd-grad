@@ -40,6 +40,7 @@ nd-coursework/books/cpp/FunctionalC++
 nd-coursework/courses/mpiWorkshop
 
 nd-research/scripts/*/.deprecated
+nd-research/scripts/spfResultParsing/defaults.rc
 nd-research/src/applications/grapheneBuilder/GrapheneBuilder/npgLatticeFiles
 nd-research/src/applications/grapheneBuilder/GrapheneBuilder/imgui.ini
 

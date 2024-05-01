@@ -31,7 +31,7 @@ def getPlotsBlueGold(percentage):
 def getPlotsArKr(percentage):
     percentage_Kr  = (100 - percentage) / 100
 
-    data = np.loadtxt("/Users/crdrisko/Desktop/SPF/SPF-Results/Modified Results/ArKr" + str(percentage) + "-mod.txt", delimiter='\t', comments='#')
+    data = np.loadtxt("/Users/crdrisko/Desktop/SPF/SPF-Results/Modified Results/ArKr" + str(percentage) + "-mod_v2.txt", delimiter='\t', comments='#')
 
     N = np.size(data)
     Jp_actual  = percentage_Kr * data[0:N:1, 0]
@@ -41,8 +41,8 @@ def getPlotsArKr(percentage):
     return Jp_actual, dAr_dz, D_Ar
 
 ### Main Code ###
-for percentage in [10, 25, 50, 75, 90]:
-# for percentage in [50, 75, 90]:
+# for percentage in [10, 25, 50, 75, 90]:
+for percentage in [50, 75, 90]:
     avg_Jp = []
 
     avg_grad = []
@@ -51,8 +51,8 @@ for percentage in [10, 25, 50, 75, 90]:
     avg_diff = []
     avg_diff_ci = []
 
-    avg_Jp, avg_grad, avg_diff = getPlotsBlueGold(percentage)
-    # avg_Jp, avg_grad, avg_diff = getPlotsArKr(percentage)
+    # avg_Jp, avg_grad, avg_diff = getPlotsBlueGold(percentage)
+    avg_Jp, avg_grad, avg_diff = getPlotsArKr(percentage)
 
     popt, pcov = curve_fit(func, np.array(avg_Jp), avg_grad)
 
@@ -66,7 +66,8 @@ for percentage in [10, 25, 50, 75, 90]:
 
     print()
 
-    fig, axes = plt.subplots(2, 1, figsize=(8, 8), sharex = True)
+    with plt.rc_context(fname='nd-grad/nd-research/scripts/spfResultParsing/custom.rc'):
+        fig, axes = plt.subplots(2, 1, figsize=(16, 8), sharex = True)
 
     axes[0].plot(avg_Jp, avg_grad, marker='o', linestyle='none', color='tab:blue')
     axes[0].plot(avg_Jp, func(np.array(avg_Jp), *popt), color='tab:blue')
@@ -78,6 +79,6 @@ for percentage in [10, 25, 50, 75, 90]:
     axes[0].set_ylabel("$\\frac{dc}{dz}$")
     axes[1].set_ylabel("D")
 
-    plt.savefig("/Users/crdrisko/Desktop/SPF/SPF-Results/ArgonRed/ArgonRed" + str(percentage) + "_files/RNEMD/Argon" + str(percentage) + ".png")
-    # plt.savefig("/Users/crdrisko/Desktop/SPF/SPF-Results/Krypton/Krypton" + str(percentage) + "_files/RNEMD/Argon" + str(percentage) + ".png")
+    # plt.savefig("/Users/crdrisko/Desktop/SPF/SPF-Results/ArgonRed/ArgonRed" + str(percentage) + "_files/RNEMD/Argon" + str(percentage) + ".png")
+    plt.savefig("/Users/crdrisko/Desktop/SPF/SPF-Results/Krypton/Krypton" + str(percentage) + "_files/RNEMD/Argon" + str(percentage) + ".png")
     plt.show()

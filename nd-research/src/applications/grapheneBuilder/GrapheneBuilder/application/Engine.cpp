@@ -663,7 +663,7 @@ void Engine::calculateBonds(const std::shared_ptr<Entity>& e)
 void Engine::writeXYZFile(const std::string& fileName)
 {
     std::ofstream outputFile;
-    outputFile.open("npgLatticeFiles\\" + fileName);
+    outputFile.open(fileName);
 
     outputFile << entityManager_.getEntities().size() << "\n\t0.00000000;  " << boxSize_.x / config_.worldScale
                << "   0.00000000   0.00000000;   0.00000000  " << boxSize_.y / config_.worldScale
@@ -692,8 +692,8 @@ void Engine::writeOMDFile(const std::string& fileName)
 
     std::ofstream omdOutputFile, incOutputFile;
 
-    omdOutputFile.open("npgLatticeFiles\\" + baseFileName + ".omd");
-    incOutputFile.open("npgLatticeFiles\\" + baseFileName + ".inc");
+    omdOutputFile.open(baseFileName + ".omd");
+    incOutputFile.open(baseFileName + ".inc");
 
     omdOutputFile
         << "<OpenMD version=3>\n  <MetaData>\n\n#include \"" << baseFileName << ".inc\"\n"
