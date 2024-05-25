@@ -26,7 +26,7 @@ int main()
     }
 
     long sum {};
-    std::size_t start { numbers.find_first_not_of(' ') };
+    std::size_t start {numbers.find_first_not_of(' ')};
 
     while (start != std::string::npos)
     {
@@ -34,7 +34,7 @@ int main()
         if (end == std::string::npos)
             end = numbers.length();
 
-        sum += std::stoi( numbers.substr(start, end - start) );
+        sum += std::stoi(numbers.substr(start, end - start));
         start = numbers.find_first_not_of(' ', end + 1);
     }
 

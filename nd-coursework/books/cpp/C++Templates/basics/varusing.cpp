@@ -15,31 +15,25 @@ private:
     std::string name;
 
 public:
-    Customer(std::string const& n) : name{n} {}
+    Customer(std::string const& n) : name {n} {}
     std::string getName() const { return name; }
 };
 
 struct CustomerEq
 {
-    bool operator()(Customer const& c1, Customer const& c2) const
-    {
-        return c1.getName() == c2.getName();
-    }
+    bool operator()(Customer const& c1, Customer const& c2) const { return c1.getName() == c2.getName(); }
 };
 
 struct CustomerHash
 {
-    std::size_t operator()(Customer const& c) const
-    {
-        return std::hash<std::string>()(c.getName());
-    }
+    std::size_t operator()(Customer const& c) const { return std::hash<std::string>()(c.getName()); }
 };
 
 // define class that combines operator() for variadic base classes:
 template<typename... Bases>
 struct Overloader : Bases...
 {
-    using Bases::operator()...;                             // OK since C++17
+    using Bases::operator()...;   // OK since C++17
 };
 
 int main()

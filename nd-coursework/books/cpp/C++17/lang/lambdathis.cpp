@@ -22,10 +22,12 @@ public:
     {
         // start and return new thread using this after 3 seconds
         using namespace std::literals;
-        std::thread t([*this] {
-                                std::this_thread::sleep_for(3s);
-                                std::cout << name << '\n';
-                              });
+        std::thread t(
+            [*this]
+            {
+                std::this_thread::sleep_for(3s);
+                std::cout << name << '\n';
+            });
         return t;
     }
 };

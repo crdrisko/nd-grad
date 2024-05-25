@@ -6,10 +6,10 @@
 // Date: 07/25/2020-20:36:07
 // Description: Using the max() function template
 
+#include "max1.hpp"
+
 #include <iostream>
 #include <string>
-
-#include "max1.hpp"
 
 int main()
 {

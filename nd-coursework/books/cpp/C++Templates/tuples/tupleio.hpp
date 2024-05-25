@@ -13,10 +13,7 @@
 
 #include "tuple.hpp"
 
-void printTuple(std::ostream& strm, Tuple<> const&, bool isFirst = true)
-{
-    strm << (isFirst ? '(' : ')');
-}
+void printTuple(std::ostream& strm, Tuple<> const&, bool isFirst = true) { strm << (isFirst ? '(' : ')'); }
 
 template<typename Head, typename... Tail>
 void printTuple(std::ostream& strm, Tuple<Head, Tail...> const& t, bool isFirst = true)

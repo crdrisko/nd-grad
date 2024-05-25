@@ -10,14 +10,16 @@
 #define VALUELIST_HPP
 
 #include "ctvalue.hpp"
-#include "typelistisempty.hpp"
 #include "typelistfront.hpp"
+#include "typelistisempty.hpp"
 #include "typelistpopfront.hpp"
 #include "typelistpushback.hpp"
 #include "typelistpushfront.hpp"
 
 template<typename T, T... Values>
-struct Valuelist {};
+struct Valuelist
+{
+};
 
 template<typename T, T... Values>
 struct IsEmpty<Valuelist<T, Values...>>
@@ -28,7 +30,7 @@ struct IsEmpty<Valuelist<T, Values...>>
 template<typename T, T Head, T... Tail>
 struct FrontT<Valuelist<T, Head, Tail...>>
 {
-    using Type = CTValue<T, Head>;
+    using Type               = CTValue<T, Head>;
     static constexpr T value = Head;
 };
 

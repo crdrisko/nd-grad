@@ -17,7 +17,7 @@ private:
     long long value;
 
 public:
-    BigInt(long long Value) : value{Value} {}
+    BigInt(long long Value) : value {Value} {}
     // ...
 };
 
@@ -26,7 +26,7 @@ template<>
 struct AccumulationTraits<BigInt>
 {
     using AccT = BigInt;
-    static BigInt const zero() { return BigInt{0}; }
+    static BigInt const zero() { return BigInt {0}; }
 };
 
 #endif

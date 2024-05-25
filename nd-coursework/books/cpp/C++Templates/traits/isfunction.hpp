@@ -15,14 +15,16 @@
 
 // primary template: no function
 template<typename T>
-struct IsFunctionT : std::false_type {};
+struct IsFunctionT : std::false_type
+{
+};
 
 // functions:
 template<typename R, typename... Params>
 struct IsFunctionT<R(Params...)> : std::true_type
 {
-    using Type = R;
-    using ParamsT = Typelist<Params...>;
+    using Type                     = R;
+    using ParamsT                  = Typelist<Params...>;
     static constexpr bool variadic = false;
 };
 
@@ -30,8 +32,8 @@ struct IsFunctionT<R(Params...)> : std::true_type
 template<typename R, typename... Params>
 struct IsFunctionT<R(Params..., ...)> : std::true_type
 {
-    using Type = R;
-    using ParamsT = Typelist<Params...>;
+    using Type                     = R;
+    using ParamsT                  = Typelist<Params...>;
     static constexpr bool variadic = true;
 };
 

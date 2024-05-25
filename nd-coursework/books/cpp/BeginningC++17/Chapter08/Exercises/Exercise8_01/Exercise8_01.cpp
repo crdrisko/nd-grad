@@ -24,9 +24,7 @@ int main()
     int y = year();
     int d = day(m, y);
 
-    std::vector<std::string> monthsOfTheYear 
-    {   
-        "January",
+    std::vector<std::string> monthsOfTheYear {"January",
         "February",
         "March",
         "April",
@@ -37,8 +35,7 @@ int main()
         "September",
         "October",
         "November",
-        "December"
-    };
+        "December"};
 
     std::cout << "Your date of birth is: " << monthsOfTheYear[m - 1] << " " << d << ", " << y << std::endl;
 }
@@ -46,14 +43,14 @@ int main()
 int validate_input(int lower, int upper, const std::string& description)
 {
     int value;
-    std::cout << "Enter a value between " << lower << " and " << upper << " which represents a valid " 
-              << description << ": ";
+    std::cout << "Enter a value between " << lower << " and " << upper << " which represents a valid " << description
+              << ": ";
     std::cin >> value;
 
     while (value < lower || value > upper)
     {
-        std::cout << "Invalid value entered. Please enter a " << description << " between " 
-                  << lower << " and " << upper << ": ";
+        std::cout << "Invalid value entered. Please enter a " << description << " between " << lower << " and " << upper
+                  << ": ";
         std::cin >> value;
     }
 
@@ -80,7 +77,13 @@ int day(int month, int year)
 
     switch (month)
     {
-    case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+    case 1:
+    case 3:
+    case 5:
+    case 7:
+    case 8:
+    case 10:
+    case 12:
         upper_day = 31;
         break;
     case 2:
@@ -89,7 +92,10 @@ int day(int month, int year)
         else
             upper_day = 28;
         break;
-    case 4: case 6: case 9: case 11:
+    case 4:
+    case 6:
+    case 9:
+    case 11:
         upper_day = 30;
         break;
     }

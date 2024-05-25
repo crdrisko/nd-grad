@@ -19,8 +19,8 @@ int main()
     std::cout << std::boolalpha;
     int i;
     int& r = i;
-    tmplParamIsReference(i);                                // false
-    tmplParamIsReference(r);                                // false
-    tmplParamIsReference<int&>(i);                          // true
-    tmplParamIsReference<int&>(r);                          // true
+    tmplParamIsReference(i);         // false
+    tmplParamIsReference(r);         // false
+    tmplParamIsReference<int&>(i);   // true
+    tmplParamIsReference<int&>(r);   // true
 }

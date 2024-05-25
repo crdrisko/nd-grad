@@ -20,8 +20,8 @@ T max(T a, T b)
 template<typename T>
 T max(T a, T b, T c)
 {
-    return max( max(a, b), c );             // uses the template version even for ints because
-}                                           // the following declaration comes too late:
+    return max(max(a, b), c);   // uses the template version even for ints because
+}   // the following declaration comes too late:
 
 // maximum of two int values:
 int max(int a, int b)
@@ -32,5 +32,5 @@ int max(int a, int b)
 
 int main()
 {
-    ::max(47, 11, 33);                      // OOPS: uses max<T>() instead of max(int, int)
+    ::max(47, 11, 33);   // OOPS: uses max<T>() instead of max(int, int)
 }

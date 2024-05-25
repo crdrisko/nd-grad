@@ -17,7 +17,9 @@ int main()
     std::cin.getline(cStyleString, maxLength);
 
     int count {};
-    for (; count < maxLength && cStyleString[count] != '\0'; ++count) {}
+    for (; count < maxLength && cStyleString[count] != '\0'; ++count)
+    {
+    }
 
     for (int i {count - 1}; i >= 0; --i)
         std::cout << cStyleString[i];

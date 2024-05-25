@@ -15,9 +15,9 @@ int main()
 {
     std::size_t size {};
     std::cout << "Enter an array size: ";
-    std::cin  >> size;
+    std::cin >> size;
 
-    auto values { std::make_unique<double[]>(size) };
+    auto values {std::make_unique<double[]>(size)};
     double sum {};
 
     for (std::size_t i {}; i < size; ++i)
@@ -28,4 +28,3 @@ int main()
 
     std::cout << "The result is " << std::setprecision(15) << std::sqrt(6.0 * sum) << std::endl;
 }
-

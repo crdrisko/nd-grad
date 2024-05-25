@@ -14,16 +14,12 @@
 #include "isconvertible.hpp"
 
 template<typename Iterator>
-constexpr bool IsInputIterator =
-    IsConvertible<
-        typename std::iterator_traits<Iterator>::iterator_category,
-        std::input_iterator_tag>;
+constexpr bool IsInputIterator
+    = IsConvertible<typename std::iterator_traits<Iterator>::iterator_category, std::input_iterator_tag>;
 
 template<typename Iterator>
-constexpr bool IsRandomAccessIterator =
-    IsConvertible<
-        typename std::iterator_traits<Iterator>::iterator_category,
-        std::random_access_iterator_tag>;
+constexpr bool IsRandomAccessIterator
+    = IsConvertible<typename std::iterator_traits<Iterator>::iterator_category, std::random_access_iterator_tag>;
 
 template<typename T>
 class Container
@@ -31,17 +27,17 @@ class Container
 public:
     // construct from an input iterator sequence:
     template<typename Iterator>
-    requires IsInputIterator<Iterator>
+        requires IsInputIterator<Iterator>
     Container(Iterator first, Iterator last);
 
     // construct from a random access iterator sequence:
     template<typename Iterator>
-    requires IsRandomAccessIterator<Iterator>
+        requires IsRandomAccessIterator<Iterator>
     Container(Iterator first, Iterator last);
 
     // convert to a container so long as the value types are convertible:
     template<typename U>
-    requires IsConvertible<T, U>
+        requires IsConvertible<T, U>
     operator Container<U>() const;
 };
 

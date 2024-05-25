@@ -12,7 +12,7 @@ int main()
 {
     int a {}, b {};
     std::cout << "Enter two integers separated by spaces: ";
-    std::cin  >> a >> b;
+    std::cin >> a >> b;
 
     if (a == b)
         std::cout << "The two integers are the same." << std::endl;

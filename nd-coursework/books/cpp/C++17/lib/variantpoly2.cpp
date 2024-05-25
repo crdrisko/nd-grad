@@ -21,7 +21,8 @@ int main()
     for (const Var& val : values)
     {
         std::visit(
-            [](const auto& v) {
+            [](const auto& v)
+            {
                 if constexpr (std::is_same_v<decltype(v), const std::string&>)
                     std::cout << '"' << v << "\" ";
                 else

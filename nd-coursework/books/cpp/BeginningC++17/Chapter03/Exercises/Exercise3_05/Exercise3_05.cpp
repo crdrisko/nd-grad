@@ -33,18 +33,15 @@ int main()
     std::cout << "\nThe color yellow consists of: "
               << "\nRed:   " << ((static_cast<unsigned int>(yellow) & R) >> 16)
               << "\nGreen: " << ((static_cast<unsigned int>(yellow) & G) >> 8)
-              << "\nBlue:  " << ((static_cast<unsigned int>(yellow) & B) >> 0)
-              << std::endl;
+              << "\nBlue:  " << ((static_cast<unsigned int>(yellow) & B) >> 0) << std::endl;
 
     std::cout << "\nThe color purple consists of: "
               << "\nRed:   " << ((static_cast<unsigned int>(purple) & R) >> 16)
               << "\nGreen: " << ((static_cast<unsigned int>(purple) & G) >> 8)
-              << "\nBlue:  " << ((static_cast<unsigned int>(purple) & B) >> 0)
-              << std::endl;
+              << "\nBlue:  " << ((static_cast<unsigned int>(purple) & B) >> 0) << std::endl;
 
     std::cout << "\nThe color green consists of: "
               << "\nRed:   " << ((static_cast<unsigned int>(green) & R) >> 16)
               << "\nGreen: " << ((static_cast<unsigned int>(green) & G) >> 8)
-              << "\nBlue:  " << ((static_cast<unsigned int>(green) & B) >> 0)
-              << std::endl;
+              << "\nBlue:  " << ((static_cast<unsigned int>(green) & B) >> 0) << std::endl;
 }

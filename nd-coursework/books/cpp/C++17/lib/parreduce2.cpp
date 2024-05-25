@@ -8,7 +8,7 @@
 
 #include <execution>
 #include <iostream>
-#include <numeric>                                          // for std::reduce()
+#include <numeric>   // for std::reduce()
 #include <vector>
 
 void printSum(long num)

@@ -19,12 +19,12 @@ int main()
 
     std::string letters;
     std::cout << "Enter one or more letters (no spaces): ";
-    std::cin  >> letters;
+    std::cin >> letters;
 
     std::vector<std::string> words, outputWords;
 
-    const std::string separators { " ,;:.\"!?'\n" };
-    std::size_t start { text.find_first_not_of(separators) };
+    const std::string separators {" ,;:.\"!?'\n"};
+    std::size_t start {text.find_first_not_of(separators)};
 
     while (start != std::string::npos)
     {

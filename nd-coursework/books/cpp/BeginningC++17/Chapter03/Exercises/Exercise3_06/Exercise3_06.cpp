@@ -12,7 +12,7 @@ int main()
 {
     long a {}, b {};
     std::cout << "Enter two integers separated by spaces: ";
-    std::cin  >> a >> b;
+    std::cin >> a >> b;
 
     a ^= b;
     b ^= a;

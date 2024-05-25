@@ -6,9 +6,9 @@
 // Date: 09/01/2020-07:31:22
 // Description: Testing if different types are fundamental types or not using our IsFundaT trait
 
-#include <iostream>
-
 #include "isfunda.hpp"
+
+#include <iostream>
 
 template<typename T>
 void test(T const&)

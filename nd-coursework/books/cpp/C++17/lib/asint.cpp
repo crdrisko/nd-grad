@@ -6,7 +6,7 @@
 // Date: 11/07/2020-17:25:35
 // Description: A function for converting a string to an integer if it's possible
 
-#include <charconv>                                         // for from_chars()
+#include <charconv>   // for from_chars()
 #include <iostream>
 #include <optional>
 #include <string_view>

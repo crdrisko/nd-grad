@@ -18,9 +18,9 @@ void f1()
     std::vector<std::thread> threads;
 
     for (unsigned i = 0; i < 20; ++i)
-        threads.emplace_back(do_work, i);                   // Spawns threads
+        threads.emplace_back(do_work, i);   // Spawns threads
 
-    for (auto& entry : threads)                             // Calls join() on each thread in turn
+    for (auto& entry : threads)   // Calls join() on each thread in turn
         entry.join();
 }
 
@@ -29,9 +29,10 @@ void f2()
     std::vector<std::thread> threads;
 
     for (unsigned i = 0; i < 20; ++i)
-        threads.push_back(std::thread(do_work, i));         // Spawns threads
+        threads.push_back(std::thread(do_work, i));   // Spawns threads
 
-    std::for_each(threads.begin(), threads.end(),           // Calls join() on each thread in turn
+    std::for_each(threads.begin(),
+        threads.end(),   // Calls join() on each thread in turn
         std::mem_fn(&std::thread::join));
 }
 

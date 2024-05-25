@@ -17,6 +17,5 @@ int main()
     // ...
 
     // find the first nonempty string in coll:
-    auto pos = std::find_if(coll.begin(), coll.end(),
-                            [](std::string const& s) { return s != ""; });
+    auto pos = std::find_if(coll.begin(), coll.end(), [](std::string const& s) { return s != ""; });
 }

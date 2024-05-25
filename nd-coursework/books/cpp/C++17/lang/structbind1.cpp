@@ -6,12 +6,13 @@
 // Date: 09/28/2020-08:36:20
 // Description: Using structured bindings for objects of type Customer
 
+#include "structbind1.hpp"
+
 #include <iostream>
 #include <string>
 #include <utility>
 
 #include "customer1.hpp"
-#include "structbind1.hpp"
 
 int main()
 {
@@ -26,7 +27,6 @@ int main()
     l = "Waters";
     v += 10;
     std::cout << "f/l/v:   " << f << ' ' << l << ' ' << v << '\n';
-    std::cout << "c:       " << c.getFirst() << ' '
-              << c.getLast() << ' ' << c.getValue() << '\n';
+    std::cout << "c:       " << c.getFirst() << ' ' << c.getLast() << ' ' << c.getValue() << '\n';
     std::cout << "s:       " << s << '\n';
 }

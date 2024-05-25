@@ -13,13 +13,15 @@
 
 // primary template: by default not a pointer
 template<typename T>
-struct IsPointerT : std::false_type {};
+struct IsPointerT : std::false_type
+{
+};
 
 // partial specialization for pointers
 template<typename T>
 struct IsPointerT<T*> : std::true_type
 {
-    using BaseT = T;                                        // type pointing to
+    using BaseT = T;   // type pointing to
 };
 
 #endif

@@ -4,7 +4,7 @@
 // Name: entityManager.cpp - Version 1.0.0
 // Author: crdrisko
 // Date: 04/17/2024-08:09:47
-// Description: 
+// Description:
 
 #include "npgBuilder/entityManager.hpp"
 

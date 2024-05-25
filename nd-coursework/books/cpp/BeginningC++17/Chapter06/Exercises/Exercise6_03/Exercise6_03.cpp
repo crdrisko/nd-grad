@@ -14,9 +14,9 @@ int main()
 {
     std::size_t size {};
     std::cout << "Enter an array size: ";
-    std::cin  >> size;
+    std::cin >> size;
 
-    double* values { new double[size] {} };
+    double* values {new double[size] {}};
     double sum {};
 
     for (std::size_t i {}; i < size; ++i)

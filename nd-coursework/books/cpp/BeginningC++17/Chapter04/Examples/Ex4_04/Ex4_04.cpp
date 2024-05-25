@@ -10,12 +10,12 @@
 
 int main()
 {
-    long number {};                             // Stores input
+    long number {};   // Stores input
     std::cout << "Enter an integer less than 2 billion: ";
-    std::cin  >> number;
+    std::cin >> number;
 
-    if (number % 2)                             // Test remainder after division by 2
-    {   // Here if remainder is 1
+    if (number % 2)   // Test remainder after division by 2
+    {                 // Here if remainder is 1
         std::cout << "Your number is odd." << std::endl;
     }
     else

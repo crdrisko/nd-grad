@@ -15,7 +15,7 @@ template<typename CountedType>
 class ObjectCounter
 {
 private:
-    inline static std::size_t count = 0;                    // number of existing objects
+    inline static std::size_t count = 0;   // number of existing objects
 
 protected:
     // default constructor

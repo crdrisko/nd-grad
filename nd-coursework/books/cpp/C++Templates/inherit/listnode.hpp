@@ -13,9 +13,10 @@ template<typename T>
 class ListNode
 {
 public:
-    T value:
+    T value :
 
-    ListNode<T>* next = nullptr;
+        ListNode<T>* next
+        = nullptr;
     ~ListNode() { delete next; }
 };
 

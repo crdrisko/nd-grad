@@ -4,7 +4,7 @@
 // Name: main.cpp - Version 1.0.0
 // Author: crdrisko
 // Date: 04/17/2024-08:09:47
-// Description: 
+// Description:
 
 #include <iostream>
 
@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
         std::cout << "Usage: " << argv[0] << " <config_file>\n";
         return EXIT_FAILURE;
     }
-    
+
     Engine engine {argv[1]};
     engine.run();
 }

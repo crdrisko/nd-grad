@@ -18,7 +18,7 @@ template<typename T, typename Rep = SArray<T>>
 class Array
 {
 private:
-    Rep expr_rep;                                           // (access to) the data of the array
+    Rep expr_rep;   // (access to) the data of the array
 
 public:
     // create array with initial size

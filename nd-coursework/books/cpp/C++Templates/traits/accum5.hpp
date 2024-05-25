@@ -12,9 +12,7 @@
 #include "accumtraits4.hpp"
 #include "sumpolicy1.hpp"
 
-template<typename T,
-         typename Policy = SumPolicy,
-         typename Traits = AccumulationTraits<T>>
+template<typename T, typename Policy = SumPolicy, typename Traits = AccumulationTraits<T>>
 auto accum(T const* beg, T const* end)
 {
     using AccT = typename Traits::AccT;

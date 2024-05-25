@@ -18,13 +18,13 @@ int main()
     while (userResponse == 'y')
     {
         std::cout << "Please enter an integer number: ";
-        std::cin  >> input;
+        std::cin >> input;
 
         total += input;
         ++count;
 
         std::cout << "Would you like to enter another number? (y/n) ";
-        std::cin  >> userResponse;
+        std::cin >> userResponse;
 
         if (std::tolower(userResponse) != 'y' && std::tolower(userResponse) != 'n')
         {
@@ -33,6 +33,6 @@ int main()
         }
     }
 
-    std::cout << "The total sum of the numbers entered is " << total << " and the average is "
-              << std::fixed << std::setprecision(2) << static_cast<float>(total) / count << std::endl;
+    std::cout << "The total sum of the numbers entered is " << total << " and the average is " << std::fixed
+              << std::setprecision(2) << static_cast<float>(total) / count << std::endl;
 }

@@ -10,7 +10,7 @@
 #define CUSTOMER2_HPP
 
 #include <string>
-#include <utility>                                          // for std::move()
+#include <utility>   // for std::move()
 
 class Customer
 {
@@ -20,7 +20,7 @@ private:
     long val;
 
 public:
-    Customer(std::string f, std::string l, long v) : first{std::move(f)}, last{std::move(l)}, val{v} {}
+    Customer(std::string f, std::string l, long v) : first {std::move(f)}, last {std::move(l)}, val {v} {}
 
     const std::string& firstname() const { return first; }
     std::string& firstname() { return first; }

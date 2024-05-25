@@ -24,14 +24,14 @@ int main()
         std::size_t id {}, quant {};
         double price {};
         std::cout << "Enter a Product ID, Quantity, and Unit Price for a given product separated by spaces: ";
-        std::cin  >> id >> quant >> price;
+        std::cin >> id >> quant >> price;
 
         productNumber.push_back(id);
         quantity.push_back(quant);
         unitPrice.push_back(price);
 
         std::cout << "Would you like to enter another number? (y/n) ";
-        std::cin  >> userResponse;
+        std::cin >> userResponse;
 
         if (std::tolower(userResponse) != 'y' && std::tolower(userResponse) != 'n')
         {
@@ -40,8 +40,8 @@ int main()
         }
     } while (userResponse == 'y');
 
-    std::cout << std::setw(10) << "Product" << std::setw(10) << "Quantity" << std::setw(12) << "Unit Price"
-              << std::setw(14) << "Cost\n";
+    std::cout << std::setw(10) << "Product" << std::setw(10) << "Quantity" << std::setw(12) << "Unit Price" << std::setw(14)
+              << "Cost\n";
 
     double cost {}, totalCost {};
 
@@ -50,13 +50,10 @@ int main()
         cost = unitPrice[i] * quantity[i];
         totalCost += cost;
 
-        std::cout << std::setw(8) << productNumber[i]
-                  << std::setw(8) << quantity[i]
-                  << std::setw(9) << "$" << std::fixed << std::setprecision(2) << std::setw(5) << unitPrice[i]
-                  << std::setw(10) << "$" << std::fixed << std::setprecision(2) << std::setw(5) << cost
-                  << std::endl;
+        std::cout << std::setw(8) << productNumber[i] << std::setw(8) << quantity[i] << std::setw(9) << "$" << std::fixed
+                  << std::setprecision(2) << std::setw(5) << unitPrice[i] << std::setw(10) << "$" << std::fixed
+                  << std::setprecision(2) << std::setw(5) << cost << std::endl;
     }
 
-    std::cout << std::setw(40) << "$" << std::fixed << std::setprecision(2) << std::setw(5)
-              << totalCost << std::endl;
+    std::cout << std::setw(40) << "$" << std::fixed << std::setprecision(2) << std::setw(5) << totalCost << std::endl;
 }

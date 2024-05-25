@@ -38,13 +38,13 @@ optional<std::size_t> find_last(string_view string, char to_find, optional<std::
 {
     // code below will not work for empty strings
     if (string.empty())
-        return std::nullopt;                                // or: 'return optional<std::size_t> {}
-                                                            // or: return {};
+        return std::nullopt;   // or: 'return optional<std::size_t> {}
+                               // or: return {};
 
     // determine the starting index for the loop that follows:
     std::size_t index = start_index.value_or(string.size() - 1);
 
-    while (true)                                            // never use while (index >= 0) here, as std::size_t is always >= 0!
+    while (true)   // never use while (index >= 0) here, as std::size_t is always >= 0!
     {
         if (string[index] == to_find)
             return index;

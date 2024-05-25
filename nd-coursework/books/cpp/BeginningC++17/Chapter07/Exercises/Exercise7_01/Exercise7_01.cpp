@@ -14,7 +14,14 @@
 
 int main()
 {
-    enum class Grades : char { A = 'A', B = 'B', C = 'C', D = 'D', F = 'F' };
+    enum class Grades : char
+    {
+        A = 'A',
+        B = 'B',
+        C = 'C',
+        D = 'D',
+        F = 'F'
+    };
 
     std::vector<std::string> studentNames;
     std::string currentName {};
@@ -27,16 +34,20 @@ int main()
     do
     {
         std::cout << "Enter a student's first name: ";
-        std::cin  >> currentName;
+        std::cin >> currentName;
         studentNames.push_back(currentName);
 
         std::cout << "What grade did " << currentName << " recieve in the class? ";
-        std::cin  >> currentGrade;
+        std::cin >> currentGrade;
 
-        switch ( std::toupper(currentGrade) )
+        switch (std::toupper(currentGrade))
         {
-        case 'A': case 'B': case 'C': case 'D': case 'F':
-            studentGrades.push_back( static_cast<Grades>(std::toupper(currentGrade)) );
+        case 'A':
+        case 'B':
+        case 'C':
+        case 'D':
+        case 'F':
+            studentGrades.push_back(static_cast<Grades>(std::toupper(currentGrade)));
             break;
         default:
             std::cout << "Invalid grade entered, valid options are A, B, C, D, or F." << std::endl;
@@ -44,11 +55,11 @@ int main()
         }
 
         std::cout << "Do you want to enter another name? (y/n): ";
-        std::cin  >> answer;
+        std::cin >> answer;
     } while (std::tolower(answer) == 'y');
 
     double gradeSum {};
-    int charToIntNormalization { static_cast<int>('F') };
+    int charToIntNormalization {static_cast<int>('F')};
 
     for (const auto& grade : studentGrades)
     {
@@ -61,9 +72,9 @@ int main()
             gradeSum += 1;
     }
 
-    Grades averageGrade = static_cast<Grades>( charToIntNormalization - std::round(gradeSum / studentGrades.size()) );
+    Grades averageGrade = static_cast<Grades>(charToIntNormalization - std::round(gradeSum / studentGrades.size()));
 
-    std::cout << "The average grade for the class was " << std::string{ (averageGrade == Grades::A) ? "an " : "a " }
+    std::cout << "The average grade for the class was " << std::string {(averageGrade == Grades::A) ? "an " : "a "}
               << static_cast<char>(averageGrade) << std::endl;
 
     for (std::size_t i {}, count {}; i < studentNames.size(); ++i)
@@ -76,6 +87,6 @@ int main()
             count = 0;
         }
     }
-    
+
     std::cout << std::endl;
 }

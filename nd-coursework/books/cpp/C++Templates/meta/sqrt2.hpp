@@ -19,9 +19,7 @@ struct Sqrt
     static constexpr auto mid = (LO + HI + 1) / 2;
 
     // search a not too large value in a halved interval
-    using SubT = IfThenElse<(N < mid * mid),
-                            Sqrt<N, LO, mid - 1>,
-                            Sqrt<N, mid, HI>>;
+    using SubT = IfThenElse<(N < mid * mid), Sqrt<N, LO, mid - 1>, Sqrt<N, mid, HI>>;
 
     static constexpr auto value = SubT::value;
 };

@@ -6,10 +6,10 @@
 // Date: 07/26/2020-14:54:33
 // Description: Using the class template Stack<> with varrying element and container types
 
+#include "stack3.hpp"
+
 #include <deque>
 #include <iostream>
-
-#include "stack3.hpp"
 
 int main()
 {

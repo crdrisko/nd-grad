@@ -13,9 +13,13 @@
 
 // primary template: by default no class
 template<typename T, typename = std::void_t<>>
-struct IsClassT : std::false_type {};
+struct IsClassT : std::false_type
+{
+};
 
 template<typename T>
-struct IsClassT<T, std::void_t<int T::*>> : std::true_type {};                  // classes can have pointer-to-member
+struct IsClassT<T, std::void_t<int T::*>> : std::true_type
+{
+};   // classes can have pointer-to-member
 
 #endif

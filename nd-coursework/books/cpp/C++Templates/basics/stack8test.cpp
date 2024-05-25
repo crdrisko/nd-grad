@@ -6,15 +6,15 @@
 // Date: 07/31/2020-07:42:09
 // Description: Using all features of the final implementation of the Stack class template
 
+#include "stack8.hpp"
+
 #include <iostream>
 #include <vector>
 
-#include "stack8.hpp"
-
 int main()
 {
-    Stack<int>   iStack;                                    // stack of ints
-    Stack<float> fStack;                                    // stack of floats
+    Stack<int> iStack;     // stack of ints
+    Stack<float> fStack;   // stack of floats
 
     // manipulate int stack
     iStack.push(1);
@@ -39,7 +39,7 @@ int main()
     vStack = fStack;
     std::cout << "vStack: ";
 
-    while ( !vStack.empty() )
+    while (!vStack.empty())
     {
         std::cout << vStack.top() << ' ';
         vStack.pop();

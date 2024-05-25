@@ -6,23 +6,23 @@
 // Date: 04/29/2020-12:57:02
 // Description: Allocating an array at runtime
 
-#include <iomanip>                      // For std::setprecision()
+#include <iomanip>   // For std::setprecision()
 #include <iostream>
 
 int main()
 {
     std::size_t count {};
     std::cout << "How many heights will you enter? ";
-    std::cin  >> count;
-    int height[count];                  // Create the array of count elements
+    std::cin >> count;
+    int height[count];   // Create the array of count elements
 
     // Read the heights
     std::size_t entered {};
     while (entered < count)
     {
         std::cout << "Enter a height: ";
-        std::cin  >> height[entered];
-        if (height[entered] > 0)        // Make sure value is positive
+        std::cin >> height[entered];
+        if (height[entered] > 0)   // Make sure value is positive
         {
             ++entered;
         }

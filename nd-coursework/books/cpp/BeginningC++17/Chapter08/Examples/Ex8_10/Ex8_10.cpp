@@ -8,7 +8,7 @@
 
 #include <iostream>
 
-void double_it(double& it)      { it *= 2; }
+void double_it(double& it) { it *= 2; }
 void print_it(const double& it) { std::cout << it << std::endl; }
 
 int main()

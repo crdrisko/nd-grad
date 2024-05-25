@@ -13,9 +13,9 @@ int main()
 {
     double moneyInDollars {};
     std::cout << "Enter a money amount (in dollars) between 0 and 10: ";
-    std::cin  >> moneyInDollars;
+    std::cin >> moneyInDollars;
 
-    if ( moneyInDollars < 0.0 || moneyInDollars > 10.0)
+    if (moneyInDollars < 0.0 || moneyInDollars > 10.0)
     {
         std::cout << "Sorry, only values between $0 and $10 please." << std::endl;
         return 1;
@@ -32,11 +32,7 @@ int main()
     unsigned int nickels {moneyInCents / 5};
     moneyInCents %= 5;
 
-    std::cout << "$" << moneyInDollars << " contains "
-              << quarters << (quarters == 1 ? " quarter, " : " quarters, ")
-              << dimes << (dimes == 1 ? " dime, " : " dimes, ")
-              << nickels << (nickels == 1 ? " nickel, " : " nickels, ")
-              << "and "
-              << moneyInCents << (moneyInCents == 1 ? " penny." : " pennies.")
-              << std::endl;
+    std::cout << "$" << moneyInDollars << " contains " << quarters << (quarters == 1 ? " quarter, " : " quarters, ") << dimes
+              << (dimes == 1 ? " dime, " : " dimes, ") << nickels << (nickels == 1 ? " nickel, " : " nickels, ") << "and "
+              << moneyInCents << (moneyInCents == 1 ? " penny." : " pennies.") << std::endl;
 }

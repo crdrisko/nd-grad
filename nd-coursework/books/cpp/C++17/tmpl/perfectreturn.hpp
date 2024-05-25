@@ -9,13 +9,13 @@
 #ifndef PERFECTRETURN_HPP
 #define PERFECTRETURN_HPP
 
-#include <functional>                                       // for std::forward()
-#include <type_traits>                                      // for std::is_same<> and std::invoke_result<>
+#include <functional>    // for std::forward()
+#include <type_traits>   // for std::is_same<> and std::invoke_result<>
 
 template<typename Callable, typename... Args>
 decltype(auto) call(Callable op, Args&&... args)
 {
-    if constexpr(std::is_void_v<std::invoke_result_t<Callable, Args...>>)
+    if constexpr (std::is_void_v<std::invoke_result_t<Callable, Args...>>)
     {
         // return type is void:
         op(std::forward<Args>(args)...);

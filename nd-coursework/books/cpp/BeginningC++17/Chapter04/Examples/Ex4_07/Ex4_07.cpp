@@ -10,7 +10,7 @@
 
 int main()
 {
-    int choice {};                      // Stores selection value
+    int choice {};   // Stores selection value
 
     std::cout << "Your electronic recipe book is at your service.\n"
               << "You can choose from the following delicious dishes:\n"
@@ -19,7 +19,7 @@ int main()
               << "3  Scrambled eggs\n"
               << "4  Coddled eggs\n"
               << "Enter your selection number: ";
-    std::cin  >> choice;
+    std::cin >> choice;
 
     switch (choice)
     {

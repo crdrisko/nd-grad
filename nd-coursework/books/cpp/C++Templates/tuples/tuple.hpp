@@ -28,14 +28,12 @@ public:
     Tuple() {}
     Tuple(Head const& head, Tuple<Tail...> const& tail) : head(head), tail(tail) {}
 
-    template<typename VHead, typename... VTail,
-             typename std::enable_if_t<sizeof...(VTail) == sizeof...(Tail)>>
+    template<typename VHead, typename... VTail, typename std::enable_if_t<sizeof...(VTail) == sizeof...(Tail)>>
     Tuple(VHead&& vhead, VTail&&... vtail) : head(std::forward<VHead>(vhead)), tail(std::forward<VTail>(vtail)...)
     {
     }
 
-    template<typename VHead, typename... VTail,
-             typename std::enable_if_t<sizeof...(VTail) == sizeof...(Tail)>>
+    template<typename VHead, typename... VTail, typename std::enable_if_t<sizeof...(VTail) == sizeof...(Tail)>>
     Tuple(Tuple<VHead, VTail...> const& other) : head(other.getHead()), tail(other.getTail())
     {
     }

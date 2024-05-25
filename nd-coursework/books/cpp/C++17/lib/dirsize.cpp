@@ -6,12 +6,12 @@
 // Date: 11/17/2020-06:30:19
 // Description: Another example of running std::transform_reduce in parallel
 
-#include <cstdlib>                                          // for EXIT_FAILURE
-#include <execution>                                        // for the execution policy
-#include <filesystem>                                       // filesystem library
+#include <cstdlib>      // for EXIT_FAILURE
+#include <execution>    // for the execution policy
+#include <filesystem>   // filesystem library
 #include <functional>
 #include <iostream>
-#include <numeric>                                          // for std::transform_reduce()
+#include <numeric>   // for std::transform_reduce()
 #include <vector>
 
 int main(int argc, char* argv[])
@@ -41,13 +41,13 @@ int main(int argc, char* argv[])
 
     // accumulate size of all regular files:
     auto sz = std::transform_reduce(/* std::execution::par,                 // parallel execution */
-                                    paths.cbegin(), paths.cend(),           // range
-                                    std::uintmax_t {0},                     // initial value
-                                    std::plus<>(),                          // accumulate...
-                                    [](const std::filesystem::path& p) {    // file size if regular file
-                                        return is_regular_file(p) ? file_size(p)
-                                                                  : std::uintmax_t {0};
-                                    });
+        paths.cbegin(),
+        paths.cend(),                          // range
+        std::uintmax_t {0},                    // initial value
+        std::plus<>(),                         // accumulate...
+        [](const std::filesystem::path& p) {   // file size if regular file
+            return is_regular_file(p) ? file_size(p) : std::uintmax_t {0};
+        });
 
     std::cout << "size of all " << paths.size() << " regular files: " << sz << '\n';
 }

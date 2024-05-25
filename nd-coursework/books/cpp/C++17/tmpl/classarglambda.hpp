@@ -9,14 +9,14 @@
 #ifndef CLASSARGLAMBDA_HPP
 #define CLASSARGLAMBDA_HPP
 
-#include <utility>                                          // for std::forward()
+#include <utility>   // for std::forward()
 
 template<typename CB>
 class CountCalls
 {
 private:
-    CB callback;                                            // callback to call
-    long calls = 0;                                         // counter for calls
+    CB callback;      // callback to call
+    long calls = 0;   // counter for calls
 
 public:
     CountCalls(CB cb) : callback(cb) {}

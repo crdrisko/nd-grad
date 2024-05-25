@@ -29,7 +29,7 @@ void printMax(T const& coll)
 int main()
 {
     std::vector<MyClass> c1;
-    std::list<MyClass>   c2;
+    std::list<MyClass> c2;
 
     // ...
 

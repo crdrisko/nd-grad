@@ -22,7 +22,7 @@ void d2str2d(double value1)
     char str[1000];
     std::to_chars_result res1 = std::to_chars(str, str + 999, value1);
 
-    *res1.ptr = '\0';                                       // add trailing null character
+    *res1.ptr = '\0';   // add trailing null character
 
     std::cout << "str: " << str << '\n';
     assert(res1.ec == std::errc {});
@@ -34,7 +34,7 @@ void d2str2d(double value1)
     std::cout << "out: " << value2 << '\n';
     assert(res2.ec == std::errc {});
 
-    assert(value1 == value2);                               // should never fail
+    assert(value1 == value2);   // should never fail
 }
 
 #endif

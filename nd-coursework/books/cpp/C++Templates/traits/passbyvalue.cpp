@@ -7,11 +7,13 @@
 // Description: Showing how a function template "decays" parameter types
 
 #include <iostream>
-#include <typeinfo>
 #include <type_traits>
+#include <typeinfo>
 
 template<typename T>
-void f(T) {}
+void f(T)
+{
+}
 
 template<typename A>
 void printParameterType(void (*)(A))

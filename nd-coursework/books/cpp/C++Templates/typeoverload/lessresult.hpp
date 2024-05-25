@@ -9,8 +9,8 @@
 #ifndef LESSRESULT_HPP
 #define LESSRESULT_HPP
 
-#include <type_traits>                                      // for true_type and false_type
-#include <utility>                                          // for declval()
+#include <type_traits>   // for true_type and false_type
+#include <utility>       // for declval()
 
 template<typename T1, typename T2>
 class HasLess
@@ -37,11 +37,15 @@ public:
 };
 
 template<typename T1, typename T2>
-class LessResultImpl<T1, T2, false> {};
+class LessResultImpl<T1, T2, false>
+{
+};
 
 
 template<typename T1, typename T2>
-class LessResultT : public LessResultImpl<T1, T2, HasLess<T1, T2>::value> {};
+class LessResultT : public LessResultImpl<T1, T2, HasLess<T1, T2>::value>
+{
+};
 
 template<typename T1, typename T2>
 using LessResult = typename LessResultT<T1, T2>::Type;

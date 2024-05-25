@@ -24,7 +24,7 @@ int main()
     {
         char temporaryStorage {cStyleString[i]};
 
-        cStyleString[i] = cStyleString[count - 1 - i];
+        cStyleString[i]             = cStyleString[count - 1 - i];
         cStyleString[count - 1 - i] = temporaryStorage;
     }
 

@@ -8,7 +8,9 @@
 
 #include <iostream>
 
-class NotVirtual {};
+class NotVirtual
+{
+};
 
 class Virtual
 {
@@ -35,10 +37,10 @@ public:
 int main()
 {
     Base<NotVirtual>* p1 = new Derived<NotVirtual>;
-    p1->foo();                                              // calls Base::foo()
+    p1->foo();   // calls Base::foo()
 
     Base<Virtual>* p2 = new Derived<Virtual>;
-    p2->foo();                                              // calls Derived::foo()
+    p2->foo();   // calls Derived::foo()
 
     delete p1;
     p1 = nullptr;

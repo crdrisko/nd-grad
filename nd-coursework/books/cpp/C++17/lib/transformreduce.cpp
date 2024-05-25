@@ -19,15 +19,19 @@ int main()
 
     // process sum of doubled values of elements:
     std::cout << "sum of doubles: "
-              << std::transform_reduce(coll.cbegin(), coll.cend(),  // range
-                                       0,
-                                       std::plus {}, twice)
+              << std::transform_reduce(coll.cbegin(),
+                     coll.cend(),   // range
+                     0,
+                     std::plus {},
+                     twice)
               << '\n';
 
     // process sum of squared values:
     std::cout << "sum of squared: "
-              << std::transform_reduce(coll.cbegin(), coll.cend(),  // range
-                                       0L,
-                                       std::plus {}, [](auto v) { return v * v; })
+              << std::transform_reduce(coll.cbegin(),
+                     coll.cend(),   // range
+                     0L,
+                     std::plus {},
+                     [](auto v) { return v * v; })
               << '\n';
 }

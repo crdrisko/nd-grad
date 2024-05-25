@@ -6,11 +6,11 @@
 // Date: 08/18/2020-14:08:25
 // Description: Using our DecayT trait to produce the same results as a pass-by-value function call
 
-#include <iostream>
-#include <typeinfo>
-#include <type_traits>
-
 #include "decay.hpp"
+
+#include <iostream>
+#include <type_traits>
+#include <typeinfo>
 
 template<typename T>
 void printDecayedType()

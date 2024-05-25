@@ -11,8 +11,11 @@
 #include <string_view>
 
 // The function prototype including defaults for parameters
-void show_data(const int data[], std::size_t count = 1, std::string_view title = "Data Values",
-    std::size_t width = 10, std::size_t perline = 5);
+void show_data(const int data[],
+    std::size_t count      = 1,
+    std::string_view title = "Data Values",
+    std::size_t width      = 10,
+    std::size_t perline    = 5);
 
 int main()
 {
@@ -30,16 +33,15 @@ int main()
     show_data(samples, std::size(samples), "Samples", 8, 4);
 }
 
-void show_data(const int data[], std::size_t count, std::string_view title,
-    std::size_t width, std::size_t perline)
+void show_data(const int data[], std::size_t count, std::string_view title, std::size_t width, std::size_t perline)
 {
-    std::cout << title << std::endl;                        // Display the title
+    std::cout << title << std::endl;   // Display the title
 
     // Output the data values
     for (std::size_t i {}; i < count; ++i)
     {
-        std::cout << std::setw(width) << data[i];           // Display a data item
-        if ( (i + 1) % perline == 0 )                       // Newline after perLine values
+        std::cout << std::setw(width) << data[i];   // Display a data item
+        if ((i + 1) % perline == 0)                 // Newline after perLine values
             std::cout << '\n';
     }
     std::cout << std::endl;

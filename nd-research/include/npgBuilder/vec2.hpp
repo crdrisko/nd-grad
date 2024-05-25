@@ -4,7 +4,7 @@
 // Name: vec2.hpp - Version 1.0.0
 // Author: crdrisko
 // Date: 04/17/2024-08:09:47
-// Description: 
+// Description:
 
 #ifndef ND_GRAD_ND_RESEARCH_INCLUDE_NPGBUILDER_VEC2_HPP
 #define ND_GRAD_ND_RESEARCH_INCLUDE_NPGBUILDER_VEC2_HPP

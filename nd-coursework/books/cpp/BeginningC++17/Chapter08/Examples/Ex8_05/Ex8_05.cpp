@@ -6,10 +6,10 @@
 // Date: 08/10/2020-08:01:47
 // Description: Passing an array to a function
 
-#include <array>                                            // For std::size()
+#include <array>   // For std::size()
 #include <iostream>
 
-double average(double array[], std::size_t count);          // Function prototype
+double average(double array[], std::size_t count);   // Function prototype
 
 int main()
 {
@@ -20,8 +20,8 @@ int main()
 // Function to compute an average
 double average(double array[], std::size_t count)
 {
-    double sum {};                                          // Accumulate total in here
+    double sum {};   // Accumulate total in here
     for (std::size_t i {}; i < count; ++i)
-        sum += array[i];                                    // Sum array elements
-    return sum / count;                                     // Return average
+        sum += array[i];   // Sum array elements
+    return sum / count;    // Return average
 }

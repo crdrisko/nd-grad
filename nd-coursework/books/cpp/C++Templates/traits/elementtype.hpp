@@ -13,16 +13,16 @@
 #include <vector>
 
 template<typename T>
-struct ElementT;                                            // primary template
+struct ElementT;   // primary template
 
 template<typename T>
-struct ElementT<std::vector<T>>                             // partial specialization for std::vector
+struct ElementT<std::vector<T>>   // partial specialization for std::vector
 {
     using Type = T;
 };
 
 template<typename T>
-struct ElementT<std::list<T>>                               // partial specialization for std::list
+struct ElementT<std::list<T>>   // partial specialization for std::list
 {
     using Type = T;
 };
@@ -30,13 +30,13 @@ struct ElementT<std::list<T>>                               // partial specializ
 // ...
 
 template<typename T, std::size_t N>
-struct ElementT<T[N]>                                       // partial specialization for arrays of known bounds
+struct ElementT<T[N]>   // partial specialization for arrays of known bounds
 {
     using Type = T;
 };
 
 template<typename T>
-struct ElementT<T[]>                                        // partial specialization for arrays of unknown bounds
+struct ElementT<T[]>   // partial specialization for arrays of unknown bounds
 {
     using Type = T;
 };

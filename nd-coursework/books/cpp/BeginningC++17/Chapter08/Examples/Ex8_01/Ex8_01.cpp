@@ -19,7 +19,7 @@ double power(double x, int n)
         for (int i {1}; i <= n; ++i)
             result *= x;
     }
-    else                                                    // n < 0
+    else   // n < 0
     {
         for (int i {1}; i <= -n; ++i)
             result /= x;

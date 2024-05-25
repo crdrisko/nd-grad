@@ -13,9 +13,9 @@ int main()
 {
     char letter {};
     std::cout << "Enter a letter: ";
-    std::cin  >> letter;
+    std::cin >> letter;
 
-    if ( !std::isalpha(letter) )
+    if (!std::isalpha(letter))
     {
         std::cout << "Required input is a letter." << std::endl;
         return 1;
@@ -24,20 +24,18 @@ int main()
     // Determining the binary representation of the letter
     unsigned int mask {0b10000000};
 
-    std::cout << "The letter '" << letter << "' ("
-              << (letter & (mask >> 0) ? 1 : 0)
-              << (letter & (mask >> 1) ? 1 : 0)
-              << (letter & (mask >> 2) ? 1 : 0)
-              << (letter & (mask >> 3) ? 1 : 0)
-              << (letter & (mask >> 4) ? 1 : 0)
-              << (letter & (mask >> 5) ? 1 : 0)
-              << (letter & (mask >> 6) ? 1 : 0)
-              << (letter & (mask >> 7) ? 1 : 0)
+    std::cout << "The letter '" << letter << "' (" << (letter & (mask >> 0) ? 1 : 0) << (letter & (mask >> 1) ? 1 : 0)
+              << (letter & (mask >> 2) ? 1 : 0) << (letter & (mask >> 3) ? 1 : 0) << (letter & (mask >> 4) ? 1 : 0)
+              << (letter & (mask >> 5) ? 1 : 0) << (letter & (mask >> 6) ? 1 : 0) << (letter & (mask >> 7) ? 1 : 0)
               << " in binary) is " << (std::islower(letter) ? "a lowercase" : "an uppercase");
 
-    switch ( std::tolower(letter) )
+    switch (std::tolower(letter))
     {
-    case 'a': case 'e': case 'i': case 'o': case 'u':
+    case 'a':
+    case 'e':
+    case 'i':
+    case 'o':
+    case 'u':
         std::cout << " vowel." << std::endl;
         break;
     default:

@@ -16,23 +16,29 @@ int main()
     std::array coll {3, 1, 7, 5, 4, 1, 6, 3};
 
     // process sum of elements:
-    std::cout << "sum: " << std::reduce(coll.begin(), coll.end())       // range
+    std::cout << "sum: " << std::reduce(coll.begin(), coll.end())   // range
               << '\n';
 
     // process sum of elements with initial value:
-    std::cout << "sum: " << std::reduce(coll.begin(), coll.end(),       // range
-                                        0)                              // initial value
+    std::cout << "sum: "
+              << std::reduce(coll.begin(),
+                     coll.end(),   // range
+                     0)            // initial value
               << '\n';
 
     // process product of elements:
-    std::cout << "product: " << std::reduce(coll.begin(), coll.end(),   // range
-                                            1LL,                        // initial value
-                                            std::multiplies {})         // operation
+    std::cout << "product: "
+              << std::reduce(coll.begin(),
+                     coll.end(),           // range
+                     1LL,                  // initial value
+                     std::multiplies {})   // operation
               << '\n';
 
     // process product of elements (use 0 as initial value):
-    std::cout << "product: " << std::reduce(coll.begin(), coll.end(),   // range
-                                            0,                          // initial value
-                                            std::multiplies {})         // operation
+    std::cout << "product: "
+              << std::reduce(coll.begin(),
+                     coll.end(),           // range
+                     0,                    // initial value
+                     std::multiplies {})   // operation
               << '\n';
 }

@@ -9,15 +9,15 @@
 #ifndef INVOKE_HPP
 #define INVOKE_HPP
 
-#include <functional>                                       // for std::invoke()
-#include <utility>                                          // for std::forward()
+#include <functional>   // for std::invoke()
+#include <utility>      // for std::forward()
 
 template<typename Callable, typename... Args>
 void call(Callable&& op, Args&&... args)
 {
     // ...
-    std::invoke(std::forward<Callable>(op),                 // call passed callable with
-                std::forward<Args>(args)...);               // all additiional passed args
+    std::invoke(std::forward<Callable>(op),   // call passed callable with
+        std::forward<Args>(args)...);         // all additiional passed args
 }
 
 #endif

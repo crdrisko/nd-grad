@@ -17,31 +17,28 @@ int main()
     std::cout << std::boolalpha;
 
     // define to check for data member first:
-    constexpr auto hasFirst
-        = isValid([](auto x) -> decltype((void)valueT(x).first) {});
+    constexpr auto hasFirst = isValid([](auto x) -> decltype((void)valueT(x).first) {});
 
     std::cout << "hasFirst: " << hasFirst(type<std::pair<int, int>>) << '\n';   // yields true
 
     // define to check for member type size_type:
-    constexpr auto hasSizeType
-        = isValid([](auto x) -> typename decltype(valueT(x))::size_type {});
+    constexpr auto hasSizeType = isValid([](auto x) -> typename decltype(valueT(x))::size_type {});
 
     struct CX
     {
         using size_type = std::size_t;
     };
 
-    std::cout << "hasSizeType: " << hasSizeType(type<CX>) << '\n';              // yields true
+    std::cout << "hasSizeType: " << hasSizeType(type<CX>) << '\n';   // yields true
 
-    if constexpr(!hasSizeType(type<int>))
+    if constexpr (!hasSizeType(type<int>))
         std::cout << "int has no size_type\n";
 
     // define to check for <:
-    constexpr auto hasLess
-        = isValid([](auto x, auto y) -> decltype(valueT(x) < valueT(y)) {});
+    constexpr auto hasLess = isValid([](auto x, auto y) -> decltype(valueT(x) < valueT(y)) {});
 
-    std::cout << hasLess(42, type<char>) << '\n';                               // yields false??
-    std::cout << hasLess(type<std::string>, type<std::string>) << '\n';         // yields true
-    std::cout << hasLess(type<std::string>, type<int>) << '\n';                 // yields false
-    std::cout << hasLess(type<std::string>, "hello") << '\n';                   // yields false??
+    std::cout << hasLess(42, type<char>) << '\n';                         // yields false??
+    std::cout << hasLess(type<std::string>, type<std::string>) << '\n';   // yields true
+    std::cout << hasLess(type<std::string>, type<int>) << '\n';           // yields false
+    std::cout << hasLess(type<std::string>, "hello") << '\n';             // yields false??
 }

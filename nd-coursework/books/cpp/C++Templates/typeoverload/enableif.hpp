@@ -10,7 +10,9 @@
 #define ENABLEIF_HPP
 
 template<bool, typename T = void>
-struct EnableIfT {};
+struct EnableIfT
+{
+};
 
 template<typename T>
 struct EnableIfT<true, T>

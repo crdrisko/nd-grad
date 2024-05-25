@@ -14,11 +14,11 @@ int main()
 
     unsigned int inches {};
     std::cout << "Enter a length in inches: ";
-    std::cin  >> inches;
+    std::cin >> inches;
 
     std::cout << "In " << inches << " inches there are ";
 
-    unsigned int feet { inches / inches_per_foot };
+    unsigned int feet {inches / inches_per_foot};
     inches %= inches_per_foot;
 
     std::cout << feet << " feet and " << inches << " inch(es)." << std::endl;

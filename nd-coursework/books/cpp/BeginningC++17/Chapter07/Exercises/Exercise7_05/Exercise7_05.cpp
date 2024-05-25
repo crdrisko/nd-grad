@@ -30,7 +30,7 @@ int main()
         if (ch == ' ')
             continue;
 
-        lowercaseString1.push_back( std::tolower(ch) );
+        lowercaseString1.push_back(std::tolower(ch));
     }
 
     for (const auto& ch : string2)
@@ -38,7 +38,7 @@ int main()
         if (ch == ' ')
             continue;
 
-        lowercaseString2.push_back( std::tolower(ch) );
+        lowercaseString2.push_back(std::tolower(ch));
     }
 
     if (lowercaseString1.length() == lowercaseString2.length())
@@ -54,9 +54,9 @@ int main()
                 {
                     const auto temp = lowercaseString1[i];
 
-                    lowercaseString1[i] = lowercaseString1[i + 1];
+                    lowercaseString1[i]     = lowercaseString1[i + 1];
                     lowercaseString1[i + 1] = temp;
-                    swapped = true;
+                    swapped                 = true;
                 }
             }
 
@@ -75,9 +75,9 @@ int main()
                 {
                     const auto temp = lowercaseString2[i];
 
-                    lowercaseString2[i] = lowercaseString2[i + 1];
+                    lowercaseString2[i]     = lowercaseString2[i + 1];
                     lowercaseString2[i + 1] = temp;
-                    swapped = true;
+                    swapped                 = true;
                 }
             }
 
@@ -89,6 +89,5 @@ int main()
             isAnagram = true;
     }
 
-    std::cout << string1 << " is " << ( (isAnagram) ? "" : "not " )
-              << "an anagram of " << string2 << "." << std::endl;
+    std::cout << string1 << " is " << ((isAnagram) ? "" : "not ") << "an anagram of " << string2 << "." << std::endl;
 }

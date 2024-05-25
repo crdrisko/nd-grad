@@ -10,13 +10,15 @@
 #define ISPOINTERTOMEMBER_HPP
 
 template<typename T>
-struct IsPointerToMemberT : std::fasle_type {};             // by default no pointer-to-member
+struct IsPointerToMemberT : std::fasle_type
+{
+};   // by default no pointer-to-member
 
 template<typename T, typename C>
-struct IsPointerToMemberT<T C::*> : std::true_type          // partial specialization
+struct IsPointerToMemberT<T C::*> : std::true_type   // partial specialization
 {
     using MemberT = T;
-    using ClassT = C;
+    using ClassT  = C;
 };
 
 #endif

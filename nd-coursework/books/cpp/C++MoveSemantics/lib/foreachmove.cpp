@@ -32,10 +32,13 @@ int main()
     std::vector<std::string> coll {"don't", "vote", "for", "liars"};
     print("coll", coll);
 
-    std::for_each(std::make_move_iterator(coll.begin()), std::make_move_iterator(coll.end()), [](auto&& elem) {
-        if (elem.size() != 4)
-            process(std::move(elem));
-    });
+    std::for_each(std::make_move_iterator(coll.begin()),
+        std::make_move_iterator(coll.end()),
+        [](auto&& elem)
+        {
+            if (elem.size() != 4)
+                process(std::move(elem));
+        });
 
     print("coll", coll);
 }

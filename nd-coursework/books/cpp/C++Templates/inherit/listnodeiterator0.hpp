@@ -15,8 +15,7 @@
 #include "listnode.hpp"
 
 template<typename T>
-class ListNodeIterator : public IteratorFacade<ListNodeIterator<T>, T, 
-                                               std::forward_iterator_tag>
+class ListNodeIterator : public IteratorFacade<ListNodeIterator<T>, T, std::forward_iterator_tag>
 {
 private:
     ListNode<T>* current = nullptr;

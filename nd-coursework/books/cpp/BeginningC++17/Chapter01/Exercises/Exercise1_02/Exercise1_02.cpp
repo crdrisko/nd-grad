@@ -8,7 +8,4 @@
 
 #include <iostream>
 
-int main()
-{
-    std::cout << "Cody Drisko\n24" << std::endl;
-}
+int main() { std::cout << "Cody Drisko\n24" << std::endl; }

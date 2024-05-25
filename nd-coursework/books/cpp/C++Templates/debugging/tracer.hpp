@@ -14,13 +14,13 @@
 class SortTracer
 {
 private:
-    int value;                                              // integer value to be sorted
-    int generation;                                         // generation of this tracer
-    inline static long n_created = 0;                       // number of constructor calls
-    inline static long n_destroyed = 0;                     // number of destructor calls
-    inline static long n_assigned = 0;                      // number of assignments
-    inline static long n_compared = 0;                      // number of comparisons
-    inline static long n_max_live = 0;                      // maximum of existing objects
+    int value;                            // integer value to be sorted
+    int generation;                       // generation of this tracer
+    inline static long n_created   = 0;   // number of constructor calls
+    inline static long n_destroyed = 0;   // number of destructor calls
+    inline static long n_assigned  = 0;   // number of assignments
+    inline static long n_compared  = 0;   // number of comparisons
+    inline static long n_max_live  = 0;   // maximum of existing objects
 
     // recompute maximum of existing objects
     static void update_max_live()
@@ -42,10 +42,8 @@ public:
     {
         ++n_created;
         update_max_live();
-        std::cerr << "SortTracer #" << n_created
-                  << ", created generation " << generation
-                  << " (total: " << n_created - n_destroyed
-                  << ")\n";
+        std::cerr << "SortTracer #" << n_created << ", created generation " << generation
+                  << " (total: " << n_created - n_destroyed << ")\n";
     }
 
     // copy constructor
@@ -53,10 +51,8 @@ public:
     {
         ++n_created;
         update_max_live();
-        std::cerr << "SortTracer #" << n_created
-                  << ", copied as generation " << generation
-                  << " (total: " << n_created - n_destroyed
-                  << ")\n";
+        std::cerr << "SortTracer #" << n_created << ", copied as generation " << generation
+                  << " (total: " << n_created - n_destroyed << ")\n";
     }
 
     // destructor
@@ -64,18 +60,14 @@ public:
     {
         ++n_destroyed;
         update_max_live();
-        std::cerr << "SortTracer generation " << generation
-                  << " destroyed (total: "
-                  << n_created - n_destroyed << ")\n";
+        std::cerr << "SortTracer generation " << generation << " destroyed (total: " << n_created - n_destroyed << ")\n";
     }
 
     // assignment
     SortTracer& operator=(SortTracer const& b)
     {
         ++n_assigned;
-        std::cerr << "SortTracer assignment #" << n_assigned
-                  << " (generation " << generation
-                  << " = " << b.generation
+        std::cerr << "SortTracer assignment #" << n_assigned << " (generation " << generation << " = " << b.generation
                   << ")\n";
         value = b.value;
         return *this;
@@ -85,9 +77,7 @@ public:
     friend bool operator<(SortTracer const& a, SortTracer const& b)
     {
         ++n_compared;
-        std::cerr << "SortTracer comparison #" << n_compared
-                  << " (generation " << a.generation
-                  << " < " << b.generation
+        std::cerr << "SortTracer comparison #" << n_compared << " (generation " << a.generation << " < " << b.generation
                   << ")\n";
         return a.value < b.value;
     }

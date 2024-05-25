@@ -12,12 +12,14 @@
 #include <type_traits>
 
 template<typename T>
-struct IsRValueReferenceT : std::false_type {};             // by default no lvalue reference
+struct IsRValueReferenceT : std::false_type
+{
+};   // by default no lvalue reference
 
 template<typename T>
-struct IsRValueReferenceT<T&&> : std::true_type             // unless T is rvalue references
+struct IsRValueReferenceT<T&&> : std::true_type   // unless T is rvalue references
 {
-    using BaseT = T;                                        // type referring to
+    using BaseT = T;   // type referring to
 };
 
 #endif

@@ -17,22 +17,13 @@ class SArray
 {
 public:
     // create array with initial size
-    explicit SArray(std::size_t s) : storage(new T[s]), storage_size(s)
-    {
-        init();
-    }
+    explicit SArray(std::size_t s) : storage(new T[s]), storage_size(s) { init(); }
 
     // copy constructor
-    SArray(SArray<T> const& orig) : storage(new T[orig.size()]), storage_size(orig.size())
-    {
-        copy(orig);
-    }
+    SArray(SArray<T> const& orig) : storage(new T[orig.size()]), storage_size(orig.size()) { copy(orig); }
 
     // destructor: free memory
-    ~SArray()
-    {
-        delete[] storage;
-    }
+    ~SArray() { delete[] storage; }
 
     // assignment operator
     SArray<T>& operator=(SArray<T> const& orig)
@@ -66,8 +57,8 @@ protected:
     }
 
 private:
-    T*          storage;                                    // storage of the elements
-    std::size_t storage_size;                               // number of elements
+    T* storage;                 // storage of the elements
+    std::size_t storage_size;   // number of elements
 };
 
 #endif

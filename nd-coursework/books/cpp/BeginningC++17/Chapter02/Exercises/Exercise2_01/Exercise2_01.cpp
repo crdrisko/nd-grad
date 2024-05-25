@@ -14,7 +14,7 @@ int main()
 
     float radius {};
     std::cout << "Enter the radius of the circle: ";
-    std::cin  >> radius;
+    std::cin >> radius;
 
     const float area = pi * radius * radius;
 

@@ -19,8 +19,7 @@ private:
     static void func(TO);
 
     // test() trying to call the helper func():
-    template<typename F, typename T,
-             typename = decltype(func(std::declval<F>()))>
+    template<typename F, typename T, typename = decltype(func(std::declval<F>()))>
     static char test(void*);
 
     // test() fallback:

@@ -6,7 +6,7 @@
 // Date: 11/17/2020-06:54:02
 // Description: An example of how to use the new algorithm std::for_each_n()
 
-#include <algorithm>                                        // for std::for_each_n()
+#include <algorithm>   // for std::for_each_n()
 #include <iostream>
 #include <string>
 #include <vector>

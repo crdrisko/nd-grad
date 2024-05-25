@@ -20,13 +20,13 @@ int main()
 
     std::string replace, lowercaseReplace;
     std::cout << "Enter the word you'd like to be replaced: ";
-    std::cin  >> replace;
+    std::cin >> replace;
 
     for (const auto& ch : replace)
-        lowercaseReplace.push_back( std::tolower(ch) );
+        lowercaseReplace.push_back(std::tolower(ch));
 
-    const std::string separators { " ,;:.\"!?'\n" };
-    std::size_t start { text.find_first_not_of(separators) };
+    const std::string separators {" ,;:.\"!?'\n"};
+    std::size_t start {text.find_first_not_of(separators)};
 
     while (start != std::string::npos)
     {
@@ -38,7 +38,7 @@ int main()
         std::string lowercaseWord {};
 
         for (const auto& ch : word)
-            lowercaseWord.push_back( std::tolower(ch) );
+            lowercaseWord.push_back(std::tolower(ch));
 
         if (lowercaseWord == lowercaseReplace)
             text.replace(start, replace.length(), replace.length(), '*');

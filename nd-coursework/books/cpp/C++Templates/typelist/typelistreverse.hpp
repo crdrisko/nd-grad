@@ -9,8 +9,8 @@
 #ifndef TYPELISTREVERSE_HPP
 #define TYPELISTREVERSE_HPP
 
-#include "typelistisempty.hpp"
 #include "typelistfront.hpp"
+#include "typelistisempty.hpp"
 #include "typelistpopfront.hpp"
 #include "typelistpushback.hpp"
 
@@ -22,7 +22,9 @@ using Reverse = typename ReverseT<List>::Type;
 
 // recursive case:
 template<typename List>
-class ReverseT<List, false> : public PushBackT<Reverse<PopFront<List>>, Front<List>> {};
+class ReverseT<List, false> : public PushBackT<Reverse<PopFront<List>>, Front<List>>
+{
+};
 
 // basis case:
 template<typename List>

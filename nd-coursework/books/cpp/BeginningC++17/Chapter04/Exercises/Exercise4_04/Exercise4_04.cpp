@@ -16,7 +16,7 @@ int main()
     // Age criteria is between 21 and 35 years of age
     int age {};
     std::cout << "Please enter your age in years: ";
-    std::cin  >> age;
+    std::cin >> age;
 
     if (age < 0 || age > 120)
     {
@@ -30,7 +30,7 @@ int main()
     // Gender criteria is female
     char gender {};
     std::cout << "Now, what is your gender? ";
-    std::cin  >> gender;
+    std::cin >> gender;
 
     gender = std::tolower(gender);
 
@@ -44,8 +44,15 @@ int main()
 
 
     // Degree criteria is bachelors or masters degree
-    enum class AcademicDegree : char {         none = 'n', associate = 'a', bachelor = 'b',
-                                       professional = 'p',    master = 'm',   doctor = 'd' };
+    enum class AcademicDegree : char
+    {
+        none         = 'n',
+        associate    = 'a',
+        bachelor     = 'b',
+        professional = 'p',
+        master       = 'm',
+        doctor       = 'd'
+    };
     AcademicDegree degree {};
 
     char tempDegree {};
@@ -56,7 +63,7 @@ int main()
               << "\n\t'p' for professional"
               << "\n\t'm' for masters"
               << "\n\t'd' for doctorate\n";
-    std::cin  >> tempDegree;
+    std::cin >> tempDegree;
 
     // Validate user input
     switch (tempDegree)
@@ -93,7 +100,7 @@ int main()
     char tempMarried {};
     std::cout << "Okay, just a few more questions, Please respond with y or n.\n"
               << "Are you married? ";
-    std::cin  >> tempMarried;
+    std::cin >> tempMarried;
 
     switch (std::tolower(tempMarried))
     {
@@ -116,7 +123,7 @@ int main()
     char tempSpeaksHindi {};
     std::cout << "Okay, just a few more questions, Please respond with y or n.\n"
               << "Do you speak Hindi? ";
-    std::cin  >> tempSpeaksHindi;
+    std::cin >> tempSpeaksHindi;
 
     switch (std::tolower(tempSpeaksHindi))
     {
@@ -134,7 +141,7 @@ int main()
     char tempSpeaksUrdu {};
     std::cout << "Okay, just a few more questions, Please respond with y or n.\n"
               << "Do you speak Urdu? ";
-    std::cin  >> tempSpeaksUrdu;
+    std::cin >> tempSpeaksUrdu;
 
     switch (std::tolower(tempSpeaksUrdu))
     {

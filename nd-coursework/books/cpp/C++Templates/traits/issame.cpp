@@ -6,9 +6,9 @@
 // Date: 08/28/2020-21:38:42
 // Description: Using IsSameT to choose implementations based of template parameter type
 
-#include <iostream>
-
 #include "issame.hpp"
+
+#include <iostream>
 
 template<typename T>
 void fooImpl(T, TrueType)
@@ -25,11 +25,11 @@ void fooImpl(T, FalseType)
 template<typename T>
 void foo(T t)
 {
-    fooImpl(t, IsSameT<T, int>{});                          // choose impl. depending on whether T is int
+    fooImpl(t, IsSameT<T, int> {});   // choose impl. depending on whether T is int
 }
 
 int main()
 {
-    foo(42);                                                // calls fooImpl(42, TrueType)
-    foo(7.7);                                               // calls fooImpl(7.7, FalseType)
+    foo(42);    // calls fooImpl(42, TrueType)
+    foo(7.7);   // calls fooImpl(7.7, FalseType)
 }

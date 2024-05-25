@@ -7,9 +7,9 @@
 // Description: Comparing the parallel for_each algorithm to the sequential version
 
 #include <algorithm>
-#include <cmath>                                            // for std::sqrt()
-#include <cstdlib>                                          // for std::atoi()
-#include <execution>                                        // for execution policy
+#include <cmath>       // for std::sqrt()
+#include <cstdlib>     // for std::atoi()
+#include <execution>   // for execution policy
 #include <iostream>
 #include <numeric>
 #include <vector>
@@ -25,8 +25,8 @@ int main(int argc, char* argv[])
 
     struct Data
     {
-        double value;                                       // initial value
-        double sqrt;                                        // parallel computed square root
+        double value;   // initial value
+        double sqrt;    // parallel computed square root
     };
 
     // initialize numElems values without square root:
@@ -42,11 +42,15 @@ int main(int argc, char* argv[])
         Timer t;
 
         // sequential execution:
-        std::for_each(/* std::execution::seq, */ coll.begin(), coll.end(), [](auto& val) { val.sqrt = std::sqrt(val.value); });
+        std::for_each(/* std::execution::seq, */ coll.begin(),
+            coll.end(),
+            [](auto& val) { val.sqrt = std::sqrt(val.value); });
         t.printDiff("sequential: ");
 
         // parallel execution:
-        std::for_each(/* std::execution::par, */ coll.begin(), coll.end(), [](auto& val) { val.sqrt = std::sqrt(val.value); });
+        std::for_each(/* std::execution::par, */ coll.begin(),
+            coll.end(),
+            [](auto& val) { val.sqrt = std::sqrt(val.value); });
         t.printDiff("parallel:   ");
 
         std::cout << '\n';

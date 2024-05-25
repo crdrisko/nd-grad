@@ -29,5 +29,5 @@ int main()
 {
     MyClass1 mc1;
     MyClass2 mc2;
-    foo(mc1, mc2);                                          // same as foo_core<MyClass1, MyClass2>(mc1, mc2)
+    foo(mc1, mc2);   // same as foo_core<MyClass1, MyClass2>(mc1, mc2)
 }

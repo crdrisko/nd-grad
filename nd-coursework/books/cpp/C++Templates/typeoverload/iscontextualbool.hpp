@@ -9,8 +9,8 @@
 #ifndef ISCONTEXTUALBOOL_HPP
 #define ISCONTEXTUALBOOL_HPP
 
-#include <type_traits>                                      // for true_type and false_type
-#include <utility>                                          // for declval()
+#include <type_traits>   // for true_type and false_type
+#include <utility>       // for declval()
 
 template<typename T>
 class IsContextualBoolT

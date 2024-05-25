@@ -16,19 +16,19 @@ int main()
 
     double height_eye {};
     std::cout << "Enter the height of your eye in inches: ";
-    std::cin  >> height_eye;
+    std::cin >> height_eye;
 
     double distance_feet {}, distance_inches {};
     std::cout << "Enter the distance to the tree in feet and inches: ";
-    std::cin  >> distance_feet >> distance_inches;
+    std::cin >> distance_feet >> distance_inches;
 
     double angle {};
     std::cout << "Enter the angle between the horizontal and a line to the top of the\n  tree in degrees: ";
-    std::cin  >> angle;
+    std::cin >> angle;
 
 
-    double height_tree = (height_eye / inches_per_foot) + (distance_inches / inches_per_foot + distance_feet)
-        * std::tan(angle * (pi / 180));
+    double height_tree = (height_eye / inches_per_foot)
+                         + (distance_inches / inches_per_foot + distance_feet) * std::tan(angle * (pi / 180));
 
     std::cout << "The height of that tree is " << height_tree << " feet" << std::endl;
 }

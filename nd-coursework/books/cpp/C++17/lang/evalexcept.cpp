@@ -22,11 +22,11 @@ int main()
         std::vector<int> vec {7, 14, 21, 28};
         print10elems(vec);
     }
-    catch(const std::exception& e)                          // handle standard exception
+    catch (const std::exception& e)   // handle standard exception
     {
         std::cerr << "EXCEPTION: " << e.what() << '\n';
     }
-    catch(...)                                              // handle any other exception
+    catch (...)   // handle any other exception
     {
         std::cerr << "EXCEPTION of unknown type\n";
     }

@@ -9,7 +9,9 @@
 #ifndef CONS_HPP
 #define CONS_HPP
 
-class Nil {};
+class Nil
+{
+};
 
 template<typename HeadT, typename TailT = Nil>
 class Cons

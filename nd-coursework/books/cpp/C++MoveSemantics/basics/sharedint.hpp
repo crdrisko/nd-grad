@@ -40,7 +40,7 @@ public:
     }
 
     // enable copying (deleted with user-declared move operations):
-    SharedInt(const SharedInt&) = default;
+    SharedInt(const SharedInt&)            = default;
     SharedInt& operator=(const SharedInt&) = default;
 };
 

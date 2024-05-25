@@ -23,10 +23,19 @@ option(research_exclude_scripts     "Builds nd-research applications while ignor
 
 ## Set appropriate option flags and continue ##
 if (grad_format_codebase)
-    ## Run clang-format on all code except the files passed as arguments with the '-i' flag ##
-    execute_process(COMMAND bash cmake/scripts/format-codebase.sh
-                    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
-                    OUTPUT_QUIET)
+    find_program(formatter clang-format HINTS /opt/local/libexec/llvm-16/bin/)
+
+    if (NOT formatter_NOTFOUND)
+        message(STATUS "Formatting ND-Grad")
+
+        ## Run clang-format on all code except the files passed as arguments with the '-i' flag ##
+        execute_process(COMMAND bash cmake/scripts/format-codebase.sh 
+                                        -f ${formatter}
+                                        -i nd-research/src/applications/misc/squareMatrix.cpp
+                                        -i nd-research/src/applications/misc/utils.cpp
+                        WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+                        OUTPUT_QUIET)
+    endif()
 endif()
 
 if (grad_enable_coverage)
@@ -95,17 +104,17 @@ include(cmake/grad-utility-functions.cmake)
 ### External Modules ###
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules")
 
-find_package(CPP_Units REQUIRED)
+find_package(DryChem REQUIRED)
 
-if (NOT ${CPP_UNITS_FOUND})
-    ## If cpp-units isn't installed or can't be found, download it from github ##
-    NDGradExternalDownload(PROJECT cpp-units
-                           REPOSITORY "https://github.com/crdrisko/cpp-units.git"
+if (NOT ${DryChem_FOUND})
+    ## If DryChem isn't installed or can't be found, download it from github ##
+    NDGradExternalDownload(PROJECT DryChem
+                           REPOSITORY "https://github.com/crdrisko/drychem.git"
                            TAG main)
 
-    set(COMMON_UTILS_INCLUDE_DIR "${CppUnits_SOURCE_DIR}/common-utilities/include")
-    set(CPP_UNITS_INCLUDE_DIR "${CppUnits_SOURCE_DIR}/cpp-units/include")
-    set(CPP_UNITS_FOUND TRUE)
+    set(COMMON_UTILS_INCLUDE_DIR "${DryChem_SOURCE_DIR}/common-utilities/include")
+    set(CPP_UNITS_INCLUDE_DIR "${DryChem_SOURCE_DIR}/cpp-units/include")
+    set(DryChem_FOUND TRUE)
 endif()
 
 include_directories(${COMMON_UTILS_INCLUDE_DIR})

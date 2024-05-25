@@ -9,10 +9,10 @@
 #ifndef GENERICLARGESTTYPE_HPP
 #define GENERICLARGESTTYPE_HPP
 
-#include "typelistisempty.hpp"
-#include "typelistfront.hpp"
-#include "typelistpopfront.hpp"
 #include "../traits/ifthenelse.hpp"
+#include "typelistfront.hpp"
+#include "typelistisempty.hpp"
+#include "typelistpopfront.hpp"
 
 template<typename List, bool Empty = IsEmpty<List>::value>
 class LargestTypeT;
@@ -23,7 +23,7 @@ class LargestTypeT<List, false>
 {
 private:
     using Contender = Front<List>;
-    using Best = typename LargestTypeT<PopFront<List>>::Type;
+    using Best      = typename LargestTypeT<PopFront<List>>::Type;
 
 public:
     using Type = IfThenElse<(sizeof(Contender) >= sizeof(Best)), Contender, Best>;

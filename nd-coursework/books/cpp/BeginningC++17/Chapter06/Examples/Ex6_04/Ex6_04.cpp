@@ -6,20 +6,21 @@
 // Date: 04/30/2020-22:04:40
 // Description: Using an array of pointers
 
-#include <array>                                // For std::size()
+#include <array>   // For std::size()
 #include <iostream>
 
 int main()
 {
-    const char* pstars[] {
-                            "Fatty Arbuckle",   "Clara Bow",
-                            "Lassie",           "Slim Pickens",
-                            "Boris Karloff",    "Mae West",
-                            "Oliver Hardy",     "Greta Garbo"
-                         };
+    const char* pstars[] {"Fatty Arbuckle",
+        "Clara Bow",
+        "Lassie",
+        "Slim Pickens",
+        "Boris Karloff",
+        "Mae West",
+        "Oliver Hardy",
+        "Greta Garbo"};
 
-    std::cout << "Pick a lucky star! Enter a number between 1 and "
-              << std::size(pstars) << ": ";
+    std::cout << "Pick a lucky star! Enter a number between 1 and " << std::size(pstars) << ": ";
     std::size_t choice {};
     std::cin >> choice;
 

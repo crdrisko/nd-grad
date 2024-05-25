@@ -43,7 +43,4 @@ void f()
     t.join();
 }
 
-int main()
-{
-    f();
-}
+int main() { f(); }

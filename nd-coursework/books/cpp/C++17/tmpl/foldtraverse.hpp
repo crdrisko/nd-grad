@@ -29,7 +29,7 @@ struct Node
     template<typename T, typename... TP>
     static Node* traverse(T np, TP... paths)
     {
-        return (np ->* ... ->* paths);                      // np ->* paths1 ->* paths2 ...
+        return (np->*...->*paths);   // np ->* paths1 ->* paths2 ...
     }
 };
 

@@ -19,28 +19,29 @@ int main()
 
     // process sum of squared values:
     std::cout << "sum of squared:         "
-              << std::transform_reduce(coll1.cbegin(), coll1.cend(),  // 1st range
-                                       coll1.cbegin(),                // 2nd range
-                                       0L)
+              << std::transform_reduce(coll1.cbegin(),
+                     coll1.cend(),     // 1st range
+                     coll1.cbegin(),   // 2nd range
+                     0L)
               << '\n';
 
     // process product of differences of corresponding arguments:
     std::cout << "product of differences: "
-              << std::transform_reduce(coll1.cbegin(), coll1.cend(),  // 1st range
-                                       coll2.cbegin(),                // 2nd range
-                                       1L,
-                                       std::multiplies {}, std::minus {})
+              << std::transform_reduce(coll1.cbegin(),
+                     coll1.cend(),     // 1st range
+                     coll2.cbegin(),   // 2nd range
+                     1L,
+                     std::multiplies {},
+                     std::minus {})
               << '\n';
 
     // process sum (of concatenation) of concatenated digits:
     std::cout << "sum of combined digits: "
-              << std::transform_reduce(coll1.cbegin(), coll1.cend(),  // 1st range
-                                       coll2.cbegin(),                // 2nd range
-                                       std::string {},
-                                       std::plus {},
-                                       [](auto x, auto y) {
-                                           return std::to_string(x)
-                                                + std::to_string(y) + " ";
-                                       })
+              << std::transform_reduce(coll1.cbegin(),
+                     coll1.cend(),     // 1st range
+                     coll2.cbegin(),   // 2nd range
+                     std::string {},
+                     std::plus {},
+                     [](auto x, auto y) { return std::to_string(x) + std::to_string(y) + " "; })
               << '\n';
 }

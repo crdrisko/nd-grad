@@ -15,21 +15,21 @@ int main()
 {
     std::string string1;
     std::cout << "Enter the first word: ";
-    std::cin  >> string1;
+    std::cin >> string1;
 
     std::string string2;
     std::cout << "Enter the second word: ";
-    std::cin  >> string2;
+    std::cin >> string2;
 
     bool isAnagram {false};
 
-    if ( string1.length() == string2.length() )
+    if (string1.length() == string2.length())
     {
         std::string lowercaseString1, lowercaseString2;
 
         // Convert to lowercase and sort the first string
         for (const auto& ch : string1)
-            lowercaseString1.push_back( std::tolower(ch) );
+            lowercaseString1.push_back(std::tolower(ch));
 
         while (true)
         {
@@ -41,9 +41,9 @@ int main()
                 {
                     const auto temp = lowercaseString1[i];
 
-                    lowercaseString1[i] = lowercaseString1[i + 1];
+                    lowercaseString1[i]     = lowercaseString1[i + 1];
                     lowercaseString1[i + 1] = temp;
-                    swapped = true;
+                    swapped                 = true;
                 }
             }
 
@@ -53,7 +53,7 @@ int main()
 
         // Convert to lowercase and sort the second string
         for (const auto& ch : string2)
-            lowercaseString2.push_back( std::tolower(ch) );
+            lowercaseString2.push_back(std::tolower(ch));
 
         while (true)
         {
@@ -65,9 +65,9 @@ int main()
                 {
                     const auto temp = lowercaseString2[i];
 
-                    lowercaseString2[i] = lowercaseString2[i + 1];
+                    lowercaseString2[i]     = lowercaseString2[i + 1];
                     lowercaseString2[i + 1] = temp;
-                    swapped = true;
+                    swapped                 = true;
                 }
             }
 
@@ -79,6 +79,5 @@ int main()
             isAnagram = true;
     }
 
-    std::cout << string1 << " is " << ( (isAnagram) ? "" : "not " )
-              << "an anagram of " << string2 << "." << std::endl;
+    std::cout << string1 << " is " << ((isAnagram) ? "" : "not ") << "an anagram of " << string2 << "." << std::endl;
 }

@@ -27,13 +27,13 @@ private:
 public:
     // constructors
     FunctionPtr() : bridge(nullptr) {}
-    FunctionPtr(FunctionPtr const& other);                  // see functionptr-cpinv.hpp
+    FunctionPtr(FunctionPtr const& other);   // see functionptr-cpinv.hpp
     FunctionPtr(FunctionPtr& other) : FunctionPtr(static_cast<FunctionPtr const&>(other)) {}
     FunctionPtr(FunctionPtr&& other) : bridge(other.bridge) { other.bridge = nullptr; }
 
     // construction from arbitrary function objects:
     template<typename F>
-    FunctionPtr(F&& f);                                     // see functionptr-init.hpp
+    FunctionPtr(F&& f);   // see functionptr-init.hpp
 
     // assignment operators:
     FunctionPtr& operator=(FunctionPtr const& other)
@@ -45,7 +45,7 @@ public:
     FunctionPtr& operator=(FunctionPtr&& other)
     {
         delete bridge;
-        bridge = other.bridge;
+        bridge       = other.bridge;
         other.bridge = nullptr;
         return *this;
     }
@@ -66,7 +66,7 @@ public:
     explicit operator bool() const { return bridge != nullptr; }
 
     // invocation:
-    R operator()(Args... args) const;                       // see functionptr-cpinv.hpp
+    R operator()(Args... args) const;   // see functionptr-cpinv.hpp
 };
 
 #endif

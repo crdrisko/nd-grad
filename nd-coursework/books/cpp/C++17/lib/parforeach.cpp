@@ -7,8 +7,8 @@
 // Description: Using a parallel for_each() algorithm
 
 #include <algorithm>
-#include <cmath>                                            // for std::sqrt()
-#include <execution>                                        // for execution policy
+#include <cmath>       // for std::sqrt()
+#include <execution>   // for execution policy
 #include <iostream>
 #include <numeric>
 #include <vector>
@@ -21,8 +21,8 @@ int main()
 
     struct Data
     {
-        double value;                                       // initial value
-        double sqrt;                                        // parallel computed square root
+        double value;   // initial value
+        double sqrt;    // parallel computed square root
     };
 
     // initialize numElems values without square root:

@@ -6,24 +6,24 @@
 // Date: 04/29/2020-13:59:34
 // Description: Using array<T, N> to create Body Mass Index (BMI) table
 
-#include <array>                                        // For array<T, N>
+#include <array>   // For array<T, N>
 #include <iomanip>
 #include <iostream>
 
 int main()
 {
-    const unsigned min_wt {100};                        // Minimum weight in table (in pounds)
-    const unsigned max_wt {250};                        // Maximum weight in table
+    const unsigned min_wt {100};   // Minimum weight in table (in pounds)
+    const unsigned max_wt {250};   // Maximum weight in table
     const unsigned wt_step {10};
-    const std::size_t wt_count { 1 + (max_wt - min_wt) / wt_step };
+    const std::size_t wt_count {1 + (max_wt - min_wt) / wt_step};
 
-    const unsigned min_ht {48};                         // Minimum height in table (in inches)
-    const unsigned max_ht {84};                         // Maximum height in table
+    const unsigned min_ht {48};   // Minimum height in table (in inches)
+    const unsigned max_ht {84};   // Maximum height in table
     const unsigned ht_step {2};
-    const std::size_t ht_count { 1 + (max_ht - min_ht) / ht_step };
+    const std::size_t ht_count {1 + (max_ht - min_ht) / ht_step};
 
-    const double lbs_per_kg {2.2};                      // Pounds per kilogram
-    const double ins_per_m {39.37};                     // Inches per meter
+    const double lbs_per_kg {2.2};    // Pounds per kilogram
+    const double ins_per_m {39.37};   // Inches per meter
     std::array<unsigned, wt_count> weight_lbs {};
     std::array<unsigned, ht_count> height_ins {};
 
@@ -50,13 +50,13 @@ int main()
         std::cout << "---------";
     std::cout << std::endl;
 
-    double bmi {};                                      // Stores BMI
-    unsigned int feet {};                               // Whole feet for output
-    unsigned int inches {};                             // Whole inches for output
+    double bmi {};            // Stores BMI
+    unsigned int feet {};     // Whole feet for output
+    unsigned int inches {};   // Whole inches for output
     const unsigned int inches_per_foot {12U};
     for (auto h : height_ins)
     {
-        feet = h / inches_per_foot;
+        feet   = h / inches_per_foot;
         inches = h % inches_per_foot;
         std::cout << std::setw(2) << feet << "'" << std::setw(2) << inches << '"' << '|';
         std::cout << std::fixed << std::setprecision(1);

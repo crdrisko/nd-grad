@@ -6,12 +6,13 @@
 // Date: 09/28/2020-09:06:50
 // Description: Using standard bindings for read access and to modify the members of a Customer
 
+#include "structbind2.hpp"
+
 #include <iostream>
 #include <string>
 #include <utility>
 
 #include "customer2.hpp"
-#include "structbind2.hpp"
 
 int main()
 {
@@ -27,7 +28,6 @@ int main()
     f2 = "Ringo";
     v += 10;
     std::cout << "f2/l2/v2: " << f2 << ' ' << l2 << ' ' << v2 << '\n';
-    std::cout << "c:        " << c.firstname() << ' '
-              << c.lastname() << ' ' << c.value() << '\n';
+    std::cout << "c:        " << c.firstname() << ' ' << c.lastname() << ' ' << c.value() << '\n';
     std::cout << "s:        " << s << '\n';
 }

@@ -15,7 +15,7 @@ template<typename T>
 class A_Scalar
 {
 private:
-    T const& s;                                             // value of the scalar
+    T const& s;   // value of the scalar
 
 public:
     // constructor initializes value

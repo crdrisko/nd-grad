@@ -33,24 +33,24 @@ constexpr int toInt(char c)
 template<std::size_t N>
 constexpr int parseInt(char const (&arr)[N])
 {
-    int base   = 10;                                        // to handle base (default: decimal)
-    int offset = 0;                                         // to skip prefixes like 0x
+    int base   = 10;   // to handle base (default: decimal)
+    int offset = 0;    // to skip prefixes like 0x
 
     if (N > 2 && arr[0] == '0')
     {
         switch (arr[1])
         {
         case 'x':
-        case 'X':                                           // prefix 0x or 0X, so hexadecimal
+        case 'X':   // prefix 0x or 0X, so hexadecimal
             base   = 16;
             offset = 2;
             break;
         case 'b':
-        case 'B':                                           // prefix 0b or 0B, so binary
+        case 'B':   // prefix 0b or 0B, so binary
             base   = 2;
             offset = 2;
             break;
-        default:                                            // prefix 0, so octal
+        default:   // prefix 0, so octal
             base   = 8;
             offset = 1;
             break;
@@ -63,7 +63,7 @@ constexpr int parseInt(char const (&arr)[N])
 
     for (std::size_t i = 0; i < N - offset; ++i)
     {
-        if (arr[N - 1 - i] != '\'')                         // ignore separating single quotes (e.g. in 1'000)
+        if (arr[N - 1 - i] != '\'')   // ignore separating single quotes (e.g. in 1'000)
         {
             value += toInt(arr[N - 1 - i]) * multiplier;
             multiplier *= base;

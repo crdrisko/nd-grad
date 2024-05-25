@@ -25,7 +25,7 @@ constexpr T sqrt(T x)
         auto mid = (hi + lo) / 2, midSquared = mid * mid;
 
         if (lo + 1 >= hi || midSquared == 2)
-            return mid;                                     // mid must be the square root
+            return mid;   // mid must be the square root
 
         // continue with the higher/lower half-interval:
         if (midSquared < x)

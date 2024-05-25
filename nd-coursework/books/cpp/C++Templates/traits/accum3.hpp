@@ -17,7 +17,7 @@ auto accum(T const* beg, T const* end)
     // return type is traits of the element type
     using AccT = typename AccumulationTraits<T>::AccT;
 
-    AccT total = AccumulationTraits<T>::zero;               // init total by trait value
+    AccT total = AccumulationTraits<T>::zero;   // init total by trait value
 
     while (beg != end)
     {

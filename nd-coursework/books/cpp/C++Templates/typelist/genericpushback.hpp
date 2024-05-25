@@ -9,8 +9,8 @@
 #ifndef GENERICPUSHBACK_HPP
 #define GENERICPUSHBACK_HPP
 
-#include "typelistisempty.hpp"
 #include "typelistfront.hpp"
+#include "typelistisempty.hpp"
 #include "typelistpopfront.hpp"
 #include "typelistpushfront.hpp"
 
@@ -21,8 +21,8 @@ class PushBackRecT;
 template<typename List, typename NewElement>
 class PushBackRecT<List, NewElement, false>
 {
-    using Head = Front<List>;
-    using Tail = PopFront<List>;
+    using Head    = Front<List>;
+    using Tail    = PopFront<List>;
     using NewTail = typename PushBackRecT<Tail, NewElement>::Type;
 
 public:
@@ -39,7 +39,9 @@ public:
 
 // generic push-back operation:
 template<typename List, typename NewElement>
-class PushBackT : public PushBackRecT<List, NewElement> {};
+class PushBackT : public PushBackRecT<List, NewElement>
+{
+};
 
 template<typename List, typename NewElement>
 using PushBack = typename PushBackT<List, NewElement>::Type;

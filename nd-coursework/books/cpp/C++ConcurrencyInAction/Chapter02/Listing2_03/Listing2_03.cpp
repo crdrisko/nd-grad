@@ -20,7 +20,7 @@ public:
         if (t.joinable())
             t.join();
     }
-    thread_guard(thread_guard const&) = delete;
+    thread_guard(thread_guard const&)            = delete;
     thread_guard& operator=(thread_guard const&) = delete;
 };
 
@@ -51,7 +51,4 @@ void f()
     do_something_in_current_thread();
 }
 
-int main()
-{
-    f();
-}
+int main() { f(); }

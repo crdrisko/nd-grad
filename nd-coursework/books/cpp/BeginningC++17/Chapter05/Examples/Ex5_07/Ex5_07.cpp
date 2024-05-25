@@ -12,16 +12,15 @@
 
 int main()
 {
-    std::size_t table {};                                                // Table size
-    const std::size_t table_min {2};                                     // Minimum table size - at least up to the 2-times
-    const std::size_t table_max {12};                                    // Maximum table size
-    char reply {};                                                  // Response to prompt
+    std::size_t table {};               // Table size
+    const std::size_t table_min {2};    // Minimum table size - at least up to the 2-times
+    const std::size_t table_max {12};   // Maximum table size
+    char reply {};                      // Response to prompt
 
     do
     {
-        std::cout << "What size table would you like ("
-                  << table_min << " to " << table_max << ")? ";
-        std::cin  >> table;                                         // Get the table size
+        std::cout << "What size table would you like (" << table_min << " to " << table_max << ")? ";
+        std::cin >> table;   // Get the table size
         std::cout << std::endl;
 
         // Make sure table is within the limits
@@ -47,20 +46,20 @@ int main()
         std::cout << std::endl;
 
         for (std::size_t i {1}; i <= table; ++i)
-        {   // Iterate over rows
-            std::cout << " " << std::setw(3) << i << " |";          // Start the row
+        {                                                    // Iterate over rows
+            std::cout << " " << std::setw(3) << i << " |";   // Start the row
 
             // Output the values in a row
             for (std::size_t j {1}; j <= table; ++j)
             {
-                std::cout << " " << std::setw(3) << i * j << " |";  // For each col.
+                std::cout << " " << std::setw(3) << i * j << " |";   // For each col.
             }
-            std::cout << std::endl;                                 // End the row
+            std::cout << std::endl;   // End the row
         }
 
         // Check if another table is required
         std::cout << "\nDo you want another table (y or n)? ";
-        std::cin  >> reply;
+        std::cin >> reply;
 
     } while (std::tolower(reply) == 'y');
 }

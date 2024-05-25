@@ -8,9 +8,8 @@
 
 #include <iostream>
 
-class EmptyClass {};
-
-int main()
+class EmptyClass
 {
-    std::cout << "sizeof(EmptyClass): " << sizeof(EmptyClass) << '\n';
-}
+};
+
+int main() { std::cout << "sizeof(EmptyClass): " << sizeof(EmptyClass) << '\n'; }

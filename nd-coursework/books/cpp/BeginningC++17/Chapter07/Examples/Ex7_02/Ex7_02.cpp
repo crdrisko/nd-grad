@@ -12,19 +12,23 @@
 
 int main()
 {
-    std::string text;                                           // Stores the input
+    std::string text;   // Stores the input
     std::cout << "Enter a line of text:\n";
-    std::getline(std::cin, text);                               // Read a line including spaces
+    std::getline(std::cin, text);   // Read a line including spaces
 
-    unsigned vowels {};                                         // Count of vowels
-    unsigned consonants {};                                     // Count of consonants
+    unsigned vowels {};       // Count of vowels
+    unsigned consonants {};   // Count of consonants
     for (std::size_t i {}; i < text.length(); ++i)
     {
         if (std::isalpha(text[i]))
         {
-            switch (std::tolower(text[i]))                      // Convert to lowercase
+            switch (std::tolower(text[i]))   // Convert to lowercase
             {
-            case 'a': case 'e': case 'i': case 'o': case 'u':
+            case 'a':
+            case 'e':
+            case 'i':
+            case 'o':
+            case 'u':
                 ++vowels;
                 break;
 
@@ -35,6 +39,5 @@ int main()
         }
     }
 
-    std::cout << "Your input contained " << vowels << " vowels and "
-              << consonants << " consonants." << std::endl;
+    std::cout << "Your input contained " << vowels << " vowels and " << consonants << " consonants." << std::endl;
 }

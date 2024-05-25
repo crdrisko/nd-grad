@@ -6,18 +6,16 @@
 // Date: 08/18/2020-12:00:34
 // Description: Using the type function, ElementT, to print type information
 
+#include "elementtype.hpp"
+
 #include <iostream>
 #include <typeinfo>
 #include <vector>
 
-#include "elementtype.hpp"
-
 template<typename T>
 void printElementType(T const& c)
 {
-    std::cout << "Container of "
-              << typeid(typename ElementT<T>::Type).name()
-              << " elements.\n";
+    std::cout << "Container of " << typeid(typename ElementT<T>::Type).name() << " elements.\n";
 }
 
 int main()

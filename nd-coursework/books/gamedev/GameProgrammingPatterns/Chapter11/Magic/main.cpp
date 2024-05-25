@@ -9,7 +9,4 @@
 
 #include "Instruction.hpp"
 
-int main()
-{
-    setHealth(0, getHealth(0) + (getAgility(0) + getWisdom(0)) / 2);
-}
+int main() { setHealth(0, getHealth(0) + (getAgility(0) + getWisdom(0)) / 2); }

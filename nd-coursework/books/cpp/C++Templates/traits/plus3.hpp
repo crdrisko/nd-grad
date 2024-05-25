@@ -20,6 +20,8 @@ struct PlusResultT
 
 // partial specialization, used otherwise:
 template<typename T1, typename T2>
-struct PlusResultT<T1, T2, false> {};
+struct PlusResultT<T1, T2, false>
+{
+};
 
 #endif

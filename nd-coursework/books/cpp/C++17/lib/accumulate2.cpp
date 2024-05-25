@@ -7,7 +7,7 @@
 // Description: Another example use of std::accumulate() but this time with a non-associative operation
 
 #include <iostream>
-#include <numeric>                                          // for std::accumulate()
+#include <numeric>   // for std::accumulate()
 #include <vector>
 
 void printSum(long num)

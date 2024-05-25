@@ -22,7 +22,7 @@ public:
     }
 
     ~scoped_thread() { t.join(); }
-    scoped_thread(scoped_thread const&) = delete;
+    scoped_thread(scoped_thread const&)            = delete;
     scoped_thread& operator=(scoped_thread const&) = delete;
 };
 
@@ -51,7 +51,4 @@ void f()
     do_something_in_current_thread();
 }
 
-int main()
-{
-    f();
-}
+int main() { f(); }

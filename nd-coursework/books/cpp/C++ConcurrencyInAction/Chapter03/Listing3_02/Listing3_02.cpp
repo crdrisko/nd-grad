@@ -29,7 +29,7 @@ public:
     void process_data(Function func)
     {
         std::lock_guard<std::mutex> l(m);
-        func(data);                                         // Pass "protected" data to user-supplied function
+        func(data);   // Pass "protected" data to user-supplied function
     }
 };
 
@@ -41,11 +41,8 @@ data_wrapper x;
 
 void foo()
 {
-    x.process_data(malicious_function);                     // Pass in a malicious function
-    unprotected->do_something();                            // Unprotected access to protected data
+    x.process_data(malicious_function);   // Pass in a malicious function
+    unprotected->do_something();          // Unprotected access to protected data
 }
 
-int main()
-{
-    foo();
-}
+int main() { foo(); }

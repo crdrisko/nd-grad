@@ -28,6 +28,8 @@ public:
 };
 
 template<typename T>
-struct IsDefaultConstructibleT : IsDefaultConstructibleHelper<T>::Type {};
+struct IsDefaultConstructibleT : IsDefaultConstructibleHelper<T>::Type
+{
+};
 
 #endif

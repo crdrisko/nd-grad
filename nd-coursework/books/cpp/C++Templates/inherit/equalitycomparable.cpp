@@ -25,5 +25,7 @@ public:
 int main()
 {
     X x1, x2;
-    if (x1 != x2) {}
+    if (x1 != x2)
+    {
+    }
 }

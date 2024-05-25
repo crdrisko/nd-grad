@@ -9,16 +9,20 @@
 #ifndef LARGESTTYPEACC0_HPP
 #define LARGESTTYPEACC0_HPP
 
+#include "../traits/ifthenelse.hpp"
 #include "accumulate.hpp"
 #include "typelistfront.hpp"
 #include "typelistpopfront.hpp"
-#include "../traits/ifthenelse.hpp"
 
 template<typename T, typename U>
-class LargerTypeT : public IfThenElseT<sizeof(T) >= sizeof(U), T, U> {};
+class LargerTypeT : public IfThenElseT<sizeof(T) >= sizeof(U), T, U>
+{
+};
 
 template<typename Typelist>
-class LargestTypeAccT : public AccumulateT<PopFront<Typelist>, LargerTypeT, Front<Typelist>> {};
+class LargestTypeAccT : public AccumulateT<PopFront<Typelist>, LargerTypeT, Front<Typelist>>
+{
+};
 
 template<typename Typelist>
 using LargestTypeAcc = typename LargestTypeAccT<Typelist>::Type;

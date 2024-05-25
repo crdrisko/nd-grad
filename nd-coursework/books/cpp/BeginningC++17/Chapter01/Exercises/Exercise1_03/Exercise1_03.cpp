@@ -17,7 +17,4 @@ Int main()                                  <- Int is capitalized, C++ is case-s
 
 #include <iostream>
 
-int main()
-{
-    std::cout << "Hello World" << std::endl;
-}
+int main() { std::cout << "Hello World" << std::endl; }

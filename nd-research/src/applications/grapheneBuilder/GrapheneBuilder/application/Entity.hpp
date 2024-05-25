@@ -29,8 +29,8 @@ public:
     void destroy() { m_active = false; }
     bool isActive() const { return m_active; }
     const std::string& tag() const { return m_tag; }
-    
-    std::size_t& id() { return m_id;  }
+
+    std::size_t& id() { return m_id; }
     const std::size_t& id() const { return m_id; }
 
     template<typename T>

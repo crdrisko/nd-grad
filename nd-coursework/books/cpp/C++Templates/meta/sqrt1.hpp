@@ -17,8 +17,7 @@ struct Sqrt
     static constexpr auto mid = (LO + HI + 1) / 2;
 
     // search a not too large value in a halved interval
-    static constexpr auto value = (N < mid * mid) ? Sqrt<N, LO, mid - 1>::value
-                                                  : Sqrt<N, mid, HI>::value;
+    static constexpr auto value = (N < mid * mid) ? Sqrt<N, LO, mid - 1>::value : Sqrt<N, mid, HI>::value;
 };
 
 // partial specialization for the case when LO equals HI

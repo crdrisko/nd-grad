@@ -1,9 +1,9 @@
-### External Module File for CPP-Units ###
-if (CPP_UNITS_INCLUDE_DIR)
+### External Module File for DryChem ###
+if (DryChem_INCLUDE_DIR)
     ## In cache already or user-specified ##
-    set(CPP_UNITS_FOUND TRUE)
+    set(DryChem_FOUND TRUE)
 else()
-    set(CPP_UNITS_FOUND FALSE)
+    set(DryChem_FOUND FALSE)
 
     if (NOT COMMON_UTILS_INCLUDE_DIR)
         find_path(COMMON_UTILS_INCLUDE_DIR common-utils
@@ -30,6 +30,6 @@ else()
     endif()
 
     if (COMMON_UTILS_INCLUDE_DIR AND CPP_UNITS_INCLUDE_DIR)
-        set(CPP_UNITS_FOUND TRUE)
+        set(DryChem_FOUND TRUE)
     endif()
 endif()

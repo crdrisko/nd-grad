@@ -20,13 +20,8 @@
 template<typename T>
 struct IsEnumT
 {
-    static constexpr bool value = !IsArrayT<T>::value &&
-                                  !IsClassT<T>::value &&
-                                  !IsFunctionT<T>::value &&
-                                  !IsFundaT<T>::value &&
-                                  !IsPointerT<T>::value &&
-                                  !IsPointerToMemberT::value &&
-                                  !IsReference<T>::value;
+    static constexpr bool value = !IsArrayT<T>::value && !IsClassT<T>::value && !IsFunctionT<T>::value && !IsFundaT<T>::value
+                                  && !IsPointerT<T>::value && !IsPointerToMemberT::value && !IsReference<T>::value;
 };
 
 #endif

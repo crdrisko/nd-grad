@@ -12,11 +12,12 @@ int main()
 {
     int number {};
     std::cout << "Enter an integer number: ";
-    std::cin  >> number;
+    std::cin >> number;
 
     std::cout << "The number is "
-              << ( (number <=  20) ? "less than or equal to 20."
-                 : (number <=  30) ? "greater than 20 but less than or equal to 30."
-                 : (number <= 100) ? "greater than 30 but less than or equal to 100."
-                 : "greater than 100." ) << std::endl;
+              << ((number <= 20)       ? "less than or equal to 20."
+                     : (number <= 30)  ? "greater than 20 but less than or equal to 30."
+                     : (number <= 100) ? "greater than 30 but less than or equal to 100."
+                                       : "greater than 100.")
+              << std::endl;
 }

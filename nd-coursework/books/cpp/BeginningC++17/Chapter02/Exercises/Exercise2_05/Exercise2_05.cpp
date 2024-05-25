@@ -18,11 +18,11 @@ int main()
 
     double weight {};
     std::cout << "Enter your weight in pounds: ";
-    std::cin  >> weight;
+    std::cin >> weight;
 
     double height_feet {}, height_inches {};
     std::cout << "Enter your height in feet and inches: ";
-    std::cin  >> height_feet >> height_inches;
+    std::cin >> height_feet >> height_inches;
 
     height_feet += height_inches / inches_per_foot;
 

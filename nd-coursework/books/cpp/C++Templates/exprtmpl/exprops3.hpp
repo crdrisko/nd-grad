@@ -26,8 +26,8 @@ public:
     std::size_t size() const { return a2.size(); }
 
 private:
-    A1 const& a1;                                           // reference to first operand
-    A2 const& a2;                                           // reference to second operand
+    A1 const& a1;   // reference to first operand
+    A2 const& a2;   // reference to second operand
 };
 
 #endif

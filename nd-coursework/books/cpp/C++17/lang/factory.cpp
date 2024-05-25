@@ -6,14 +6,14 @@
 // Date: 09/29/2020-18:16:49
 // Description: Using our factory function to create even a type such as std::atomic<>
 
+#include "factory.hpp"
+
 #include <memory>
 #include <thread>
 
-#include "factory.hpp"
-
 int main()
 {
-    int i = create<int>(42);
-    std::unique_ptr<int> up = create<std::unique_ptr<int>>(new int{42});
-    std::atomic<int> ai = create<std::atomic<int>>(42);
+    int i                   = create<int>(42);
+    std::unique_ptr<int> up = create<std::unique_ptr<int>>(new int {42});
+    std::atomic<int> ai     = create<std::atomic<int>>(42);
 }

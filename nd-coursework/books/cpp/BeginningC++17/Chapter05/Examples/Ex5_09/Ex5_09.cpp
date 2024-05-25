@@ -11,15 +11,15 @@
 
 int main()
 {
-    const std::size_t size {1000};                           // Array size
-    double x[size] {};                                  // Stores data to be sorted
-    std::size_t count {};                                    // Number of values in array
+    const std::size_t size {1000};   // Array size
+    double x[size] {};               // Stores data to be sorted
+    std::size_t count {};            // Number of values in array
 
     while (true)
     {
-        double input {};                                // Temporary store for a value
+        double input {};   // Temporary store for a value
         std::cout << "Enter a non-zero value, or 0 to end: ";
-        std::cin  >> input;
+        std::cin >> input;
         if (input == 0)
             break;
 
@@ -42,34 +42,33 @@ int main()
 
     while (true)
     {
-        bool swapped {false};                           // becomes true when not all values are in order
+        bool swapped {false};   // becomes true when not all values are in order
         for (std::size_t i {}; i < count - 1; ++i)
         {
-            if (x[i] > x[i + 1])                        // Out of order so swap them
+            if (x[i] > x[i + 1])   // Out of order so swap them
             {
                 const auto temp = x[i];
 
-                x[i] = x[i + 1];
+                x[i]     = x[i + 1];
                 x[i + 1] = temp;
-                swapped = true;
+                swapped  = true;
             }
         }
 
-        if (!swapped)                                   // If there were no swaps ...
-            break;                                      // ... all values are in order ...
-    }                                                   // ... otherwise go around again.
+        if (!swapped)   // If there were no swaps ...
+            break;      // ... all values are in order ...
+    }                   // ... otherwise go around again.
 
-    std::cout << "Your data in ascending sequence:\n"
-              << std::fixed << std::setprecision(1);
-    const std::size_t perline {10};                          // Number output per line
-    std::size_t n {};                                        // Number on current line
+    std::cout << "Your data in ascending sequence:\n" << std::fixed << std::setprecision(1);
+    const std::size_t perline {10};   // Number output per line
+    std::size_t n {};                 // Number on current line
     for (std::size_t i {}; i < count; ++i)
     {
         std::cout << std::setw(8) << x[i];
-        if (++n == perline)                             // When perline have been written ...
+        if (++n == perline)   // When perline have been written ...
         {
-            std::cout << std::endl;                     // ... start a new line and ...
-            n = 0;                                      // ... reset count on this line
+            std::cout << std::endl;   // ... start a new line and ...
+            n = 0;                    // ... reset count on this line
         }
     }
     std::cout << std::endl;

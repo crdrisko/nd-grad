@@ -11,14 +11,15 @@
 #ifndef EXPROPS1A_HPP
 #define EXPROPS1A_HPP
 
-template<typename T> class A_Scalar;
+template<typename T>
+class A_Scalar;
 
 // primary template
 template<typename T>
 class A_Traits
 {
 public:
-    using ExprRef = T const&;                               // type to refer to is constant reference
+    using ExprRef = T const&;   // type to refer to is constant reference
 };
 
 // partial specialization for scalars
@@ -26,7 +27,7 @@ template<typename T>
 class A_Traits<A_Scalar<T>>
 {
 public:
-    using ExprRef = A_Scalar<T>;                        // type to refer to is ordinary value
+    using ExprRef = A_Scalar<T>;   // type to refer to is ordinary value
 };
 
 #endif

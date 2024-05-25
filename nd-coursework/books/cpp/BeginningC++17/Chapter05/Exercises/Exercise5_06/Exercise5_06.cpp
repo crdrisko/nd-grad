@@ -14,7 +14,7 @@ int main()
 {
     std::size_t limit {}, count {}, perline {10};
     std::cout << "Please enter an upper limit for the integers: ";
-    std::cin  >> limit;
+    std::cin >> limit;
 
     std::vector<std::size_t> data;
 

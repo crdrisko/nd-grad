@@ -21,7 +21,7 @@ public:
     // ...
 
     // copying disabled:
-    MoveOnly(const MoveOnly&) = delete;
+    MoveOnly(const MoveOnly&)            = delete;
     MoveOnly& operator=(const MoveOnly&) = delete;
 
     // moving enabled:

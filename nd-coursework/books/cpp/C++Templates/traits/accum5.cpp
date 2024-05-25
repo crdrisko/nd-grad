@@ -6,9 +6,9 @@
 // Date: 08/18/2020-10:27:50
 // Description: Using the accumulator with a new multiplication policy
 
-#include <iostream>
-
 #include "accum5.hpp"
+
+#include <iostream>
 
 class MultPolicy
 {
@@ -23,10 +23,8 @@ public:
 int main()
 {
     // create array of 5 integer values
-    int num[] = { 1, 2, 3, 4, 5 };
+    int num[] = {1, 2, 3, 4, 5};
 
     // print product of all values
-    std::cout << "the product of the integer values is "
-              << accum<int, MultPolicy>(num, num + 5)
-              << '\n';
+    std::cout << "the product of the integer values is " << accum<int, MultPolicy>(num, num + 5) << '\n';
 }

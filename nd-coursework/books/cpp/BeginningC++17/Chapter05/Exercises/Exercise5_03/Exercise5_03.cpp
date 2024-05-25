@@ -20,6 +20,5 @@ int main()
         ++count;
     } while (character != '#');
 
-    std::cout << "You entered " << --count << " non-whitespace characters (not including '#')."
-              << std::endl;
+    std::cout << "You entered " << --count << " non-whitespace characters (not including '#')." << std::endl;
 }

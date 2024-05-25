@@ -25,7 +25,7 @@ int main()
 
         std::cout << std::setw(5) << *pOdds++;
 
-        if ( !(++count % 10) )
+        if (!(++count % 10))
             std::cout << std::endl;
     }
 
@@ -36,7 +36,7 @@ int main()
     {
         std::cout << std::setw(5) << *(--pOdds);
 
-        if ( !(++count % 10) )
+        if (!(++count % 10))
             std::cout << std::endl;
     }
 

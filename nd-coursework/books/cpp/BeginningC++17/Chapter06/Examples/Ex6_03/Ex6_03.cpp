@@ -26,14 +26,31 @@ int main()
 
     switch (choice)
     {
-    case 1: std::cout << pstr << pstar1 << std::endl; break;
-    case 2: std::cout << pstr << pstar2 << std::endl; break;
-    case 3: std::cout << pstr << pstar3 << std::endl; break;
-    case 4: std::cout << pstr << pstar4 << std::endl; break;
-    case 5: std::cout << pstr << pstar5 << std::endl; break;
-    case 6: std::cout << pstr << pstar6 << std::endl; break;
-    case 7: std::cout << pstr << pstar7 << std::endl; break;
-    case 8: std::cout << pstr << pstar8 << std::endl; break;
-    default: std::cout << "Sorry, you haven't got a lucky star." << std::endl;
+    case 1:
+        std::cout << pstr << pstar1 << std::endl;
+        break;
+    case 2:
+        std::cout << pstr << pstar2 << std::endl;
+        break;
+    case 3:
+        std::cout << pstr << pstar3 << std::endl;
+        break;
+    case 4:
+        std::cout << pstr << pstar4 << std::endl;
+        break;
+    case 5:
+        std::cout << pstr << pstar5 << std::endl;
+        break;
+    case 6:
+        std::cout << pstr << pstar6 << std::endl;
+        break;
+    case 7:
+        std::cout << pstr << pstar7 << std::endl;
+        break;
+    case 8:
+        std::cout << pstr << pstar8 << std::endl;
+        break;
+    default:
+        std::cout << "Sorry, you haven't got a lucky star." << std::endl;
     }
 }

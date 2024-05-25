@@ -13,7 +13,8 @@
 // require a universal reference of a specific type:
 // - no implicit type conversions supported
 template<typename T>
-requires std::is_same_v<std::remove_cvref_t<T>, std::string> void requiresSame(T&&)
+    requires std::is_same_v<std::remove_cvref_t<T>, std::string>
+void requiresSame(T&&)
 {
     // ...
 }
@@ -21,7 +22,8 @@ requires std::is_same_v<std::remove_cvref_t<T>, std::string> void requiresSame(T
 // require a universal reference of a specific type:
 // - implicit but no explicit type conversions supported
 template<typename T>
-requires std::is_convertible_v<T, std::string> void requireConvertible(T&&)
+    requires std::is_convertible_v<T, std::string>
+void requireConvertible(T&&)
 {
     // ...
 }
@@ -30,7 +32,8 @@ requires std::is_convertible_v<T, std::string> void requireConvertible(T&&)
 // - even explicit type conversions supported
 // note: the order of arguments differs
 template<typename T>
-requires std::is_constructible_v<std::string, T> void requireConstructible(T&&)
+    requires std::is_constructible_v<std::string, T>
+void requireConstructible(T&&)
 {
     // ...
 }

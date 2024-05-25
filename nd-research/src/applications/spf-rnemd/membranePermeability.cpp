@@ -106,7 +106,7 @@ int main(int argc, char* argv[])
         else
         {
             std::cout << activityO_02B.size() << ' ' << activityO_B20.size() << ' ' << activityO_A.size() << '\n';
-             std::exit(EXIT_FAILURE);
+            std::exit(EXIT_FAILURE);
         }
 
         outputFile << std::setw(4) << (2 * std::stoi(path.substr(15, 2)) - 1) << ',';

@@ -30,7 +30,7 @@ protected:
     Base(Base&&)      = default;
 
     // disable assignment operator (due to the problem of slicing):
-    Base& operator=(Base&&) = delete;
+    Base& operator=(Base&&)      = delete;
     Base& operator=(const Base&) = delete;
 };
 

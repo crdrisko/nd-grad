@@ -281,7 +281,9 @@ void Engine::sGui()
             {
                 createGrapheneLattice();
             }
-            if (ImGui::MenuItem("Open", "Ctrl+O", false, false)) {}
+            if (ImGui::MenuItem("Open", "Ctrl+O", false, false))
+            {
+            }
             ImGui::Separator();
             if (ImGui::MenuItem("Save", "Ctrl+S"))
             {

@@ -13,13 +13,15 @@
 
 // primary template: not an array
 template<typename T>
-struct IsArrayT : std::false_type {};
+struct IsArrayT : std::false_type
+{
+};
 
 // partial specialization for arrays:
 template<typename T, std::size_t N>
 struct IsArrayT<T[N]> : std::true_type
 {
-    using BaseT = T;
+    using BaseT                       = T;
     static constexpr std::size_t size = N;
 };
 
@@ -27,7 +29,7 @@ struct IsArrayT<T[N]> : std::true_type
 template<typename T>
 struct IsArrayT<T[]> : std::true_type
 {
-    using BaseT = T;
+    using BaseT                       = T;
     static constexpr std::size_t size = 0;
 };
 

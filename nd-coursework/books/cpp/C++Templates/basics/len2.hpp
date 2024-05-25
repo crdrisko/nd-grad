@@ -13,7 +13,7 @@
 
 // number of elements in a raw array:
 template<typename T, unsigned N>
-std::size_t len(T(&)[N])
+std::size_t len(T (&)[N])
 {
     return N;
 }
@@ -26,9 +26,6 @@ typename T::size_type len(T const& t)
 }
 
 // fallback for all other types:
-std::size_t len(...)
-{
-    return 0;
-}
+std::size_t len(...) { return 0; }
 
 #endif

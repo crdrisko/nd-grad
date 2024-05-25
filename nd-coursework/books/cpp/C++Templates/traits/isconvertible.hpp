@@ -19,8 +19,7 @@ private:
     static void aux(TO);
 
     // test() trying to call the helper aux(TO) for a FROM passed as F:
-    template<typename F, typename,
-             typename = decltype(aux(std::declval<F>()))>
+    template<typename F, typename, typename = decltype(aux(std::declval<F>()))>
     static std::true_type test(void*);
 
     // test() fallback:
@@ -32,7 +31,9 @@ public:
 };
 
 template<typename FROM, typename TO>
-struct IsConvertibleT : IsConvertibleHelper<FROM, TO>::Type {};
+struct IsConvertibleT : IsConvertibleHelper<FROM, TO>::Type
+{
+};
 
 template<typename FROM, typename TO>
 using IsConvertible = typename IsConvertibleT<FROM, TO>::Type;

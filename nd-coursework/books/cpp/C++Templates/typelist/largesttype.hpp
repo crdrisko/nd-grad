@@ -9,10 +9,10 @@
 #ifndef LARGESTTYPE_HPP
 #define LARGESTTYPE_HPP
 
+#include "../traits/ifthenelse.hpp"
 #include "typelist.hpp"
 #include "typelistfront.hpp"
 #include "typelistpopfront.hpp"
-#include "../traits/ifthenelse.hpp"
 
 template<typename List>
 class LargestTypeT;
@@ -23,7 +23,7 @@ class LargestTypeT
 {
 private:
     using First = Front<List>;
-    using Rest = typename LargestTypeT<PopFront<List>>::Type;
+    using Rest  = typename LargestTypeT<PopFront<List>>::Type;
 
 public:
     using Type = IfThenElse<(sizeof(First) >= sizeof(Rest)), First, Rest>;

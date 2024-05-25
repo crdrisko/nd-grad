@@ -47,7 +47,7 @@ public:
     }
 
     // enable copying:
-    Email(const Email& e) = default;
+    Email(const Email& e)            = default;
     Email& operator=(const Email& e) = default;
 
     // print out the current state (even if it is a moved-from state):

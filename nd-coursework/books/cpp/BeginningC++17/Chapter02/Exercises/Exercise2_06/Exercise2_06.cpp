@@ -12,11 +12,10 @@ int main()
 {
     long a {}, b {};
     std::cout << "Enter two integers separated by spaces: ";
-    std::cin  >> a >> b;
+    std::cin >> a >> b;
 
-    const long larger  = ( (a * (a / b) + b * (b / a)) ) / ( (a / b) + (b / a) );
-    const long smaller = ( (a * (b / a) + b * (a / b)) ) / ( (a / b) + (b / a) );
+    const long larger  = ((a * (a / b) + b * (b / a))) / ((a / b) + (b / a));
+    const long smaller = ((a * (b / a) + b * (a / b))) / ((a / b) + (b / a));
 
-    std::cout << "The larger value is "       << larger
-              << " and the smaller value is " << smaller << std::endl;
+    std::cout << "The larger value is " << larger << " and the smaller value is " << smaller << std::endl;
 }

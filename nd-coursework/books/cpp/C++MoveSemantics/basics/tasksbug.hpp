@@ -32,7 +32,7 @@ public:
     // ...
 
     // OOPS: enable default move semantics:
-    Tasks(Tasks&&) = default;
+    Tasks(Tasks&&)            = default;
     Tasks& operator=(Tasks&&) = default;
 
     // at the end wait for all started threads:

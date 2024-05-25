@@ -4,7 +4,7 @@
 // Name: entity.hpp - Version 1.0.0
 // Author: crdrisko
 // Date: 04/17/2024-08:09:47
-// Description: 
+// Description:
 
 #ifndef ND_GRAD_ND_RESEARCH_INCLUDE_NPGBUILDER_ENTITY_HPP
 #define ND_GRAD_ND_RESEARCH_INCLUDE_NPGBUILDER_ENTITY_HPP
@@ -34,8 +34,8 @@ public:
     void destroy() { m_active = false; }
     bool isActive() const { return m_active; }
     const std::string& tag() const { return m_tag; }
-    
-    std::size_t& id() { return m_id;  }
+
+    std::size_t& id() { return m_id; }
     const std::size_t& id() const { return m_id; }
 
     template<typename T>

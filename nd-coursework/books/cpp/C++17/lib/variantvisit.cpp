@@ -20,9 +20,9 @@ struct MyVisitor
 int main()
 {
     std::variant<int, std::string, double> var(42);
-    std::visit(MyVisitor(), var);                           // calls operator() for int
+    std::visit(MyVisitor(), var);   // calls operator() for int
     var = "hello";
-    std::visit(MyVisitor(), var);                           // calls operator() for string
+    std::visit(MyVisitor(), var);   // calls operator() for string
     var = 42.7;
-    std::visit(MyVisitor(), var);                           // calls operator() for long double
+    std::visit(MyVisitor(), var);   // calls operator() for long double
 }

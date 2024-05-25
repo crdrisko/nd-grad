@@ -6,9 +6,9 @@
 // Date: 09/02/2020-08:11:14
 // Description: A simple program using our Sqrt template
 
-#include <iostream>
-
 #include "sqrt1.hpp"
+
+#include <iostream>
 
 int main()
 {

@@ -20,22 +20,26 @@ int main()
     auto twice = [](int v) { return v * 2; };
 
     std::cout << " source:                      ";
-    std::copy(coll.begin(), coll.end(),
-              std::ostream_iterator<int>(std::cout, " "));
+    std::copy(coll.begin(), coll.end(), std::ostream_iterator<int>(std::cout, " "));
 
     std::cout << "\n transform_inclusive_scan():      ";
-    std::transform_inclusive_scan(coll.begin(), coll.end(),
-                                  std::ostream_iterator<int>(std::cout, " "), std::plus {}, twice);
+    std::transform_inclusive_scan(coll.begin(), coll.end(), std::ostream_iterator<int>(std::cout, " "), std::plus {}, twice);
 
     std::cout << "\n transform_inclusive_scan():      ";
-    std::transform_inclusive_scan(coll.begin(), coll.end(),
-                                  std::ostream_iterator<int>(std::cout, " "),
-                                  std::plus {}, twice, 100);
+    std::transform_inclusive_scan(coll.begin(),
+        coll.end(),
+        std::ostream_iterator<int>(std::cout, " "),
+        std::plus {},
+        twice,
+        100);
 
     std::cout << "\n transform_exclusive_scan():  ";
-    std::transform_exclusive_scan(coll.begin(), coll.end(),
-                                  std::ostream_iterator<int>(std::cout, " "),
-                                  100, std::plus {}, twice);            // note the other param order
+    std::transform_exclusive_scan(coll.begin(),
+        coll.end(),
+        std::ostream_iterator<int>(std::cout, " "),
+        100,
+        std::plus {},
+        twice);   // note the other param order
 
     std::cout << std::endl;
 }

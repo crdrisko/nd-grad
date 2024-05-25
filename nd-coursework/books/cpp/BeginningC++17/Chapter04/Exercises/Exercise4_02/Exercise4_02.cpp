@@ -12,14 +12,14 @@ int main()
 {
     int a {}, b {};
     std::cout << "Enter two positive, non-zero integers separated by spaces: ";
-    std::cin  >> a >> b;
+    std::cin >> a >> b;
 
     if (a > 0 && b > 0)
     {
-        int larger  { (a > b) ? a : b };
-        int smaller { (a > b) ? b : a };
+        int larger {(a > b) ? a : b};
+        int smaller {(a > b) ? b : a};
 
-        if ( !(larger % smaller) )
+        if (!(larger % smaller))
             std::cout << smaller << " is a multiple of " << larger << std::endl;
         else
             std::cout << smaller << " is not a multiple of " << larger << std::endl;

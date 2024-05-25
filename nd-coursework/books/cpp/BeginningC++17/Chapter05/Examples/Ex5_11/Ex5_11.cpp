@@ -6,23 +6,24 @@
 // Date: 04/29/2020-12:50:04
 // Description: Working with strings in an array
 
-#include <array>                        // For std::size()
+#include <array>   // For std::size()
 #include <iostream>
 
 int main()
 {
-    const std::size_t max_length {80};       // Maximum string length (including \0)
-    char stars[][max_length] {
-                                "Fatty Arbuckle",   "Clara Bow",
-                                "Lassie",           "Slim Pickens",
-                                "Boris Karloff",    "Mae West",
-                                "Oliver Hardy",     "Greta Garbo"
-                             };
+    const std::size_t max_length {80};   // Maximum string length (including \0)
+    char stars[][max_length] {"Fatty Arbuckle",
+        "Clara Bow",
+        "Lassie",
+        "Slim Pickens",
+        "Boris Karloff",
+        "Mae West",
+        "Oliver Hardy",
+        "Greta Garbo"};
     std::size_t choice {};
 
-    std::cout << "Pick a lucky star! Enter a number between 1 and "
-              << std::size(stars) << ": ";
-    std::cin  >> choice;
+    std::cout << "Pick a lucky star! Enter a number between 1 and " << std::size(stars) << ": ";
+    std::cin >> choice;
 
     if (choice >= 1 && choice <= std::size(stars))
     {

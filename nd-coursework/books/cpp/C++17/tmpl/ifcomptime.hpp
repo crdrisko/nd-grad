@@ -15,14 +15,14 @@
 template<typename T>
 std::string asString(T x)
 {
-    if constexpr(std::is_same_v<T, std::string>)
-        return x;                                           // statement invalid if no conversion to string
+    if constexpr (std::is_same_v<T, std::string>)
+        return x;   // statement invalid if no conversion to string
 
     else if constexpr (std::is_arithmetic_v<T>)
-        return std::to_string(x);                           // statement invalid if x is not numeric
+        return std::to_string(x);   // statement invalid if x is not numeric
 
     else
-        return std::string(x);                              // statement invalid if no conversion to string
+        return std::string(x);   // statement invalid if no conversion to string
 }
 
 #endif

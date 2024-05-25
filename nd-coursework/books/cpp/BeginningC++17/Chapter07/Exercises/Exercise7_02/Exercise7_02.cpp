@@ -22,8 +22,8 @@ int main()
 
     std::size_t maxLength {};
 
-    const std::string separators { " ,;:.\"!?'\n" };
-    std::size_t start { text.find_first_not_of(separators) };
+    const std::string separators {" ,;:.\"!?'\n"};
+    std::size_t start {text.find_first_not_of(separators)};
 
     while (start != std::string::npos)
     {
@@ -62,8 +62,8 @@ int main()
     // Output the data 3 to a line, left aligned for the word, right aligned for the count
     for (std::size_t i {}, count {}; i < words.size(); ++i)
     {
-        std::cout << std::setw(maxLength) << std::left << std::setw(maxLength) << words[i]
-                  << std::setw(4) << std::right << counts[i] << " ";
+        std::cout << std::setw(maxLength) << std::left << std::setw(maxLength) << words[i] << std::setw(4) << std::right
+                  << counts[i] << " ";
 
         if (++count == 3)
         {

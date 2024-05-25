@@ -8,8 +8,8 @@
 #ifndef LISTING02_06_HPP
 #define LISTING02_06_HPP
 
-#include "../../Vector.hpp"
 #include "../../Matrix.hpp"
+#include "../../Vector.hpp"
 
 // clang-format off
 Matrix3D MakeScale(float s, const Vector3D& a)
