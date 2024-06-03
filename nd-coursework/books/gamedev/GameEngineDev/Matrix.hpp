@@ -44,10 +44,8 @@ public:
 
 struct Matrix4D
 {
-private:
     float n[4][4];
 
-public:
     Matrix4D() = default;
 
     Matrix4D(float n00, float n01, float n02, float n03,
