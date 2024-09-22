@@ -27,15 +27,6 @@ namespace ND_Research
     {
         struct RNEMDBlockParameters
         {
-            bool hasExchangeMethodSet {false};
-            bool hasFluxTypeSet {false};
-            bool hasPrivilegedAxisSet {false};
-            bool hasExchangeTimeSet {false};
-            bool hasObjectSelectionSet {false};
-            bool hasSelectionASet {false};
-            bool hasSelectionBSet {false};
-            bool hasOutputSelectionSet {false};
-
             std::string exchangeMethod;
             std::string fluxType;
             char privilegedAxis;
@@ -55,24 +46,29 @@ namespace ND_Research
             DryChem::Vector3D<CppUnits::MomentumFlux> momentumFlux;
             DryChem::Vector3D<CppUnits::MomentumFlux> angularMomentumFlux;
             ParticleFlux particleFlux;
+            CppUnits::CurrentDensity currentDensity;
 
             // Target one-time exchanges
             CppUnits::MolarEnergy kineticTarget;
             DryChem::Vector3D<CppUnits::Momentum> momentumTarget;
             DryChem::Vector3D<CppUnits::Momentum> angularMomentumTarget;
             CppUnits::DimensionlessQuantity particleTarget;
+            CppUnits::ElectricCharge electronTarget;
 
             // Actual exchange totals
             CppUnits::MolarEnergy kineticExchange;
             DryChem::Vector3D<CppUnits::Momentum> momentumExchange;
             DryChem::Vector3D<CppUnits::Momentum> angularMomentumExchange;
             CppUnits::DimensionlessQuantity particleExchange;
+            CppUnits::ElectricCharge electronExchange;
+
 
             // Actual fluxes
             CppUnits::MolarEnergyFlux Jz;
             DryChem::Vector3D<CppUnits::MomentumFlux> JzP;
             DryChem::Vector3D<CppUnits::MomentumFlux> JzL;
             ParticleFlux Jp;
+            CppUnits::CurrentDensity Jc;
 
             // Exchange statistics
             unsigned long trialCount {};
@@ -83,6 +79,7 @@ namespace ND_Research
         struct RNEMDInferredParameters
         {
             bool hasSelectionB {false};
+            bool useChargedSPF_ {false};
             std::size_t numberOfSelected {};
             std::unordered_map<std::string, int> names2index;
             std::string dataLabels {};
@@ -106,8 +103,8 @@ namespace ND_Research
         std::vector<DryChem::Vector3D<CppUnits::AngularVelocity>> angularVelocity;
         std::vector<CppUnits::MassDensity> density;
         std::vector<std::vector<CppUnits::Concentration>> activity;
-        // std::vector<DryChem::Vector3D<CppUnits::ElectricField>> electricField;
-        // std::vector<CppUnits::ElectricPotential> electricPotential;
+        std::vector<DryChem::Vector3D<CppUnits::ElectricField>> electricField;
+        std::vector<CppUnits::ElectricPotential> electricPotential;
     };
 }   // namespace ND_Research
 

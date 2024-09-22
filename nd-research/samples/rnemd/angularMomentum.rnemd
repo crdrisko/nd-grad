@@ -15,19 +15,22 @@
 #           kinetic = 0 (kcal/mol/A^2/fs)
 #          momentum = [ 0, 0, 0 ] (amu/A/fs^2)
 #  angular momentum = [ 100, 0, 0 ] (amu/A^2/fs^2)
-#   current density = 0 (electrons/A^2/fs)
+#          particle = 0 (particles/A^2/fs)
 # Target one-time exchanges:
 #          kinetic = 0 (kcal/mol)
 #          momentum = [ 0, 0, 0 ] (amu*A/fs)
 #  angular momentum = [ 361108.16, 0, 0 ] (amu*A^2/fs)
+#          particle = 0 (particles)
 # Actual exchange totals:
 #          kinetic = 0 (kcal/mol)
 #          momentum = [ 0, 0, 0 ] (amu*A/fs)
 #  angular momentum = [ 0, 0, 0 ] (amu*A^2/fs)
+#          particle = 0 (particles)
 # Actual flux:
 #          kinetic = 0 (kcal/mol/A^2/fs)
 #          momentum = [ 0, 0, 0 ] (amu/A/fs^2)
 #  angular momentum = [ 0, 0, 0 ] (amu/A^2/fs^2)
+#          particle = 0 (particles/A^2/fs)
 # Exchange statistics:
 #               attempted = 18480
 #                  failed = 18480

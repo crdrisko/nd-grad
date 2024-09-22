@@ -23,10 +23,6 @@ Matrix3D MakeSkew(float t, const Vector3D& a, const Vector3D& b)
     float y = a.y * t;
     float z = a.z * t;
 
-    float axay = x * a.y;
-    float axaz = x * a.z;
-    float ayaz = y * a.z;
-
     return (Matrix3D(x * b.x + 1.0f, x * b.y, x * b.z,
                      y * b.x, y * b.y + 1.0f, y * b.z,
                      z * b.x, z * b.y, z * b.z + 1.0f));

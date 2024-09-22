@@ -122,6 +122,7 @@ submission=queue
 timing=1
 tempDir=$PWD
 verbose=0
+testing=0
 
 
 ### Runtime Configuration ###

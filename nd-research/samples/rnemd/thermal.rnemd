@@ -5,8 +5,8 @@
 #    privilegedAxis = z;
 #    exchangeTime = 1;
 #    objectSelection = "select SPCE_RB_0";
-#    selectionA = "select wrappedz > -2 && wrappedz < 2";
-#    selectionB = "select wrappedz > 18 || wrappedz < -18";
+#    selectionA = "select wrappedz >= -2 && wrappedz < 2";
+#    selectionB = "select wrappedz >= 18 || wrappedz < -18";
 #    outputSelection = "select SPCE_RB_0";
 # }
 #######################################################
@@ -16,19 +16,22 @@
 #           kinetic = 4e-06 (kcal/mol/A^2/fs)
 #          momentum = [ 0, 0, 0 ] (amu/A/fs^2)
 #  angular momentum = [ 0, 0, 0 ] (amu/A^2/fs^2)
-#   current density = 0 (electrons/A^2/fs)
+#          particle = 0 (particles/A^2/fs)
 # Target one-time exchanges:
 #          kinetic = 0.0030701448 (kcal/mol)
 #          momentum = [ 0, 0, 0 ] (amu*A/fs)
 #  angular momentum = [ 0, 0, 0 ] (amu*A^2/fs)
+#          particle = 0 (particles)
 # Actual exchange totals:
 #          kinetic = 15350.724 (kcal/mol)
 #          momentum = [ 0, 0, 0 ] (amu*A/fs)
 #  angular momentum = [ 0, 0, 0 ] (amu*A^2/fs)
+#          particle = 0 (particles)
 # Actual flux:
 #          kinetic = 1.9999996e-06 (kcal/mol/A^2/fs)
 #          momentum = [ 0, 0, 0 ] (amu/A/fs^2)
 #  angular momentum = [ 0, 0, 0 ] (amu/A^2/fs^2)
+#          particle = 0 (particles/A^2/fs)
 # Exchange statistics:
 #               attempted = 5000000
 #                  failed = 0

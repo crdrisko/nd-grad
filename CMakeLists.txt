@@ -120,6 +120,24 @@ endif()
 include_directories(${COMMON_UTILS_INCLUDE_DIR})
 include_directories(${CPP_UNITS_INCLUDE_DIR})
 
+find_package(DryPhys REQUIRED)
+
+if (NOT ${DryPhys_FOUND})
+    ## If DryPhys isn't installed or can't be found, download it from github ##
+    include(FetchContent)
+
+    ## DryPhys
+    message(STATUS "Fetching DryPhys...")
+    FetchContent_Declare(dryphys          # v1.90.5
+                         GIT_REPOSITORY "https://github.com/crdrisko/dryphys.git"
+                         GIT_TAG dev)
+
+    FetchContent_MakeAvailable(dryphys)
+    set(DryPhys_FOUND TRUE)
+endif()
+
+include_directories(${DryPhys_LIBRARIES})
+
 if (research_enable_npgBuilder)
     include(FetchContent)
 

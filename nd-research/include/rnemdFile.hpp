@@ -13,6 +13,7 @@
 #include <string>
 
 #include <common-utils/files.hpp>
+#include <common-utils/utilities.hpp>
 
 #include "rnemdParameters.hpp"
 
@@ -32,7 +33,24 @@ namespace ND_Research
         std::string generateSelectionScript(const std::vector<std::string>& selectionScript) const;
 
         template<typename T>
-        std::string generateVector3Ds(const DryChem::Vector3D<T>& vector2Print) const;
+        std::string generateVector3Ds(const DryChem::Vector3D<T>& vector2Print) const
+        {
+            std::stringstream ss;
+            ss << "[ ";
+
+            for (const auto& elem : vector2Print)
+            {
+                if (std::fabs(elem.getMagnitude()) < std::numeric_limits<long double>::epsilon())
+                    ss << "0, ";
+                else
+                    ss << elem.getMagnitude() << ", ";
+            }
+
+            std::string printableVector3D = ss.str();
+            printableVector3D.replace(printableVector3D.length() - 2, 2, " ]");
+
+            return printableVector3D;
+        }
 
     public:
         explicit RNEMDFile(const std::string& fileName) : fileName_ {fileName}

@@ -5,8 +5,8 @@
 #    privilegedAxis = z;
 #    exchangeTime = 2;
 #    objectSelection = "select Ar";
-#    selectionA = "select wrappedz > -10.0917 && wrappedz < 10.0917";
-#    selectionB = "select wrappedz > 90.8257 || wrappedz < -90.8257";
+#    selectionA = "select wrappedz >= -10.0917 && wrappedz < 10.0917";
+#    selectionB = "select wrappedz >= 90.8257 || wrappedz < -90.8257";
 #    outputSelection = "select Ar";
 # }
 #######################################################
@@ -16,19 +16,22 @@
 #           kinetic = 0 (kcal/mol/A^2/fs)
 #          momentum = [ 1e-07, 0, 0 ] (amu/A/fs^2)
 #  angular momentum = [ 0, 0, 0 ] (amu/A^2/fs^2)
-#   current density = 0 (electrons/A^2/fs)
+#          particle = 0 (particles/A^2/fs)
 # Target one-time exchanges:
 #          kinetic = 0 (kcal/mol)
 #          momentum = [ 0.0012573236, 0, 0 ] (amu*A/fs)
 #  angular momentum = [ 0, 0, 0 ] (amu*A^2/fs)
+#          particle = 0 (particles)
 # Actual exchange totals:
 #          kinetic = 0 (kcal/mol)
 #          momentum = [ 6286.618, 0, 0 ] (amu*A/fs)
 #  angular momentum = [ 0, 0, 0 ] (amu*A^2/fs)
+#          particle = 0 (particles)
 # Actual flux:
 #          kinetic = 0 (kcal/mol/A^2/fs)
 #          momentum = [ 9.999999e-08, 0, 0 ] (amu/A/fs^2)
 #  angular momentum = [ 0, 0, 0 ] (amu/A^2/fs^2)
+#          particle = 0 (particles/A^2/fs)
 # Exchange statistics:
 #               attempted = 5000000
 #                  failed = 0

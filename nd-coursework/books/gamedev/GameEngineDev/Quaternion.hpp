@@ -1,3 +1,5 @@
+// Copyright (c) 2016 by Eric Lengyel. All rights reserved.
+//
 // Name: Quaternion.hpp
 // Author: crdrisko
 // Date: 06/03/2024-16:29:03
@@ -6,8 +8,8 @@
 #ifndef QUATERNION_HPP
 #define QUATERNION_HPP
 
-#include "../../Matrix.hpp"
-#include "../../Vector.hpp"
+#include "Matrix.hpp"
+#include "Vector.hpp"
 
 struct Quaternion
 {

@@ -74,7 +74,6 @@ struct Matrix4D
     const Vector4D& operator[](int j) const { return (*reinterpret_cast<const Vector4D*>(n[j])); }
 };
 
-// Listing 1-5
 Matrix3D operator*(const Matrix3D& A, const Matrix3D& B)
 {
     return (Matrix3D( A(0, 0) * B(0, 0) + A(0, 1) * B(1, 0) + A(0, 2) * B(2, 0),
