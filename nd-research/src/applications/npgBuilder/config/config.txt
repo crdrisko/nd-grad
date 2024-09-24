@@ -1,6 +1,6 @@
 WordScale = 22.5;
 
-DesiredBoxDimensions = {40, 40};
+DesiredBoxDimensions = {25, 25};
 
 HydrogenBondLength  = 1.08;
 HydrogenAtomRadius = 5.0;

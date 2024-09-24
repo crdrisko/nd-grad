@@ -10,9 +10,9 @@
 
 #include <cmath>
 
-#include "Vector.hpp"
 #include "Matrix.hpp"
 #include "Point.hpp"
+#include "Vector.hpp"
 
 // clang-format off
 struct Transform4D : Matrix4D

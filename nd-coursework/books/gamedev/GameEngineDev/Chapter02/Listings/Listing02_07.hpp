@@ -3,7 +3,7 @@
 // Name: Listing02_07.hpp
 // Author: crdrisko
 // Date: 06/02/2024-05:58:41
-// Description: Function that creates a 3x3 matrix representing a skew by the angle t along the 
+// Description: Function that creates a 3x3 matrix representing a skew by the angle t along the
 //                  direction a based on the projected length aling the direction b
 
 #ifndef LISTING02_07_HPP

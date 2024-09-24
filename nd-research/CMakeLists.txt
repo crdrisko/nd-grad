@@ -14,7 +14,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY
 
 
 ### Libraries / Executables ###
-if (research_enable_npgBuilder)
+if (NOT research_exclude_npgBuilder)
     set(NPGBUILDER_SOURCE src/applications/npgBuilder/engine/engine.cpp
                           src/applications/npgBuilder/engine/entityManager.cpp
                           src/applications/npgBuilder/engine/vec2.cpp)
@@ -43,6 +43,7 @@ add_executable(rcorrAnalysis        src/applications/emdAnalysis/rcorrAnalysis.c
 
 add_executable(fzConstraintAnalysis src/applications/spf-rnemd/fzConstraintAnalysis.cpp src/fzFile.cpp)
 
+add_executable(chargedSPF           src/applications/spf-rnemd/chargedSPF.cpp src/rnemdFile.cpp)
 add_executable(membranePermeability src/applications/spf-rnemd/membranePermeability.cpp src/rnemdFile.cpp)
 add_executable(soretEffects         src/applications/spf-rnemd/soretEffects.cpp src/rnemdFile.cpp)
 add_executable(spfFitting           src/applications/spf-rnemd/spfFitting.cpp src/rnemdFile.cpp)
@@ -62,13 +63,13 @@ install(FILES include/rnemdFile.hpp include/rnemdParameters.hpp
 install(FILES include/emdFile.hpp
         DESTINATION include/nd-grad)
 
-install(TARGETS kirkwoodBuffAnalysis onsagerAnalysis rcorrAnalysis membranePermeability soretEffects spfFitting stitchRNEMD thermalProfile
+install(TARGETS kirkwoodBuffAnalysis onsagerAnalysis rcorrAnalysis chargedSPF membranePermeability soretEffects spfFitting stitchRNEMD thermalProfile
         DESTINATION bin
         PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE
                     GROUP_READ             GROUP_EXECUTE
                     WORLD_READ             WORLD_EXECUTE)
 
-if (research_enable_npgBuilder)
+if (NOT research_exclude_npgBuilder)
     install(TARGETS npgBuilder
             DESTINATION bin
             PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE

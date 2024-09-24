@@ -18,7 +18,7 @@ option(grad_format_codebase         "Builds appropriate applications while also 
 option(research_build_all           "Builds nd-research applications, corresponding unit tests, and corresponding code samples." OFF)
 option(research_build_tests         "Builds nd-research applications and corresponding unit tests." OFF)
 option(research_build_samples       "Builds nd-research applications and corresponding code samples." OFF)
-option(research_enable_npgBuilder   "Builds nd-research applications including NPG-Builder." OFF)
+option(research_exclude_npgBuilder  "Builds nd-research applications without including NPG-Builder and its dependencies." OFF)
 option(research_exclude_scripts     "Builds nd-research applications while ignoring the scripts directory." OFF)
 
 ## Set appropriate option flags and continue ##
@@ -132,13 +132,15 @@ if (NOT ${DryPhys_FOUND})
                          GIT_REPOSITORY "https://github.com/crdrisko/dryphys.git"
                          GIT_TAG dev)
 
+    set(phys_exclude_engine ON)
+
     FetchContent_MakeAvailable(dryphys)
     set(DryPhys_FOUND TRUE)
 endif()
 
 include_directories(${DryPhys_LIBRARIES})
 
-if (research_enable_npgBuilder)
+if (NOT research_exclude_npgBuilder)
     include(FetchContent)
 
     ## ImGui

@@ -88,7 +88,13 @@ void Engine::init(const std::string& config)
     boxSize_ = Vec2 {(2 * repeatX) * worldScaledDistanceX, (2 * repeatY) * (worldScaledDistanceY + scaledBondLength)};
 
     // Create the SFML window
-    window_.create(sf::VideoMode(boxSize_.x, boxSize_.y + 30), "Graphene Builder");   // Offset ImGUI file bar by 30 pixels
+    sf::ContextSettings settings;
+    settings.antialiasingLevel = 8;
+
+    window_.create(sf::VideoMode(boxSize_.x, boxSize_.y + 30),   // Offset ImGUI file bar by 30 pixels
+        "Graphene Builder",
+        sf::Style::Default,
+        settings);
 
     window_.setFramerateLimit(60);
     if (!ImGui::SFML::Init(window_))
