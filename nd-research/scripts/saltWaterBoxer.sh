@@ -114,7 +114,7 @@ then
 
     cd "$tempDir" || printFatalErrorMessage 3 "Could not change into required directory."
 
-    if [[ -n "$outputDir" || -d "$outputDir" ]]
+    if [[ -n "$outputDir" && -d "$outputDir" ]]
     then
         cd "$outputDir" || printFatalErrorMessage 4 "Could not change into required directory."
 
