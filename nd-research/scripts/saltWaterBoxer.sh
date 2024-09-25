@@ -26,8 +26,8 @@ printHelpMessage()          #@ DESCRIPTION: Print the saltWaterBoxer program's h
 printMetaDataSection()      #@ DESCRIPTION: Print a sample OpenMD metaData section
 {                           #@ USAGE: printMetaDataSection
     printf "\nensemble = NVT;\n"
-    printf "forceField = \"SaltWater\";\n"
-    printf "forceFieldFileName = \"SaltWater.frc\";\n"
+    printf "forceField = \"ChargedSPF\";\n"
+    printf "forceFieldFileName = \"ChargedSPF.frc\";\n"
     printf "electrostaticSummationMethod = \"shifted_force\";\n"
     printf "electrostaticScreeningMethod = \"damped\";\n"
     printf "cutoffRadius = 12;\n"
@@ -114,7 +114,7 @@ then
 
     cd "$tempDir" || printFatalErrorMessage 3 "Could not change into required directory."
 
-    if [[ -d "$outputDir" ]]
+    if [[ -n "$outputDir" || -d "$outputDir" ]]
     then
         cd "$outputDir" || printFatalErrorMessage 4 "Could not change into required directory."
 

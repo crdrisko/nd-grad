@@ -190,7 +190,7 @@ then
 
     cd "$tempDir" || printFatalErrorMessage 4 "Could not change into required directory."
 
-    if [[ -d "$outputDir" ]]
+    if [[ -n "$outputDir" || -d "$outputDir" ]]
     then
         cd "$outputDir" || printFatalErrorMessage 5 "Could not change into required directory."
 

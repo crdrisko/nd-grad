@@ -128,7 +128,7 @@ if (NOT ${DryPhys_FOUND})
 
     ## DryPhys
     message(STATUS "Fetching DryPhys...")
-    FetchContent_Declare(dryphys          # v1.90.5
+    FetchContent_Declare(dryphys        # v1.90.5
                          GIT_REPOSITORY "https://github.com/crdrisko/dryphys.git"
                          GIT_TAG dev)
 
@@ -136,9 +136,11 @@ if (NOT ${DryPhys_FOUND})
 
     FetchContent_MakeAvailable(dryphys)
     set(DryPhys_FOUND TRUE)
-endif()
 
-include_directories(${DryPhys_LIBRARIES})
+    include_directories(${dryphys_SOURCE_DIR}/include)
+else()
+    include_directories(${DryPhys_LIBRARIES})
+endif()
 
 if (NOT research_exclude_npgBuilder)
     include(FetchContent)
