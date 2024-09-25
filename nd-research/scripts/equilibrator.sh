@@ -105,7 +105,7 @@ performRunType()        #@ DESCRIPTION: Run the calculations for a given part of
 
          test) testing=1 ;;
 
-            *) printFatalErrorMessage 2 "Sorry, only 'queue' and 'local' are valid submission options." ;;
+            *) printFatalErrorMessage 2 "Sorry, only 'queue', 'local', and 'test' are valid submission options." ;;
     esac
 
     inputFileName=$desiredFile.eor
@@ -190,13 +190,16 @@ then
 
     cd "$tempDir" || printFatalErrorMessage 4 "Could not change into required directory."
 
-    if [[ -n "$outputDir" && -d "$outputDir" ]]
+    if [[ -n "$outputDir" ]]
     then
-        cd "$outputDir" || printFatalErrorMessage 5 "Could not change into required directory."
+        if [[ -d "$outputDir" ]]
+        then
+            cd "$outputDir" || printFatalErrorMessage 5 "Could not change into required directory."
 
-        [[ $outputFile ]] && cp equil.eor "$outputFile"
-    else
-        printFatalErrorMessage 6 "Invalid directory."
+            [[ $outputFile ]] && cp equil.eor "$outputFile"
+        else
+            printFatalErrorMessage 6 "Invalid directory."
+        fi
     fi
 else
     printFatalErrorMessage 7 "Invalid directory."
