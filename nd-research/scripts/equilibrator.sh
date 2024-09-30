@@ -14,7 +14,7 @@ source typeParsing
 
 printHelpMessage()      #@ DESCRIPTION: Print the equilibrator program's help message
 {                       #@ USAGE: printHelpMessage
-    printf "\nUSAGE: equilibrator [-hv] [-i FILE] [-o FILE] [-c STRING] [-s STRING] [-t INT]\n\n"
+    printf "\nUSAGE: equilibrator [-hv] [-i FILE] [-o FILE] [-c STRING] [-s STRING] [-t INT] [-V INT]\n\n"
     printf "  -h  Prints help information about the equilibrator program.\n"
     printf "  -v  Verbose mode. Defaults to false/off.\n\n"
     printf "  -i  REQUIRED: Pre-thermalized '.omd' input file.\n"
@@ -26,7 +26,9 @@ printHelpMessage()      #@ DESCRIPTION: Print the equilibrator program's help me
     printf "        queue.\n"
     printf "  -t  OPTIONAL: Desired runTime selections, options are a positive integer.\n"
     printf "        When selected, the integer indicated corresponds to either the default\n"
-    printf "        runTimes, or an integer multiple of the default runtimes. Default is 1.\n\n"
+    printf "        runTimes, or an integer multiple of the default runtimes. Default is 1.\n"
+    printf "  -V  OPTIONAL: Desired volume to affineScale to at the end of the pressure\n" 
+    printf "        correction phase.\n\n"
     printf "EXAMPLE: equilibrator -i NaClwarm.omd -s local -c \"mpi-24 24\"\n\n"
 }
 
@@ -134,6 +136,7 @@ do
         c) STRING cores      = "$OPTARG" ;;
         s) STRING submission = "$OPTARG" ;;
         t) INT    timing     = "$OPTARG" ;;
+        V) INT    volume     = "$OPTARG" ;;
         v) export verbose=1 ;;
         h) printHelpMessage && printFatalErrorMessage 0 ;;
         *) printFatalErrorMessage 1 "Invalid option flag passed to program." ;;
@@ -169,8 +172,11 @@ then
     performRunType PressureRelaxation
 
     ## AffineScale to average volume ##
-    volumeArray=( $(grep Volume pres.report) )
-    volume=${volumeArray[2]}
+    if [[ -n $volume ]]
+    then
+        volumeArray=( $(grep Volume pres.report) )
+        volume=${volumeArray[2]}
+    fi
     [ $testing -ne 1 ] && affineScale -m pres.eor -o temp.omd -v "$volume"
     printf "Volume Used = %s\n" "$volume"
 
