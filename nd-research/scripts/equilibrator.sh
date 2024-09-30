@@ -117,7 +117,7 @@ performRunType()        #@ DESCRIPTION: Run the calculations for a given part of
 
 
 ### Initial Variables / Default Values ###
-declare inputFile inputDir outputFile outputDir cores submission timing tempDir verbose
+declare inputFile inputDir outputFile outputDir cores submission timing volume tempDir verbose
 
 cores=smp\ 16
 submission=queue
@@ -128,7 +128,7 @@ testing=0
 
 
 ### Runtime Configuration ###
-while getopts i:o:s:c:t:vh opt
+while getopts i:o:s:c:t:V:vh opt
 do
     case $opt in
         i) FILE   input      = "$OPTARG" ;;                 ## Returns inputFile and inputDir variables
