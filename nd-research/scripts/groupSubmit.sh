@@ -2,7 +2,7 @@
 # Copyright (c) 2019-2024 Cody R. Drisko. All rights reserved.
 # Licensed under the MIT License. See the LICENSE file in the project root for more information.
 #
-# Name: groupSubmit.sh - Version 1.3.1
+# Name: groupSubmit.sh - Version 1.3.2
 # Author: cdrisko
 # Date: 01/20/2020-10:22:05
 # Description: Gezelter group submission script creator and resource monitor
@@ -80,12 +80,12 @@ printCheckQuotaScript()         #@ DESCRIPTION: Print script used to notify user
 printOpenmdSubmissionScript()   #@ DESCRIPTION: Print script used to run the OpenMD job
 {                               #@ USAGE: printOpenmdSubmissionScript
     printf "#!/bin/bash\n"
-    printf "#$ -N %s\n" "${inputFile%%.*}"
+    printf "#$ -N %s\n" "${inputFile%.*}"
     printf "#$ -M %s@nd.edu\n" "$username"
     printf "#$ -m abe\n"
     printf "#$ -q %s\n" "${queue:-long}"
     printf "#$ -pe %s\n\n" "${cores:="smp 16"}"
-    printf "SIM_NAME=\"%s\"\n" "${inputFile%%.*}"
+    printf "SIM_NAME=\"%s\"\n" "${inputFile%.*}"
     printf "WORK_DIR=\`pwd\`\n\n"
     printf "module purge\n"
     printf "module load openmd\n"

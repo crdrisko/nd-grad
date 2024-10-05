@@ -2,7 +2,7 @@
 # Copyright (c) 2019-2024 Cody R. Drisko. All rights reserved.
 # Licensed under the MIT License. See the LICENSE file in the project root for more information.
 #
-# Name: equilibrator.sh - Version 1.1.1
+# Name: equilibrator.sh - Version 1.2.2
 # Author: cdrisko
 # Date: 02/07/2020-08:37:21
 # Description: Standard equilibration procedure for an OpenMD simulation
@@ -95,7 +95,6 @@ performRunType()        #@ DESCRIPTION: Run the calculations for a given part of
                            *) printFatalErrorMessage 1 "$1 is not a valid runtype."
     esac
 
-    cp "$inputFileName" "$desiredFile.omd"
     modifyFiles -i "$desiredFile.omd" -o "$currentEnsemble" -n "$desiredEnsemble"
     modifyFiles -i "$desiredFile.omd" -o "$currentTime" -n "$desiredTime"
 
@@ -165,14 +164,18 @@ then
     sciNotCalc 100000 "$timing" thermRelax                      ## 1e5 fs = 100 ps
     sciNotCalc 1000000 "$timing" equilibrate                    ## 1e6 fs = 1000 ps = 1 ns
 
+    cp $inputFile warm.omd
+
     ## Structural Relaxation - NVT Ensemble ##
     performRunType StructuralRelaxation
+
+    cp warm.eor pres.omd
 
     ## Pressure Relaxation - NPTi Ensemble ##
     performRunType PressureRelaxation
 
     ## AffineScale to average volume ##
-    if [[ -n $volume ]]
+    if [[ -z $volume ]]
     then
         volumeArray=( $(grep Volume pres.report) )
         volume=${volumeArray[2]}
