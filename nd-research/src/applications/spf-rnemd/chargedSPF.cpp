@@ -30,32 +30,80 @@ int main(int argc, char* argv[])
         return EXIT_FAILURE;
     }
 
+    std::string dirName {argv[1]};
+    fs::path outputFileName {dirName};
+    std::string fileName = outputFileName.string() + "/../" + outputFileName.stem().string();
+
+    std::ofstream outputFile;
+    outputFile.open(fileName + ".csv");
+
+    outputFile << std::setw(13) << "# Time  Jc_applied," << std::setw(19) << "Jc_actual," << std::setw(13) << "dCation_dz,"
+               << std::setw(13) << "dAnion_dz," << std::setw(13) << "EField\n";
+
     const auto ConversionFactor = (4184.0 * 6.2415e18 / Constants::avogadrosNumber);
 
-    RNEMDFile rnemdFile {argv[1]};
+    // Sort the filenames
+    std::set<std::string> paths;
+    for (const auto& dirEntry : fs::directory_iterator(argv[1]))
+        if (dirEntry.path().extension().string() == ".rnemd")
+            paths.insert(dirEntry.path().string());
 
-    RNEMDData data         = rnemdFile.getRNEMDData();
-    RNEMDData errors       = rnemdFile.getRNEMDErrors();
-    RNEMDParameters params = rnemdFile.getRNEMDParameters();
-
-    ElectricField sum {};
-    int count {};
-
-    for (auto iter {data.electricField.begin() + params.inferred.boundaryB_end};
-         iter != data.electricField.begin() + params.inferred.boundaryA_start;
-         ++iter)
+    for (const auto& path : paths)
     {
-        sum += Math::abs(iter->at(2));
-        count++;
-    }
+        RNEMDFile rnemdFile {path};
 
-    for (auto iter {data.electricField.begin() + params.inferred.boundaryA_end};
-         iter != data.electricField.begin() + params.inferred.boundaryB_start;
-         ++iter)
-    {
-        sum += Math::abs(iter->at(2));
-        count++;
-    }
+        RNEMDData data         = rnemdFile.getRNEMDData();
+        RNEMDData errors       = rnemdFile.getRNEMDErrors();
+        RNEMDParameters params = rnemdFile.getRNEMDParameters();
 
-    std::cout << (sum / count) * ConversionFactor << " V / Ang\n";
+        ElectricField sum {};
+        int count {};
+
+        for (auto iter {data.electricField.begin() + params.inferred.boundaryB_end};
+             iter != data.electricField.begin() + params.inferred.boundaryA_start;
+             ++iter)
+        {
+            sum += Math::abs(iter->at(2));
+            count++;
+        }
+
+        for (auto iter {data.electricField.begin() + params.inferred.boundaryA_end};
+             iter != data.electricField.begin() + params.inferred.boundaryB_start;
+             ++iter)
+        {
+            sum += Math::abs(iter->at(2));
+            count++;
+        }
+
+        auto dCation1_dz = DryChem::linearLeastSquaresFitting(data.rnemdAxis.begin() + params.inferred.boundaryB_end,
+            data.rnemdAxis.begin() + params.inferred.boundaryA_start,
+            data.activity[0].begin() + params.inferred.boundaryB_end,
+            data.activity[0].begin() + params.inferred.boundaryA_start);
+
+        auto dAnion1_dz = DryChem::linearLeastSquaresFitting(data.rnemdAxis.begin() + params.inferred.boundaryB_end,
+            data.rnemdAxis.begin() + params.inferred.boundaryA_start,
+            data.activity[1].begin() + params.inferred.boundaryB_end,
+            data.activity[1].begin() + params.inferred.boundaryA_start);
+
+        auto dCation2_dz = DryChem::linearLeastSquaresFitting(data.rnemdAxis.begin() + params.inferred.boundaryA_end,
+            data.rnemdAxis.begin() + params.inferred.boundaryB_start,
+            data.activity[0].begin() + params.inferred.boundaryA_end,
+            data.activity[0].begin() + params.inferred.boundaryB_start);
+
+        auto dAnion2_dz = DryChem::linearLeastSquaresFitting(data.rnemdAxis.begin() + params.inferred.boundaryA_end,
+            data.rnemdAxis.begin() + params.inferred.boundaryB_start,
+            data.activity[1].begin() + params.inferred.boundaryA_end,
+            data.activity[1].begin() + params.inferred.boundaryB_start);
+
+        ConcentrationGradient dCation_dz = Math::abs(dCation1_dz.slope - dCation2_dz.slope) / 2;
+        ConcentrationGradient dAnion_dz  = Math::abs(dAnion1_dz.slope - dAnion2_dz.slope) / 2;
+
+        outputFile << std::setw(4) << (std::stoi(path.substr(path.find("stitch") + 7, 2)) - 1) << ',';
+
+        outputFile << std::setw(12) << params.report.currentDensity << ',' << std::setw(18) << params.report.Jc << ','
+                   << std::setw(12) << dCation_dz << ',' << std::setw(12) << dAnion_dz << ',' << std::setw(12)
+                   << (sum / count) * ConversionFactor << '\n';
+
+        std::cout << (params.report.Jc / ((sum / count) * ConversionFactor)) * (1e15 * 1e10 * 1.602e-19) * 10 << '\n';
+    }
 }

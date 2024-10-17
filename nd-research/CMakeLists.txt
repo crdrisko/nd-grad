@@ -37,18 +37,19 @@ set(RESEARCH_SOURCE src/fzFile.cpp
 
 add_library(research STATIC ${RESEARCH_SOURCE})
 
-add_executable(kirkwoodBuffAnalysis src/applications/emdAnalysis/kirkwoodBuffAnalysis.cpp)
-add_executable(onsagerAnalysis      src/applications/emdAnalysis/onsagerAnalysis.cpp)
-add_executable(rcorrAnalysis        src/applications/emdAnalysis/rcorrAnalysis.cpp)
+add_executable(currentDensityAnalysis src/applications/emdAnalysis/currentDensityAnalysis.cpp)
+add_executable(kirkwoodBuffAnalysis   src/applications/emdAnalysis/kirkwoodBuffAnalysis.cpp)
+add_executable(onsagerAnalysis        src/applications/emdAnalysis/onsagerAnalysis.cpp)
+add_executable(rcorrAnalysis          src/applications/emdAnalysis/rcorrAnalysis.cpp)
 
-add_executable(fzConstraintAnalysis src/applications/spf-rnemd/fzConstraintAnalysis.cpp src/fzFile.cpp)
+add_executable(fzConstraintAnalysis   src/applications/spf-rnemd/fzConstraintAnalysis.cpp src/fzFile.cpp)
 
-add_executable(chargedSPF           src/applications/spf-rnemd/chargedSPF.cpp src/rnemdFile.cpp)
-add_executable(membranePermeability src/applications/spf-rnemd/membranePermeability.cpp src/rnemdFile.cpp)
-add_executable(soretEffects         src/applications/spf-rnemd/soretEffects.cpp src/rnemdFile.cpp)
-add_executable(spfFitting           src/applications/spf-rnemd/spfFitting.cpp src/rnemdFile.cpp)
-add_executable(stitchRNEMD          src/applications/spf-rnemd/stitchRNEMD.cpp src/rnemdFile.cpp)
-add_executable(thermalProfile       src/applications/spf-rnemd/thermalProfile.cpp src/rnemdFile.cpp)
+add_executable(chargedSPF             src/applications/spf-rnemd/chargedSPF.cpp src/rnemdFile.cpp)
+add_executable(membranePermeability   src/applications/spf-rnemd/membranePermeability.cpp src/rnemdFile.cpp)
+add_executable(soretEffects           src/applications/spf-rnemd/soretEffects.cpp src/rnemdFile.cpp)
+add_executable(spfFitting             src/applications/spf-rnemd/spfFitting.cpp src/rnemdFile.cpp)
+add_executable(stitchRNEMD            src/applications/spf-rnemd/stitchRNEMD.cpp src/rnemdFile.cpp)
+add_executable(thermalProfile         src/applications/spf-rnemd/thermalProfile.cpp src/rnemdFile.cpp)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${NDGrad_BINARY_DIR}/bin)
 
@@ -63,7 +64,9 @@ install(FILES include/rnemdFile.hpp include/rnemdParameters.hpp
 install(FILES include/emdFile.hpp
         DESTINATION include/nd-grad)
 
-install(TARGETS kirkwoodBuffAnalysis onsagerAnalysis rcorrAnalysis chargedSPF membranePermeability soretEffects spfFitting stitchRNEMD thermalProfile
+install(TARGETS currentDensityAnalysis kirkwoodBuffAnalysis onsagerAnalysis rcorrAnalysis 
+                chargedSPF fzConstraintAnalysis membranePermeability soretEffects 
+                spfFitting stitchRNEMD thermalProfile
         DESTINATION bin
         PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE
                     GROUP_READ             GROUP_EXECUTE
