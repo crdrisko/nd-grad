@@ -63,7 +63,7 @@ int main(int argc, char* argv[])
              iter != data.electricField.begin() + params.inferred.boundaryA_start;
              ++iter)
         {
-            sum += Math::abs(iter->at(2));
+            sum += iter->at(2);
             count++;
         }
 
@@ -71,7 +71,7 @@ int main(int argc, char* argv[])
              iter != data.electricField.begin() + params.inferred.boundaryB_start;
              ++iter)
         {
-            sum += Math::abs(iter->at(2));
+            sum -= iter->at(2);
             count++;
         }
 
@@ -95,15 +95,13 @@ int main(int argc, char* argv[])
             data.activity[1].begin() + params.inferred.boundaryA_end,
             data.activity[1].begin() + params.inferred.boundaryB_start);
 
-        ConcentrationGradient dCation_dz = Math::abs(dCation1_dz.slope - dCation2_dz.slope) / 2;
-        ConcentrationGradient dAnion_dz  = Math::abs(dAnion1_dz.slope - dAnion2_dz.slope) / 2;
+        ConcentrationGradient dCation_dz = (dCation1_dz.slope - dCation2_dz.slope) / 2;
+        ConcentrationGradient dAnion_dz  = (dAnion1_dz.slope - dAnion2_dz.slope) / 2;
 
         outputFile << std::setw(4) << (std::stoi(path.substr(path.find("stitch") + 7, 2)) - 1) << ',';
 
         outputFile << std::setw(12) << params.report.currentDensity << ',' << std::setw(18) << params.report.Jc << ','
                    << std::setw(12) << dCation_dz << ',' << std::setw(12) << dAnion_dz << ',' << std::setw(12)
                    << (sum / count) * ConversionFactor << '\n';
-
-        std::cout << (params.report.Jc / ((sum / count) * ConversionFactor)) * (1e15 * 1e10 * 1.602e-19) * 10 << '\n';
     }
 }

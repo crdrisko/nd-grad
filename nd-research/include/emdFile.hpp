@@ -21,10 +21,10 @@
 
 namespace ND_Research
 {
-    template<typename ReturnType>
-    std::vector<ReturnType> parseInputFiles(const std::set<std::string>& paths)
+    template<typename ResultType>
+    std::vector<ResultType> parseInputFiles(const std::set<std::string>& paths)
     {
-        std::vector<ReturnType> input;
+        std::vector<ResultType> input;
 
         for (const auto& path : paths)
         {
@@ -37,7 +37,7 @@ namespace ND_Research
                 if (row[0] != '#')
                     dataContents += row + '\n';
 
-            ReturnType temp_results {};
+            ResultType temp_results {};
 
             DryChem::AsColumns columnParser {};
             std::vector<std::string> columns {columnParser(dataContents)};
@@ -62,10 +62,10 @@ namespace ND_Research
         return input;
     }
 
-    template<typename T>
-    T calculateAverages(const std::vector<T>& input)
+    template<typename ResultType>
+    ResultType calculateAverages(const std::vector<ResultType>& input)
     {
-        T output {input[0]};
+        ResultType output {input[0]};
 
         for (std::size_t sample {1}; sample < input.size(); ++sample)
         {
@@ -93,10 +93,10 @@ namespace ND_Research
         return output;
     }
 
-    template<typename T>
-    T calculateStdDev(const T& output, const std::vector<T>& input)
+    template<typename ResultType>
+    ResultType calculateStdDev(const ResultType& output, const std::vector<ResultType>& input)
     {
-        T errors;
+        ResultType errors;
 
         const int nFields = sizeof(output) / sizeof(output.x);
 
@@ -131,8 +131,8 @@ namespace ND_Research
         return errors;
     }
 
-    template<typename T>
-    void calculate95CIFromStdDev(T& errors, std::size_t nSamples)
+    template<typename ResultType>
+    void calculate95CIFromStdDev(ResultType& errors, std::size_t nSamples)
     {
         for (std::size_t bin {}; bin < errors.x.size(); ++bin)
         {
