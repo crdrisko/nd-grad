@@ -69,5 +69,5 @@ int main(int argc, char* argv[])
     sigmaJc = std::sqrt(sigmaJc) / output.x.size();
 
     std::cout << "J_c   = " << avgJc << " +/- " << sigmaJc << " (e / Ang^s / fs)\n"
-              << "sigma = " << (avgJc / eField * ConversionFactor) << " (mS / cm)\n";
+              << "sigma = " << (avgJc / eField * ConversionFactor) << " +/- " << (sigmaJc / eField  * ConversionFactor) << " (mS / cm)\n";
 }

@@ -98,7 +98,10 @@ int main(int argc, char* argv[])
         ConcentrationGradient dCation_dz = (dCation1_dz.slope - dCation2_dz.slope) / 2;
         ConcentrationGradient dAnion_dz  = (dAnion1_dz.slope - dAnion2_dz.slope) / 2;
 
-        outputFile << std::setw(4) << (std::stoi(path.substr(path.find("stitch") + 7, 2)) - 1) << ',';
+        std::size_t numberStart {path.find("stitch") + 7};
+        std::size_t numberEnd {path.find(".rnemd")};
+
+        outputFile << std::setw(4) << (std::stoi(path.substr(numberStart, numberEnd - numberStart))) << ',';
 
         outputFile << std::setw(12) << params.report.currentDensity << ',' << std::setw(18) << params.report.Jc << ','
                    << std::setw(12) << dCation_dz << ',' << std::setw(12) << dAnion_dz << ',' << std::setw(12)
