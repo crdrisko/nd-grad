@@ -90,10 +90,12 @@ if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Release")
 endif()
 
-add_compile_options(-Wall -Wextra -pedantic -Werror)
+if (NOT WIN32)
+    add_compile_options(-Wall -Wextra -pedantic -Werror)
 
-if (CMAKE_COMPILER_IS_GNUCXX)
-    add_definitions(-Wno-psabi)
+    if (CMAKE_COMPILER_IS_GNUCXX)
+        add_definitions(-Wno-psabi)
+    endif()
 endif()
 
 
@@ -122,7 +124,7 @@ include_directories(${CPP_UNITS_INCLUDE_DIR})
 
 find_package(DryPhys REQUIRED)
 
-if (NOT ${DryPhys_FOUND})
+# if (NOT ${DryPhys_FOUND})
     ## If DryPhys isn't installed or can't be found, download it from github ##
     include(FetchContent)
 
@@ -132,53 +134,16 @@ if (NOT ${DryPhys_FOUND})
                          GIT_REPOSITORY "https://github.com/crdrisko/dryphys.git"
                          GIT_TAG dev)
 
-    set(phys_exclude_engine ON)
+    set(phys_exclude_engine OFF)
 
     FetchContent_MakeAvailable(dryphys)
     set(DryPhys_FOUND TRUE)
 
     include_directories(${dryphys_SOURCE_DIR}/include)
-else()
-    include_directories(${DryPhys_LIBRARIES})
-endif()
-
-if (NOT research_exclude_npgBuilder)
-    include(FetchContent)
-
-    ## ImGui
-    message(STATUS "Fetching ImGUI...")
-    FetchContent_Declare(imgui          # v1.90.5
-                         GIT_REPOSITORY "https://github.com/ocornut/imgui.git"
-                         GIT_TAG "231cbee0fc4f59dbe5b8b853a11b08dc84e57c65")
-
-    FetchContent_MakeAvailable(imgui)
-    include_directories(${imgui_SOURCE_DIR})
-
-    ## SFML
-    message(STATUS "Fetching SFML...")
-    FetchContent_Declare(sfml           # v2.6.1
-                     GIT_REPOSITORY "https://github.com/SFML/SFML.git"
-                     GIT_TAG "69ea0cd863aed1d4092b970b676924a716ff718b")
-
-    set(SFML_BUILD_AUDIO FALSE)
-    set(SFML_BUILD_NETWORK FALSE)
-
-    FetchContent_MakeAvailable(sfml)
-    include_directories(${sfml_SOURCE_DIR}/include)
-
-    ## ImGui-SFML
-    message(STATUS "Fetching ImGui-SFML...")
-    FetchContent_Declare(imgui_sfml     # v2.6
-                         GIT_REPOSITORY "https://github.com/SFML/imgui-sfml.git"
-                         GIT_TAG "de565ac8f2b795dedc0307b60830cb006afd2ecd")
-
-    set(IMGUI_DIR ${imgui_SOURCE_DIR})
-    set(IMGUI_SFML_FIND_SFML OFF)
-    set(IMGUI_SFML_IMGUI_DEMO ON)
-
-    FetchContent_MakeAvailable(imgui_sfml)
-    include_directories(${imgui_sfml_SOURCE_DIR})
-endif()
+    include_directories("${dryphys_BINARY_DIR}") # for <config.h> -> need to fix in DryPhys...
+# else()
+#     include_directories(${DryPhys_LIBRARIES})
+# endif()
 
 
 ### ND-Grad Subprojects ###

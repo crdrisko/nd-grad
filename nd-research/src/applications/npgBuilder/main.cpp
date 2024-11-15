@@ -6,11 +6,14 @@
 // Date: 04/17/2024-08:09:47
 // Description:
 
+#include <cstddef>
 #include <iostream>
 
-#include "npgBuilder/engine.hpp"
+#include <engine2d/engine.hpp>
 
-int main(int argc, char* argv[])
+#include "npgBuilder/scenes/npgScene.hpp"
+
+int main(int argc, char** argv)
 {
     if (argc < 2)
     {
@@ -18,6 +21,9 @@ int main(int argc, char* argv[])
         return EXIT_FAILURE;
     }
 
-    Engine engine {argv[1]};
+    Engine2D::Engine engine {argv[1]};
+
+    // Set the default scene ourself so the engine doesn't need to know about it
+    engine.setDefaultScene<NPGBuilder::NPGScene>("NPGBuilder", argv[1]);
     engine.run();
 }

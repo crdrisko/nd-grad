@@ -1,9 +1,0 @@
-WordScale = 30;
-
-DesiredBoxDimensions = {40, 40};
-
-HydrogenBondLength  = 1.08;
-HydrogenAtomRadius = 5.0;
-
-CarbonBondLength = 1.37;
-CarbonAtomRadius = 10.0;

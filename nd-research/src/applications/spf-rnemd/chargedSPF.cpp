@@ -75,6 +75,12 @@ int main(int argc, char* argv[])
             count++;
         }
 
+        for (std::size_t i {}; i < data.activity[0].size(); ++i)
+        {
+            data.activity[0][i] = 1.0_M * Math::log(data.activity[0][i]);
+            data.activity[1][i] = 1.0_M * Math::log(data.activity[1][i]);
+        }
+
         auto dCation1_dz = DryChem::linearLeastSquaresFitting(data.rnemdAxis.begin() + params.inferred.boundaryB_end,
             data.rnemdAxis.begin() + params.inferred.boundaryA_start,
             data.activity[0].begin() + params.inferred.boundaryB_end,

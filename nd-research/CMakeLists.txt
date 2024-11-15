@@ -8,27 +8,19 @@ if (NOT research_exclude_scripts)
 endif()
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY
-    ${PROJECT_BINARY_DIR}/bin
+    ${CMAKE_BINARY_DIR}/bin
     CACHE PATH
     "Single directory for all executables.")
 
 
 ### Libraries / Executables ###
 if (NOT research_exclude_npgBuilder)
-    set(NPGBUILDER_SOURCE src/applications/npgBuilder/engine/engine.cpp
-                          src/applications/npgBuilder/engine/entityManager.cpp
-                          src/applications/npgBuilder/engine/vec2.cpp)
+    set(NPGBUILDER_SOURCE src/applications/npgBuilder/main.cpp
+                          src/applications/npgBuilder/scenes/npgScene.cpp)
 
-    set(IMGUI_SOURCE ${imgui_SOURCE_DIR}/imgui_demo.cpp
-                     ${imgui_SOURCE_DIR}/imgui_draw.cpp
-                     ${imgui_SOURCE_DIR}/imgui_tables.cpp
-                     ${imgui_SOURCE_DIR}/imgui_widgets.cpp
-                     ${imgui_SOURCE_DIR}/imgui.cpp
-                     ${imgui_sfml_SOURCE_DIR}/imgui-SFML.cpp)  
-
-    add_executable(npgBuilder src/applications/npgBuilder/main.cpp ${NPGBUILDER_SOURCE} ${IMGUI_SOURCE})
-
-    target_link_libraries(npgBuilder PRIVATE ImGui-SFML::ImGui-SFML)
+    add_executable(npgBuilder ${NPGBUILDER_SOURCE})
+    target_include_directories(npgBuilder PRIVATE ${PROJECT_SOURCE_DIR}/nd-research/src/applications)
+    target_link_libraries(npgBuilder PRIVATE engine2d_gui)
 endif()
 
 set(RESEARCH_SOURCE src/fzFile.cpp
@@ -51,7 +43,7 @@ add_executable(spfFitting             src/applications/spf-rnemd/spfFitting.cpp 
 add_executable(stitchRNEMD            src/applications/spf-rnemd/stitchRNEMD.cpp src/rnemdFile.cpp)
 add_executable(thermalProfile         src/applications/spf-rnemd/thermalProfile.cpp src/rnemdFile.cpp)
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${NDGrad_BINARY_DIR}/bin)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 
 ### Installation ###

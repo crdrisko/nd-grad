@@ -58,7 +58,7 @@ int main(int argc, char* argv[])
 
     double avgJc   = DryChem::calculateAverage(output.Jc.begin(), output.Jc.end());
     double sigmaJc = {};
-    double eField = std::stod(argv[2]);
+    double eField  = std::stod(argv[2]);
 
     for (std::size_t bin {}; bin < output.x.size(); ++bin)
     {
@@ -69,5 +69,6 @@ int main(int argc, char* argv[])
     sigmaJc = std::sqrt(sigmaJc) / output.x.size();
 
     std::cout << "J_c   = " << avgJc << " +/- " << sigmaJc << " (e / Ang^s / fs)\n"
-              << "sigma = " << (avgJc / eField * ConversionFactor) << " +/- " << (sigmaJc / eField  * ConversionFactor) << " (mS / cm)\n";
+              << "sigma = " << (avgJc / eField * ConversionFactor) << " +/- " << (sigmaJc / eField * ConversionFactor)
+              << " (mS / cm)\n";
 }

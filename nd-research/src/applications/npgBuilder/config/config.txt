@@ -1,6 +1,6 @@
-WordScale = 22.5;
+Window NPGBuilder 25 25 60 0
 
-DesiredBoxDimensions = {25, 25};
+WordScale = 22.5;
 
 HydrogenBondLength  = 1.08;
 HydrogenAtomRadius = 5.0;
@@ -8,4 +8,4 @@ HydrogenAtomRadius = 5.0;
 CarbonBondLength = 1.37;
 CarbonAtomRadius = 10.0;
 
-Font /System/Library/Fonts/Supplemental/Arial.ttf 18
+Font Arial /System/Library/Fonts/Supplemental/Arial.ttf 18
