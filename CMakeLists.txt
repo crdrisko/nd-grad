@@ -1,5 +1,5 @@
 ### Top Level CMake Script for ND-Grad ###
-cmake_minimum_required(VERSION 3.15.0)
+cmake_minimum_required(VERSION 3.23.0)
 project(NDGrad VERSION 1.0.0)
 
 
@@ -21,9 +21,8 @@ option(research_build_samples       "Builds nd-research applications and corresp
 option(research_exclude_npgBuilder  "Builds nd-research applications without including NPG-Builder and its dependencies." OFF)
 option(research_exclude_scripts     "Builds nd-research applications while ignoring the scripts directory." OFF)
 
-## Set appropriate option flags and continue ##
 if (grad_format_codebase)
-    find_program(formatter clang-format HINTS /opt/local/libexec/llvm-16/bin/)
+    find_program(formatter clang-format HINTS /opt/homebrew/bin/)
 
     if (NOT formatter_NOTFOUND)
         message(STATUS "Formatting ND-Grad")
@@ -96,6 +95,8 @@ if (NOT WIN32)
     if (CMAKE_COMPILER_IS_GNUCXX)
         add_definitions(-Wno-psabi)
     endif()
+else()
+    add_compile_options(/MD /WX)
 endif()
 
 
@@ -103,24 +104,34 @@ endif()
 include(cmake/grad-utility-functions.cmake)
 
 
+### Files / Directories ###
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin
+    CACHE PATH "Single directory for all executables.")
+
+SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib
+    CACHE PATH "Single directory for all static libraries.")
+
+
 ### External Modules ###
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules")
 
 find_package(DryChem REQUIRED)
 
-if (NOT ${DryChem_FOUND})
+# if (NOT ${DryChem_FOUND})
     ## If DryChem isn't installed or can't be found, download it from github ##
-    NDGradExternalDownload(PROJECT DryChem
-                           REPOSITORY "https://github.com/crdrisko/drychem.git"
-                           TAG main)
+    include(FetchContent)
 
-    set(COMMON_UTILS_INCLUDE_DIR "${DryChem_SOURCE_DIR}/common-utilities/include")
-    set(CPP_UNITS_INCLUDE_DIR "${DryChem_SOURCE_DIR}/cpp-units/include")
-    set(DryChem_FOUND TRUE)
-endif()
+    message(STATUS "Fetching DryChem...")
+    FetchContent_Declare(drychem
+                         GIT_REPOSITORY "https://github.com/crdrisko/drychem.git"
+                         GIT_TAG main)
 
-include_directories(${COMMON_UTILS_INCLUDE_DIR})
-include_directories(${CPP_UNITS_INCLUDE_DIR})
+    FetchContent_MakeAvailable(drychem)
+    set(drychem_FOUND TRUE)
+# endif()
+
+include_directories(${drychem_SOURCE_DIR}/common-utilities/include)
+include_directories(${drychem_SOURCE_DIR}/cpp-units/include)
 
 find_package(DryPhys REQUIRED)
 
@@ -128,19 +139,23 @@ find_package(DryPhys REQUIRED)
     ## If DryPhys isn't installed or can't be found, download it from github ##
     include(FetchContent)
 
-    ## DryPhys
     message(STATUS "Fetching DryPhys...")
-    FetchContent_Declare(dryphys        # v1.90.5
+    FetchContent_Declare(dryphys
                          GIT_REPOSITORY "https://github.com/crdrisko/dryphys.git"
                          GIT_TAG dev)
 
-    set(phys_exclude_engine OFF)
+    if (research_exclude_npgBuilder)
+        set(phys_exclude_engine ON)
+    else()
+        set(phys_exclude_engine OFF)
+    endif()
 
     FetchContent_MakeAvailable(dryphys)
     set(DryPhys_FOUND TRUE)
 
     include_directories(${dryphys_SOURCE_DIR}/include)
     include_directories("${dryphys_BINARY_DIR}") # for <config.h> -> need to fix in DryPhys...
+    include_directories(/usr/local/include)
 # else()
 #     include_directories(${DryPhys_LIBRARIES})
 # endif()

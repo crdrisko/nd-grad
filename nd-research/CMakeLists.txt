@@ -7,10 +7,10 @@ if (NOT research_exclude_scripts)
         scripts/saltWaterBoxer.sh)
 endif()
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY
-    ${CMAKE_BINARY_DIR}/bin
-    CACHE PATH
-    "Single directory for all executables.")
+# set(CMAKE_RUNTIME_OUTPUT_DIRECTORY
+#     ${CMAKE_BINARY_DIR}/bin
+#     CACHE PATH
+#     "Single directory for all executables.")
 
 
 ### Libraries / Executables ###
@@ -43,7 +43,7 @@ add_executable(spfFitting             src/applications/spf-rnemd/spfFitting.cpp 
 add_executable(stitchRNEMD            src/applications/spf-rnemd/stitchRNEMD.cpp src/rnemdFile.cpp)
 add_executable(thermalProfile         src/applications/spf-rnemd/thermalProfile.cpp src/rnemdFile.cpp)
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+# set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${NDGrad_BINARY_DIR}/bin)
 
 
 ### Installation ###
@@ -90,18 +90,24 @@ endif()
 
 ### Unit Testing ###
 if (grad_build_tests OR research_build_tests)
-    find_package(GTest)
+    # find_package(GTest)
     find_package(Threads)
 
-    if (NOT ${GTest_FOUND})
-        ## If googletest isn't installed or can't be found, download it from github ##
-        NDGradExternalDownload(PROJECT googletest
-                               REPOSITORY "https://github.com/google/googletest.git"
-                               TAG main)
+    # if (NOT ${GTest_FOUND})
+        include(FetchContent)
 
+        ## If googletest isn't installed or can't be found, download it from github ##
+        message(STATUS "Fetching GoogleTest...")
+        FetchContent_Declare(googletest
+                GIT_REPOSITORY "https://github.com/google/googletest.git"
+                GIT_TAG main)
+                            
         set(GTEST_LIBRARIES gtest)
         set(GTEST_INCLUDE_DIRS "${gtest_SOURCE_DIR}/include")
-    endif()
+                            
+        FetchContent_MakeAvailable(googletest)
+        set(GTest_FOUND TRUE)
+    # endif()
 
     include_directories(${GTEST_INCLUDE_DIRS})
 
