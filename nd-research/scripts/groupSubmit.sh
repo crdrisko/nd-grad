@@ -2,7 +2,7 @@
 # Copyright (c) 2019-2024 Cody R. Drisko. All rights reserved.
 # Licensed under the MIT License. See the LICENSE file in the project root for more information.
 #
-# Name: groupSubmit.sh - Version 1.3.2
+# Name: groupSubmit.sh - Version 1.3.3
 # Author: cdrisko
 # Date: 01/20/2020-10:22:05
 # Description: Gezelter group submission script creator and resource monitor
@@ -45,20 +45,20 @@ printCheckQuotaScript()         #@ DESCRIPTION: Print script used to notify user
     printf "    then\n"
     printf "        ## Send DANGER if within 1%% of available quota ##\n"
     printf "        mail -s 'DANGER' %s@nd.edu <<< 'You have used 99%% of your available quota.'\n" "$username"
-    printf "        sleepTime=15m\n\n"
+    printf "        sleepTime=30m\n\n"
     printf "    elif [ \$quotaPercentage -ge 95 ]\n"
     printf "    then\n"
     printf "        ## Send WARNING if within 5%% of available quota ##\n"
     printf "        mail -s 'WARNING' %s@nd.edu <<< 'You have used 95%% of your available quota.'\n" "$username"
-    printf "        sleepTime=30m\n\n"
+    printf "        sleepTime=1hr\n\n"
     printf "    elif [ \$quotaPercentage -ge 90 ]\n"
     printf "    then\n"
     printf "        ## Send CAUTION if within 10%% of available quota ##\n"
     printf "        mail -s 'CAUTION' %s@nd.edu <<< 'You have used 90%% of your available quota.'\n" "$username"
-    printf "        sleepTime=1h\n"
+    printf "        sleepTime=2h\n"
     printf "    fi\n\n"
     printf "    ## Put machine to sleep before next check ##\n"
-    printf "    sleep \${sleepTime:=2h}\n\n"
+    printf "    sleep \${sleepTime:=3h}\n\n"
     printf "    qstatArray=( \$( /opt/sge/bin/lx-amd64/qstat -u %s | tail -n +3 ) )\n" "$USER"
     printf "    qstatArrayLength=\$( printf \"%%s\\\n\" \${qstatArray[@]} | wc -l )\n\n"
     printf "    case \$qstatArrayLength in\n"
