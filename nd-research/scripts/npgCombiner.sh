@@ -2,7 +2,7 @@
 # Copyright (c) 2019-2024 Cody R. Drisko. All rights reserved.
 # Licensed under the MIT License. See the LICENSE file in the project root for more information.
 #
-# Name: npgCombiner.sh - Version 1.0.0
+# Name: npgCombiner.sh - Version 1.1.0
 # Author: crdrisko
 # Date: 11/22/2024-08:27:58
 # Description: Remove graphene sheets from a simulation box
