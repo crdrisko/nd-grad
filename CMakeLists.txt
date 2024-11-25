@@ -115,30 +115,30 @@ SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib
 ### External Modules ###
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules")
 
-find_package(DryChem REQUIRED)
+include(FetchContent)
+find_package(DryChem)
 
-# if (NOT ${DryChem_FOUND})
+if (NOT DryChem_FOUND)
     ## If DryChem isn't installed or can't be found, download it from github ##
-    include(FetchContent)
-
     message(STATUS "Fetching DryChem...")
-    FetchContent_Declare(drychem
+    FetchContent_Declare(drychem        # v1.0.0
                          GIT_REPOSITORY "https://github.com/crdrisko/drychem.git"
-                         GIT_TAG main)
+                         GIT_TAG        "714dded492aca9a59c7d3f167839abe57daec12e")
 
     FetchContent_MakeAvailable(drychem)
-    set(drychem_FOUND TRUE)
-# endif()
 
-include_directories(${drychem_SOURCE_DIR}/common-utilities/include)
-include_directories(${drychem_SOURCE_DIR}/cpp-units/include)
+    set(DryChem_FOUND TRUE)
+    set(COMMON_UTILS_INCLUDE_DIR "${drychem_SOURCE_DIR}/common-utilities/include")
+    set(CPP_UNITS_INCLUDE_DIR    "${drychem_SOURCE_DIR}/cpp-units/include")
+endif()
 
-find_package(DryPhys REQUIRED)
+include_directories(${COMMON_UTILS_INCLUDE_DIR})
+include_directories(${CPP_UNITS_INCLUDE_DIR})
 
-# if (NOT ${DryPhys_FOUND})
+# find_package(DryPhys)
+
+if (NOT DryPhys_FOUND)
     ## If DryPhys isn't installed or can't be found, download it from github ##
-    include(FetchContent)
-
     message(STATUS "Fetching DryPhys...")
     FetchContent_Declare(dryphys
                          GIT_REPOSITORY "https://github.com/crdrisko/dryphys.git"
@@ -152,13 +152,13 @@ find_package(DryPhys REQUIRED)
 
     FetchContent_MakeAvailable(dryphys)
     set(DryPhys_FOUND TRUE)
+    set(DRYPHYS_INCLUDE_DIR  "${dryphys_SOURCE_DIR}/include")
+    set(ENGINE2D_INCLUDE_DIR  "${dryphys_SOURCE_DIR}/include")
+    set(ENGINE2D_LIBRARIES    engine2d_gui)
+endif()
 
-    include_directories(${dryphys_SOURCE_DIR}/include)
-    include_directories("${dryphys_BINARY_DIR}") # for <config.h> -> need to fix in DryPhys...
-    include_directories(/usr/local/include)
-# else()
-#     include_directories(${DryPhys_LIBRARIES})
-# endif()
+include_directories(${DRYPHYS_INCLUDE_DIR})
+include_directories(${ENGINE2D_INCLUDE_DIR})
 
 
 ### ND-Grad Subprojects ###

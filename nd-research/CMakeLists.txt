@@ -16,7 +16,7 @@ if (NOT research_exclude_npgBuilder)
 
     add_executable(npgBuilder ${NPGBUILDER_SOURCE})
     target_include_directories(npgBuilder PRIVATE ${PROJECT_SOURCE_DIR}/nd-research/src/applications)
-    target_link_libraries(npgBuilder PRIVATE engine2d_gui)
+    target_link_libraries(npgBuilder ${ENGINE2D_LIBRARIES})
 endif()
 
 set(RESEARCH_SOURCE src/fzFile.cpp
@@ -31,6 +31,7 @@ add_executable(onsagerAnalysis        src/applications/emdAnalysis/onsagerAnalys
 add_executable(rcorrAnalysis          src/applications/emdAnalysis/rcorrAnalysis.cpp)
 
 add_executable(fzConstraintAnalysis   src/applications/spf-rnemd/fzConstraintAnalysis.cpp src/fzFile.cpp)
+add_executable(fzTimeDependence       src/applications/spf-rnemd/fzTimeDependence.cpp src/fzFile.cpp)
 
 add_executable(chargedSPF             src/applications/spf-rnemd/chargedSPF.cpp src/rnemdFile.cpp)
 add_executable(membranePermeability   src/applications/spf-rnemd/membranePermeability.cpp src/rnemdFile.cpp)
@@ -51,8 +52,8 @@ install(FILES include/emdFile.hpp
         DESTINATION include/nd-grad)
 
 install(TARGETS currentDensityAnalysis kirkwoodBuffAnalysis onsagerAnalysis rcorrAnalysis 
-                chargedSPF fzConstraintAnalysis membranePermeability soretEffects 
-                spfFitting stitchRNEMD thermalProfile
+                chargedSPF fzConstraintAnalysis fzTimeDependence membranePermeability
+                soretEffects spfFitting stitchRNEMD thermalProfile
         DESTINATION bin
         PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE
                     GROUP_READ             GROUP_EXECUTE
@@ -84,24 +85,24 @@ endif()
 
 ### Unit Testing ###
 if (grad_build_tests OR research_build_tests)
-    # find_package(GTest)
+    find_package(GTest)
     find_package(Threads)
 
-    # if (NOT ${GTest_FOUND})
-        include(FetchContent)
-
+    if (NOT GTEST_FOUND)
         ## If googletest isn't installed or can't be found, download it from github ##
         message(STATUS "Fetching GoogleTest...")
         FetchContent_Declare(googletest     # v1.15.2
                              GIT_REPOSITORY "https://github.com/google/googletest.git"
                              GIT_TAG        "b514bdc898e2951020cbdca1304b75f5950d1f59")
                             
+        FetchContent_MakeAvailable(googletest)
+
+        set(GTEST_FOUND TRUE)
         set(GTEST_LIBRARIES gtest)
         set(GTEST_INCLUDE_DIRS "${gtest_SOURCE_DIR}/include")
-                            
-        FetchContent_MakeAvailable(googletest)
-        set(GTest_FOUND TRUE)
-    # endif()
+    else()
+        set(GTEST_INCLUDE_DIRS "${googletest_SOURCE_DIR}/include")
+    endif()
 
     include_directories(${GTEST_INCLUDE_DIRS})
 
