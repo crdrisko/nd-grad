@@ -55,7 +55,7 @@ int main(int argc, char* argv[])
         {
             for (const auto& [id, zConstraints] : param.moleculeData)
             {
-                sumForces += Math::abs(zConstraints.force);
+                sumForces -= zConstraints.force;
             }
 
             vals[param.time] += sumForces / param.numberOfZConstraints; 

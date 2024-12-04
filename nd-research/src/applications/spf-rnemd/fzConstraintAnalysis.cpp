@@ -37,8 +37,6 @@ int main(int argc, char* argv[])
     std::ofstream outputFile;
     outputFile.open(fileName + ".txt");
 
-    // std::cout << fileName << '\n';
-
     // Sort the filenames
     std::set<std::string> paths;
     for (const auto& dirEntry : fs::directory_iterator(argv[1]))
@@ -61,19 +59,19 @@ int main(int argc, char* argv[])
             }
         }
 
-        // std::cout << "Constraint ID | Counts | Forces (kcal/mol/Ang)\n";
-
         Force deltaF {};
 
         for (const auto& [id, count] : counts)
         {
-            // std::cout << std::setw(7) << id << std::setw(15) << count << std::setw(17) << sumForces[id] / count << '\n';
             deltaF += Math::abs(sumForces[id] / count);
         }
 
         try
         {
-            outputFile << (2 * std::stoi(path.substr(15, 2)) - 1) << ", " << deltaF << '\n';
+            std::size_t numberStart {path.find("stitch") + 7};
+            std::size_t numberEnd {path.find(".fz")};
+
+            outputFile << (2 * std::stoi(path.substr(numberStart, numberEnd - numberStart)) - 1) << ", " << deltaF << '\n';
         }
         catch (const std::exception& e)
         {
