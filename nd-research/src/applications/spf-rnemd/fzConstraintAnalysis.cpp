@@ -63,7 +63,7 @@ int main(int argc, char* argv[])
 
         for (const auto& [id, count] : counts)
         {
-            deltaF += Math::abs(sumForces[id] / count);
+            deltaF -= sumForces[id] / count;
         }
 
         try

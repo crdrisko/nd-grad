@@ -16,7 +16,9 @@ if (NOT research_exclude_npgBuilder)
 
     add_executable(npgBuilder ${NPGBUILDER_SOURCE})
     target_include_directories(npgBuilder PRIVATE ${PROJECT_SOURCE_DIR}/nd-research/src/applications)
-    target_link_libraries(npgBuilder ${ENGINE2D_LIBRARIES})
+    target_link_libraries(npgBuilder PRIVATE ${DRYPHYS_LIBRARIES} ${ENGINE2D_LIBRARIES} ImGui-SFML::ImGui-SFML sfml-audio )
+    set_target_properties(npgBuilder PROPERTIES COMPILE_DEFINITIONS USE_IMGUI)
+
 endif()
 
 set(RESEARCH_SOURCE src/fzFile.cpp
@@ -25,20 +27,21 @@ set(RESEARCH_SOURCE src/fzFile.cpp
 
 add_library(research STATIC ${RESEARCH_SOURCE})
 
-add_executable(currentDensityAnalysis src/applications/emdAnalysis/currentDensityAnalysis.cpp)
-add_executable(kirkwoodBuffAnalysis   src/applications/emdAnalysis/kirkwoodBuffAnalysis.cpp)
-add_executable(onsagerAnalysis        src/applications/emdAnalysis/onsagerAnalysis.cpp)
-add_executable(rcorrAnalysis          src/applications/emdAnalysis/rcorrAnalysis.cpp)
+add_executable(currentDensityAnalysis   src/applications/emdAnalysis/currentDensityAnalysis.cpp)
+add_executable(kirkwoodBuffAnalysis     src/applications/emdAnalysis/kirkwoodBuffAnalysis.cpp)
+add_executable(onsagerAnalysis          src/applications/emdAnalysis/onsagerAnalysis.cpp)
+add_executable(rcorrAnalysis            src/applications/emdAnalysis/rcorrAnalysis.cpp)
 
-add_executable(fzConstraintAnalysis   src/applications/spf-rnemd/fzConstraintAnalysis.cpp src/fzFile.cpp)
-add_executable(fzTimeDependence       src/applications/spf-rnemd/fzTimeDependence.cpp src/fzFile.cpp)
+add_executable(fzConstraintAnalysis     src/applications/spf-rnemd/fzConstraintAnalysis.cpp src/fzFile.cpp)
+add_executable(fzTimeDependence         src/applications/spf-rnemd/fzTimeDependence.cpp src/fzFile.cpp)
 
-add_executable(chargedSPF             src/applications/spf-rnemd/chargedSPF.cpp src/rnemdFile.cpp)
-add_executable(membranePermeability   src/applications/spf-rnemd/membranePermeability.cpp src/rnemdFile.cpp)
-add_executable(soretEffects           src/applications/spf-rnemd/soretEffects.cpp src/rnemdFile.cpp)
-add_executable(spfFitting             src/applications/spf-rnemd/spfFitting.cpp src/rnemdFile.cpp)
-add_executable(stitchRNEMD            src/applications/spf-rnemd/stitchRNEMD.cpp src/rnemdFile.cpp)
-add_executable(thermalProfile         src/applications/spf-rnemd/thermalProfile.cpp src/rnemdFile.cpp)
+add_executable(chargedSPF               src/applications/spf-rnemd/chargedSPF.cpp src/rnemdFile.cpp)
+add_executable(membranePermeability     src/applications/spf-rnemd/membranePermeability.cpp src/rnemdFile.cpp)
+add_executable(membranePermeabilitySalt src/applications/spf-rnemd/membranePermeabilitySalt.cpp src/rnemdFile.cpp)
+add_executable(soretEffects             src/applications/spf-rnemd/soretEffects.cpp src/rnemdFile.cpp)
+add_executable(spfFitting               src/applications/spf-rnemd/spfFitting.cpp src/rnemdFile.cpp)
+add_executable(stitchRNEMD              src/applications/spf-rnemd/stitchRNEMD.cpp src/rnemdFile.cpp)
+add_executable(thermalProfile           src/applications/spf-rnemd/thermalProfile.cpp src/rnemdFile.cpp)
 
 
 ### Installation ###

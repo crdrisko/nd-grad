@@ -15,7 +15,7 @@
 #include <common-utils/files.hpp>
 #include <common-utils/strings.hpp>
 #include <cpp-units/physicalQuantities.hpp>
-#include <dryphys/utilities.hpp>
+#include <dryphys/dryphys.hpp>
 
 using namespace CppUnits;
 using namespace DryPhys::Literals;

@@ -135,7 +135,7 @@ endif()
 include_directories(${COMMON_UTILS_INCLUDE_DIR})
 include_directories(${CPP_UNITS_INCLUDE_DIR})
 
-# find_package(DryPhys)
+find_package(DryPhys)
 
 if (NOT DryPhys_FOUND)
     ## If DryPhys isn't installed or can't be found, download it from github ##
@@ -153,12 +153,50 @@ if (NOT DryPhys_FOUND)
     FetchContent_MakeAvailable(dryphys)
     set(DryPhys_FOUND TRUE)
     set(DRYPHYS_INCLUDE_DIR  "${dryphys_SOURCE_DIR}/include")
-    set(ENGINE2D_INCLUDE_DIR  "${dryphys_SOURCE_DIR}/include")
     set(ENGINE2D_LIBRARIES    engine2d_gui)
+else()
+    ## ImGui
+    message(STATUS "Fetching ImGUI...")
+    FetchContent_Declare(imgui          # v1.90.5
+                         GIT_REPOSITORY "https://github.com/ocornut/imgui.git"
+                         GIT_TAG        "231cbee0fc4f59dbe5b8b853a11b08dc84e57c65")
+
+    FetchContent_MakeAvailable(imgui)
+    include_directories(${imgui_SOURCE_DIR})
+
+    ## SFML
+    message(STATUS "Fetching SFML...")
+    FetchContent_Declare(sfml           # v2.6.1
+                         GIT_REPOSITORY "https://github.com/SFML/SFML.git"
+                         GIT_TAG        "69ea0cd863aed1d4092b970b676924a716ff718b")
+
+    set(SFML_BUILD_AUDIO ON)
+    set(SFML_BUILD_NETWORK OFF)
+
+    FetchContent_MakeAvailable(sfml)
+
+    ## ImGui-SFML
+    message(STATUS "Fetching ImGui-SFML...")
+    FetchContent_Declare(imgui_sfml     # v2.6
+                         GIT_REPOSITORY "https://github.com/SFML/imgui-sfml.git"
+                         GIT_TAG        "de565ac8f2b795dedc0307b60830cb006afd2ecd")
+
+    set(IMGUI_DIR ${imgui_SOURCE_DIR})
+    set(IMGUI_SFML_FIND_SFML OFF)
+    set(IMGUI_SFML_IMGUI_DEMO ON)
+
+    FetchContent_MakeAvailable(imgui_sfml)
+    include_directories(${imgui_sfml_SOURCE_DIR})
+
+    set(IMGUI_SOURCE ${imgui_SOURCE_DIR}/imgui.cpp
+                     ${imgui_SOURCE_DIR}/imgui_demo.cpp
+                     ${imgui_SOURCE_DIR}/imgui_draw.cpp
+                     ${imgui_SOURCE_DIR}/imgui_tables.cpp
+                     ${imgui_SOURCE_DIR}/imgui_widgets.cpp
+                     ${imgui_sfml_SOURCE_DIR}/imgui-SFML.cpp)
 endif()
 
 include_directories(${DRYPHYS_INCLUDE_DIR})
-include_directories(${ENGINE2D_INCLUDE_DIR})
 
 
 ### ND-Grad Subprojects ###

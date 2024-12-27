@@ -10,7 +10,7 @@
 #define ND_GRAD_ND_RESEARCH_SRC_APPLICATIONS_NPGBUILDER_COMPONENTS_HPP
 
 #include <SFML/Graphics.hpp>
-#include <dryphys/math.hpp>
+#include <dryphys/dryphys.hpp>
 #include <engine2d/components.hpp>
 
 namespace NPGBuilder

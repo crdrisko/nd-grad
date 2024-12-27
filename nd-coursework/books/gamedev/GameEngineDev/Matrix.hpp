@@ -21,7 +21,9 @@ private:
 public:
     Matrix3D() = default;
 
-    Matrix3D(float n00, float n01, float n02, float n10, float n11, float n12, float n20, float n21, float n22)
+    Matrix3D(float n00, float n01, float n02, 
+             float n10, float n11, float n12, 
+             float n20, float n21, float n22)
     {
         n[0][0] = n00; n[0][1] = n10; n[0][2] = n20;
         n[1][0] = n01; n[1][1] = n11; n[1][2] = n21;
@@ -92,6 +94,24 @@ Vector3D operator*(const Matrix3D& M, const Vector3D& v)
     return (Vector3D(M(0, 0) * v.x + M(0, 1) * v.y + M(0, 2) * v.z,
                      M(1, 0) * v.x + M(1, 1) * v.y + M(1, 2) * v.z,
                      M(2, 0) * v.x + M(2, 1) * v.y + M(2, 2) * v.z));
+}
+
+Matrix3D Inverse(const Matrix3D& M)
+{
+    const Vector3D& a = M[0];
+    const Vector3D& b = M[1];
+    const Vector3D& c = M[2];
+
+    Vector3D r0 = Cross(b, c);
+    Vector3D r1 = Cross(c, a);
+    Vector3D r2 = Cross(a, b);
+
+    float invDet = 1.0F / Dot(r2, c);
+
+   
+    return (Matrix3D(r0.x * invDet, r0.y * invDet, r0.z * invDet,
+                     r1.x * invDet, r1.y * invDet, r1.z * invDet,
+                     r2.x * invDet, r2.y * invDet, r2.z * invDet));
 }
 // clang-format on
 
