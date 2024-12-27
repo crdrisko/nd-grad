@@ -54,8 +54,8 @@ install(FILES include/rnemdFile.hpp include/rnemdParameters.hpp
 install(FILES include/emdFile.hpp
         DESTINATION include/nd-grad)
 
-install(TARGETS currentDensityAnalysis kirkwoodBuffAnalysis onsagerAnalysis rcorrAnalysis 
-                chargedSPF fzConstraintAnalysis fzTimeDependence membranePermeability
+install(TARGETS currentDensityAnalysis kirkwoodBuffAnalysis onsagerAnalysis rcorrAnalysis chargedSPF 
+                fzConstraintAnalysis fzTimeDependence membranePermeability membranePermeabilitySalt
                 soretEffects spfFitting stitchRNEMD thermalProfile
         DESTINATION bin
         PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE
