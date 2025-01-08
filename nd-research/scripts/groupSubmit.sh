@@ -2,7 +2,7 @@
 # Copyright (c) 2019-2024 Cody R. Drisko. All rights reserved.
 # Licensed under the MIT License. See the LICENSE file in the project root for more information.
 #
-# Name: groupSubmit.sh - Version 1.3.3
+# Name: groupSubmit.sh - Version 1.4.0
 # Author: cdrisko
 # Date: 01/20/2020-10:22:05
 # Description: Gezelter group submission script creator and resource monitor
@@ -14,9 +14,10 @@ source typeParsing
 
 printHelpMessage()              #@ DESCRIPTION: Print the groupSubmit program's help message
 {                               #@ USAGE: printHelpMessage
-    printf "\nUSAGE: groupSubmit [-hvd] [-i FILE] [-s FILE] [-u STRING] [-c STRING]\n\n"
+    printf "\nUSAGE: groupSubmit [-hvrd] [-i FILE] [-s FILE] [-u STRING] [-c STRING]\n\n"
     printf "  -h  Prints help information about the groupSubmit program.\n"
     printf "  -v  Verbose mode. Defaults to false/off.\n"
+    printf "  -r  Disable the resource checking system. Defaults to false/off.\n"
     printf "  -d  Submit jobs to the debug queue. Defaults to false/off.\n\n"
     printf "  -i  OPTIONAL: Your input '.omd' file to be submitted. Note that this is\n"
     printf "        required if no submission script is provided via the '-s' option.\n"
@@ -30,7 +31,7 @@ printHelpMessage()              #@ DESCRIPTION: Print the groupSubmit program's 
 }
 
 printCheckQuotaScript()         #@ DESCRIPTION: Print script used to notify user of potential memory overflow
-{                               #@ USAGE: printCheckQuotaScript [User|Group]
+{                               #@ USAGE: printCheckQuotaScript [User|Group|Scratch]
     printf "#!/bin/bash\n"
     printf "#$ -N check%sQuota\n" "$1"
     printf "#$ -M %s@nd.edu\n" "$username"
@@ -38,8 +39,14 @@ printCheckQuotaScript()         #@ DESCRIPTION: Print script used to notify user
     printf "#$ -pe smp 1\n\n"
     printf "while true\n"
     printf "do\n"
-    printf "    quotaArray=( \$( /usr/bin/fs quota ) )\n"
-    printf "    quotaPercentage=\${quotaArray[0]}\n"
+    if [[ "$1" == "Scratch" ]]
+    then
+        printf "    quotaArray=( \$( pan_df /scratch365/%s ) )\n" "$USER"
+        printf "    quotaPercentage=\${quotaArray[11]}\n"
+    else
+        printf "    quotaArray=( \$( /usr/bin/fs quota ) )\n"
+        printf "    quotaPercentage=\${quotaArray[0]}\n"
+    fi
     printf "    quotaPercentage=\${quotaPercentage%%%%\\%%*}\n\n"
     printf "    if [ \$quotaPercentage -ge 99 ]\n"
     printf "    then\n"
@@ -50,26 +57,42 @@ printCheckQuotaScript()         #@ DESCRIPTION: Print script used to notify user
     printf "    then\n"
     printf "        ## Send WARNING if within 5%% of available quota ##\n"
     printf "        mail -s 'WARNING' %s@nd.edu <<< 'You have used 95%% of your available quota.'\n" "$username"
-    printf "        sleepTime=1hr\n\n"
+    printf "        sleepTime=1h\n\n"
     printf "    elif [ \$quotaPercentage -ge 90 ]\n"
     printf "    then\n"
     printf "        ## Send CAUTION if within 10%% of available quota ##\n"
     printf "        mail -s 'CAUTION' %s@nd.edu <<< 'You have used 90%% of your available quota.'\n" "$username"
     printf "        sleepTime=2h\n"
+    printf "    else\n"
+    printf "        sleepTime=4h\n"
     printf "    fi\n\n"
     printf "    ## Put machine to sleep before next check ##\n"
-    printf "    sleep \${sleepTime:=3h}\n\n"
+    printf "    sleep \${sleepTime:=4h}\n\n"
     printf "    qstatArray=( \$( /opt/sge/bin/lx-amd64/qstat -u %s | tail -n +3 ) )\n" "$USER"
     printf "    qstatArrayLength=\$( printf \"%%s\\\n\" \${qstatArray[@]} | wc -l )\n\n"
     printf "    case \$qstatArrayLength in\n"
     printf "         9) ## Only one filesystem is being checked ##\n"
-    printf "            if [[ \${qstatArray[2]} == \"checkUserQ\" || \${qstatArray[2]} == \"checkGroup\" ]]\n"
+    printf "            if [[ \${qstatArray[2]} == \"checkUserQ\" || \${qstatArray[2]} == \"checkGroup\" || \${qstatArray[2]} == \"checkScrat\" ]]\n"
     printf "            then\n"
     printf "                exit 0\n"
     printf "            fi ;;\n"
-    printf "        18) ## Only one filesystem is being checked ##\n"
+    printf "        18) ## Only two filesystems are being checked ##\n"
     printf "            if [[ \${qstatArray[2]} == \"checkUserQ\" && \${qstatArray[11]} == \"checkGroup\" ]]\\\\\n"
-    printf "                || [[ \${qstatArray[11]} == \"checkUserQ\" && \${qstatArray[2]} == \"checkGroup\" ]]\n"
+    printf "                || [[ \${qstatArray[2]} == \"checkUserQ\" && \${qstatArray[11]} == \"checkScrat\" ]]\\\\\n"
+    printf "                || [[ \${qstatArray[2]} == \"checkGroup\" && \${qstatArray[11]} == \"checkUserQ\" ]]\\\\\n"
+    printf "                || [[ \${qstatArray[2]} == \"checkGroup\" && \${qstatArray[11]} == \"checkScrat\" ]]\\\\\n"
+    printf "                || [[ \${qstatArray[2]} == \"checkScrat\" && \${qstatArray[11]} == \"checkUserQ\" ]]\\\\\n"
+    printf "                || [[ \${qstatArray[2]} == \"checkScrat\" && \${qstatArray[11]} == \"checkGroup\" ]]\n"
+    printf "            then\n"
+    printf "                exit 0\n"
+    printf "            fi ;;\n"
+    printf "        27) ## Only three filesystems are being checked ##\n"
+    printf "            if [[ \${qstatArray[2]} == \"checkUserQ\" && \${qstatArray[11]} == \"checkGroup\" && \${qstatArray[20]} == \"checkScrat\" ]]\\\\\n"
+    printf "                || [[ \${qstatArray[2]} == \"checkUserQ\" && \${qstatArray[11]} == \"checkScrat\" && \${qstatArray[20]} == \"checkGroup\" ]]\\\\\n"
+    printf "                || [[ \${qstatArray[2]} == \"checkGroup\" && \${qstatArray[11]} == \"checkUserQ\" && \${qstatArray[20]} == \"checkScrat\" ]]\\\\\n"
+    printf "                || [[ \${qstatArray[2]} == \"checkGroup\" && \${qstatArray[11]} == \"checkScrat\" && \${qstatArray[20]} == \"checkUserQ\" ]]\\\\\n"
+    printf "                || [[ \${qstatArray[2]} == \"checkScrat\" && \${qstatArray[11]} == \"checkUserQ\" && \${qstatArray[20]} == \"checkGroup\" ]]\\\\\n"
+    printf "                || [[ \${qstatArray[2]} == \"checkScrat\" && \${qstatArray[11]} == \"checkGroup\" && \${qstatArray[20]} == \"checkUserQ\" ]]\\\\\n"        
     printf "            then\n"
     printf "                exit 0\n"
     printf "            fi ;;\n"
@@ -102,15 +125,16 @@ printOpenmdSubmissionScript()   #@ DESCRIPTION: Print script used to run the Ope
 
 
 ### Initial Variables / Default Values ###
-declare inputDir inputFile queue scriptDir scriptFile username verbose
+declare inputDir inputFile queue scriptDir scriptFile username skipResourceManagement verbose
 
 queue=long
 username="$USER"
+skipResourceManagement=0
 verbose=0
 
 
 ### Runtime Configuration ###
-while getopts i:s:u:c:dvh opt
+while getopts i:s:u:c:drvh opt
 do
     case $opt in
         i) FILE   input    = "$OPTARG" ;;                   ## Returns inputFile and inputDir variables
@@ -118,6 +142,7 @@ do
         u) STRING username = "$OPTARG" ;;
         c) STRING cores    = "$OPTARG" ;;
         d) queue=debug ;;
+        r) skipResourceManagement=1 ;;
         v) export verbose=1 ;;
         h) printHelpMessage && printFatalErrorMessage 0 ;;
         *) printFatalErrorMessage 1 "Invalid option flag passed to program." ;;
@@ -173,32 +198,42 @@ fi
 ## Submit the jobs if the submission script exists ##
 if [[ -f ${scriptFile:?A script is required} ]]
 then
-    ## If checkQuota script is already running, no need to submit it again ##
-    IFS=$'\n'
-    qstatArray=( $( qstat -u "$USER" ) )
-    IFS=$' \t\n'
+    if [[ ${skipResourceManagement} -eq 0 ]]
+    then
+        ## If checkQuota script is already running, no need to submit it again ##
+        IFS=$'\n'
+        qstatArray=( $( qstat -u "$USER" ) )
+        IFS=$' \t\n'
 
-    for line in "${qstatArray[@]}"
-    do
-        lineArray=( $line )
+        for line in "${qstatArray[@]}"
+        do
+            lineArray=( $line )
 
-        if [[ "${lineArray[2]}" == "checkUserQ" ]]
+            if [[ "${lineArray[2]}" == "checkUserQ" ]]
+            then
+                checkUserQuota=1
+            elif [[ "${lineArray[2]}" == "checkGroup" ]]
+            then
+                checkGroupQuota=1
+            elif [[ "${lineArray[2]}" == "checkScrat" ]]
+            then
+                checkScratchQuota=1
+            fi
+        done
+
+        if [[ ${checkUserQuota:-0} -eq 0 && "$PWD" == /afs/crc.nd.edu/user/* ]]
         then
-            checkUserQuota=1
-        elif [[ "${lineArray[2]}" == "checkGroup" ]]
+            printCheckQuotaScript User > checkUserQuota.sh
+            qsub checkUserQuota.sh
+        elif [[ ${checkGroupQuota:-0} -eq 0 && "$PWD" == /afs/crc.nd.edu/group/gezelter/* ]]
         then
-            checkGroupQuota=1
+            printCheckQuotaScript Group > checkGroupQuota.sh
+            qsub checkGroupQuota.sh
+        elif [[ ${checkScratchQuota:-0} -eq 0 && "$PWD" == /scratch365/* ]]
+        then
+            printCheckQuotaScript Scratch > checkScratchQuota.sh
+            qsub checkScratchQuota.sh
         fi
-    done
-
-    if [[ ${checkUserQuota:-0} -eq 0 && "$PWD" == /afs/crc.nd.edu/user/* ]]
-    then
-        printCheckQuotaScript User > checkUserQuota.sh
-        qsub checkUserQuota.sh
-    elif [[ ${checkGroupQuota:-0} -eq 0 && "$PWD" == /afs/crc.nd.edu/group/gezelter/* ]]
-    then
-        printCheckQuotaScript Group > checkGroupQuota.sh
-        qsub checkGroupQuota.sh
     fi
 
     qsub "$scriptFile"
