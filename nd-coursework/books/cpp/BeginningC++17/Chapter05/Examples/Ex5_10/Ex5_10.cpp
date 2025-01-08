@@ -2,7 +2,7 @@
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
 // Name: Ex5_10.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 04/29/2020-12:40:44
 // Description: Classifying the letters in a C-style string
 

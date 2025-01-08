@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: varprint2.hpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/27/2020-10:39:28
 // Description: Printing a variable number of arguments where the templates differ only by a training parameter pack
 

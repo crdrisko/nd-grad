@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: maxconstexpr.hpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/26/2020-08:34:31
 // Description: A version of the max() function that can be used at compile time
 

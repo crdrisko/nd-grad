@@ -1,8 +1,8 @@
-// Copyright (c) 2019-2024 Cody R. Drisko. All rights reserved.
+// Copyright (c) 2019-2025 Cody R. Drisko. All rights reserved.
 // Licensed under the MIT License. See the LICENSE file in the project root for more information.
 //
 // Name: Exercise7_03.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 08/03/2020-07:52:32
 // Description: Replacing all instances of a (full) word in a string with astrisks
 

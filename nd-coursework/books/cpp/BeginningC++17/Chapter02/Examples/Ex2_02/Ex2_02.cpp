@@ -2,7 +2,7 @@
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
 // Name: Ex2_02.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 04/16/2020-12:05:31
 // Description: Converting distances
 

@@ -1,8 +1,8 @@
-// Copyright (c) 2019-2024 Cody R. Drisko. All rights reserved.
+// Copyright (c) 2019-2025 Cody R. Drisko. All rights reserved.
 // Licensed under the MIT License. See the LICENSE file in the project root for more information.
 //
 // Name: Exercise5_02.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 04/30/2020-13:15:00
 // Description: Calculate the sum and average of user-entered numbers
 

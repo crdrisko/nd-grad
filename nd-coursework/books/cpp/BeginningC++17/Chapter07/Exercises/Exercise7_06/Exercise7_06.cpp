@@ -1,8 +1,8 @@
-// Copyright (c) 2019-2024 Cody R. Drisko. All rights reserved.
+// Copyright (c) 2019-2025 Cody R. Drisko. All rights reserved.
 // Licensed under the MIT License. See the LICENSE file in the project root for more information.
 //
 // Name: Exercise7_06.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 08/05/2020-07:59:15
 // Description: Finding all words that begin with a letter from a list of letters
 

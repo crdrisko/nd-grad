@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: iteratorfacadeaccessskel.hpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/29/2020-09:34:33
 // Description: A class that hides access to our iterator operations except by friend classes
 

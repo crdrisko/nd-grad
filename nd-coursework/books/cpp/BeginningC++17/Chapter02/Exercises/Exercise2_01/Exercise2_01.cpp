@@ -1,8 +1,8 @@
-// Copyright (c) 2019-2024 Cody R. Drisko. All rights reserved.
+// Copyright (c) 2019-2025 Cody R. Drisko. All rights reserved.
 // Licensed under the MIT License. See the LICENSE file in the project root for more information.
 //
 // Name: Exercise2_01.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 04/22/2020-14:11:51
 // Description: Compute the area of a circle
 

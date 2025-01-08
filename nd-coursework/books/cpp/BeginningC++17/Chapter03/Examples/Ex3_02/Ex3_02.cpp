@@ -2,7 +2,7 @@
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
 // Name: Ex3_02.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 04/23/2020-13:44:41
 // Description: Operations with enumerations
 

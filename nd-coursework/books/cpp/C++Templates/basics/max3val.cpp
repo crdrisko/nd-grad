@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: max3val.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/26/2020-08:10:46
 // Description: Overloading the max() function template for pointers and ordinary C-strings
 

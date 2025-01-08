@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: forupto1.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/27/2020-12:59:34
 // Description: Enumerating integer values from 0 up to some value and providing each value to the given function object
 

@@ -1,8 +1,8 @@
-// Copyright (c) 2019-2024 Cody R. Drisko. All rights reserved.
+// Copyright (c) 2019-2025 Cody R. Drisko. All rights reserved.
 // Licensed under the MIT License. See the LICENSE file in the project root for more information.
 //
 // Name: Exercise7_01.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/25/2020-08:17:49
 // Description: Calculating and outputting the average grade from an unknown number of students in a class
 

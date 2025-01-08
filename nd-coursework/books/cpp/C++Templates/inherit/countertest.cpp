@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: countertest.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/29/2020-08:17:55
 // Description: Testing our object counter utilizing the CRTP
 

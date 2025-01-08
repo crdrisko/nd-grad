@@ -2,7 +2,7 @@
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
 // Name: Ex5_14.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 04/29/2020-13:59:34
 // Description: Using array<T, N> to create Body Mass Index (BMI) table
 

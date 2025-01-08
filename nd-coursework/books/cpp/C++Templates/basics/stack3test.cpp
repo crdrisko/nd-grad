@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: stack3test.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/26/2020-14:54:33
 // Description: Using the class template Stack<> with varrying element and container types
 

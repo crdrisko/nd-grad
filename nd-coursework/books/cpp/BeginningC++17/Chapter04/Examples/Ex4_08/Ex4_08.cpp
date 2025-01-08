@@ -2,7 +2,7 @@
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
 // Name: Ex4_08.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 04/25/2020-12:03:15
 // Description: Multiple case actions
 

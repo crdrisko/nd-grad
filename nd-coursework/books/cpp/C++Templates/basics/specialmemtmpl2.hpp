@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: specialmemtmpl2.hpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 08/01/2020-08:45:53
 // Description: Replacing the overloading constructors by using a generic constructor with perfect forwarding
 

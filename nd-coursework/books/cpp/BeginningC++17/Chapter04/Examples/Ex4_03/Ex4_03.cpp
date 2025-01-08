@@ -2,7 +2,7 @@
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
 // Name: Ex4_03.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 04/24/2020-13:57:01
 // Description: Using a nested if
 

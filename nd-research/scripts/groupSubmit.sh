@@ -1,9 +1,9 @@
 #!/bin/bash
-# Copyright (c) 2019-2024 Cody R. Drisko. All rights reserved.
+# Copyright (c) 2019-2025 Cody R. Drisko. All rights reserved.
 # Licensed under the MIT License. See the LICENSE file in the project root for more information.
 #
 # Name: groupSubmit.sh - Version 1.4.0
-# Author: cdrisko
+# Author: crdrisko
 # Date: 01/20/2020-10:22:05
 # Description: Gezelter group submission script creator and resource monitor
 

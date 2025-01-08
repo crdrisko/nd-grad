@@ -2,7 +2,7 @@
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
 // Name: Ex4_04.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 04/25/2020-08:51:45
 // Description: Using the if-else statement
 

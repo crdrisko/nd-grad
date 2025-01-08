@@ -2,7 +2,7 @@
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
 // Name: Ex5_08.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 04/27/2020-13:42:42
 // Description: Using the continue statement to display ASCII character codes
 

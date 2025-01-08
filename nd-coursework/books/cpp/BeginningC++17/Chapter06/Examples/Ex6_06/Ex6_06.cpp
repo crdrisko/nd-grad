@@ -2,7 +2,7 @@
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
 // Name: Ex6_06.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 05/01/2020-14:17:51
 // Description: Calculate primes using dynamic memory allocation
 

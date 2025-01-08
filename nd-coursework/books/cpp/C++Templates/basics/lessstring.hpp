@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: lessstring.hpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/29/2020-20:44:32
 // Description: A function template designed for string literals (and other char arrays)
 

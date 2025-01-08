@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# Copyright (c) 2019-2024 Cody R. Drisko. All rights reserved.
+# Copyright (c) 2019-2025 Cody R. Drisko. All rights reserved.
 # Licensed under the MIT License. See the LICENSE file in the project root for more information.
 #
 # Name: reflectionToAbsorbance.py - Version 1.0.0
-# Author: cdrisko
+# Author: crdrisko
 # Date: 02/10/2019-11:08:39
 # Description: Reproduce absorbance plot from 'Atomically thin MoS2: A new direct-gap semiconductor' paper
 

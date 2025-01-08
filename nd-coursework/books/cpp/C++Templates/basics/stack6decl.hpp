@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: stack6decl.hpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/30/2020-21:43:52
 // Description: A Stack class with a parameterized internal container
 

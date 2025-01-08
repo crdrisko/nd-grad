@@ -2,7 +2,7 @@
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
 // Name: Ex7_06.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 05/03/2020-17:04:08
 // Description: Searching a string for characters from a set
 

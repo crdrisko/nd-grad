@@ -2,7 +2,7 @@
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
 // Name: Ex5_01.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 04/26/2020-14:44:30
 // Description: Using a for loop with an array
 

@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: max1.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/25/2020-20:36:07
 // Description: Using the max() function template
 

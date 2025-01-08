@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: stack4assign.hpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/30/2020-21:28:35
 // Description: Implementation details of the fourth Stack class
 

@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: lessarray.hpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/29/2020-20:44:25
 // Description: Templates specifically designed for raw arrays or string literals
 

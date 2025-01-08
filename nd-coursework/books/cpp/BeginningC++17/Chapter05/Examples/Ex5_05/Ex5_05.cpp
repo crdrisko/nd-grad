@@ -2,7 +2,7 @@
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
 // Name: Ex5_05.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 04/26/2020-15:14:58
 // Description: Using a while loop to calculate the sum of integers from 1 to n and n!
 

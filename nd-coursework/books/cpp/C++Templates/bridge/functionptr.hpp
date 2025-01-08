@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: functionptr.hpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/27/2020-14:13:01
 // Description: The interface of the FunctionPtr<> template class
 

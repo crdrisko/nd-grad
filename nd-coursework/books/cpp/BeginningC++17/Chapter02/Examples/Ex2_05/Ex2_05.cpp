@@ -2,7 +2,7 @@
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
 // Name: Ex2_05.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 04/22/2020-14:05:32
 // Description: Finding maximum and minimum values for data types
 

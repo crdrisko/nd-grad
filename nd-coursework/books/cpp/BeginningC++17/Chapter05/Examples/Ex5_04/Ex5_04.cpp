@@ -2,7 +2,7 @@
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
 // Name: Ex5_04.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 04/26/2020-15:02:34
 // Description: Multiple initializations in a loop expression
 

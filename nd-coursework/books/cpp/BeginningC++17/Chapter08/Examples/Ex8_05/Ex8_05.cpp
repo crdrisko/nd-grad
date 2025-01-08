@@ -2,7 +2,7 @@
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
 // Name: Ex8_05.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 08/10/2020-08:01:47
 // Description: Passing an array to a function
 

@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: functorbridge.hpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/27/2020-14:17:03
 // Description: An abstract base class responsible for the ownership and manipulation of the underlying function object
 

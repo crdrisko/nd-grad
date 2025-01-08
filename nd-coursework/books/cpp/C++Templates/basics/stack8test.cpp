@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: stack8test.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/31/2020-07:42:09
 // Description: Using all features of the final implementation of the Stack class template
 

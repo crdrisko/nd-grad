@@ -1,9 +1,9 @@
 #!/bin/bash
-# Copyright (c) 2019-2024 Cody R. Drisko. All rights reserved.
+# Copyright (c) 2019-2025 Cody R. Drisko. All rights reserved.
 # Licensed under the MIT License. See the LICENSE file in the project root for more information.
 #
 # Name: saltWaterBoxer.sh - Version 1.2.0
-# Author: cdrisko
+# Author: crdrisko
 # Date: 05/22/2020-11:15:28
 # Description: Take an input packmol file and return a valid openmd file for a solution of salt water
 

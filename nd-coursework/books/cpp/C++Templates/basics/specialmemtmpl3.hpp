@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: specialmemtmpl3.hpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 08/01/2020-08:45:56
 // Description: Using std::enable_if<> to allow for COPY-CONSTR to be called by switching off TMPL-CONSTR
 

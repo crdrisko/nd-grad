@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: maxdefault1.hpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/26/2020-07:55:15
 // Description: Using the operator?: to set a default return type (C++14 and on)
 

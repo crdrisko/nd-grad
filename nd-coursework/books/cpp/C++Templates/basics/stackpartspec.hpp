@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: stackpartspec.hpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/26/2020-14:41:31
 // Description: Partial specialization of class Stack<> for pointers
 

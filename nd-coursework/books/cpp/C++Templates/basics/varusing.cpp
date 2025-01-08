@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: varusing.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/27/2020-11:35:26
 // Description: Demonstrating the use of variadic base classes and using
 

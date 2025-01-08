@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: forupto2.hpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/27/2020-13:09:13
 // Description: Limiting an increase in code size by using a function pointer instead of a function template
 

@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: stack8.hpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/31/2020-07:41:58
 // Description: Final version of the stack template
 

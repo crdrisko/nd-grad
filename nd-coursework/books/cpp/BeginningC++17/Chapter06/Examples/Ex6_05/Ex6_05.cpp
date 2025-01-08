@@ -2,7 +2,7 @@
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
 // Name: Ex6_05.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 04/30/2020-22:36:56
 // Description: Calculating prime numbers using pointer notation
 

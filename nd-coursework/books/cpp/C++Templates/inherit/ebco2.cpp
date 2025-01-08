@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: ebco2.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/28/2020-20:08:41
 // Description: Running into a constraint of EBCO
 

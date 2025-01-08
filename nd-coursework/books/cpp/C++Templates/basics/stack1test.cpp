@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: stack1test.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/26/2020-14:09:48
 // Description: Using the class template Stack<> (prior to C++17)
 

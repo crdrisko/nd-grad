@@ -2,7 +2,7 @@
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
 // Name: Ex6_04.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 04/30/2020-22:04:40
 // Description: Using an array of pointers
 

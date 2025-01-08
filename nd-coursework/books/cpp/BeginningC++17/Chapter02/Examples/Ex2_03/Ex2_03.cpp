@@ -2,7 +2,7 @@
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
 // Name: Ex2_03.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 04/22/2020-13:47:25
 // Description: Sizing a pond for happy fish
 

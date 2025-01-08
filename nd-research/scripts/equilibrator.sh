@@ -1,9 +1,9 @@
 #!/bin/bash
-# Copyright (c) 2019-2024 Cody R. Drisko. All rights reserved.
+# Copyright (c) 2019-2025 Cody R. Drisko. All rights reserved.
 # Licensed under the MIT License. See the LICENSE file in the project root for more information.
 #
 # Name: equilibrator.sh - Version 1.2.2
-# Author: cdrisko
+# Author: crdrisko
 # Date: 02/07/2020-08:37:21
 # Description: Standard equilibration procedure for an OpenMD simulation
 

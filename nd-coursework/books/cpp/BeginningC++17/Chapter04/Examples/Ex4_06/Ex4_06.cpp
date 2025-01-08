@@ -2,7 +2,7 @@
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
 // Name: Ex4_06.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 04/25/2020-11:46:19
 // Description: Using the conditional operator to select output
 

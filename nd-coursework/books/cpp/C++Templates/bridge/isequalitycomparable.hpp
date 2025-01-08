@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: isequalitycomparable.hpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/27/2020-16:17:39
 // Description: Querying whether the operator== is available before calling it
 

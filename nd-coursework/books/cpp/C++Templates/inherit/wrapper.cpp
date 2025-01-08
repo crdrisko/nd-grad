@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: wrapper.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/29/2020-08:30:40
 // Description: Differing cases of visiblity for a friend function in a wrapper class
 

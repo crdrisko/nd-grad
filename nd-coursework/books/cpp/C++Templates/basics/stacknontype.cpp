@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: stacknontype.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/26/2020-17:40:39
 // Description: Demonstrating the use of the Stack<> template with the non-type parameter
 

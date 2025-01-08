@@ -2,7 +2,7 @@
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
 // Name: Ex6_01.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 04/30/2020-21:41:31
 // Description: The size of pointers
 

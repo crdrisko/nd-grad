@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: boolstringgetbool.hpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/30/2020-21:51:13
 // Description: Full specialization for BoolString::getValue<>() for bool
 

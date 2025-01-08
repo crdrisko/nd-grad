@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: functionptr-init.hpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/27/2020-15:01:08
 // Description: Using the FunctionPtr initializer to create instances of SpecificFunctorBridge<>'s (C++14 and on)
 

@@ -2,7 +2,7 @@
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
 // Name: Ex5_07.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 04/26/2020-15:35:23
 // Description: Generating multiplication tables using nested loops
 

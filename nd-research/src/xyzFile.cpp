@@ -1,8 +1,8 @@
-// Copyright (c) 2019-2024 Cody R. Drisko. All rights reserved.
+// Copyright (c) 2019-2025 Cody R. Drisko. All rights reserved.
 // Licensed under the MIT License. See the LICENSE file in the project root for more information.
 //
 // Name: xyzFile.cpp - Version 1.0.0
-// Author: cdrisko
+// Author: crdrisko
 // Date: 02/24/2020-07:57:37
 // Description: Funtion definitions for the XYZFile class
 

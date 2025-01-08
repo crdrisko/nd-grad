@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: max4.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/26/2020-08:33:50
 // Description: Demonstration of why to always ensure all overloaded versions of a function are declared before the function is called
 

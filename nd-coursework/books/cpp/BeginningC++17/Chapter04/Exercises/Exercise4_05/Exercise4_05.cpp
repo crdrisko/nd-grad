@@ -1,8 +1,8 @@
-// Copyright (c) 2019-2024 Cody R. Drisko. All rights reserved.
+// Copyright (c) 2019-2025 Cody R. Drisko. All rights reserved.
 // Licensed under the MIT License. See the LICENSE file in the project root for more information.
 //
 // Name: Exercise4_05.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 04/26/2020-09:46:51
 // Description: Additional messages printed at the end of Ex4_06
 

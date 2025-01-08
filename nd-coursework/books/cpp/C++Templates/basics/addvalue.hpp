@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: addvalue.hpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/26/2020-17:47:44
 // Description: Defines a group of functions for which a certain value can be added
 

@@ -1,8 +1,8 @@
-// Copyright (c) 2019-2024 Cody R. Drisko. All rights reserved.
+// Copyright (c) 2019-2025 Cody R. Drisko. All rights reserved.
 // Licensed under the MIT License. See the LICENSE file in the project root for more information.
 //
 // Name: Exercise7_07.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 08/06/2020-07:26:52
 // Description: Using stringstreams to parse strings
 

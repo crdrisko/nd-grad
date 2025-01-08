@@ -2,7 +2,7 @@
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
 // Name: Ex6_07.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 05/01/2020-16:20:48
 // Description: Using smart pointers
 

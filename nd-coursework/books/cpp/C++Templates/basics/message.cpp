@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: message.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/27/2020-07:54:49
 // Description: Passing statically locally declared strings as constant arrays (C++17 and on)
 

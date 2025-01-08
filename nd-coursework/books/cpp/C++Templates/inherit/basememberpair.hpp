@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: basememberpair.hpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/28/2020-20:20:55
 // Description: Implementation of BaseMemberPair
 

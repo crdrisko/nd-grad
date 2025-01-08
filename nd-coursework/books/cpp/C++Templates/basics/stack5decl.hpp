@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: stack5decl.hpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/30/2020-21:34:20
 // Description: Using a friend class to give Stack<T> access to the private members of a Stack<T2>
 

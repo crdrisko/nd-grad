@@ -2,7 +2,7 @@
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
 // Name: Ex5_02.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 04/26/2020-14:48:59
 // Description: Obtaining the number of array elements
 

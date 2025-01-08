@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: stack4decl.hpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/30/2020-21:15:58
 // Description: Declaration of a templated Stack which has a separately templated assignment operator
 

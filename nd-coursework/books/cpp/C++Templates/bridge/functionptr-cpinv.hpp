@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: functionptr-cpinv.hpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/27/2020-14:54:41
 // Description: FunctionPtr's copy constructor and function call operator
 

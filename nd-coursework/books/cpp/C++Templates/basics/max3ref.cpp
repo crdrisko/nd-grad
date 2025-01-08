@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: max3ref.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/26/2020-08:24:08
 // Description: Demonstrating the danger of calling function templates by reference
 

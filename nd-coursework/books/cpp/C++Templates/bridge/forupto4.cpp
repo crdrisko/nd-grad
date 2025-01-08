@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: forupto4.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/27/2020-14:12:48
 // Description: Demonstrating the use of our generalized function pointer class template in place of std::function<>
 

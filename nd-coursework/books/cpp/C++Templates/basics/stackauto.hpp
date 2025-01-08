@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: stackauto.hpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/27/2020-07:54:14
 // Description: A more generic stack class with a fixed size (C++17 and on)
 

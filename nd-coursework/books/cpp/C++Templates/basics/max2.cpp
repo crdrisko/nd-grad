@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: max2.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/26/2020-08:03:17
 // Description: Overloading a function template
 

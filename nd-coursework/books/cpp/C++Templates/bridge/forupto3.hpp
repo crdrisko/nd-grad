@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: forupto3.hpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/27/2020-13:09:16
 // Description: An alternative formulation of forUpTo() using the standard library's class template, std::function<>
 

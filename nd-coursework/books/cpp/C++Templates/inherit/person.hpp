@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: person.hpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/29/2020-09:45:40
 // Description: A basic definition of a Person structure
 

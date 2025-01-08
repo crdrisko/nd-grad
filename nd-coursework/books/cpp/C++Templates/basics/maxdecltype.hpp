@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: maxdecltype.hpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/25/2020-21:06:12
 // Description: Declaring the way in which the return type should be derived for our max() function (C++11 and on)
 

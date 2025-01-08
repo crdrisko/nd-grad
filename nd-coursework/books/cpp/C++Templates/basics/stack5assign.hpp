@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: stack5assign.hpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/30/2020-21:36:07
 // Description: Implementation details of the fifth Stack class
 

@@ -2,7 +2,7 @@
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
 // Name: Ex7_04.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 05/03/2020-16:47:47
 // Description: Searching within strings
 

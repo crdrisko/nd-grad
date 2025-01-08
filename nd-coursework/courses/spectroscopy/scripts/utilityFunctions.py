@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# Copyright (c) 2019-2024 Cody R. Drisko. All rights reserved.
+# Copyright (c) 2019-2025 Cody R. Drisko. All rights reserved.
 # Licensed under the MIT License. See the LICENSE file in the project root for more information.
 #
 # Name: utilityFunctions.py - Version 1.0.0
-# Author: cdrisko
+# Author: crdrisko
 # Date: 04/26/2019-11:46:42
 # Description: A collection of utility functions that can be used in other scripts
 

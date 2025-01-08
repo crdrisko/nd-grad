@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: stack7decl.hpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/31/2020-07:36:50
 // Description: A class template with template template parameters for a simple stack
 

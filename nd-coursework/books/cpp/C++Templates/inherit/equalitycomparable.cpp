@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: equalitycomparable.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/29/2020-08:49:21
 // Description: Combining CRTP with the Barton-Nackman trick when implementing operators in terms of other operators
 

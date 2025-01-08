@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: listnodeiterator0.hpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/29/2020-09:27:53
 // Description: Using the IteratorFacade to easily define a list iterator
 

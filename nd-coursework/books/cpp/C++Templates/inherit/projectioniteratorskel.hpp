@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: projectioniteratorskel.hpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/29/2020-09:48:21
 // Description: An iterator defined in terms of the base iterator and the type of value that will be exposed by the iterator
 

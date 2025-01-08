@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: maxdefault3.hpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/26/2020-08:10:38
 // Description: Overloading the max() function template to explicitly specify the return type only
 

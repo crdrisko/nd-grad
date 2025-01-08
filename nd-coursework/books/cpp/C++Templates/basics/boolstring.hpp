@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: boolstring.hpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/30/2020-21:48:25
 // Description: An example of specializing member function templates
 

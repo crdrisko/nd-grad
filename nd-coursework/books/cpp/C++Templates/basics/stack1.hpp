@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: stack1.hpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/26/2020-13:57:07
 // Description: A basic stack implementation wrapping a std::vector
 

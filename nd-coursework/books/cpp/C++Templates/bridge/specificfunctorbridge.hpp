@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: specificfunctorbridge.hpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/27/2020-15:01:00
 // Description: Definition of the derived class for our FunctorBridge
 

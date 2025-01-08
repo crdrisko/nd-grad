@@ -2,7 +2,7 @@
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
 // Name: Ex4_03A.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 04/24/2020-14:08:26
 // Description: Using Standard character classification functions instead of nested ifs
 

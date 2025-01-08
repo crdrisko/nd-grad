@@ -2,7 +2,7 @@
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
 // Name: Ex7_07.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 05/03/2020-17:56:43
 // Description: Replacing words in a string
 

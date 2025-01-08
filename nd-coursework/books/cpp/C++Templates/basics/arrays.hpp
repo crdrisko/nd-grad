@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: arrays.hpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/29/2020-20:51:00
 // Description: All possible overloads for arrays
 

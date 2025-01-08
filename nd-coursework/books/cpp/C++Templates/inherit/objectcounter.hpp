@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: objectcounter.hpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/29/2020-07:43:12
 // Description: Using the curiously recurring template pattern (CRTP) to implement an object counter (C++17 and on)
 

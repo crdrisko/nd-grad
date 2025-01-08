@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: stack3.hpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/26/2020-14:52:04
 // Description: A new version of a basic stack with a templated element and container type
 

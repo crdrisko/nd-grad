@@ -2,7 +2,7 @@
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
 // Name: Ex1_02.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 04/15/2020-08:13:22
 // Description: Using escape sequences
 

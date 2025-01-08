@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: foldtraverse.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/27/2020-10:50:22
 // Description: Using a fold expression to traverse a path in a binary tree using operator->*
 

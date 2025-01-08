@@ -2,7 +2,7 @@
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
 // Name: Ex7_03.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 05/03/2020-15:44:14
 // Description: Comparing strings
 

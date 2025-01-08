@@ -1,8 +1,8 @@
-// Copyright (c) 2019-2024 Cody R. Drisko. All rights reserved.
+// Copyright (c) 2019-2025 Cody R. Drisko. All rights reserved.
 // Licensed under the MIT License. See the LICENSE file in the project root for more information.
 //
 // Name: Exercise1_01.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 04/15/2020-08:20:28
 // Description: A first hello world program
 

@@ -1,8 +1,8 @@
-// Copyright (c) 2019-2024 Cody R. Drisko. All rights reserved.
+// Copyright (c) 2019-2025 Cody R. Drisko. All rights reserved.
 // Licensed under the MIT License. See the LICENSE file in the project root for more information.
 //
 // Name: Exercise5_05.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 04/30/2020-14:07:48
 // Description: Reversing a C-style string using a while loop
 

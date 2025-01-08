@@ -2,7 +2,7 @@
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
 // Name: Ex5_11.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 04/29/2020-12:50:04
 // Description: Working with strings in an array
 

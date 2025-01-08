@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: varprint1.hpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/27/2020-10:21:12
 // Description: Printing a variable number of arguments
 

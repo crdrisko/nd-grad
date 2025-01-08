@@ -2,7 +2,7 @@
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
 // Name: Ex7_02A.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 05/03/2020-15:11:25
 // Description: Accessing characters in a string with a range-based for loop
 

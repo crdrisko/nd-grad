@@ -2,7 +2,7 @@
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
 // Name: Ex8_04.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 08/10/2020-07:57:25
 // Description: Modifying the value of a caller variable
 

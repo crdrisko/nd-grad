@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: projectioniterator.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/29/2020-09:49:12
 // Description: Printing out the first names of a vector containing Person values
 

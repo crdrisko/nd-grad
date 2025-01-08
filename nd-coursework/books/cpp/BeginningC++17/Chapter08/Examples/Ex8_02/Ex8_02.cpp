@@ -2,7 +2,7 @@
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
 // Name: Ex8_02.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 08/07/2020-14:55:10
 // Description: Calculating powers - rearranged
 

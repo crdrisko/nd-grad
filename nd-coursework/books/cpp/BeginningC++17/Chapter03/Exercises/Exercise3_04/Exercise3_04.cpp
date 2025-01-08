@@ -1,8 +1,8 @@
-// Copyright (c) 2019-2024 Cody R. Drisko. All rights reserved.
+// Copyright (c) 2019-2025 Cody R. Drisko. All rights reserved.
 // Licensed under the MIT License. See the LICENSE file in the project root for more information.
 //
 // Name: Exercise3_04.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 04/23/2020-14:55:48
 // Description: Combine 4 characters into a word and output the word in hexadecimal notation
 

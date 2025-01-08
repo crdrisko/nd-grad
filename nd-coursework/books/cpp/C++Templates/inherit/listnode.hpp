@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: listnode.hpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/29/2020-09:25:56
 // Description: A simple definition for a node in a linked list
 

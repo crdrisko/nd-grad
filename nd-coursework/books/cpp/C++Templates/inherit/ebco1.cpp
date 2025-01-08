@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: ebco1.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/28/2020-20:03:44
 // Description: Clarifying what the the empty base class optimization (EBCO) means in practice
 

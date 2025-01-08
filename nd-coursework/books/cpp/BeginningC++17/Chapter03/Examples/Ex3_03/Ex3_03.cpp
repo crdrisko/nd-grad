@@ -2,7 +2,7 @@
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
 // Name: Ex3_03.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 04/23/2020-14:00:29
 // Description: Demonstrating scope, lifetime, and global variables
 

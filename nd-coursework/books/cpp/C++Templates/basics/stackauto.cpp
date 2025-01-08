@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: stackauto.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/27/2020-07:54:22
 // Description: Using the Stack<> template with the automatically deduced size type
 

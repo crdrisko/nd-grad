@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: empty.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/28/2020-19:58:45
 // Description: Demonstrating that even an empty class still has a nonzero size
 

@@ -2,7 +2,7 @@
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
 // Name: Ex5_04A.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 04/26/2020-15:10:16
 // Description: Multiple calculations in a loop expression's third control expression by using the comma operator
 

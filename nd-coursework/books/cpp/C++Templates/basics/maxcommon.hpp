@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: maxcommon.hpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/25/2020-21:15:42
 // Description: How to choose the more general type to return for our max() function (C++14 and on)
 

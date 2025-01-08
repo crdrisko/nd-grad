@@ -2,7 +2,7 @@
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
 // Name: Ex5_09.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 04/27/2020-14:10:52
 // Description: Sorting an array in ascending sequence - using an indefinite while loop
 

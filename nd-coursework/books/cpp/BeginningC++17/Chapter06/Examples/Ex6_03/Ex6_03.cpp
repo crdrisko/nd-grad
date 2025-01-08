@@ -2,7 +2,7 @@
 // Licensed under the Freeware License. See the LICENSE file in the project root for more information.
 //
 // Name: Ex6_03.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 04/30/2020-21:57:28
 // Description: Initializing pointers with strings
 

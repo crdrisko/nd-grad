@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: maxdefault2.hpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/26/2020-08:00:21
 // Description: Using std::common_type<> to specify the default value for the return type (C++14 and on)
 

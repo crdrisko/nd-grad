@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: specialmemtmpl1.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 08/01/2020-08:45:50
 // Description: Supporting move semantics by providing overloading a constructor
 

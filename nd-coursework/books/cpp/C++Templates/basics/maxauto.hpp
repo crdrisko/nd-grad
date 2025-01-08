@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: maxauto.hpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/25/2020-21:03:18
 // Description: Using auto to deduce the return type of our max() function (C++14 and on)
 

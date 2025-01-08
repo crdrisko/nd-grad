@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information.
 //
 // Name: virtual.cpp
-// Author: cdrisko
+// Author: crdrisko
 // Date: 07/29/2020-10:10:55
 // Description: Demonstrating the use of parameterized virtuality with Mixins
 
