@@ -2,7 +2,7 @@
 # Copyright (c) 2019-2025 Cody R. Drisko. All rights reserved.
 # Licensed under the MIT License. See the LICENSE file in the project root for more information.
 #
-# Name: groupSubmit.sh - Version 1.4.0
+# Name: groupSubmit.sh - Version 1.4.1
 # Author: crdrisko
 # Date: 01/20/2020-10:22:05
 # Description: Gezelter group submission script creator and resource monitor
@@ -92,7 +92,7 @@ printCheckQuotaScript()         #@ DESCRIPTION: Print script used to notify user
     printf "                || [[ \${qstatArray[2]} == \"checkGroup\" && \${qstatArray[11]} == \"checkUserQ\" && \${qstatArray[20]} == \"checkScrat\" ]]\\\\\n"
     printf "                || [[ \${qstatArray[2]} == \"checkGroup\" && \${qstatArray[11]} == \"checkScrat\" && \${qstatArray[20]} == \"checkUserQ\" ]]\\\\\n"
     printf "                || [[ \${qstatArray[2]} == \"checkScrat\" && \${qstatArray[11]} == \"checkUserQ\" && \${qstatArray[20]} == \"checkGroup\" ]]\\\\\n"
-    printf "                || [[ \${qstatArray[2]} == \"checkScrat\" && \${qstatArray[11]} == \"checkGroup\" && \${qstatArray[20]} == \"checkUserQ\" ]]\\\\\n"        
+    printf "                || [[ \${qstatArray[2]} == \"checkScrat\" && \${qstatArray[11]} == \"checkGroup\" && \${qstatArray[20]} == \"checkUserQ\" ]]\n"        
     printf "            then\n"
     printf "                exit 0\n"
     printf "            fi ;;\n"
