@@ -1,0 +1,136 @@
+// 12-6-4 Paramters from three papers:
+//
+// "Systematic Parameterization of Monovalent Ions Employing the
+// Nonbonded Model," Pengfei Li, Lin Frank Song, and Kenneth M. Merz Jr.
+// Journal of Chemical Theory and Computation 2015 11 (4), 1645-1657
+// DOI: 10.1021/ct500918t
+//
+// "Taking into Account the Ion-Induced Dipole Interaction in the
+// Nonbonded Model of Ions," by Pengfei Li and Kenneth/ M. Merz Jr.
+// Journal of Chemical Theory and Computation 2014 10 (1), 289-297
+// DOI: 10.1021/ct400751u
+//
+// "Parameterization of Highly Charged Metal Ions Using the 12-6-4
+// LJ-Type Nonbonded Model in Explicit Water," Pengfei Li, Lin Frank
+// Song, and Kenneth M. Merz Jr.  The Journal of Physical Chemistry B
+// 2015 119 (3), 883-895 DOI: 10.1021/jp505875v
+//
+// This version is for use with the SPC/E water model. C4 terms for
+// direct non-bonded interactions between O_SPCE and the ions are
+// included. Care should be taken to generate similar C4 terms for
+// ion-ion interactions using the atomic polarizabilities.  Note that
+// OpenMD assumes positive coefficients for all InversePowerSeries, so
+// comparing signs with A and B coefficients in other codes may differ.
+
+begin Options
+  Name      "ChargedSPF"
+  DistanceMixingRule     Arithmetic
+  EnergyMixingRule       Geometric
+end Options
+
+begin BaseAtomTypes
+  Na   22.989769
+  Cl   35.453
+  Ca   40.078
+  H    1.00784
+  O    15.9994
+  C    12.0107
+end BaseAtomTypes
+
+begin AtomTypes
+  Na+     Na
+  Cl-     Cl
+  Ca2+    Ca
+  OW      O
+  HW      H
+  O_SPCE  OW
+  H_SPCE  HW
+  CA      C
+  CB      C
+  HA      H
+end AtomTypes
+
+begin ChargeAtomTypes
+  Na+      1.0
+  Cl-     -1.0
+  Ca2+     2.0
+  O_SPCE  -0.8476
+  H_SPCE   0.4238
+  CA      -0.115
+  HA       0.115
+end ChargeAtomTypes
+
+begin LennardJonesAtomTypes
+  Na+	    0.03091095	2.62280582620516
+  Cl-	    0.52404590	3.8362098803123
+  Ca2+	  0.09731901	2.91145701088263
+  O_SPCE  0.15532     3.16549
+  CA      0.068       3.55
+  CB      0.068       3.55
+  HA      0.030       2.42
+end LennardJonesAtomTypes
+
+begin BondTypes
+  CA      HA      Harmonic        1.080           734
+  CB      CB      Harmonic        1.370           1040
+  CA      CB      Harmonic        1.404           938
+  CA      CA      Harmonic        1.40            938
+end BondTypes
+
+begin BendTypes
+  CB      CB      CB      Harmonic        120.0  126.0
+  CB      CB      CA      Harmonic        120.0  126.0
+  CA      CB      CA      Harmonic        120.0  126.0
+  CB      CA      CB      Harmonic        120.0  126.0
+  CA      CA      CA      Harmonic        120.0  126.0
+  CA      CA      CB      Harmonic        120.0  126.0
+  CA      CA      HA      Harmonic        120.0   70.0
+  CB      CA      HA      Harmonic        120.0   70.0
+end BendTypes
+
+begin TorsionTypes
+  CA      CB      CB      CA      Opls            0.0             7.250           0.0
+  CB      CB      CB      CB      Opls            0.0             7.250           0.0
+  CB      CB      CB      CA      Opls            0.0             7.250           0.0
+  CA      CA      CB      CB      Opls            0.0             7.250           0.0
+  CB      CA      CB      CB      Opls            0.0             7.250           0.0
+  CA      CA      CB      CA      Opls            0.0             7.250           0.0
+  CA      CB      CA      CB      Opls            0.0             7.250           0.0
+  X       CB      CB      X       Opls            0.0             7.250           0.0
+  X       CA      CA      X       Opls            0.0             7.250           0.0
+  CA      CA      CA      CB      Opls            0.0             7.250           0.0
+  HA      CA      CA      CB      Opls            0.0             7.250           0.0
+  HA      CA      CB      CB      Opls            0.0             7.250           0.0
+  HA      CA      CB      CA      Opls            0.0             7.250           0.0
+  HA      CA      CA      HA      Opls            0.0             7.250           0.0
+end TorsionTypes
+
+begin InversionTypes
+  CB      CB      CB      CB      AmberImproper   1.100
+  CB      CB      CB      CA      AmberImproper   1.100
+  CB      CB      CA      CA      AmberImproper   1.100
+  CB      CA      CA      CA      AmberImproper   1.100
+  CA      HA      CA      CB      AmberImproper   1.100
+  CA      HA      CA      CA      AmberImproper   1.100
+  CA      HA      CB      CB      AmberImproper   1.100
+end InversionTypes
+
+begin NonBondedInteractions
+  Na+   O_SPCE  InversePowerSeries       12     95714.67654     6       -162.87491      4       -6.00000
+  Na+   Na+     InversePowerSeries       12     13102.85758     6       -40.25031       4       -4.15512
+  Na+   Cl-     InversePowerSeries       12     655295.17613    6       -577.58898      4       24.64681
+  Na+   CA      InversePowerSeries       12     137025.71172    6       -158.52083      4       -5.61773
+  Na+   CB      InversePowerSeries       12     137025.71172    6       -158.52083      4       -7.87812
+  Na+   HA      InversePowerSeries       12     8042.36534      6       -31.29899       4       -1.60803
+  Cl-   O_SPCE  InversePowerSeries       12     3867588.79805   6       -2100.87068     4       55.00000
+  Cl-   Cl-     InversePowerSeries       12     21294018.81053  6       -6681.03083     4       123.21676
+  Cl-   CA      InversePowerSeries       12     4860700.83324   6       -1915.79485     4       51.49584
+  Cl-   CB      InversePowerSeries       12     4860700.83324   6       -1915.79485     4       72.21607
+  Cl-   HA      InversePowerSeries       12     440231.43669    6       -469.88672      4       14.74030
+  Ca2+  O_SPCE  InversePowerSeries       12     304535.53001    6       -386.99490      4       -89.00000
+  Ca2+  Cl-     InversePowerSeries       12     1964839.88916   6       -1332.24878     4       -75.14197
+  Ca2+  Ca2+    InversePowerSeries       12     144405.00857    6       -237.09367      4       -201.05125
+  Ca2+  CA      InversePowerSeries       12     420744.89158    6       -370.01222      4       -83.32964
+  Ca2+  CB      InversePowerSeries       12     420744.89158    6       -370.01222      4       -116.85873
+  Ca2+  HA      InversePowerSeries       12     27829.82353     6       -77.55592       4       -23.85249
+end NonBondedInteractions
