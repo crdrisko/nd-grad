@@ -117,8 +117,8 @@ end InversionTypes
 
 begin NonBondedInteractions
   Na+   O_SPCE  InversePowerSeries       12     95714.67654     6       -162.87491      4       -6.00000
-  Na+   Na+     InversePowerSeries       12     13102.85758     6       -40.25031       4       -4.15512
-  Na+   Cl-     InversePowerSeries       12     655295.17613    6       -577.58898      4       24.64681
+  Na+   Na+     InversePowerSeries       12     13102.85758     6       -40.25031       4       -0.61573
+  Na+   Cl-     InversePowerSeries       12     655295.17613    6       -577.58898      4       -7.79767
   Na+   CA      InversePowerSeries       12     137025.71172    6       -158.52083      4       -5.61773
   Na+   CB      InversePowerSeries       12     137025.71172    6       -158.52083      4       -7.87812
   Na+   HA      InversePowerSeries       12     8042.36534      6       -31.29899       4       -1.60803
@@ -128,8 +128,8 @@ begin NonBondedInteractions
   Cl-   CB      InversePowerSeries       12     4860700.83324   6       -1915.79485     4       72.21607
   Cl-   HA      InversePowerSeries       12     440231.43669    6       -469.88672      4       14.74030
   Ca2+  O_SPCE  InversePowerSeries       12     304535.53001    6       -386.99490      4       -89.00000
-  Ca2+  Cl-     InversePowerSeries       12     1964839.88916   6       -1332.24878     4       -75.14197
-  Ca2+  Ca2+    InversePowerSeries       12     144405.00857    6       -237.09367      4       -201.05125
+  Ca2+  Cl-     InversePowerSeries       12     1964839.88916   6       -1332.24878     4       -180.97589
+  Ca2+  Ca2+    InversePowerSeries       12     144405.00857    6       -237.09367      4       -29.79272
   Ca2+  CA      InversePowerSeries       12     420744.89158    6       -370.01222      4       -83.32964
   Ca2+  CB      InversePowerSeries       12     420744.89158    6       -370.01222      4       -116.85873
   Ca2+  HA      InversePowerSeries       12     27829.82353     6       -77.55592       4       -23.85249
