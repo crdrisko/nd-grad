@@ -1,12 +1,12 @@
 # Create and Equilibrate a Box of Salt-Water and Nanoporous Graphene Sheets
 
+> [!IMPORTANT]  
+> Check the seed each time a `.omd` file is edited.
+
 1. Generate a salt-water box from a packmol file
     ```bash
     saltWaterBoxer -i box.pack
     ```
-
-    > [!IMPORTANT]  
-    > Check the seed
 
 2. Use NPGBuilder to create the graphene sheets
     ...
@@ -82,9 +82,6 @@
         zPos = 18.75;
     }
     ```
-
-    > [!IMPORTANT]  
-    > Check the seed
 
 6. Use some `openmd` tools to finalize the starting configurations
 
@@ -190,10 +187,6 @@
         zPos = -18.75;
     }
     ```
-
-    > [!IMPORTANT]
-    > Check the seed
-    > Check the molecule name
 
 14. ...
     ```bash
