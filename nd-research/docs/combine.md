@@ -5,7 +5,8 @@
     saltWaterBoxer -i box.pack
     ```
 
-    \note check the seed!
+    > [!IMPORTANT]  
+    > Check the seed
 
 2. Use NPGBuilder to create the graphene sheets
     ...
@@ -82,7 +83,8 @@
     }
     ```
 
-    \note check the seed!
+    > [!IMPORTANT]  
+    > Check the seed
 
 6. Use some `openmd` tools to finalize the starting configurations
 
@@ -189,8 +191,9 @@
     }
     ```
 
-    \note check the seed!
-    \note check the molecule name!
+    > [!IMPORTANT]
+    > Check the seed
+    > Check the molecule name
 
 14. ...
     ```bash
