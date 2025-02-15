@@ -1,3 +1,5 @@
+[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/crdrisko/nd-grad?include_prereleases)](https://github.com/crdrisko/nd-grad/releases) [![DOI](https://zenodo.org/badge/232623725.svg)](https://doi.org/10.5281/zenodo.14876051)
+
 # ND-Grad
 
 Welcome to the ND-Grad project! This repository is a merger of the formerly separate ND-Research and ND-Coursework projects. Because these repositories were so closely related, it makes sense to maintain and release them together.
