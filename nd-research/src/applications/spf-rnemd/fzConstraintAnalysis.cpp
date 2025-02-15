@@ -71,7 +71,7 @@ int main(int argc, char* argv[])
             std::size_t numberStart {path.find("stitch") + 7};
             std::size_t numberEnd {path.find(".fz")};
 
-            outputFile << (2 * std::stoi(path.substr(numberStart, numberEnd - numberStart)) - 1) << ", " << deltaF << '\n';
+            outputFile << std::stoi(path.substr(numberStart, numberEnd - numberStart)) << ", " << deltaF << '\n';
         }
         catch (const std::exception& e)
         {

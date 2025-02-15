@@ -52,8 +52,8 @@ def getAverageDeltaP(exchangeTime):
             data = np.loadtxt(fileName, delimiter=',', comments='#')
 
             N = np.size(data)
-            indicies   = data[0:N:1, 0] / 10
-            DeltaP     = (data[0:N:1, 1] / (area)) * (1e30 * 4184) / (6.022e23 * 1e5) # Convert kcal/mol/Ang^3 -> bar
+            indicies = data[0:N:1, 0] / 10
+            DeltaP   = (data[0:N:1, 1] / (area)) * (1e30 * 4184) / (6.022e23 * 1e5) # Convert kcal/mol/Ang^3 -> bar
 
         for i in range(0, np.size(indicies)):
             if (counts.get(indicies[i]) == None):
@@ -98,7 +98,7 @@ def getAverageDeltaPi(exchangeTime):
             indicies   = data[0:N:1, 0] / 10
             Jp_applied = data[0:N:1, 1]
             Jp_actual  = data[0:N:1, 2] / 1e-8
-            DeltaPi     = (data[0:N:1, 3] * temperature * idealGasConstant) * (1000 * 1e-5)
+            DeltaPi    = (data[0:N:1, 3] * temperature * idealGasConstant) * (1000 * 1e-5)
 
         for i in range(0, np.size(indicies)):
             if (counts.get(indicies[i]) == None):

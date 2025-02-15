@@ -85,6 +85,9 @@ if (NOT research_exclude_scripts)
     endforeach()
 endif()
 
+# install(DIRECTORY docs DESTINATION docs)
+# install(DIRECTORY etc DESTINATION etc)
+
 
 ### Unit Testing ###
 if (grad_build_tests OR research_build_tests)
