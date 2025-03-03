@@ -51,8 +51,9 @@ int main(int argc, char* argv[])
     outputFile.open(fileName + ".csv");
 
     outputFile << std::setw(5) << "# Num," << std::setw(13) << "Jp_applied," << std::setw(19) << "Jp_actual,"
-               << std::setw(13) << "Conc Na+," << std::setw(13) << "Conc Cl-," << std::setw(13) << "Conc O_SPCE,"
-               << std::setw(13) << "Conc H_SPCE\n";
+               << std::setw(13) << "Conc Na+ B," << std::setw(13) << "Conc Na+ A," << std::setw(17) << "Delta Conc Na+,"
+               << std::setw(13) << "Conc Cl- B," << std::setw(13) << "Conc Cl- A, " << std::setw(17) << "Delta Conc Cl-,"
+               << std::setw(13) << "Conc O_SPCE," << std::setw(13) << "Conc H_SPCE\n";
 
     // Sort the filenames
     std::set<std::string> paths = sortFilesWithExtension(dirName, ".rnemd");
@@ -128,6 +129,9 @@ int main(int argc, char* argv[])
             = DryChem::calculateAverage(data.activity[cation_index].begin() + rightGraphene_right,
                 data.activity[cation_index].begin() + params.inferred.boundaryB_start);
 
+        Concentration avgConc_cation_b = (avgConc_cation_b2lgl + avgConc_cation_rgr2b) / 2;
+        Concentration avgConc_cation_a = (avgConc_cation_a2rgl + avgConc_cation_lgr2a) / 2;
+
         // Anion
         Concentration avgConc_anion_b2lgl
             = DryChem::calculateAverage(data.activity[anion_index].begin() + params.inferred.boundaryB_end,
@@ -144,6 +148,9 @@ int main(int argc, char* argv[])
         Concentration avgConc_anion_rgr2b
             = DryChem::calculateAverage(data.activity[anion_index].begin() + rightGraphene_right,
                 data.activity[anion_index].begin() + params.inferred.boundaryB_start);
+
+        Concentration avgConc_anion_b = (avgConc_anion_b2lgl + avgConc_anion_rgr2b) / 2;
+        Concentration avgConc_anion_a = (avgConc_anion_a2rgl + avgConc_anion_lgr2a) / 2;
 
         // Oxygen
         Concentration avgConc_O_s2lgl
@@ -172,10 +179,9 @@ int main(int argc, char* argv[])
         outputFile << std::setw(4) << (std::stoi(path.substr(numberStart, numberEnd - numberStart))) << ',';
 
         outputFile << std::setw(12) << params.report.particleFlux << ',' << std::setw(18) << params.report.Jp << ','
-                   << std::setw(12)
-                   << ((avgConc_cation_b2lgl + avgConc_cation_rgr2b) / 2 - (avgConc_cation_a2rgl - avgConc_cation_lgr2a) / 2)
-                   << ',' << std::setw(12)
-                   << ((avgConc_anion_b2lgl + avgConc_anion_rgr2b) / 2 - (avgConc_anion_lgr2a - avgConc_anion_a2rgl) / 2)
+                   << std::setw(12) << avgConc_cation_b << ',' << std::setw(12) << avgConc_cation_a << ',' << std::setw(16)
+                   << (avgConc_cation_b - avgConc_cation_a) << ',' << std::setw(12) << avgConc_anion_b << ','
+                   << std::setw(12) << avgConc_anion_a << ',' << std::setw(16) << (avgConc_anion_b - avgConc_anion_a)
                    << ',' << std::setw(12) << ((avgConc_O_s2lgl + avgConc_O_rgr2e) / 2 - avgConc_O_lgr2rgl) << ','
                    << std::setw(12) << ((avgConc_H_s2lgl + avgConc_H_rgr2e) / 2 - avgConc_H_lgr2rgl) << '\n';
     }
